@@ -1,20 +1,16 @@
 import {
-  useQuery,
-  useMutation,
-  useQueryClient,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-
 import "./App.css";
-import ApiTestFrontend from "./components/ApiTestFrontend";
+import ApiAutomationTest from "./components/features/ApiAutomationTest";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ApiTestFrontend />
+      <ApiAutomationTest />
     </QueryClientProvider>
   );
 }
