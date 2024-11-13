@@ -1,24 +1,29 @@
 import "./App.css";
 import { useQuery } from "@tanstack/react-query";
-import { getAutomatization } from "./lib/apiActions/getAutomation";
+import { AutomationModel } from "./lib/Models/AutomationModel";
 
 function App() {
-  const automatization = useQuery({
+  const automations = useQuery({
     queryKey: ["data"],
-    queryFn: async () => await getAutomatization() 
-    });
+    queryFn: async () => await AutomationModel.getAutomation() 
+  });
 
-  if (automatization.isLoading) return <div>Loading...</div>;
-  if (automatization.error) return <div>Error: {automatization.error.message}</div>;
+  // const automation = useQuery({
+  //   queryKey: ["data"],
+  //   queryFn: async () => await AutomationModel.getAutomationById("GITHUB_REMOVE_COLLABORATORS-12345") 
+  // });
+
+  if (automations.isLoading) return <div>Loading...</div>;
+  if (automations.error) return <div>Error: {automations.error.message}</div>;
 
   return (
     <div className="App">
-      {automatization.data?.map((automat, index: number) => (
+      {automations.data?.map((automation, index: number) => (
         <div className="p-20" key={index}>
-          <div>{automat.id}</div>
-          <div>{automat.last_activity}</div>
-          <div>{automat.state}</div>
-          <div>{automat.type}</div>
+          <div>{automation.id}</div>
+          <div>{automation.last_activity}</div>
+          <div>{automation.state}</div>
+          <div>{automation.type}</div>  
         </div>
       ))}
     </div>
