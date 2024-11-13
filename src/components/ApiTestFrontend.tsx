@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSAS } from "../api/runners/ApiTest";
+import { getSAS } from "../libs/api/runners/ApiFetches";
+import { IErrorMessage } from "../libs/types/IErrorMessage";
 
 export default function ApiTestFrontend() {
-  const { isPending, isError, data, error } = useQuery<string[]>({
+  const { isPending, isError, data, error } = useQuery<
+    string[] | IErrorMessage
+  >({
     queryKey: ["getSAS"],
     queryFn: getSAS,
   });
@@ -10,6 +13,17 @@ export default function ApiTestFrontend() {
   if (isPending) return <span>...</span>;
 
   if (isError) return <span>{error.message}</span>;
+
+  if ("error" in data) {
+    return (
+      <div>
+        <p>
+          Error {data.code}: {data.error}
+        </p>
+        <p>{data.message}</p>
+      </div>
+    );
+  }
 
   return (
     <div>

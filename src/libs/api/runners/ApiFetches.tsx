@@ -1,6 +1,5 @@
-//import login from "../../helpers/api/auth";
+import login from "../../helpers/api/auth";
 
-const login = btoa("dopo:DevOps2024");
 export async function getSAS() {
   const response = await fetch("https://hackaton-api.fly.dev/api/v1/sas", {
     method: "GET",
@@ -9,5 +8,6 @@ export async function getSAS() {
       "Content-Type": "application/json",
     },
   });
+
   return response.json();
 }
