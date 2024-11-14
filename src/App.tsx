@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 
 import "./App.css";
-import ApiTestFrontend from "./components/ApiTestFrontend";
+import ApiTestFrontend from "./components/features/ApiTestFrontend";
 
 const queryClient = new QueryClient();
 
