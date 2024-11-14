@@ -5,7 +5,6 @@ import { IMetrics } from "../types/IMetrics";
 import { IRunner } from "../types/IRunner";
 
 export class RunnerModel {
-
     static async getSAS(): Promise<string[] | IErrorMessage> {
         const response = await fetch('https://hackaton-api.fly.dev/api/v1/sas', {
             method: 'GET',
