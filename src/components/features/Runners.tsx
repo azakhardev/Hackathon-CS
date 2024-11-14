@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { RunnerModel } from "../../lib/Models/RunnerModel";
 import { getSAS } from "../../lib/api/runners/ApiFetches";
 import { useState } from "react";
@@ -10,110 +10,90 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table"
+} from "../ui/table";
 import { IJobs } from "../../lib/types/IJobs";
+import { format } from "date-fns";
 
 export default function Runners() {
+  const [selectedSAS, setSelectedSAS] = useState<string>("");
 
-  const [jobsData, setJobsData] = useState<IJobs[] | IErrorMessage>([]);
-
-  const sas = useQuery({
-    queryKey: ["data"],
-    queryFn: async () => await getSAS()
+  const sasQuery = useQuery({
+    queryKey: ["sas"],
+    queryFn: async () => await getSAS(),
   });
 
-  const getJobs = useMutation({
-    mutationKey: ['jobs'],
-    mutationFn: async (sas: string) => await RunnerModel.getJobs(sas),
-    onSuccess: (data) => {
-      setJobsData(data)
-    }
-  })
+  const runnersQuery = useQuery({
+    queryKey: ["runners"],
+    queryFn: async () => await RunnerModel.getRunners(),
+  });
+
+  const jobsQuery = useQuery({
+    queryKey: ["jobs", selectedSAS],
+    queryFn: async () => await RunnerModel.getJobs(selectedSAS),
+  });
 
   const handleClickRow = (sas: string) => {
-    getJobs.mutate(sas)
-  }
+    setSelectedSAS(sas);
+  };
 
-  const runners = useQuery({
-    queryKey: ["runners"],
-    queryFn: async () => await RunnerModel.getRunners()
-  });
+  if (sasQuery.error) return <div>Error: {sasQuery.error.message}</div>;
+  if (runnersQuery.error) return <div>Error: {runnersQuery.error.message}</div>;
 
-  if (sas.error) return <div>Error: {sas.error?.message}</div>;
-  if (runners.error) return <div>Error: {runners.error?.message}</div>;
-
-
-  if (jobsData && "error" in jobsData) {
-    const errorData = jobsData as IErrorMessage;
+  if (jobsQuery.data && "error" in jobsQuery.data) {
+    const errorData = jobsQuery.data as IErrorMessage;
     return <div>Error: {errorData.message}</div>;
   }
 
+  console.log(jobsQuery.data);
+  
   return (
     <div className="flex flex-row">
-      <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>SAS</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {sas.data?.map((s, index) => (
-          <TableRow className="cursor-pointer" key={index} onClick={() => handleClickRow(s)}>
-            <TableCell>{s}</TableCell>
-          </TableRow>
-          ))}
-      </TableBody>
-    </Table>
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>SAS</TableHead>
-          <TableHead>id</TableHead>
-          <TableHead>organizace</TableHead>
-          <TableHead>runner</TableHead>
-          <TableHead>timestamp</TableHead>
-          <TableHead>state</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {jobsData.map((data, index) => (
-          <TableRow key={index}>
-            <TableCell>{data.SAS}</TableCell>
-            <TableCell>{data.id}</TableCell>
-            <TableCell>{data.organization}</TableCell>
-            <TableCell>{data.runner}</TableCell>
-            <TableCell>{data.timestamp}</TableCell>
-            <TableCell>{data.state}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+      <div className="w-50 border-r-2">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>SAS</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="overflow-y-auto h-[90vh]">
+            {sasQuery.data?.map((s: string, index: number) => (
+              <TableRow
+                className="cursor-pointer"
+                key={index}
+                onClick={() => handleClickRow(s)}
+              >
+                <TableCell>{s}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="flex-1">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>SAS</TableHead>
+              <TableHead>Id</TableHead>
+              <TableHead>Organization</TableHead>
+              <TableHead>Runner</TableHead>
+              <TableHead>Timestamp</TableHead>
+              <TableHead>State</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="overflow-y-auto h-[90vh]">
+            {jobsQuery.data?.map((job: IJobs, index: number) => (
+              <TableRow key={index}>
+                <TableCell>{job.SAS}</TableCell>
+                <TableCell>{job.id}</TableCell>
+                <TableCell>{job.organization}</TableCell>
+                <TableCell>{job.runner}</TableCell>
+                <TableCell>{format(new Date(job.timestamp), 'dd. MM. yyyy HH:mm:ss')}</TableCell>
+                <TableCell>{job.state}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
-    // <div className="App">
-    //   <div className="p-20 flex flex-col gap-5">
-          
-    //     <div className="p-20 flex flex-col">
-    //       {jobs.data?.map((job, index) => (
-    //         job.SAS === jobSas && (
-    //           <button onClick={() => handleClickJobs(job.runner)} key={index}>
-    //             {job.id} - SAS: {job.SAS} {job.runner}
-    //           </button>
-    //         )
-    //       ))}
-    //     </div>
-
-
-    //      <div className="p-20">
-    //       <h2>Runners Data:</h2>
-    //       {runners.data?.map((runner, index) => (
-    //         runner.id === runnerId && (
-    //           <div key={index}>
-    //             {runner.id} {runner.runner_group} {runner.organization} {runner.state}
-    //           </div>
-    //         )
-    //       ))}
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
