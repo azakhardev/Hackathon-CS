@@ -1,6 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { RunnerModel } from "../../lib/Models/RunnerModel";
-import { getSAS } from "../../lib/api/runners/ApiFetches";
 import { useState } from "react";
 import { IErrorMessage } from "../../lib/types/IErrorMessage";
 import {
@@ -10,88 +9,96 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table"
+} from "../ui/table";
 import { IJobs } from "../../lib/types/IJobs";
+import ErrorMessage from "../ui/ErrorMessage";
 
 export default function Runners() {
-
   const [jobsData, setJobsData] = useState<IJobs[] | IErrorMessage>([]);
 
   const sas = useQuery({
     queryKey: ["data"],
-    queryFn: async () => await getSAS()
+    queryFn: async () => await RunnerModel.getSAS(),
   });
 
   const getJobs = useMutation({
-    mutationKey: ['jobs'],
+    mutationKey: ["jobs"],
     mutationFn: async (sas: string) => await RunnerModel.getJobs(sas),
     onSuccess: (data) => {
-      setJobsData(data)
-    }
-  })
+      setJobsData(data);
+    },
+  });
 
   const handleClickRow = (sas: string) => {
-    getJobs.mutate(sas)
-  }
+    getJobs.mutate(sas);
+  };
 
   const runners = useQuery({
     queryKey: ["runners"],
-    queryFn: async () => await RunnerModel.getRunners()
+    queryFn: async () => await RunnerModel.getRunners(),
   });
 
   if (sas.error) return <div>Error: {sas.error?.message}</div>;
   if (runners.error) return <div>Error: {runners.error?.message}</div>;
-
 
   if (jobsData && "error" in jobsData) {
     const errorData = jobsData as IErrorMessage;
     return <div>Error: {errorData.message}</div>;
   }
 
+  if (sas.data && "error" in sas.data) {
+    const errorData = sas.data as IErrorMessage;
+    return <ErrorMessage errorMessage={errorData} />;
+  }
+
   return (
     <div className="flex flex-row">
       <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>SAS</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {sas.data?.map((s, index) => (
-          <TableRow className="cursor-pointer" key={index} onClick={() => handleClickRow(s)}>
-            <TableCell>{s}</TableCell>
+        <TableHeader>
+          <TableRow>
+            <TableHead>SAS</TableHead>
           </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sas.data?.map((s, index) => (
+            <TableRow
+              className="cursor-pointer"
+              key={index}
+              onClick={() => handleClickRow(s)}
+            >
+              <TableCell>{s}</TableCell>
+            </TableRow>
           ))}
-      </TableBody>
-    </Table>
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>SAS</TableHead>
-          <TableHead>id</TableHead>
-          <TableHead>organizace</TableHead>
-          <TableHead>runner</TableHead>
-          <TableHead>timestamp</TableHead>
-          <TableHead>state</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {jobsData.map((data, index) => (
-          <TableRow key={index}>
-            <TableCell>{data.SAS}</TableCell>
-            <TableCell>{data.id}</TableCell>
-            <TableCell>{data.organization}</TableCell>
-            <TableCell>{data.runner}</TableCell>
-            <TableCell>{data.timestamp}</TableCell>
-            <TableCell>{data.state}</TableCell>
+        </TableBody>
+      </Table>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>SAS</TableHead>
+            <TableHead>id</TableHead>
+            <TableHead>organizace</TableHead>
+            <TableHead>runner</TableHead>
+            <TableHead>timestamp</TableHead>
+            <TableHead>state</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {jobsData.map((data, index) => (
+            <TableRow key={index}>
+              <TableCell>{data.SAS}</TableCell>
+              <TableCell>{data.id}</TableCell>
+              <TableCell>{data.organization}</TableCell>
+              <TableCell>{data.runner}</TableCell>
+              <TableCell>{data.timestamp}</TableCell>
+              <TableCell>{data.state}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
     // <div className="App">
     //   <div className="p-20 flex flex-col gap-5">
-          
+
     //     <div className="p-20 flex flex-col">
     //       {jobs.data?.map((job, index) => (
     //         job.SAS === jobSas && (
@@ -101,7 +108,6 @@ export default function Runners() {
     //         )
     //       ))}
     //     </div>
-
 
     //      <div className="p-20">
     //       <h2>Runners Data:</h2>
