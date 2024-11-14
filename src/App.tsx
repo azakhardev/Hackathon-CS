@@ -3,14 +3,14 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import "./App.css";
-import ApiAutomationTest from "./components/features/ApiAutomationTest";
+import Runners from "./components/features/Runners";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ApiAutomationTest />
+      <Runners />
     </QueryClientProvider>
   );
 }

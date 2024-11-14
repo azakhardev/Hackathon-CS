@@ -5,16 +5,18 @@ import { IAutomationType } from "../types/IAutomationType";
 import { IErrorMessage } from "../types/IErrorMessage";
 
 export class AutomationModel{
-    static async getAutomations(): Promise<IAutomation[] | IErrorMessage> {
-        const response = await fetch('https://hackaton-api.fly.dev/api/v1/automations', {
+    static async getAutomations(limit = 10): Promise<IAutomation[] | IErrorMessage> {
+        const response = await fetch('https://hackaton-api.fly.dev/api/v1/automations?' + new URLSearchParams({
+            limit: limit.toString(),
+        }), {
             method: 'GET',
             headers: {
                 'Authorization': `Basic ${login}`
             }
         });
-
         return response.json();
     }
+    
     
     static async getAutomationById(id: string): Promise<IAutomation | IErrorMessage> {
         const response = await fetch(`https://hackaton-api.fly.dev/api/v1/automations/${id}`, {
@@ -34,7 +36,6 @@ export class AutomationModel{
                 'Authorization': `Basic ${login}`
             }
         });
-
         return response.json();
     }
 

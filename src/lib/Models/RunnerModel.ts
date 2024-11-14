@@ -1,10 +1,11 @@
 import login from "../helpers/api/auth";
+import { IErrorMessage } from "../types/IErrorMessage";
 import { IJobs } from "../types/IJobs";
 import { IMetrics } from "../types/IMetrics";
 import { IRunner } from "../types/IRunner";
 
 export class RunnerModel {
-    static async getRunners(): Promise<IRunner[]> {
+    static async getRunners(): Promise<IRunner[] | IErrorMessage> {
         const response = await fetch('https://hackaton-api.fly.dev/api/v1/runners', {
             method: 'GET',
             headers: {
@@ -15,7 +16,7 @@ export class RunnerModel {
         return response.json();
     }
 
-    static async getRunnerById(id: string): Promise<IRunner> {
+    static async getRunnerById(id: string): Promise<IRunner | IErrorMessage> {
         const response = await fetch(`https://hackaton-api.fly.dev/api/v1/runners/${id}`, {
             method: 'GET',
             headers: {
@@ -26,8 +27,10 @@ export class RunnerModel {
         return response.json();
     }
 
-    static async getJobs(): Promise<IJobs[]> {
-        const response = await fetch(`https://hackaton-api.fly.dev/api/v1/jobs`, {
+    static async getJobs(sas?: string): Promise<IJobs[] | IErrorMessage> {
+        const response = await fetch(`https://hackaton-api.fly.dev/api/v1/jobs?` + new URLSearchParams({
+            search: sas ?? ""
+        }), {
             method: 'GET',
             headers: {
                 'Authorization': `Basic ${login}`
@@ -37,7 +40,7 @@ export class RunnerModel {
         return response.json();
     }
 
-    static async getJobsById(id: string): Promise<IJobs> {
+    static async getJobsById(id: string): Promise<IJobs | IErrorMessage> {
         const response = await fetch(`https://hackaton-api.fly.dev/api/v1/jobs/${id}`, {
             method: 'GET',
             headers: {
@@ -48,7 +51,7 @@ export class RunnerModel {
         return response.json();
     }
 
-    static async getMetrics(): Promise<IMetrics[]> {
+    static async getMetrics(): Promise<IMetrics[] | IErrorMessage> {
         const response = await fetch(`https://hackaton-api.fly.dev/api/v1/metrics`, {
             method: 'GET',
             headers: {
@@ -59,7 +62,7 @@ export class RunnerModel {
         return response.json();
     }
 
-    static async getMetricsByRunner(id: string): Promise<IMetrics> {
+    static async getMetricsByRunner(id: string): Promise<IMetrics | IErrorMessage> {
         const response = await fetch(`https://hackaton-api.fly.dev/api/v1/metrics/${id}`, {
             method: 'GET',
             headers: {
