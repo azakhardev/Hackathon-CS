@@ -32,11 +32,13 @@ export default function Runners() {
     queryKey: ["metrics", selectedJobRunner],
     queryFn: async () => await RunnerModel.getMetricsByRunner(selectedJobRunner),
     enabled: !!selectedJobRunner,
+    gcTime: 0,
   })
 
   const jobsQuery = useQuery({
     queryKey: ["jobs", selectedSAS],
     queryFn: async () => await RunnerModel.getJobs(selectedSAS),
+    gcTime: 0,
   });
 
   const handleClickRow = (sas: string) => {
@@ -66,9 +68,10 @@ export default function Runners() {
     return <ErrorMessage errorMessage={errorData} />;
   }
 
-  if (runnersQuery.isLoading) { return (<div></div>)}
-  if (metricsQuery.isLoading) { return (<div></div>)}
+  if (runnersQuery.isLoading) { return (<div>Loading...</div>)}
+  if (metricsQuery.isLoading) { return (<div>Loading...</div>)}
   
+  console.log(metricsQuery.data)
 
   return (
     <div>
@@ -109,9 +112,6 @@ export default function Runners() {
               {jobsQuery.data?.map((job: IJobs, index: number) => (
                 <TableRow onClick={() => {
                   setSelectedJobRunner(job.runner);
-                  console.log(selectedJobRunner)
-                  console.log("runner: ", runnersQuery.data)
-                  console.log("metrics: ", metricsQuery.data)
                 }} key={index}>
                   <TableCell>{job.SAS}</TableCell>
                   <TableCell>{job.id}</TableCell>
@@ -161,9 +161,9 @@ export default function Runners() {
               </TableRow>
             </TableHeader>
             <TableBody className="overflow-y-auto h-[90vh]">
-              {metricsQuery.data && (
-                metricsQuery.data.metrics.map((metric) => (
-                  <TableRow>
+              {metricsQuery.data && metricsQuery.data.metrics &&(
+                metricsQuery.data?.metrics.map((metric, index) => (
+                  <TableRow key={index}>
                   <TableCell>{metric.cpu}</TableCell>
                   <TableCell>{metric.fs_reads}</TableCell>
                   <TableCell>{metric.fs_writes}</TableCell>
