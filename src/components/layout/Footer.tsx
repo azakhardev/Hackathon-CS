@@ -1,3 +1,5 @@
 export default function Footer() {
-  return <h1>Footer</h1>;
+  return (
+    <footer className="bg-slate-600 w-screen p-2 text-center">Footer</footer>
+  );
 }
