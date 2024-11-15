@@ -11,18 +11,15 @@ import { IChartConfig } from "@/lib/types/IChartConfig";
 
 interface IProps {
   chartConfig: IChartConfig;
-  chartData: any;
+  chartData: any[];
+  innerRadius: number;
 }
 
 export default function CustomPieChart(props: IProps) {
   const nKey = Object.keys(props.chartData[0]).at(0);
-  console.log(nKey);
 
   return (
-    <ChartContainer
-      config={props.chartConfig}
-      className="mx-auto aspect-square max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground"
-    >
+    <ChartContainer config={props.chartConfig}>
       <PieChart>
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
         <Pie
@@ -30,6 +27,7 @@ export default function CustomPieChart(props: IProps) {
           dataKey={Object.keys(props.chartConfig).at(0) as string}
           label
           nameKey={nKey}
+          innerRadius={props.innerRadius}
         />
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
         <ChartLegend

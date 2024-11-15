@@ -1,28 +1,38 @@
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { IChartConfig } from "@/lib/types/IChartConfig";
+
+import { Area, CartesianGrid, Line, LineChart, XAxis } from "recharts";
+
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { IChartConfig } from "@/lib/types/IChartConfig";
+import { CurveType } from "recharts/types/shape/Curve";
 
 interface IProps {
   chartConfig: IChartConfig;
   chartData: any[];
   dataKey: string;
+  lineType: CurveType;
   showCursor: boolean;
 }
-
-export default function CustomBarChart(props: IProps) {
+export default function CustomLineChart(props: IProps) {
   return (
     <ChartContainer config={props.chartConfig}>
-      <BarChart accessibilityLayer data={props.chartData}>
+      <LineChart
+        accessibilityLayer
+        data={props.chartData}
+        margin={{
+          left: 10,
+          right: 10,
+        }}
+      >
         <CartesianGrid vertical={false} />
         <XAxis
           dataKey={props.dataKey}
-          tickLine={false}
+          tickLine={true}
+          axisLine={true}
           tickMargin={10}
-          axisLine={false}
           tickFormatter={(value) => value.slice(0, 3)}
         />
         <ChartTooltip
@@ -31,14 +41,17 @@ export default function CustomBarChart(props: IProps) {
         />
 
         {Object.keys(props.chartConfig).map((p, i) => (
-          <Bar
+          <Line
             key={i}
             dataKey={p}
-            fill={props.chartConfig[p].color}
+            type={props.lineType}
+            dot={props.lineType === "linear"}
+            stroke={props.chartConfig[p].color}
+            strokeWidth={2}
             radius={8}
           />
         ))}
-      </BarChart>
+      </LineChart>
     </ChartContainer>
   );
 }
