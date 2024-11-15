@@ -4,6 +4,7 @@ import HomePage from "./pages/Home";
 import RunnersPage from "./pages/Runners";
 import AutomationsPage from "./pages/Automations";
 import MainLayout from "./components/layout/MainLayout";
+import ChartTest from "./components/features/grapghs/ChartTest";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,11 @@ const router = createBrowserRouter([
       { path: "/runners", element: <RunnersPage /> },
       { path: "/automations", element: <AutomationsPage /> },
     ],
+  },
+  {
+    path: "/test",
+    element: <MainLayout />,
+    children: [{ path: "chart", element: <ChartTest /> }],
   },
 ]);
 
