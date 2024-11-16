@@ -6,9 +6,7 @@ import { useParams } from "react-router-dom";
 
 export default function AutomationDetailPage() {
   const params = useParams();
-
   const automationId = params.id;
-  console.log(automationId);
 
   const automation = useQuery({
     queryKey: ["automation", automationId],

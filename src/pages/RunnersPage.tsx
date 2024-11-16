@@ -3,8 +3,6 @@ import { RunnerModel } from "@/lib/Models/RunnerModel";
 import RunnersTable from "@/components/features/tables/RunnersTable";
 import { IRunner } from "@/lib/types/IRunner";
 import { useSearchParams } from "react-router-dom";
-import { group } from "console";
-
 export default function RunnersPage() {
   const [searchParams] = useSearchParams();
 
