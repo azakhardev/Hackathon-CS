@@ -34,7 +34,7 @@ interface IProps {
 
 export default function JobsTable(props: IProps) {
   return (
-    <Table className="overflow-x-auto max-h-[400px]">
+    <Table>
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
@@ -48,14 +48,14 @@ export default function JobsTable(props: IProps) {
           <TableRow key={j.id}>
             <TableCell className="font-medium">{j.id}</TableCell>
             <TableCell>{j.state}</TableCell>
-            <TableCell>
+            <TableCell className="flex flex-row">
               <Link
                 to={`/jobs?sas=${j.SAS}`}
                 className={badgeVariants({ variant: "outline" })}
               >
                 {j.SAS.slice(4)}
               </Link>
-              on runner{" "}
+               <p> runner: </p>
               <Link
                 to={`/runners/${j.runner}`}
                 className={badgeVariants({ variant: "outline" })}

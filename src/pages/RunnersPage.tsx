@@ -37,7 +37,7 @@ export default function RunnersPage() {
   }
 
   return (
-    <main>
+    <main className="overflow-auto h-[100dvh]">
       <h1>Runners</h1>
       {runnersQuery.isLoading && (
         <div className="loader-wrap">

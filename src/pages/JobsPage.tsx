@@ -14,10 +14,8 @@ export default function JobsPage() {
     gcTime: 0,
   });
 
-  console.log(jobsQuery);
-
   return (
-    <main>
+    <main className="overflow-auto h-[100dvh]">
       <h1>Jobs</h1>
       {jobsQuery.isLoading && (
         <div className="loader-wrap">
