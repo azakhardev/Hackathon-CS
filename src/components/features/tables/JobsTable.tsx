@@ -57,10 +57,10 @@ export default function JobsTable(props: IProps) {
               </Link>
               on runner{" "}
               <Link
-                to={`/runnerInfo/${j.runner}`}
+                to={`/runners/${j.runner}`}
                 className={badgeVariants({ variant: "outline" })}
               >
-                {j.organization}
+                {j.runner.slice(j.runner.length - 5).toUpperCase()}
               </Link>
             </TableCell>
           </TableRow>

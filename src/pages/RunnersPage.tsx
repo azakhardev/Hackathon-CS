@@ -40,7 +40,9 @@ export default function RunnersPage() {
     <main>
       <h1>Runners</h1>
       {runnersQuery.isLoading && (
-        <div className="loading-spinner">Loading...</div>
+        <div className="loader-wrap">
+          <div className="loading-spinner"></div>
+        </div>
       )}
       {!runnersQuery.isLoading && <RunnersTable runners={filteredRunners} />}
     </main>

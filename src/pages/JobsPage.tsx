@@ -19,7 +19,11 @@ export default function JobsPage() {
   return (
     <main>
       <h1>Jobs</h1>
-      {jobsQuery.isLoading && <div className="loading-spinner">Loading...</div>}
+      {jobsQuery.isLoading && (
+        <div className="loader-wrap">
+          <div className="loading-spinner"></div>
+        </div>
+      )}
       {!jobsQuery.isLoading && <JobsTable jobs={jobsQuery.data as IJobs[]} />}
     </main>
   );

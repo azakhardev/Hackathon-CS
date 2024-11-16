@@ -6,7 +6,8 @@ import AutomationsPage from "./pages/AutomationsPage";
 import MainLayout from "./components/layout/MainLayout";
 import ChartTest from "./components/features/grapghs/ChartTest";
 import JobsPage from "./pages/JobsPage";
-import RunnerDetailsPage from "./pages/RunnerDetailsPage";
+import RunnerDetailPage from "./pages/RunnerDetailPage";
+import AutomationDetailPage from "./pages/AutomationDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -16,14 +17,14 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "/sas", element: <div /> },
+      // { path: "/sas", element: <div /> },
       { path: "/runners", element: <RunnersPage /> },
-      { path: "/runnerInfo/:id", element: <RunnerDetailsPage /> },
+      { path: "/runners/:id", element: <RunnerDetailPage /> },
       { path: "/jobs", element: <JobsPage /> },
-      { path: "/metrics", element: <div /> },
+      // { path: "/metrics", element: <div /> },
       // { path: "/metrics/:runnerId", element: <div /> },
       { path: "/automations", element: <AutomationsPage /> },
-      { path: "/automations/:id", element: <AutomationsPage /> },
+      { path: "/automations/:id", element: <AutomationDetailPage /> },
       // { path: "/logs/:automationId", element: <div /> },
     ],
   },

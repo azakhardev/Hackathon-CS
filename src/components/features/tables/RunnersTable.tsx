@@ -30,7 +30,9 @@ export default function RunnersTable(props: IProps) {
       <TableBody>
         {(props.runners as IRunner[]).map((r) => (
           <TableRow key={r.id}>
-            <TableCell className="font-medium">{r.id}</TableCell>
+            <TableCell className="font-medium">
+              {r.id.slice(r.id.length - 5).toUpperCase()}
+            </TableCell>
             <TableCell>{r.state}</TableCell>
             <TableCell>
               <Link
