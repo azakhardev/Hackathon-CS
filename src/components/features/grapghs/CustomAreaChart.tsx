@@ -1,13 +1,6 @@
 import { IChartConfig } from "@/lib/types/IChartConfig";
 
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Line,
-  LineChart,
-  XAxis,
-} from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
 import {
   ChartContainer,

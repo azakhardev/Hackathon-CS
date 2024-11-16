@@ -137,13 +137,22 @@ export default function ChartTest() {
         />
       </div>
       <div>
-        <CustomAreaChart
+        <CustomRadialChart
+          chartConfig={radialChartConfig}
+          chartData={radialChartData}
+          dataKey="visitors"
+          showCursor={false}
+          innerRadius={30}
+          outerRadius={120}
+          single={true}
+        />
+        {/* <CustomAreaChart
           chartConfig={lineChartConfig}
           chartData={lineChartData}
           dataKey="month"
           lineType="bump"
           showCursor={true}
-        />
+        /> */}
       </div>
     </div>
   );

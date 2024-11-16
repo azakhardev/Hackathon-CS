@@ -1,7 +1,6 @@
 import {
   Label,
   LabelList,
-  PolarGrid,
   PolarRadiusAxis,
   RadialBar,
   RadialBarChart,
