@@ -146,13 +146,15 @@ export default function ChartTest() {
           outerRadius={120}
           single={true}
         />
-        {/* <CustomAreaChart
-          chartConfig={lineChartConfig}
-          chartData={lineChartData}
-          dataKey="month"
-          lineType="bump"
-          showCursor={true}
-        /> */}
+        {
+          <CustomAreaChart
+            chartConfig={lineChartConfig}
+            chartData={lineChartData}
+            dataKey="month"
+            lineType="bump"
+            showCursor={true}
+          />
+        }
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
+import { Link } from "react-router-dom";
 
 interface IProps {
   automations: IAutomation[] | IErrorMessage;
@@ -28,12 +29,14 @@ export default function AutomationsTable(props: IProps) {
       </TableHeader>
       <TableBody>
         {(props.automations as IAutomation[]).map((a) => (
-          <TableRow key={a.id}>
-            <TableCell className="font-medium">{a.id}</TableCell>
-            <TableCell>{a.state}</TableCell>
-            <TableCell>{a.last_activity}</TableCell>
-            <TableCell>{a.type}</TableCell>
-          </TableRow>
+          <Link to={`/automations/${a.id}`}>
+            <TableRow key={a.id}>
+              <TableCell className="font-medium">{a.id}</TableCell>
+              <TableCell>{a.state}</TableCell>
+              <TableCell>{a.last_activity}</TableCell>
+              <TableCell>{a.type}</TableCell>
+            </TableRow>
+          </Link>
         ))}
       </TableBody>
     </Table>

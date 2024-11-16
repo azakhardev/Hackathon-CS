@@ -1,4 +1,4 @@
-export interface IAutomationLogs{
+export interface IAutomationLog{
     automation_id: string;
     timestamp: string;
     level: string;

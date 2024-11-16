@@ -1,5 +1,5 @@
 import { IAutomation } from "../types/IAutomation";
-import { IAutomationLogs } from "../types/IAutomationLogs";
+import { IAutomationLog } from "../types/IAutomationLog";
 import login from "../helpers/api/auth";
 import { IAutomationType } from "../types/IAutomationType";
 import { IErrorMessage } from "../types/IErrorMessage";
@@ -29,7 +29,7 @@ export class AutomationModel{
         return response.json();
     }
 
-    static async getAutomationLogs(id: string): Promise<IAutomationLogs | IErrorMessage> {
+    static async getAutomationLogs(id: string): Promise<IAutomationLog[] | IErrorMessage> {
         const response = await fetch(`https://hackaton-api.fly.dev/api/v1/automations/${id}/logs`, {
             method: 'GET',
             headers: {
