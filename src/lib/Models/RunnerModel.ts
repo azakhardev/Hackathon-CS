@@ -16,7 +16,7 @@ export class RunnerModel {
     return response.json();
   }
 
-  static async getRunners(search: string, limit?: number): Promise<IRunner[] | IErrorMessage> {
+  static async getRunners(search: string): Promise<IRunner[] | IErrorMessage> {
     const response = await fetch(`${api_url}/runners?${new URLSearchParams({search: search == "" ? "" : search})}`, {
       method: "GET",
       headers: {
@@ -24,6 +24,17 @@ export class RunnerModel {
       },
     });
 
+    return response.json();
+  }
+
+  static async getRunnersLimit(page: string, limit:string): Promise<IRunner[] | IErrorMessage> {
+    const response = await fetch(`${api_url}/runners?${new URLSearchParams({page: page ?? "", limit: limit ?? "" })}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Basic ${api_auth}`,
+      },
+    });
+    
     return response.json();
   }
 
@@ -51,6 +62,28 @@ export class RunnerModel {
         },
       }
     );
+
+    return response.json();
+  }
+
+  static async getJobsLimit(page: string, limit:string): Promise<IRunner[] | IErrorMessage> {
+    const response = await fetch(`${api_url}/jobs?${new URLSearchParams({page: page ?? "", limit: limit ?? "" })}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Basic ${api_auth}`,
+      },
+    });
+    
+    return response.json();
+  }
+
+  static async getProjectLatestJobs( limit:string, sort: string, order: string, search: string, ): Promise<IJobs | IErrorMessage> {
+    const response = await fetch(`${api_url}/jobs/${new URLSearchParams({limit: limit, sort: sort ,order: order, search: search, })}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Basic ${api_auth}`,
+      },
+    });
 
     return response.json();
   }
