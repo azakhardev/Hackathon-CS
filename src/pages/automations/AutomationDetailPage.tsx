@@ -1,5 +1,5 @@
-import H1 from "@/components/features/H1";
-import LogsTable from "@/components/features/tables/LogsTable";
+import H1 from "@/components/H1";
+import LogsTable from "@/pages/automations/components/LogsTable";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { AutomationModel } from "@/lib/Models/AutomationModel";
 import { IAutomationLog } from "@/lib/types/IAutomationLog";

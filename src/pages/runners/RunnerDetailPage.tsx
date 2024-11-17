@@ -1,4 +1,4 @@
-import H1 from "@/components/features/H1";
+import H1 from "@/components/H1";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { RunnerModel } from "@/lib/Models/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";

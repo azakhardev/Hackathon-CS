@@ -1,4 +1,4 @@
-import H1 from "@/components/features/H1";
+import H1 from "@/components/H1";
 
 export default function MetricsPage() {
   return (

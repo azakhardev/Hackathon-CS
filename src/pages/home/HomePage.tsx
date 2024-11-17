@@ -1,8 +1,8 @@
-import H1 from "@/components/features/H1";
-import AutomationsTable from "@/components/features/tables/AutomationsTable";
-import JobsTable from "@/components/features/tables/JobsTable";
-import ProjectsTable from "@/components/features/tables/ProjectsTable";
-import RunnersTable from "@/components/features/tables/RunnersTable";
+import H1 from "@/components/H1";
+import AutomationsTable from "@/pages/automations/components/AutomationsTable";
+import JobsTable from "@/pages/jobs/components/JobsTable";
+import ProjectsTable from "@/pages/projects/components/ProjectsTable";
+import RunnersTable from "@/pages/runners/components/RunnersTable";
 import { RunnerModel } from "@/lib/Models/RunnerModel";
 import { useQuery } from "@tanstack/react-query";
 

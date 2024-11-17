@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { RunnerModel } from "../../lib/Models/RunnerModel";
+import { RunnerModel } from "../../../lib/Models/RunnerModel";
 import { useState } from "react";
-import { IErrorMessage } from "../../lib/types/IErrorMessage";
+import { IErrorMessage } from "../../../lib/types/IErrorMessage";
 import {
   Table,
   TableBody,
@@ -9,9 +9,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table/table";
-import ErrorMessage from "../ui/ErrorMessage";
-import { IJobs } from "../../lib/types/IJobs";
+} from "../../../components/ui/table/table";
+import ErrorMessage from "../../../components/ui/ErrorMessage";
+import { IJobs } from "../../../lib/types/IJobs";
 import { format } from "date-fns";
 
 export default function Runners() {

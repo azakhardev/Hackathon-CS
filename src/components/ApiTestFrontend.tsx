@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSAS } from "../../lib/api/runners/ApiFetches";
-import { IErrorMessage } from "../../lib/types/IErrorMessage";
+import { getSAS } from "../lib/api/runners/ApiFetches";
+import { IErrorMessage } from "../lib/types/IErrorMessage";
 
 export default function ApiTestFrontend() {
   const { isPending, isError, data, error } = useQuery<

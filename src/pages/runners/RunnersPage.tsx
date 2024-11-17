@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { RunnerModel } from "@/lib/Models/RunnerModel";
-import RunnersTable from "@/components/features/tables/RunnersTable";
+import RunnersTable from "@/pages/runners/components/RunnersTable";
 import { IRunner } from "@/lib/types/IRunner";
 import { useSearchParams } from "react-router-dom";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/Button";
 
-import H1 from "@/components/features/H1";
+import H1 from "@/components/H1";
 export default function RunnersPage() {
   const [searchText, setSearchText] = useState("");
   const [searchGroup, setSearchGroup] = useState(" ");

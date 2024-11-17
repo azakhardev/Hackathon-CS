@@ -5,7 +5,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/pages/layout/app-sidebar";
+import { AppSidebar } from "@/pages/_layout/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,

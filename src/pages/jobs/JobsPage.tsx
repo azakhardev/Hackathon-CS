@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import JobsTable from "../components/features/tables/JobsTable";
+import JobsTable from "./components/JobsTable";
 import { RunnerModel } from "@/lib/Models/RunnerModel";
 import { IJobs } from "@/lib/types/IJobs";
 import { useSearchParams } from "react-router-dom";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import H1 from "@/components/features/H1";
+import H1 from "@/components/H1";
 
 export default function JobsPage() {
   const [searchParams] = useSearchParams();
