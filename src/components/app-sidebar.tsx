@@ -8,6 +8,7 @@ import {
   Folder,
   Home,
   Inbox,
+  InfinityIcon,
   MonitorCog,
   Search,
   Shapes,
@@ -23,6 +24,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -32,6 +34,9 @@ import { Link } from "react-router-dom";
 export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
+      <SidebarHeader className="border">
+        <SidebarHeaderBuilder title="Loop" />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarMenuItems title="Dev" items={itemsDev} />
         <SidebarMenuItems title="Ops" items={itemsOps} />
@@ -77,7 +82,7 @@ const itemsOps: Item[] = [
   {
     title: "Types",
     url: "/automations",
-    icon: Shapes, //Triangle
+    icon: Shapes, //Shapes, Triangle
   },
 ];
 
@@ -105,4 +110,59 @@ const SidebarMenuItems = ({
       </SidebarMenu>
     </SidebarGroupContent>
   </SidebarGroup>
+);
+
+const SidebarHeaderBuilder = ({ title }: { title: string }) => (
+  <SidebarMenu>
+    <SidebarMenuItem>
+      <Link to="#">
+        <SidebarMenuButton
+          size="lg"
+          //className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        >
+          <div className="flex items-center justify-center rounded-lg aspect-square size-8 ">
+            {/* bg-sidebar-primary text-sidebar-primary-foreground */}
+            <InfinityIcon className="size-4" />
+          </div>
+          <div className="grid flex-1 text-sm leading-tight text-left">
+            <span className="font-semibold truncate">{title}</span>
+          </div>
+        </SidebarMenuButton>
+      </Link>
+    </SidebarMenuItem>
+  </SidebarMenu>
+);
+
+const SidebarHeaderBuilder1 = ({ title }: { title: string }) => (
+  <SidebarMenu>
+    <SidebarMenuItem key="home">
+      <SidebarMenuButton
+        asChild
+        size="lg"
+        className="flex justify-center w-full gap-2"
+      >
+        <Link to="#">
+          <InfinityIcon />
+          <span>{title}</span>
+        </Link>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
+  </SidebarMenu>
+);
+const SidebarHeaderBuilder2 = ({ title }: { title: string }) => (
+  <SidebarMenu>
+    <SidebarMenuItem>
+      <Link to="/">
+        <SidebarMenuButton
+          size="lg"
+          //className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        >
+          <div className="flex justify-center w-full gap-2">
+            <InfinityIcon />
+            <span>{title}</span>
+          </div>
+        </SidebarMenuButton>
+      </Link>
+    </SidebarMenuItem>
+  </SidebarMenu>
 );
