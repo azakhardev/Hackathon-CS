@@ -1,20 +1,10 @@
 import {
-  Calendar,
-  ChartLine,
   ChartPie,
   Check,
-  ClipboardList,
   Container,
   Folder,
-  Home,
-  Inbox,
   InfinityIcon,
-  MonitorCog,
-  Search,
   Shapes,
-  SquareCheck,
-  TerminalSquare,
-  Triangle,
   Workflow,
 } from "lucide-react";
 
@@ -128,40 +118,6 @@ const SidebarHeaderBuilder = ({ title }: { title: string }) => (
           </div>
           <div className="grid flex-1 text-sm leading-tight text-left">
             <span className="font-semibold truncate">{title}</span>
-          </div>
-        </SidebarMenuButton>
-      </Link>
-    </SidebarMenuItem>
-  </SidebarMenu>
-);
-
-const SidebarHeaderBuilder1 = ({ title }: { title: string }) => (
-  <SidebarMenu>
-    <SidebarMenuItem key="home">
-      <SidebarMenuButton
-        asChild
-        size="lg"
-        className="flex justify-center w-full gap-2"
-      >
-        <Link to="#">
-          <InfinityIcon />
-          <span>{title}</span>
-        </Link>
-      </SidebarMenuButton>
-    </SidebarMenuItem>
-  </SidebarMenu>
-);
-const SidebarHeaderBuilder2 = ({ title }: { title: string }) => (
-  <SidebarMenu>
-    <SidebarMenuItem>
-      <Link to="/">
-        <SidebarMenuButton
-          size="lg"
-          //className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-        >
-          <div className="flex justify-center w-full gap-2">
-            <InfinityIcon />
-            <span>{title}</span>
           </div>
         </SidebarMenuButton>
       </Link>
