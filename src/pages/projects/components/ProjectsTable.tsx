@@ -29,7 +29,7 @@ export default function ProjectsTable(props: IProps) {
               <Table_cel_title title={p.name.toUpperCase().slice(4)} text="" />
             </TableCell>
             <JobCells {...p.job} />
-            <TableCell>
+            <TableCell className="text-end">
               <Link
                 className={buttonVariants({ variant: "outline" })}
                 to={`/jobs?sas=${p.job.SAS}`}

@@ -7,7 +7,7 @@ import { IJobs } from "@/lib/types/IJobs";
 import { IProject } from "@/lib/types/IProject";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/ui/table/SearchBar";
 
 export default function ProjectsPage() {
   const [searchText, setSearchText] = useState("");

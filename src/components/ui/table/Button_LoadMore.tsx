@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/Button";
-import React from "react";
 
 interface ButtonLoadMoreProps {
   show: boolean;

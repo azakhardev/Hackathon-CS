@@ -1,11 +1,11 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
+  // TableCaption,
+  // TableHead,
+  // TableHeader,
 } from "@/components/ui/table/table";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
@@ -46,7 +46,7 @@ export default function AutomationsTable(props: IProps) {
 
   return (
     <Table className="overflow-x-auto">
-      <TableCaption></TableCaption>
+      {/* <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[200px] text-white">Id</TableHead>
@@ -55,7 +55,7 @@ export default function AutomationsTable(props: IProps) {
           <TableHead className="text-white">Type</TableHead>
           <TableHead className="text-white">Action</TableHead>
         </TableRow>
-      </TableHeader>
+      </TableHeader> */}
       <TableBody>
         {(props.automations as IAutomation[]).map((a) => (
           <TableRow key={a.id}>
@@ -78,7 +78,7 @@ export default function AutomationsTable(props: IProps) {
               {format(new Date(a.last_activity), "dd. MM. yyyy HH:mm:ss")}
             </TableCell>
             <TableCell>{a.type}</TableCell>
-            <TableCell>
+            <TableCell className="text-end">
               <Link
                 className={buttonVariants({ variant: "outline" })}
                 to={`/automations/${a.id}`}

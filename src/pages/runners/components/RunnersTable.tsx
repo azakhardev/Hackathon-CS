@@ -46,6 +46,7 @@ export default function RunnersTable(props: IProps) {
                 text=""
               />
             </TableCell>
+
             <TableCell>
               <Table_cel_state title={r.state} text="Date" type={r.state} />
             </TableCell>
@@ -64,7 +65,8 @@ export default function RunnersTable(props: IProps) {
                 {r.organization}
               </Link>
             </TableCell>
-            <TableCell>
+
+            <TableCell className="text-end">
               <Link
                 className={buttonVariants({ variant: "outline" })}
                 to={`/runners/${r.id}`}

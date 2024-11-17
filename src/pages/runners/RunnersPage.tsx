@@ -2,12 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { RunnerModel } from "@/lib/Models/RunnerModel";
 import RunnersTable from "@/pages/runners/components/RunnersTable";
 import { IRunner } from "@/lib/types/IRunner";
-import { useSearchParams } from "react-router-dom";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Search } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -15,11 +12,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/Button";
 
 import H1 from "@/components/H1";
-import SearchBar from "@/components/SearchBar";
-import ButtonLoadMore from "@/components/Button_LoadMore";
+import SearchBar from "@/components/ui/table/SearchBar";
+import ButtonLoadMore from "@/components/ui/table/Button_LoadMore";
 export default function RunnersPage() {
   const [searchText, setSearchText] = useState("");
   const [searchGroup, setSearchGroup] = useState(" ");
