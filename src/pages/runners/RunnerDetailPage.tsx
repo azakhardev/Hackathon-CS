@@ -5,15 +5,20 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table/table";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { DatePickerWithRange } from "@/components/ui/DatePicker";
+import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import RunnerDetailJobsFilter from "./components/RunnerDetailJobsFilters";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table/table";
 import { formatDistanceToNow } from "date-fns";
-import { useState } from "react";
+import { Table_cel_state } from "@/components/ui/table/table_cel_state";
 
 export default function RunnerDetailPage() {
   const [limit, setLimit] = useState(5);
@@ -48,10 +53,6 @@ export default function RunnerDetailPage() {
     return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
   }
 
-  let showRunners = jobsQuery.data?.slice(0, limit);
-
-  console.log(jobsQuery.data)
-
   return (
     <main>
       {runnerQuery.isLoading &&
@@ -79,69 +80,58 @@ export default function RunnerDetailPage() {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="jobs">
-                  <RunnerDetailJobsFilter />
+                  <RunnerDetailJobsFilter/>
                   <Table>
                     <TableBody>
-                      {showRunners?.map(
-                        (jobs, index) =>
-                          index < 5 && (
-                            <TableRow key={index}>
-                              <TableCell>
-                                <div className="items-center">
-                                  <p>{jobs.id}</p>
-                                  <p className="text-gray-400 text-[10px]">
-                                    {(() => {
-                                      const prod = `${
-                                        jobs.runner.split("-")[1]
-                                      }-${jobs.runner.split("-")[2]}`;
-                                      const action = jobs.runner
-                                        .split("-")
-                                        .slice(3, -1)
-                                        .join("-");
-
-                                      switch (`${prod}-${action}`) {
-                                        case "csas-dev-csas-linux":
-                                          return "build aplikace";
-                                        case "csas-dev-csas-linux-test":
-                                          return "testování aplikace";
-                                        case "csas-ops-csas-linux":
-                                          return "Deploy do neprodukčního prostředí";
-                                        case "csas-ops-csas-linux-test":
-                                          return "Deploy do produkčního prostředí";
-                                        default:
-                                          return "Unknown action";
-                                      }
-                                    })()}
-                                  </p>
-                                </div>
-                              </TableCell>
-                              <TableCell>
-                                <div>
-                                    <p>{jobs.state}</p>
-                                    <p className="text-gray-400 text-[10px]">({formatDistanceToNow(new Date(jobs.timestamp), {addSuffix: true})})</p>
-                                </div>
-                              </TableCell>
-                              <TableCell>{jobs.SAS}</TableCell>
-
-                              <TableCell>{jobs.runner.split("-")[5]}</TableCell>
-                            </TableRow>
-                          )
-                      )}
+                      {jobsQuery.data?.map((jobs, index) => (
+                        <TableRow key={index}>
+                        <TableCell>
+                          <div>
+                            <h3>{jobs.id}</h3>
+                            <p className="text-gray-500 text-[12px]">
+                              {(() => {
+                                const prod = `${jobs.runner.split('-')[1]}-${jobs.runner.split('-')[2]}`;
+                                const action = jobs.runner.split('-').slice(3, -1).join('-');
+                      
+                                switch (`${prod}-${action}`) {
+                                  case "csas-dev-csas-linux":
+                                    return "build aplikace";
+                                  case "csas-dev-csas-linux-test":
+                                    return "testování aplikace";
+                                  case "csas-ops-csas-linux":
+                                    return "Deploy do neprodukčního prostředí";
+                                  case "csas-ops-csas-linux-test":
+                                    return "Deploy do produkčního prostředí";
+                                  default:
+                                    return "Unknown action";
+                                }
+                              })()}
+                            </p>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Table_cel_state title={jobs.state} text={`(${formatDistanceToNow(new Date(jobs.timestamp), { addSuffix: true })})`} type={jobs.state}/>
+                        </TableCell>
+                        <TableCell>{jobs.SAS}</TableCell>
+                        <TableCell>{jobs.runner.split('-')[5]}</TableCell>
+                      </TableRow>
+                      ))}
                     </TableBody>
                   </Table>
-                  <Button
-          className={jobsQuery.data && jobsQuery.data.length >= limit ? "w-full" : "hidden"}
-          variant="outline"
-          onClick={() => setLimit(limit + 25)}
-        >
-          Load more
-        </Button>
                 </TabsContent>
               </Tabs>
             </div>
           </div>
         )
       )}
+      <div className="m-4">
+        <Button
+          className={jobsQuery.data && jobsQuery.data.length >= limit ? "w-full" : "hidden"}
+          variant="outline"
+        >
+          Load more
+        </Button>
+      </div>
     </main>
   );
 }
