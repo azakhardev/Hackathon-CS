@@ -1,4 +1,4 @@
-import { api_auth, api_url } from "../helpers/api/auth";
+import { api_auth, api_url } from "../helpers/api/env_vars";
 import { IErrorMessage } from "../types/IErrorMessage";
 import { IJobs } from "../types/IJobs";
 import { IMetrics } from "../types/IMetrics";

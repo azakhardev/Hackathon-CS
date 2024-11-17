@@ -1,6 +1,6 @@
 import { IAutomation } from "../types/IAutomation";
 import { IAutomationLog } from "../types/IAutomationLog";
-import { api_auth, api_url } from "../helpers/api/auth";
+import { api_auth, api_url } from "../helpers/api/env_vars";
 import { IAutomationType } from "../types/IAutomationType";
 import { IErrorMessage } from "../types/IErrorMessage";
 
