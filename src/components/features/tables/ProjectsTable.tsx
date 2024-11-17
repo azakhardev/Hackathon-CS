@@ -25,10 +25,10 @@ export default function ProjectsTable(props: IProps) {
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[200px]">Project Name</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Info</TableHead>
-          <TableHead>Actions</TableHead>
+          <TableHead className="w-[200px] text-white">Project Name</TableHead>
+          <TableHead className="text-white">Status</TableHead>
+          <TableHead className="text-white">Info</TableHead>
+          <TableHead className="text-white">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

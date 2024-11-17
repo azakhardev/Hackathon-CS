@@ -20,12 +20,11 @@ interface IProps {
 export default function JobsTable(props: IProps) {
   return (
     <Table>
-      <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[200px]">Id</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Info</TableHead>
+          <TableHead className="w-[200px] text-white">Id</TableHead>
+          <TableHead className="text-white">Status</TableHead>
+          <TableHead className="text-white">Info</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

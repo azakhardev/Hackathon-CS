@@ -29,10 +29,10 @@ export default function RunnersTable(props: IProps) {
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[200px]">Id</TableHead>
-          <TableHead>State</TableHead>
-          <TableHead>Info</TableHead>
-          <TableHead>Action</TableHead>
+          <TableHead className="w-[200px] text-white">Id</TableHead>
+          <TableHead className="text-white">State</TableHead>
+          <TableHead className="text-white">Info</TableHead>
+          <TableHead className="text-white">Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

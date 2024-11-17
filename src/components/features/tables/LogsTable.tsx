@@ -22,9 +22,9 @@ export default function LogsTable(props: IProps) {
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[400px]">Type</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Time</TableHead>
+          <TableHead className="w-[400px] text-white">Type</TableHead>
+          <TableHead className="text-white">Status</TableHead>
+          <TableHead className="text-white">Time</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
