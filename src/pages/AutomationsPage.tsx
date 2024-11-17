@@ -4,6 +4,7 @@ import AutomationsTable from "@/components/features/tables/AutomationsTable";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
+import H1 from "@/components/features/H1";
 
 export default function AutomationsPage() {
   const automationsQuery = useQuery({
@@ -19,7 +20,7 @@ export default function AutomationsPage() {
 
   return (
     <>
-      <h1>Automatizace</h1>
+      <H1>Automatizace</H1>
       {automationsQuery.isLoading && (
         <div className="loader-wrap">
           <div className="loading-spinner"></div>

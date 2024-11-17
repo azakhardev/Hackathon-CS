@@ -1,7 +1,9 @@
+import H1 from "@/components/features/H1";
+
 export default function MetricsPage() {
   return (
     <>
-      <h1>Stránka s grafy</h1>
+      <H1>Stránka s grafy</H1>
       <ul>
         <li>Kolik jobů běží pro devy, kolik pro opsy a jaký je jejich state</li>
         <li>

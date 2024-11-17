@@ -1,3 +1,4 @@
+import H1 from "@/components/features/H1";
 import ProjectsTable from "@/components/features/tables/ProjectsTable";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { RunnerModel } from "@/lib/Models/RunnerModel";
@@ -53,7 +54,7 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <h2>Projekty</h2>
+      <H1>Projekty</H1>
       <ProjectsTable projects={projects} />{" "}
     </>
   );

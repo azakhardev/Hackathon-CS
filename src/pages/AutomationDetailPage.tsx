@@ -1,3 +1,4 @@
+import H1 from "@/components/features/H1";
 import LogsTable from "@/components/features/tables/LogsTable";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { AutomationModel } from "@/lib/Models/AutomationModel";
@@ -32,7 +33,7 @@ export default function AutomationDetailPage() {
 
   return (
     <>
-      <h1>Automations Detail</h1>
+      <H1>Automations Detail</H1>
       {!automationQuery.isLoading && <div>Tady budou nějaké grafy</div>}
       {(automationQuery.isLoading || logsQuery.isLoading) && (
         <div className="loader-wrap">

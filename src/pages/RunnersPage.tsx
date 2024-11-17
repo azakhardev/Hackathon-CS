@@ -5,6 +5,7 @@ import { IRunner } from "@/lib/types/IRunner";
 import { useSearchParams } from "react-router-dom";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
+import H1 from "@/components/features/H1";
 export default function RunnersPage() {
   const [searchParams] = useSearchParams();
 
@@ -43,7 +44,7 @@ export default function RunnersPage() {
 
   return (
     <>
-      <h1>Runners</h1>
+      <H1>Runners</H1>
       {runnersQuery.isLoading && (
         <div className="loader-wrap">
           <div className="loading-spinner"></div>

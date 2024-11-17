@@ -1,3 +1,4 @@
+import H1 from "@/components/features/H1";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { RunnerModel } from "@/lib/Models/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
@@ -56,7 +57,7 @@ export default function RunnerDetailPage() {
           <div className="loading-spinner"></div>
         </div>
       ) : (
-        <div>Runner details</div>
+        <H1>Runner details</H1>
       )}
     </>
   );
