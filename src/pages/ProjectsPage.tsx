@@ -1,3 +1,4 @@
+import H1 from "@/components/features/H1";
 import ProjectsTable from "@/components/features/tables/ProjectsTable";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { RunnerModel } from "@/lib/Models/RunnerModel";
@@ -57,8 +58,8 @@ export default function ProjectsPage() {
   console.log(projects);
 
   return (
-    <main>
-      <h2>Projekty</h2>
+    <>
+      <H1>Projekty</H1>
       <div className="relative">
         <Input
           className="m-4 w-1/2 pl-9"
@@ -70,6 +71,6 @@ export default function ProjectsPage() {
         </div>
       </div>
       <ProjectsTable projects={projects} />{" "}
-    </main>
+    </>
   );
 }

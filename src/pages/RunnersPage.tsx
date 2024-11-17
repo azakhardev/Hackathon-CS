@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/Button";
 
+import H1 from "@/components/features/H1";
 export default function RunnersPage() {
   const [searchText, setSearchText] = useState("");
   const [searchGroup, setSearchGroup] = useState(" ");
@@ -68,8 +69,8 @@ export default function RunnersPage() {
   console.log(searchGroup);
 
   return (
-    <main className="overflow-auto h-[100dvh]">
-      <h1>Runners</h1>
+    <>
+      <H1>Runners</H1>
       <div className="flex gap-4 m-4 justify-between">
         <div className="relative w-1/2">
           <Input
@@ -131,6 +132,6 @@ export default function RunnersPage() {
           Load more
         </Button>
       </div>
-    </main>
+    </>
   );
 }
