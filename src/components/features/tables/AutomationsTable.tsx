@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/table/table";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { format } from "date-fns";
@@ -66,7 +66,7 @@ export default function AutomationsTable(props: IProps) {
                   <TooltipContent
                     side="right"
                     align="center"
-                    className="bg-gray-800 text-white p-2 rounded shadow-lg m-1"
+                    className="p-2 m-1 text-white bg-gray-800 rounded shadow-lg"
                   >
                     <p>{a.id}</p>
                   </TooltipContent>

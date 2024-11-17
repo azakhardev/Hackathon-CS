@@ -8,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/table/table";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { Link } from "react-router-dom";
 import { Badge, badgeVariants } from "@/components/ui/badge";

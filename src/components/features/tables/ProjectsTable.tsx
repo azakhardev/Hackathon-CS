@@ -3,41 +3,52 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
-} from "@/components/ui/table";
+  // TableCaption,
+  // TableHead,
+  // TableHeader,
+} from "@/components/ui/table/table";
 import { Link } from "react-router-dom";
 import { badgeVariants } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/Button";
 import { IProject } from "@/lib/types/IProject";
 import { Badge } from "@/components/ui/badge";
+import Table_cel_title from "@/components/ui/table/table_cel_title";
+import {
+  Table_cel_state,
+  StateType,
+} from "@/components/ui/table/table_cel_state";
 
 interface IProps {
   projects: IProject[] | IErrorMessage;
 }
 
+enum Status {
+  Queued = "queued",
+  InProgress = "in_progress",
+  Success = "success",
+}
+
 export default function ProjectsTable(props: IProps) {
   return (
     <Table>
-      <TableCaption></TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[200px]">Project Name</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Info</TableHead>
-          <TableHead>Actions</TableHead>
-        </TableRow>
-      </TableHeader>
       <TableBody>
         {(props.projects as IProject[]).map((p) => (
           <TableRow key={p.name}>
             <TableCell className="font-medium">
-              {p.name.toUpperCase().slice(4)}
+              <Table_cel_title
+                title={p.name.toUpperCase().slice(4)}
+                text="Deploy to prod"
+              />
             </TableCell>
-            <TableCell>{p.status}</TableCell>
+            <TableCell>
+              <Table_cel_state
+                title={p.status}
+                text="Status"
+                type={StateType.Orange}
+              />
+            </TableCell>
             <TableCell>
               {p.runnerId !== "none" ? (
                 <Link

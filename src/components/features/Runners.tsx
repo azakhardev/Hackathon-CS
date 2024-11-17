@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table";
+} from "../ui/table/table";
 import ErrorMessage from "../ui/ErrorMessage";
 import { IJobs } from "../../lib/types/IJobs";
 import { format } from "date-fns";
@@ -30,10 +30,11 @@ export default function Runners() {
   });
   const metricsQuery = useQuery({
     queryKey: ["metrics", selectedJobRunner],
-    queryFn: async () => await RunnerModel.getMetricsByRunner(selectedJobRunner),
+    queryFn: async () =>
+      await RunnerModel.getMetricsByRunner(selectedJobRunner),
     enabled: !!selectedJobRunner,
     gcTime: 0,
-  })
+  });
 
   const jobsQuery = useQuery({
     queryKey: ["jobs", selectedSAS],
@@ -68,10 +69,14 @@ export default function Runners() {
     return <ErrorMessage errorMessage={errorData} />;
   }
 
-  if (runnersQuery.isLoading) { return (<div>Loading...</div>)}
-  if (metricsQuery.isLoading) { return (<div>Loading...</div>)}
-  
-  console.log(metricsQuery.data)
+  if (runnersQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (metricsQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  console.log(metricsQuery.data);
 
   return (
     <div>
@@ -110,14 +115,19 @@ export default function Runners() {
             </TableHeader>
             <TableBody className="overflow-y-auto h-[90vh]">
               {jobsQuery.data?.map((job: IJobs, index: number) => (
-                <TableRow onClick={() => {
-                  setSelectedJobRunner(job.runner);
-                }} key={index}>
+                <TableRow
+                  onClick={() => {
+                    setSelectedJobRunner(job.runner);
+                  }}
+                  key={index}
+                >
                   <TableCell>{job.SAS}</TableCell>
                   <TableCell>{job.id}</TableCell>
                   <TableCell>{job.organization}</TableCell>
                   <TableCell>{job.runner}</TableCell>
-                  <TableCell>{format(new Date(job.timestamp), 'dd. MM. yyyy HH:mm:ss')}</TableCell>
+                  <TableCell>
+                    {format(new Date(job.timestamp), "dd. MM. yyyy HH:mm:ss")}
+                  </TableCell>
                   <TableCell>{job.state}</TableCell>
                 </TableRow>
               ))}
@@ -161,25 +171,22 @@ export default function Runners() {
               </TableRow>
             </TableHeader>
             <TableBody className="overflow-y-auto h-[90vh]">
-              {metricsQuery.data && metricsQuery.data.metrics &&(
+              {metricsQuery.data &&
+                metricsQuery.data.metrics &&
                 metricsQuery.data?.metrics.map((metric, index) => (
                   <TableRow key={index}>
-                  <TableCell>{metric.cpu}</TableCell>
-                  <TableCell>{metric.fs_reads}</TableCell>
-                  <TableCell>{metric.fs_writes}</TableCell>
-                  <TableCell>{metric.memory}</TableCell>
-                  <TableCell>{metric.network_receive}</TableCell>
-                  <TableCell>{metric.network_transmit}</TableCell>
-                </TableRow>
-                ))
-              )}
+                    <TableCell>{metric.cpu}</TableCell>
+                    <TableCell>{metric.fs_reads}</TableCell>
+                    <TableCell>{metric.fs_writes}</TableCell>
+                    <TableCell>{metric.memory}</TableCell>
+                    <TableCell>{metric.network_receive}</TableCell>
+                    <TableCell>{metric.network_transmit}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </div>
       </div>
     </div>
-    
   );
 }
-
-

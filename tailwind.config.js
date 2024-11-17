@@ -12,6 +12,10 @@ export default {
         // My
         bg_default: "hsl(var(--bg_default))",
         bg_secondary: "hsl(var(--bg_secondary))",
+        state_gray: "hsl(var(--state_gray))",
+        state_yellow: "hsl(var(--state_yellow))",
+        state_green: "hsl(var(--state_green))",
+        state_red: "hsl(var(--state_red))",
         // ShadCn
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
