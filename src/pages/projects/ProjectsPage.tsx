@@ -6,9 +6,8 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { IJobs } from "@/lib/types/IJobs";
 import { IProject } from "@/lib/types/IProject";
 import { useQuery } from "@tanstack/react-query";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import { useState } from "react";
+import SearchBar from "@/components/SearchBar";
 
 export default function ProjectsPage() {
   const [searchText, setSearchText] = useState("");
@@ -59,15 +58,8 @@ export default function ProjectsPage() {
   return (
     <>
       <H1>Projekty</H1>
-      <div className="relative">
-        <Input
-          className="w-1/2 m-4 pl-9"
-          onChange={(e) => setSearchText(e.target.value)}
-        ></Input>
-        <div className="absolute top-[9.5px] left-6 flex">
-          <Search size={20}></Search>
-          <p className={searchText == "" ? "text-sm ml-2" : "hidden"}>Find</p>
-        </div>
+      <div className="mb-4">
+        <SearchBar searchText={searchText} setSearchText={setSearchText} />
       </div>
       <ProjectsTable projects={projects} />{" "}
     </>

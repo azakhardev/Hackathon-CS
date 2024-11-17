@@ -18,6 +18,8 @@ import {
 import { Button } from "@/components/ui/Button";
 
 import H1 from "@/components/H1";
+import SearchBar from "@/components/SearchBar";
+import ButtonLoadMore from "@/components/Button_LoadMore";
 export default function RunnersPage() {
   const [searchText, setSearchText] = useState("");
   const [searchGroup, setSearchGroup] = useState(" ");
@@ -67,17 +69,8 @@ export default function RunnersPage() {
   return (
     <>
       <H1>Runners</H1>
-      <div className="flex gap-4 m-4 justify-between">
-        <div className="relative w-1/2">
-          <Input
-            className="pl-9"
-            onChange={(e) => setSearchText(e.target.value)}
-          ></Input>
-          <div className="absolute top-[9.5px] left-2 flex">
-            <Search size={20}></Search>
-            <p className={searchText == "" ? "text-sm ml-2" : "hidden"}>Find</p>
-          </div>
-        </div>
+      <div className="flex justify-between gap-4 mb-4">
+        <SearchBar searchText={searchText} setSearchText={setSearchText} />
         <Select onValueChange={(e) => setSearchGroup(e)}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="All Groups" />
@@ -119,14 +112,11 @@ export default function RunnersPage() {
         </div>
       )}
       {!runnersQuery.isLoading && <RunnersTable runners={showRunners} />}
-      <div className="m-4">
-        <Button
-          className={filteredRunners.length >= limit ? "w-full" : "hidden"}
-          variant="outline"
+      <div className="mt-4">
+        <ButtonLoadMore
+          show={filteredRunners.length >= limit}
           onClick={() => setLimit(limit + 25)}
-        >
-          Load more
-        </Button>
+        />
       </div>
     </>
   );
