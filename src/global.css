@@ -101,7 +101,7 @@
 
     --border: var(--border_default);
 
-    --input: var(--base_secondary);
+    --input: var(--border_default);
 
     --primary: var(--text_primary);
     --primary-foreground: var(--bg_secondary);
