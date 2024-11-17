@@ -48,7 +48,7 @@ export default function RunnersTable(props: IProps) {
             </TableCell>
 
             <TableCell>
-              <Table_cel_state title={r.state} text="Date" type={r.state} />
+              <Table_cel_state title={r.state} text="" type={r.state} />
             </TableCell>
 
             <TableCell>
