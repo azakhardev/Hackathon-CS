@@ -21,8 +21,8 @@ export default function Layout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+      <SidebarInset className=" bg-bg_secondary">
+        <header className="mb-6 border-b flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="h-4 mr-2" />
@@ -41,7 +41,7 @@ export default function Layout() {
             </Breadcrumb>
           </div>
         </header>
-        <main className="h-full max-w-full mx-4 md:mx-32">
+        <main className="h-full max-w-full px-4 md:px-32 bg-bg_secondary">
           <Outlet />
         </main>
       </SidebarInset>
