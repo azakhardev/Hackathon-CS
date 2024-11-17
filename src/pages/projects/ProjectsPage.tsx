@@ -48,11 +48,7 @@ export default function ProjectsPage() {
           });
         const newProject: IProject = {
           name: s,
-          status: sasLatestJob.state,
-          group: "Moc narocny dotaz na pamet - muzes si ho zkusit fetchnout",
-          organisation: sasLatestJob.organization,
-          date: sasLatestJob.timestamp,
-          runnerId: sasLatestJob.runner,
+          job: sasLatestJob,
         };
         projects.push(newProject);
       });
@@ -65,7 +61,7 @@ export default function ProjectsPage() {
       <H1>Projekty</H1>
       <div className="relative">
         <Input
-          className="m-4 w-1/2 pl-9"
+          className="w-1/2 m-4 pl-9"
           onChange={(e) => setSearchText(e.target.value)}
         ></Input>
         <div className="absolute top-[9.5px] left-6 flex">

@@ -1,13 +1,24 @@
 import { CircleIcon } from "lucide-react";
 
 export enum StateType {
-  Gray = "gray",
-  Green = "green",
-  Red = "red",
-  Orange = "orange",
+  Gray = "state_gray",
+  Green = "state_green",
+  Red = "state_red",
+  Orange = "state_yellow",
 }
-
-function StateFormat(state: string) {
+const stateColorMap: { [key: string]: StateType } = {
+  queued: StateType.Gray,
+  in_progress: StateType.Orange,
+  success: StateType.Green,
+  failed: StateType.Red,
+  offline: StateType.Gray,
+  idle: StateType.Orange,
+  active: StateType.Green,
+};
+function getColorForState(state: string): StateType {
+  return stateColorMap[state] || StateType.Gray;
+}
+function formatState(state: string) {
   return state.charAt(0).toUpperCase() + state.slice(1).replace("_", " ");
 }
 
@@ -18,26 +29,18 @@ export function Table_cel_state({
 }: {
   title: string;
   text: string;
-  type: StateType;
+  type: string;
 }) {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row items-center gap-2">
         <CircleIcon
           size={12}
-          className={`${
-            type === StateType.Green
-              ? "fill-state_green"
-              : type === StateType.Red
-              ? "fill-state_red"
-              : type === StateType.Orange
-              ? "fill-state_yellow"
-              : "fill-state_gray"
-          }`}
+          className={`fill-${getColorForState(type)}`}
           stroke="none"
         />
         <div className="text-base font-semibold text-primary">
-          {StateFormat(title)}
+          {formatState(title)}
         </div>
       </div>
       <div className="text-sm font-light text-muted-foreground">{text}</div>
