@@ -1,6 +1,8 @@
 import {
   Calendar,
   ChartLine,
+  ChartPie,
+  Check,
   ClipboardList,
   Container,
   Folder,
@@ -9,6 +11,7 @@ import {
   MonitorCog,
   Search,
   Shapes,
+  SquareCheck,
   TerminalSquare,
   Triangle,
   Workflow,
@@ -52,20 +55,20 @@ const itemsDev: Item[] = [
   {
     title: "Runners",
     url: "/runners",
-    icon: TerminalSquare, //MonitorCog, Container
+    icon: Container, //TerminalSquare, MonitorCog, Container
   },
   {
     title: "Jobs",
     url: "/jobs",
-    icon: ClipboardList, //square-check
-  },
-  {
-    title: "Metrics",
-    url: "/metrics",
-    icon: ChartLine, //chart-line, chart-pie
+    icon: Check, //ClipboardList, SquareCheck
   },
 ];
 const itemsOps: Item[] = [
+  {
+    title: "Metrics",
+    url: "/metrics",
+    icon: ChartPie, //ChartLine, chart-pie
+  },
   {
     title: "Automations",
     url: "/automations",
