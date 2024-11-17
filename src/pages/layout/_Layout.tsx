@@ -41,28 +41,10 @@ export default function Layout() {
             </Breadcrumb>
           </div>
         </header>
-        <main className="w-full">
+        <main className="h-full max-w-full mx-4 md:mx-32">
           <Outlet />
         </main>
       </SidebarInset>
     </SidebarProvider>
   );
 }
-
-// import Header from "./Header";
-// import Footer from "./Footer";
-// import Menu from "./Menu";
-// import Content from "./Content";
-
-// export default function Layout() {
-//   return (
-//     <div className="flex flex-col w-screen h-screen">
-//       <Header />
-//       <Content>
-//         <Menu />
-//         <Outlet></Outlet>
-//       </Content>
-//       <Footer />
-//     </div>
-//   );
-// }
