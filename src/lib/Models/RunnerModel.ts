@@ -5,8 +5,8 @@ import { IMetrics } from "../types/IMetrics";
 import { IRunner } from "../types/IRunner";
 
 export class RunnerModel {
-  static async getSAS(): Promise<string[] | IErrorMessage> {
-    const response = await fetch(`${api_url}/sas`, {
+  static async getSAS(search: string): Promise<string[] | IErrorMessage> {
+    const response = await fetch(`${api_url}/sas?${new URLSearchParams({search: search == "" ? "" : search})}`, {
       method: "GET",
       headers: {
         Authorization: `Basic ${api_auth}`,
@@ -16,8 +16,8 @@ export class RunnerModel {
     return response.json();
   }
 
-  static async getRunners(): Promise<IRunner[] | IErrorMessage> {
-    const response = await fetch(`${api_url}/runners`, {
+  static async getRunners(search: string): Promise<IRunner[] | IErrorMessage> {
+    const response = await fetch(`${api_url}/runners?${new URLSearchParams({search: search == "" ? "" : search})}`, {
       method: "GET",
       headers: {
         Authorization: `Basic ${api_auth}`,

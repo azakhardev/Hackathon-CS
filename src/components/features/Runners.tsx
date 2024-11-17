@@ -18,7 +18,7 @@ export default function Runners() {
   const [selectedSAS, setSelectedSAS] = useState<string>("");
   const [selectedJobRunner, setSelectedJobRunner] = useState<string>("");
 
-  const sasQuery = useQuery({
+  /* const sasQuery = useQuery({
     queryKey: ["sas"],
     queryFn: async () => await RunnerModel.getSAS(),
   });
@@ -188,5 +188,5 @@ export default function Runners() {
         </div>
       </div>
     </div>
-  );
+  );*/
 }

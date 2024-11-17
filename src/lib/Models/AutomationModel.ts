@@ -6,7 +6,7 @@ import { IErrorMessage } from "../types/IErrorMessage";
 
 export class AutomationModel {
   static async getAutomations(
-    limit = 10
+    limit = 10,
   ): Promise<IAutomation[] | IErrorMessage> {
     const response = await fetch(
       `${api_url}/automations?` +
