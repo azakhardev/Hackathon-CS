@@ -1,4 +1,4 @@
-import { Badge, badgeVariants } from "@/components/ui/badge";
+import { badgeVariants } from "@/components/ui/badge";
 import {
   Table,
   TableBody,

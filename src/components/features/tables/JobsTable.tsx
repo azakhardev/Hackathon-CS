@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/table";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { Link } from "react-router-dom";
-import { Progress } from "@/components/ui/progress";
 import { Badge, badgeVariants } from "@/components/ui/badge";
 
 interface IProps {
