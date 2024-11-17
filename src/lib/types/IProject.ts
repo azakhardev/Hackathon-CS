@@ -3,5 +3,6 @@ export interface IProject {
     status: string;
     group: string;
     organisation: string;
+    timestamp: string;
     runnerId: string;
   }

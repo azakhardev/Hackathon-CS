@@ -51,6 +51,7 @@ export default function ProjectsPage() {
           status: sasLatestJob.state,
           group: "Moc narocny dotaz na pamet - muzes si ho zkusit fetchnout",
           organisation: sasLatestJob.organization,
+          date: sasLatestJob.timestamp,
           runnerId: sasLatestJob.runner,
         };
         projects.push(newProject);

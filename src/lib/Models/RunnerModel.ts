@@ -16,8 +16,8 @@ export class RunnerModel {
     return response.json();
   }
 
-  static async getRunners(search: string): Promise<IRunner[] | IErrorMessage> {
-    const response = await fetch(`${api_url}/runners?${new URLSearchParams({search: search == "" ? "" : search})}`, {
+  static async getRunners(search: string, limit?: string): Promise<IRunner[] | IErrorMessage> {
+    const response = await fetch(`${api_url}/runners?${new URLSearchParams({search: search == "" ? "" : search, limit: limit ? limit : "" })}`, {
       method: "GET",
       headers: {
         Authorization: `Basic ${api_auth}`,
