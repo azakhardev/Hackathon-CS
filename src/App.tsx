@@ -39,9 +39,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      {/* <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme"> */}
+      <RouterProvider router={router} />
+      {/* </ThemeProvider> */}
     </QueryClientProvider>
   );
 }
