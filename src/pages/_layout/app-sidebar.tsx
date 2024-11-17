@@ -11,6 +11,7 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -19,6 +20,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 
@@ -32,6 +34,9 @@ export function AppSidebar() {
         <SidebarMenuItems title="Dev" items={itemsDev} />
         <SidebarMenuItems title="Ops" items={itemsOps} />
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarTrigger className="w-full" />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
