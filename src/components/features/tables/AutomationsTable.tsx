@@ -49,11 +49,11 @@ export default function AutomationsTable(props: IProps) {
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[200px]">Id</TableHead>
-          <TableHead>State</TableHead>
-          <TableHead>Last Activity</TableHead>
-          <TableHead>Type</TableHead>
-          <TableHead>Action</TableHead>
+          <TableHead className="w-[200px] text-white">Id</TableHead>
+          <TableHead className="text-white">State</TableHead>
+          <TableHead className="text-white">Last Activity</TableHead>
+          <TableHead className="text-white">Type</TableHead>
+          <TableHead className="text-white">Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

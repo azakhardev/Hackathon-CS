@@ -36,23 +36,25 @@ export default function ProjectsPage() {
   }
 
   if (!jobsQuery.isLoading && !sasQuery.isLoading) {
-    (sasQuery.data as string[]).forEach((s) => {
-      const sasLatestJob = (jobsQuery.data as IJobs[])
-        .filter((j) => j.SAS === s)
-        .reduce((newest, job) => {
-          return new Date(job.timestamp) > new Date(newest.timestamp)
-            ? job
-            : newest;
-        });
-      const newProject: IProject = {
-        name: s,
-        status: sasLatestJob.state,
-        group: "Moc narocny dotaz na pamet- muzes si ho zkusit fetchnout",
-        organisation: sasLatestJob.organization,
-        runnerId: sasLatestJob.runner,
-      };
-      projects.push(newProject);
-    });
+    (sasQuery.data as string[])
+      .filter((x) => x.includes(searchText.toUpperCase()))
+      .forEach((s) => {
+        const sasLatestJob = (jobsQuery.data as IJobs[])
+          .filter((j) => j.SAS === s)
+          .reduce((newest, job) => {
+            return new Date(job.timestamp) > new Date(newest.timestamp)
+              ? job
+              : newest;
+          });
+        const newProject: IProject = {
+          name: s,
+          status: sasLatestJob.state,
+          group: "Moc narocny dotaz na pamet - muzes si ho zkusit fetchnout",
+          organisation: sasLatestJob.organization,
+          runnerId: sasLatestJob.runner,
+        };
+        projects.push(newProject);
+      });
   }
 
   console.log(projects);
