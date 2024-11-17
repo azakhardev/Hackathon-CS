@@ -31,7 +31,7 @@ export default function AutomationDetailPage() {
   }
 
   return (
-    <main>
+    <>
       <h1>Automations Detail</h1>
       {!automationQuery.isLoading && <div>Tady budou nějaké grafy</div>}
       {(automationQuery.isLoading || logsQuery.isLoading) && (
@@ -42,6 +42,6 @@ export default function AutomationDetailPage() {
       {!automationQuery.isLoading && !logsQuery.isLoading && (
         <LogsTable logs={logsQuery.data as IAutomationLog[]} />
       )}
-    </main>
+    </>
   );
 }

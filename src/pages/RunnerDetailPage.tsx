@@ -48,7 +48,7 @@ export default function RunnerDetailPage() {
   console.log("jobs:", filteredJobs);
 
   return (
-    <main>
+    <>
       {runnerQuery.isLoading &&
       metricsQuery.isLoading &&
       jobsQuery.isLoading ? (
@@ -58,6 +58,6 @@ export default function RunnerDetailPage() {
       ) : (
         <div>Runner details</div>
       )}
-    </main>
+    </>
   );
 }

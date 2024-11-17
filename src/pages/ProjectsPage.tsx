@@ -52,9 +52,9 @@ export default function ProjectsPage() {
   console.log(projects);
 
   return (
-    <main>
+    <>
       <h2>Projekty</h2>
       <ProjectsTable projects={projects} />{" "}
-    </main>
+    </>
   );
 }

@@ -5,7 +5,7 @@ import RunnersTable from "@/components/features/tables/RunnersTable";
 
 export default function HomePage() {
   return (
-    <main className="m-8">
+    <>
       <h1>Homepage</h1>
       <h2>Projects</h2>
       <ProjectsTable projects={[]} />
@@ -16,6 +16,6 @@ export default function HomePage() {
       <h2>Automations</h2>
       <AutomationsTable automations={[]} />
       <h2>Automation Types</h2>
-    </main>
+    </>
   );
 }

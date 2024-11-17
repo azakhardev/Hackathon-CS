@@ -18,7 +18,7 @@ export default function AutomationsPage() {
   }
 
   return (
-    <main>
+    <>
       <h1>Automatizace</h1>
       {automationsQuery.isLoading && (
         <div className="loader-wrap">
@@ -30,6 +30,6 @@ export default function AutomationsPage() {
           automations={automationsQuery.data as IAutomation[]}
         />
       )}
-    </main>
+    </>
   );
 }

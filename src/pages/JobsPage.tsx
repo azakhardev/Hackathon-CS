@@ -21,7 +21,7 @@ export default function JobsPage() {
   }
 
   return (
-    <main className="overflow-auto h-[100dvh]">
+    <>
       <h1>Jobs</h1>
       {jobsQuery.isLoading && (
         <div className="loader-wrap">
@@ -29,6 +29,6 @@ export default function JobsPage() {
         </div>
       )}
       {!jobsQuery.isLoading && <JobsTable jobs={jobsQuery.data as IJobs[]} />}
-    </main>
+    </>
   );
 }

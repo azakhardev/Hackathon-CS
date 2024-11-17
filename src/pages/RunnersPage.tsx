@@ -42,7 +42,7 @@ export default function RunnersPage() {
   }
 
   return (
-    <main className="overflow-auto h-[100dvh]">
+    <>
       <h1>Runners</h1>
       {runnersQuery.isLoading && (
         <div className="loader-wrap">
@@ -50,6 +50,6 @@ export default function RunnersPage() {
         </div>
       )}
       {!runnersQuery.isLoading && <RunnersTable runners={filteredRunners} />}
-    </main>
+    </>
   );
 }

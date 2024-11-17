@@ -1,6 +1,6 @@
 export default function MetricsPage() {
   return (
-    <main>
+    <>
       <h1>Stránka s grafy</h1>
       <ul>
         <li>Kolik jobů běží pro devy, kolik pro opsy a jaký je jejich state</li>
@@ -17,6 +17,6 @@ export default function MetricsPage() {
           (kolik INITIAL, FINISHED atd...)
         </li>
       </ul>
-    </main>
+    </>
   );
 }
