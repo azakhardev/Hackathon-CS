@@ -25,9 +25,9 @@ interface IProps {
 }
 
 enum Status {
-  Queued = "queued",
-  InProgress = "in_progress",
-  Success = "success",
+  Queued = "queued", //gray
+  InProgress = "in_progress", //orange
+  Success = "success", //green
 }
 
 export default function ProjectsTable(props: IProps) {
@@ -37,16 +37,21 @@ export default function ProjectsTable(props: IProps) {
         {(props.projects as IProject[]).map((p) => (
           <TableRow key={p.name}>
             <TableCell className="font-medium">
-              <Table_cel_title
-                title={p.name.toUpperCase().slice(4)}
-                text="Deploy to prod"
-              />
+              <Table_cel_title title={p.name.toUpperCase().slice(4)} text="" />
             </TableCell>
             <TableCell>
               <Table_cel_state
                 title={p.status}
                 text="Status"
-                type={StateType.Orange}
+                type={
+                  p.status === Status.Queued
+                    ? StateType.Gray
+                    : p.status === Status.InProgress
+                    ? StateType.Orange
+                    : p.status === Status.Success
+                    ? StateType.Green
+                    : StateType.Gray
+                }
               />
             </TableCell>
             <TableCell>
