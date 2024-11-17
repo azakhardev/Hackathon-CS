@@ -8,6 +8,7 @@ import ChartTest from "./components/features/grapghs/ChartTest";
 import JobsPage from "./pages/JobsPage";
 import RunnerDetailPage from "./pages/RunnerDetailPage";
 import AutomationDetailPage from "./pages/AutomationDetailPage";
+import { ThemeProvider } from "./components/theme-provider";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +39,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
