@@ -1,4 +1,5 @@
 import { badgeVariants } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/Button";
 import {
   Table,
   TableBody,
@@ -17,25 +18,27 @@ interface IProps {
 }
 
 export default function RunnersTable(props: IProps) {
-  const navigate = useNavigate();
+  // onClick={() => handleRowClick(r.id)}
+  // const navigate = useNavigate();
 
-  function handleRowClick(id: string) {
-    navigate(`/runners/${id}`);
-  }
+  // function handleRowClick(id: string) {
+  //   navigate(`/runners/${id}`);
+  // }
 
   return (
     <Table>
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Id</TableHead>
+          <TableHead className="w-[200px]">Id</TableHead>
           <TableHead>State</TableHead>
           <TableHead>Info</TableHead>
+          <TableHead>Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {(props.runners as IRunner[]).map((r) => (
-          <TableRow onClick={() => handleRowClick(r.id)} key={r.id}>
+          <TableRow key={r.id}>
             <TableCell className="font-medium">
               {r.id.slice(r.id.length - 5).toUpperCase()}
             </TableCell>
@@ -52,6 +55,14 @@ export default function RunnersTable(props: IProps) {
                 className={badgeVariants({ variant: "outline" })}
               >
                 {r.organization}
+              </Link>
+            </TableCell>
+            <TableCell>
+              <Link
+                className={buttonVariants({ variant: "outline" })}
+                to={`/runners/${r.id}`}
+              >
+                Detail
               </Link>
             </TableCell>
           </TableRow>

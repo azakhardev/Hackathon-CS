@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { Link } from "react-router-dom";
 import { badgeVariants } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/Button";
 import { IProject } from "@/lib/types/IProject";
 import { Badge } from "@/components/ui/badge";
 
