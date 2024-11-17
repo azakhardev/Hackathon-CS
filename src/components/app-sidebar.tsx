@@ -81,7 +81,7 @@ const itemsOps: Item[] = [
   },
   {
     title: "Types",
-    url: "/automations",
+    url: "/automationTypes",
     icon: Shapes, //Shapes, Triangle
   },
 ];
@@ -115,7 +115,7 @@ const SidebarMenuItems = ({
 const SidebarHeaderBuilder = ({ title }: { title: string }) => (
   <SidebarMenu>
     <SidebarMenuItem>
-      <Link to="#">
+      <Link to="/">
         <SidebarMenuButton
           size="lg"
           //className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"

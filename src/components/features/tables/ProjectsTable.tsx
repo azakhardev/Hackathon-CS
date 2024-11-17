@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { badgeVariants } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { IProject } from "@/lib/types/IProject";
+import { Badge } from "@/components/ui/badge";
 
 interface IProps {
   projects: IProject[] | IErrorMessage;
@@ -38,12 +39,16 @@ export default function ProjectsTable(props: IProps) {
             </TableCell>
             <TableCell>{p.status}</TableCell>
             <TableCell>
-              <Link
-                to={`/runners/${p.runnerId}`}
-                className={badgeVariants({ variant: "outline" })}
-              >
-                {p.runnerId.slice(p.runnerId.length - 5).toUpperCase()}
-              </Link>
+              {p.runnerId !== "none" ? (
+                <Link
+                  to={`/runners/${p.runnerId}`}
+                  className={badgeVariants({ variant: "outline" })}
+                >
+                  {p.runnerId.slice(p.runnerId.length - 5).toUpperCase()}
+                </Link>
+              ) : (
+                <Badge variant="outline">none</Badge>
+              )}
               Mage vzorecek
               <Link
                 to={`/runners?grp=${p.group}`}

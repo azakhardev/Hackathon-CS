@@ -11,6 +11,7 @@ import AutomationDetailPage from "./pages/AutomationDetailPage";
 import { ThemeProvider } from "./components/theme-provider";
 import MetricsPage from "./pages/MetricsPage";
 import ProjectsPage from "./pages/ProjectsPage";
+import AutomationTypesPage from "./pages/AutomationTypesPage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { path: "/metrics", element: <MetricsPage /> },
       { path: "/automations", element: <AutomationsPage /> },
       { path: "/automations/:id", element: <AutomationDetailPage /> },
+      { path: "/automationTypes", element: <AutomationTypesPage /> },
     ],
   },
   {
