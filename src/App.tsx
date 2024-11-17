@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import RunnersPage from "./pages/RunnersPage";
 import AutomationsPage from "./pages/AutomationsPage";
-import MainLayout from "./components/layout/MainLayout";
+import Layout from "./components/layout/_Layout";
 import ChartTest from "./components/features/grapghs/ChartTest";
 import JobsPage from "./pages/JobsPage";
 import RunnerDetailPage from "./pages/RunnerDetailPage";
@@ -15,7 +15,7 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: <Layout />,
     children: [
       { index: true, element: <HomePage /> },
       // { path: "/sas", element: <div /> },
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/test",
-    element: <MainLayout />,
+    element: <Layout />,
     children: [{ path: "chart", element: <ChartTest /> }],
   },
 ]);

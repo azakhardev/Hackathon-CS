@@ -4,9 +4,9 @@ import Footer from "./Footer";
 import Menu from "./Menu";
 import Content from "./Content";
 
-export default function MainLayout() {
+export default function Layout() {
   return (
-    <div className="h-screen w-screen flex flex-col">
+    <div className="flex flex-col w-screen h-screen">
       <Header />
       <Content>
         <Menu />
