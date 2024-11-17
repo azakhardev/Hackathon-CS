@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import RunnersPage from "./pages/RunnersPage";
 import AutomationsPage from "./pages/AutomationsPage";
 import Layout from "./components/layout/_Layout";
-import ChartTest from "./components/features/grapghs/ChartTest";
+import ChartTest from "./components/features/charts/ChartTest";
 import JobsPage from "./pages/JobsPage";
 import RunnerDetailPage from "./pages/RunnerDetailPage";
 import AutomationDetailPage from "./pages/AutomationDetailPage";
