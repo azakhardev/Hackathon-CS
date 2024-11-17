@@ -18,9 +18,11 @@ interface IProps {
 
 export default function RunnersTable(props: IProps) {
   const navigate = useNavigate();
+
   function handleRowClick(id: string) {
     navigate(`/runners/${id}`);
   }
+
   return (
     <Table>
       <TableCaption></TableCaption>

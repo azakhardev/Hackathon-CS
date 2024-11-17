@@ -9,6 +9,8 @@ import JobsPage from "./pages/JobsPage";
 import RunnerDetailPage from "./pages/RunnerDetailPage";
 import AutomationDetailPage from "./pages/AutomationDetailPage";
 import { ThemeProvider } from "./components/theme-provider";
+import MetricsPage from "./pages/MetricsPage";
+import ProjectsPage from "./pages/ProjectsPage";
 
 const queryClient = new QueryClient();
 
@@ -18,15 +20,13 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <HomePage /> },
-      // { path: "/sas", element: <div /> },
+      { path: "/projects", element: <ProjectsPage /> },
       { path: "/runners", element: <RunnersPage /> },
       { path: "/runners/:id", element: <RunnerDetailPage /> },
       { path: "/jobs", element: <JobsPage /> },
-      // { path: "/metrics", element: <div /> },
-      // { path: "/metrics/:runnerId", element: <div /> },
+      { path: "/metrics", element: <MetricsPage /> },
       { path: "/automations", element: <AutomationsPage /> },
       { path: "/automations/:id", element: <AutomationDetailPage /> },
-      // { path: "/logs/:automationId", element: <div /> },
     ],
   },
   {

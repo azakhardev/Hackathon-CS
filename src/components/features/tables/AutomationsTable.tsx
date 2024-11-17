@@ -43,7 +43,7 @@ export default function AutomationsTable(props: IProps) {
   }
 
   return (
-    <Table className="overflow-x-auto ">
+    <Table className="overflow-x-auto">
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>

@@ -18,9 +18,6 @@ export default function AutomationDetailPage() {
     queryFn: async () => await AutomationModel.getAutomationLogs(automationId!),
   });
 
-  console.log(automation);
-  console.log(logs);
-
   return (
     <main>
       <h1>Automations Detail</h1>

@@ -46,7 +46,7 @@ type Item = {
 const itemsDev: Item[] = [
   {
     title: "Projects",
-    url: "#",
+    url: "/projects",
     icon: Folder, //MonitorCog, Container
   },
   {
@@ -61,7 +61,7 @@ const itemsDev: Item[] = [
   },
   {
     title: "Metrics",
-    url: "#",
+    url: "/metrics",
     icon: ChartLine, //chart-line, chart-pie
   },
 ];
