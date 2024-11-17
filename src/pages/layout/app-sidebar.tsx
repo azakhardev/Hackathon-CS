@@ -28,6 +28,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarRail,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
 
@@ -41,6 +42,7 @@ export function AppSidebar() {
         <SidebarMenuItems title="Dev" items={itemsDev} />
         <SidebarMenuItems title="Ops" items={itemsOps} />
       </SidebarContent>
+      <SidebarRail />
     </Sidebar>
   );
 }
