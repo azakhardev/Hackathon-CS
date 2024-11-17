@@ -5,7 +5,7 @@ import { IJobs } from "@/lib/types/IJobs";
 import { useSearchParams } from "react-router-dom";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import H1 from "@/components/H1";
+import H1 from "@/components/ui/typography/H1";
 
 export default function JobsPage() {
   const [searchParams] = useSearchParams();

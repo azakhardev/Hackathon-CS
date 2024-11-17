@@ -4,7 +4,7 @@ import AutomationsTable from "@/pages/automations/components/AutomationsTable";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import H1 from "@/components/H1";
+import H1 from "@/components/ui/typography/H1";
 
 export default function AutomationsPage() {
   const automationsQuery = useQuery({

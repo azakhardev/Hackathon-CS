@@ -6,8 +6,9 @@ import ProjectsTable from "../projects/components/ProjectsTable";
 import RunnersTable from "../runners/components/RunnersTable";
 import JobsTable from "../jobs/components/JobsTable";
 import AutomationsTable from "../automations/components/AutomationsTable";
-import H1 from "@/components/H1";
+import H1 from "@/components/ui/typography/H1";
 import { IRunner } from "@/lib/types/IRunner";
+import H2 from "@/components/ui/typography/H2";
 
 export default function HomePage() {
   const runnersQuery = useQuery({
@@ -21,24 +22,67 @@ export default function HomePage() {
   }
 
   return (
+    <div className="flex flex-col gap-10">
+      {/* <H1>Homepage</H1> */}
+      <div className="flex flex-col gap-6">
+        <H1 className="w-full text-center">Dev</H1>
+        <div>
+          <H2>Projects</H2>
+          <Loader isLoading={runnersQuery.isLoading}>
+            {/* <ProjectsTable projects={[]} /> */}
+            <RunnersTable runners={runnersQuery.data as IRunner[]} />
+          </Loader>
+        </div>
+        <div>
+          <H2>Runners</H2>
+          <Loader isLoading={runnersQuery.isLoading}>
+            <RunnersTable runners={runnersQuery.data as IRunner[]} />
+          </Loader>
+        </div>
+        <div>
+          <H2>Jobs</H2>
+          <Loader isLoading={runnersQuery.isLoading}>
+            {/* <JobsTable jobs={[]} /> */}
+            <RunnersTable runners={runnersQuery.data as IRunner[]} />
+          </Loader>
+        </div>
+      </div>
+      <div className="flex flex-col gap-6">
+        <H1 className="w-full text-center">Ops</H1>
+        <div>
+          <H2>Automations</H2>
+          <Loader isLoading={runnersQuery.isLoading}>
+            {/* <AutomationsTable automations={[]} /> */}
+            <RunnersTable runners={runnersQuery.data as IRunner[]} />
+          </Loader>
+        </div>
+        <div>
+          <H2>Automation Types</H2>
+          <Loader isLoading={runnersQuery.isLoading}>
+            <RunnersTable runners={runnersQuery.data as IRunner[]} />
+          </Loader>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Loader({
+  children,
+  isLoading,
+}: {
+  children: React.ReactNode;
+  isLoading: boolean;
+}): JSX.Element {
+  return (
     <>
-      <H1>Homepage</H1>
-      <h2>Projects</h2>
-      <ProjectsTable projects={[]} />
-      <h2>Runners</h2>
-      {runnersQuery.isLoading && (
+      {isLoading ? (
         <div className="loader-wrap">
           <div className="loading-spinner"></div>
         </div>
+      ) : (
+        children
       )}
-      {!runnersQuery.isLoading && (
-        <RunnersTable runners={runnersQuery.data as IRunner[]} />
-      )}
-      <h2>Jobs</h2>
-      <JobsTable jobs={[]} />
-      <h2>Automations</h2>
-      <AutomationsTable automations={[]} />
-      <h2>Automation Types</h2>
     </>
   );
 }

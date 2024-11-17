@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import H1 from "@/components/H1";
+import H1 from "@/components/ui/typography/H1";
 import SearchBar from "@/components/ui/table/SearchBar";
 import ButtonLoadMore from "@/components/ui/table/Button_LoadMore";
 export default function RunnersPage() {
