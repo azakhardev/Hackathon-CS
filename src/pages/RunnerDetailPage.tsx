@@ -74,7 +74,10 @@ export default function RunnerDetailPage() {
                 </TabsList>
                 <TabsContent value="jobs">
                   <div className="grid grid-cols-5 gap-10 mt-5">
-                    <Input className="text-white border-grey-100" placeholder="find.." />
+                    <Input
+                      className="text-white border-grey-100"
+                      placeholder="find.."
+                    />
                     <DatePickerWithRange className="pl-[300px]" />
                     <Select>
                       <SelectTrigger className="w-[200px]">
@@ -113,6 +116,6 @@ export default function RunnerDetailPage() {
           </div>
         )
       )}
-    </>
+    </main>
   );
 }

@@ -24,10 +24,6 @@ export default function RunnersPage() {
   const [searchOrganization, setSearchOrganization] = useState(" ");
   const [searchState, setSearchState] = useState(" ");
   const [limit, setLimit] = useState(5);
-  const [searchParams] = useSearchParams();
-
-  const grp = searchParams.get("grp") ?? "";
-  const org = searchParams.get("org") ?? "";
 
   const runnersQuery = useQuery({
     queryKey: ["runners", searchText],
@@ -125,9 +121,9 @@ export default function RunnersPage() {
       {!runnersQuery.isLoading && <RunnersTable runners={showRunners} />}
       <div className="m-4">
         <Button
+          className={filteredRunners.length >= limit ? "w-full" : "hidden"}
           variant="outline"
-          className="w-full"
-          onClick={() => setLimit(limit + 5)}
+          onClick={() => setLimit(limit + 25)}
         >
           Load more
         </Button>
