@@ -12,7 +12,6 @@ import {
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { IRunner } from "@/lib/types/IRunner";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 interface IProps {
   runners: IRunner[] | IErrorMessage;
 }

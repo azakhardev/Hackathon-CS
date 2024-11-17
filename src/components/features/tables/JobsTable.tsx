@@ -23,7 +23,7 @@ export default function JobsTable(props: IProps) {
       <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Id</TableHead>
+          <TableHead className="w-[200px]">Id</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Info</TableHead>
         </TableRow>
