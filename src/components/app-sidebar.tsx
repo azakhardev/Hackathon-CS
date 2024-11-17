@@ -34,7 +34,7 @@ import { Link } from "react-router-dom";
 export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="border">
+      <SidebarHeader className="border-b">
         <SidebarHeaderBuilder title="Loop" />
       </SidebarHeader>
       <SidebarContent>
