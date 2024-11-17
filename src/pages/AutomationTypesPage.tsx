@@ -1,7 +1,9 @@
+import H1 from "@/components/features/H1";
+
 export default function AutomationTypesPage() {
   return (
-    <main>
-      <h1>Tabluka typů automatizací</h1>
-    </main>
+    <>
+      <H1>Tabluka typů automatizací</H1>
+    </>
   );
 }

@@ -91,7 +91,7 @@
     --foreground: var(--text_primary);
 
     --muted: var(--base_secondary);
-    --muted-foreground: var(--secondary-foreground);
+    --muted-foreground: var(--text_secondary);
 
     --card: var(--bg_default);
     --card-foreground: var(--foreground);

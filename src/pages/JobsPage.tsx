@@ -5,6 +5,7 @@ import { IJobs } from "@/lib/types/IJobs";
 import { useSearchParams } from "react-router-dom";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
+import H1 from "@/components/features/H1";
 
 export default function JobsPage() {
   const [searchParams] = useSearchParams();
@@ -21,14 +22,14 @@ export default function JobsPage() {
   }
 
   return (
-    <main className="overflow-auto h-[100dvh]">
-      <h1>Jobs</h1>
+    <>
+      <H1>Jobs</H1>
       {jobsQuery.isLoading && (
         <div className="loader-wrap">
           <div className="loading-spinner"></div>
         </div>
       )}
       {!jobsQuery.isLoading && <JobsTable jobs={jobsQuery.data as IJobs[]} />}
-    </main>
+    </>
   );
 }
