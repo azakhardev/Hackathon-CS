@@ -3,6 +3,8 @@ import JobsTable from "../components/features/tables/JobsTable";
 import { RunnerModel } from "@/lib/Models/RunnerModel";
 import { IJobs } from "@/lib/types/IJobs";
 import { useSearchParams } from "react-router-dom";
+import { IErrorMessage } from "@/lib/types/IErrorMessage";
+import ErrorMessage from "@/components/ui/ErrorMessage";
 
 export default function JobsPage() {
   const [searchParams] = useSearchParams();
@@ -13,6 +15,10 @@ export default function JobsPage() {
     queryFn: async () => await RunnerModel.getJobs(sas),
     gcTime: 0,
   });
+
+  if (jobsQuery.data && "error" in jobsQuery.data) {
+    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
+  }
 
   return (
     <main className="overflow-auto h-[100dvh]">

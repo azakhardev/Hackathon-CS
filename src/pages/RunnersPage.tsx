@@ -3,6 +3,8 @@ import { RunnerModel } from "@/lib/Models/RunnerModel";
 import RunnersTable from "@/components/features/tables/RunnersTable";
 import { IRunner } from "@/lib/types/IRunner";
 import { useSearchParams } from "react-router-dom";
+import { IErrorMessage } from "@/lib/types/IErrorMessage";
+import ErrorMessage from "@/components/ui/ErrorMessage";
 export default function RunnersPage() {
   const [searchParams] = useSearchParams();
 
@@ -13,6 +15,11 @@ export default function RunnersPage() {
     queryKey: ["runners"],
     queryFn: async () => await RunnerModel.getRunners(),
   });
+
+  if (runnersQuery.data && "error" in runnersQuery.data) {
+    const errorData = runnersQuery.data as IErrorMessage;
+    return <ErrorMessage errorMessage={errorData} />;
+  }
 
   let filteredRunners: IRunner[] = [];
   if (!runnersQuery.isLoading) {
