@@ -115,9 +115,7 @@ function SidebarMenuItems({ title, items }: { title: string; items: Item[] }) {
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 asChild
-                className={
-                  location.pathname === item.url ? "bg-slate-700" : undefined
-                }
+                className={location.pathname === item.url ? "bg-[#27272a]" : ""}
               >
                 <Link to={item.url}>
                   <item.icon />
