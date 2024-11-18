@@ -31,7 +31,7 @@ export default function RunnerDetailPage() {
 
   const jobsQuery = useQuery({
     queryKey: ["runnerJobs", runnerId], // Simplified the queryKey to an array with a string and runnerId
-    queryFn: async () => await RunnerModel.getJobs(runnerId, 99999, undefined, undefined, 'asc', undefined),
+    queryFn: async () => await RunnerModel.getJobs(runnerId, undefined, undefined, undefined, 'asc', undefined),
   });
 
   console.log(runnerId)

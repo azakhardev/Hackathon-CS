@@ -31,7 +31,7 @@ export class RunnerModel {
   ): Promise<IRunner[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
-      limit: limit?.toString() ?? "-1",
+      limit: limit?.toString() && search ? "-1" : '999999',
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc",
@@ -94,7 +94,7 @@ export class RunnerModel {
   ): Promise<IJobs[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
-      limit: limit?.toString() ?? "-1",
+      limit: limit?.toString() && search ? "-1" : '999999',
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc",
@@ -183,7 +183,7 @@ export class RunnerModel {
   ): Promise<IMetrics[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
-      limit: limit?.toString() ?? "-1",
+      limit: limit?.toString() && search ? "-1" : '999999',
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc",
