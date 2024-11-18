@@ -1,5 +1,5 @@
-import { api_auth, api_url } from "../../utils/env_vars";
-import { IErrorMessage } from "../../types/IErrorMessage";
+import { api_auth, api_url } from "@/lib/utils/env_vars";
+import { IErrorMessage } from "@/lib/types/IErrorMessage";
 
 export async function getSAS(): Promise<string[] | IErrorMessage> {
   const response = await fetch(`${api_url}/api/v1/sas`, {
