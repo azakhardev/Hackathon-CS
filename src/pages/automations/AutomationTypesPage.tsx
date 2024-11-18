@@ -78,46 +78,38 @@ export default function AutomationTypesPage() {
                         let direction: NodeDirection = "down";
                         if (ii == x.transitions.length - 1) direction = "none";
                         return (
-                          <div
-                            key={ii}
-                            className="flex items-start gap-2 ml-[25rem]"
-                          >
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger>
-                                  <div className="mt-[-5px]">
-                                    {xx.from_state.charAt(0).toUpperCase() +
-                                      xx.from_state.slice(1).toLowerCase()}
-                                  </div>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                  <p>
-                                    <span className="font-semibold">
-                                      Trigger:
-                                    </span>
-                                    <span className="font-mono">
-                                      {" "}
-                                      {xx.event}
-                                    </span>
-                                  </p>
-                                  <p>
-                                    <span className="font-semibold">
-                                      Action:
-                                    </span>
-                                    <span className="font-mono">
-                                      {" "}
-                                      {xx.action}
-                                    </span>
-                                  </p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                            <StateNode
-                              color="green"
-                              direction={direction}
-                              isActive={false}
-                            />
-                          </div>
+                          <TooltipProvider key={ii}>
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <div className="flex items-start gap-2 ml-[25rem]">
+                                  {" "}
+                                  {/* mt-[-5px] - broken */}
+                                  <StateNode
+                                    color="green"
+                                    direction={direction}
+                                    isActive={false}
+                                  />
+                                  {xx.from_state.charAt(0).toUpperCase() +
+                                    xx.from_state.slice(1).toLowerCase()}
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>
+                                  <span className="font-semibold">
+                                    Trigger:
+                                  </span>
+                                  <span className="font-mono"> {xx.event}</span>
+                                </p>
+                                <p>
+                                  <span className="font-semibold">Action:</span>
+                                  <span className="font-mono">
+                                    {" "}
+                                    {xx.action}
+                                  </span>
+                                </p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
                         );
                       })}
                     </AccordionContent>
