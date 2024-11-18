@@ -20,7 +20,7 @@ import { badgeVariants } from "@/components/ui/badge";
 import StateNode from "@/components/Node";
 
 export default function AutomationTypesPage() {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["automationTypes"],
     queryFn: async () => await AutomationModel.getAutomationTypes(),
     gcTime: 0,
@@ -28,7 +28,7 @@ export default function AutomationTypesPage() {
   const types = data as IAutomationType[];
   console.log(types);
 
-  if (!types) {
+  if (!types && !isLoading) {
     const error: IErrorMessage = {
       code: "500",
       error: "Internal server error",

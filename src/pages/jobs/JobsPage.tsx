@@ -21,7 +21,7 @@ export default function JobsPage() {
     return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
   }
 
-  if (!jobsQuery.data) {
+  if (!jobsQuery.data && !jobsQuery.isLoading) {
     const error: IErrorMessage = {
       code: "500",
       error: "Internal server error",

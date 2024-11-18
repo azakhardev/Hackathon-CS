@@ -21,7 +21,7 @@ export default function HomePage() {
     return <ErrorMessage errorMessage={errorData} />;
   }
 
-  if (!runnersQuery.data) {
+  if (!runnersQuery.data && !runnersQuery.isLoading) {
     const error: IErrorMessage = {
       code: "500",
       error: "Internal server error",
