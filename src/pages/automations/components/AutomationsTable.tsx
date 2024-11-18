@@ -15,6 +15,12 @@ import Table_cel_title from "@/components/ui/table/table_cel_title";
 import { Badge_timeAgo } from "@/components/ui/table/badge_timeAgo";
 import StateNode from "@/components/Node";
 import { IAutomationType } from "../types/IAutomationType";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface IProps {
   automations: IAutomation[] | IErrorMessage;
@@ -80,12 +86,21 @@ export default function AutomationsTable(props: IProps) {
                     direction = "none";
 
                   return (
-                    <StateNode
-                      key={index}
-                      color={color}
-                      isBorder={isBorder}
-                      direction={direction}
-                    />
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <StateNode
+                            key={index}
+                            color={color}
+                            isBorder={isBorder}
+                            direction={direction}
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{state}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   );
                 })}
               </div>
