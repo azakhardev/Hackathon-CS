@@ -4,7 +4,7 @@ import RunnersTable from "@/pages/runners/components/RunnersTable";
 import { IRunner } from "@/pages/runners/types/IRunner";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -22,11 +22,35 @@ export default function RunnersPage() {
   const [searchGroup, setSearchGroup] = useState(" ");
   const [searchOrganization, setSearchOrganization] = useState(" ");
   const [searchState, setSearchState] = useState(" ");
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(25);
+  const [isFiltered, setIsFiltered] = useState(false);
+
+  function activeFilter() {
+    console.log("text:", searchText.trim() !== "");
+    console.log("grp:", searchGroup.trim() !== "");
+    console.log("org:", searchOrganization.trim() !== "");
+    console.log("state:", searchState.trim() !== "");
+    if (
+      searchText.trim() !== "" ||
+      searchGroup.trim() !== "" ||
+      searchOrganization.trim() !== "" ||
+      searchState.trim() !== ""
+    ) {
+      if (isFiltered == false) setIsFiltered(true);
+      return;
+    }
+    if (isFiltered === true) {
+      setIsFiltered(false);
+    }
+  }
+
+  activeFilter();
+  console.log(isFiltered);
 
   const runnersQuery = useQuery({
-    queryKey: ["runners", searchText],
-    queryFn: async () => await RunnerModel.getRunners(searchText),
+    queryKey: ["runners", searchText, limit, isFiltered],
+    queryFn: async () =>
+      await RunnerModel.getRunners(searchText, isFiltered ? -1 : limit),
   });
 
   if (runnersQuery.data && "error" in runnersQuery.data) {
@@ -68,16 +92,18 @@ export default function RunnersPage() {
     );
   }
 
-  let showRunners = filteredRunners.slice(0, limit);
-
-  console.log(searchGroup);
+  console.log(filteredRunners.length);
 
   return (
     <>
       <H1>Runners</H1>
       <div className="flex justify-between gap-4 mb-4">
         <SearchBar searchText={searchText} setSearchText={setSearchText} />
-        <Select onValueChange={(e) => setSearchGroup(e)}>
+        <Select
+          onValueChange={(e) => {
+            setSearchGroup(e);
+          }}
+        >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="All Groups" />
           </SelectTrigger>
@@ -88,7 +114,12 @@ export default function RunnersPage() {
             <SelectItem value="csas-linux-prod">csas-linux-prod</SelectItem>
           </SelectContent>
         </Select>
-        <Select onValueChange={(e) => setSearchOrganization(e)}>
+        <Select
+          onValueChange={(e) => {
+            setSearchOrganization(e);
+            activeFilter();
+          }}
+        >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="All Organizations" />
           </SelectTrigger>
@@ -98,7 +129,12 @@ export default function RunnersPage() {
             <SelectItem value="csas-ops">csas-ops</SelectItem>
           </SelectContent>
         </Select>
-        <Select onValueChange={(e) => setSearchState(e)}>
+        <Select
+          onValueChange={(e) => {
+            setSearchState(e);
+            activeFilter();
+          }}
+        >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="All States" />
           </SelectTrigger>
@@ -125,12 +161,9 @@ export default function RunnersPage() {
           <div className="loading-spinner"></div>
         </div>
       )}
-      {!runnersQuery.isLoading && <RunnersTable runners={showRunners} />}
+      {!runnersQuery.isLoading && <RunnersTable runners={filteredRunners} />}
       <div className="mt-4">
-        <ButtonLoadMore
-          show={filteredRunners.length >= limit}
-          onClick={() => setLimit(limit + 25)}
-        />
+        <ButtonLoadMore show={true} onClick={() => setLimit(limit + 25)} />
       </div>
     </>
   );

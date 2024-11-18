@@ -8,7 +8,7 @@ interface SearchBarProps {
 
 export default function SearchBar({
   searchText,
-  setSearchText,
+  setSearchText: setSearchText,
 }: SearchBarProps) {
   return (
     <div className="relative flex items-center w-1/2">
@@ -17,7 +17,9 @@ export default function SearchBar({
       </div>
       <Input
         className="pl-10"
-        onChange={(e) => setSearchText(e.target.value)}
+        onChange={(e) => {
+          setSearchText(e.target.value);
+        }}
       />
       {searchText === "" && (
         <div className="absolute inset-y-0 flex items-center pointer-events-none left-8">
