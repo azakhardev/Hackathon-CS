@@ -34,24 +34,33 @@ export default function ProjectsPage() {
     return <ErrorMessage errorMessage={sasQuery.data as IErrorMessage} />;
   }
 
-  
+  if (!jobsQuery.data) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
 
   if (!jobsQuery.isLoading && !sasQuery.isLoading) {
     console.log(jobsQuery.data);
     console.log(sasQuery.data);
-  
+
     (sasQuery.data as string[])
       .filter((x) => x.includes(searchText.toUpperCase()))
       .forEach((s) => {
-        const jobsForSAS = (jobsQuery.data as IJobs[]).filter((j) => j.SAS === s);
-  
+        const jobsForSAS = (jobsQuery.data as IJobs[]).filter(
+          (j) => j.SAS === s
+        );
+
         if (jobsForSAS.length > 0) {
           const sasLatestJob = jobsForSAS.reduce((newest, job) => {
             return new Date(job.timestamp) > new Date(newest.timestamp)
               ? job
               : newest;
           });
-  
+
           const newProject: IProject = {
             name: s,
             job: sasLatestJob,

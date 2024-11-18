@@ -21,6 +21,15 @@ export default function JobsPage() {
     return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
   }
 
+  if (!jobsQuery.data) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
+
   return (
     <>
       <H1>Jobs</H1>

@@ -27,9 +27,16 @@ export default function AutomationTypesPage() {
   });
   const types = data as IAutomationType[];
   console.log(types);
-  if (types === undefined) {
-    return <H1>error</H1>;
+
+  if (!types) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
+
   if (data && "error" in data) {
     return <ErrorMessage errorMessage={data as IErrorMessage} />;
   }

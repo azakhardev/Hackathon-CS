@@ -21,6 +21,15 @@ export default function HomePage() {
     return <ErrorMessage errorMessage={errorData} />;
   }
 
+  if (!runnersQuery.data) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
+
   return (
     <div className="flex flex-col gap-10">
       {/* <H1>Homepage</H1> */}

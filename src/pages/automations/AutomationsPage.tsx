@@ -22,6 +22,16 @@ export default function AutomationsPage() {
       <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />
     );
   }
+
+  if (!automationsQuery.data) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
+
   // Data joining logic
   const automationsWithTypes = automationsQuery.data?.map(
     (automation: IAutomation) => {

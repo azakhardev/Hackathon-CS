@@ -34,6 +34,15 @@ export default function RunnersPage() {
     return <ErrorMessage errorMessage={errorData} />;
   }
 
+  if (!runnersQuery.data) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
+
   let filteredRunners: IRunner[] = [];
   if (!runnersQuery.isLoading) {
     filteredRunners = (runnersQuery.data as IRunner[]).filter(
