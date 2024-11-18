@@ -2,16 +2,27 @@ export default function StateNode({
   isBorder = false,
   isActive = false,
   color = "state_gray",
-  direction = "left", //up, down, left, right or none
+  direction = "left",
   size = 12,
   lineLength = 10,
 }) {
   const isBefore = direction === "<-" || direction === "up";
   const isCol = direction === "up" || direction === "down";
   const isLine = direction === "none";
-  const lineColor = "bg-" + (isActive ? "state_gray" : color);
-  color = isActive ? "state_yellow" : color;
-  color = isBorder ? `border border-1 border-${color}` : `bg-${color}`;
+
+  // Use complete class names instead of dynamic construction
+  const getNodeClass = () => {
+    if (isActive) {
+      return isBorder
+        ? "border border-1 border-state_yellow"
+        : "bg-state_yellow";
+    }
+    return isBorder ? `border border-1 border-${color}` : `bg-${color}`;
+  };
+
+  const getLineClass = () => {
+    return isActive ? "bg-state_gray" : `bg-${color}`;
+  };
 
   const circleStyle: React.CSSProperties = {
     width: size,
@@ -27,11 +38,11 @@ export default function StateNode({
   return (
     <div className={`flex items-center ${isCol ? "flex-col" : "flex-row"}`}>
       {isBefore && !isLine && (
-        <div style={lineStyle} className={`${lineColor}`}></div>
+        <div style={lineStyle} className={getLineClass()}></div>
       )}
-      <div style={circleStyle} className={`${color}`}></div>
+      <div style={circleStyle} className={getNodeClass()}></div>
       {!isBefore && !isLine && (
-        <div style={lineStyle} className={`${lineColor}`}></div>
+        <div style={lineStyle} className={getLineClass()}></div>
       )}
     </div>
   );
