@@ -67,7 +67,7 @@ export function JobCells(job: IJobs) {
         <span>{tagJoin({ action, state: job.state })}</span>
         {action !== RunnerActions.waiting.toString() && (
           <Link
-            to={`/runners?grp=${job.organization}`}
+            to={`/runners/${job.runner}`}
             className={badgeVariants({ variant: "outline" })}
           >
             {job.runner.slice(job.runner.length - 5).toUpperCase()}

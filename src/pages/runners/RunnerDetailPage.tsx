@@ -30,9 +30,11 @@ export default function RunnerDetailPage() {
   });
 
   const jobsQuery = useQuery({
-    queryKey: ["runnerJobs", runnerId],
-    queryFn: async () => await RunnerModel.getJobs(runnerId),
+    queryKey: ["runnerJobs", runnerId], // Simplified the queryKey to an array with a string and runnerId
+    queryFn: async () => await RunnerModel.getJobs(runnerId, undefined, undefined, undefined, 'asc', undefined),
   });
+
+  console.log(runnerId)
 
   if (runnerQuery.data && "error" in runnerQuery.data) {
     return <ErrorMessage errorMessage={runnerQuery.data as IErrorMessage} />;
@@ -46,9 +48,7 @@ export default function RunnerDetailPage() {
     return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
   }
 
-  console.log(runnerQuery);
-  console.log(metricsQuery);
-  console.log(jobsQuery);
+  console.log(jobsQuery.data);
 
   return (
     <main>

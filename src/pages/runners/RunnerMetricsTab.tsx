@@ -1,6 +1,5 @@
 import CustomLineChart from "@/components/charts/CustomLineChart";
 import { IMetrics } from "../metrics/types/IMetrics";
-import RunnerMetricsGridCell from "./RunnerMetricsGridCell";
 import CustomAreaChart from "@/components/charts/CustomAreaChart";
 
 interface ICPUMetrics {
@@ -59,6 +58,16 @@ export default function RunnerMetricsTab(props: IProps) {
   const cpuMetrics = createCpuData(props.runnerMetrics);
   const incomingData = createNetworkData(props.runnerMetrics);
   const outgoingData = createFsData(props.runnerMetrics);
+
+  console.log(cpuMetrics.length)
+  console.log(incomingData.length)
+  console.log(outgoingData.length)
+
+
+  if (cpuMetrics.length == 0 && incomingData.length == 0 && outgoingData.length == 0) {
+    return <div className="font-bold text-[30px] mt-5">Metriky nejsou k dispozici</div>
+  }
+
   return (
     <div className="grid grid-rows-2 gap-4 auto-rows-max grid-cols-2 mt-5">
       {/* <RunnerMetricsGridCell heading="CPU"> */}
@@ -90,34 +99,48 @@ export default function RunnerMetricsTab(props: IProps) {
 
 function createCpuData(runnerMetrics: IMetrics) {
   let cpuMetrics: ICPUMetrics[] = [];
-  runnerMetrics.metrics.forEach((m, i) => {
-    cpuMetrics.push({
-      point: (runnerMetrics.metrics.length - i).toString(),
-      percents: Math.round(m.cpu * 10000) / 100,
+  
+  if (runnerMetrics?.metrics) {
+    runnerMetrics.metrics.forEach((m, i) => {
+      cpuMetrics.push({
+        point: (runnerMetrics.metrics.length - i).toString(),
+        percents: Math.round(m.cpu * 10000) / 100,
+      });
     });
-  });
+  }
+  
   return cpuMetrics;
 }
+
 function createNetworkData(runnerMetrics: IMetrics) {
   let incomingMetrics: IIncomingMetrics[] = [];
-  runnerMetrics.metrics.forEach((m, i) => {
-    incomingMetrics.push({
-      point: (runnerMetrics.metrics.length - i).toString(),
-      recieve: Math.round(m.network_receive / 64),
-      write: Math.round(m.fs_writes / 64),
+  
+  if (runnerMetrics?.metrics) {
+    runnerMetrics.metrics.forEach((m, i) => {
+      incomingMetrics.push({
+        point: (runnerMetrics.metrics.length - i).toString(),
+        recieve: Math.round(m.network_receive / 64),
+        write: Math.round(m.fs_writes / 64),
+      });
     });
-  });
+  }
+  
   return incomingMetrics;
 }
 
+
 function createFsData(runnerMetrics: IMetrics) {
   let outgoingMetrics: IOutgoingMetrics[] = [];
-  runnerMetrics.metrics.forEach((m, i) => {
-    outgoingMetrics.push({
-      point: (runnerMetrics.metrics.length - i).toString(),
-      read: Math.round(m.fs_reads / 64),
-      transmit: Math.round(m.network_transmit / 64),
+  
+  if (runnerMetrics?.metrics) {
+    runnerMetrics.metrics.forEach((m, i) => {
+      outgoingMetrics.push({
+        point: (runnerMetrics.metrics.length - i).toString(),
+        read: Math.round(m.fs_reads / 64),
+        transmit: Math.round(m.network_transmit / 64),
+      });
     });
-  });
+  }
+  
   return outgoingMetrics;
 }
