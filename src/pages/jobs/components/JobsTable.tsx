@@ -53,7 +53,9 @@ export function JobCells(job: IJobs) {
         >
           {job.SAS.toUpperCase().slice(4)}
         </Link>
-        <span>was build by</span>
+        <span>
+          {tagJoin({ action: parseRunnerAction(job.runner), state: job.state })}
+        </span>
         <Link
           to={`/runners?grp=${job.organization}`}
           className={badgeVariants({ variant: "outline" })}
@@ -63,4 +65,69 @@ export function JobCells(job: IJobs) {
       </TableCell>
     </>
   );
+}
+
+enum RunnerActions {
+  build = "build",
+  test = "test",
+  deploy_dev = "deploy_dev",
+  deploy_prod = "deploy_prod",
+}
+enum JobStates {
+  queued = "queued",
+  in_progress = "in_progress",
+  success = "success",
+  failed = "failed",
+}
+
+export function parseRunnerAction(RunnerId: string) {
+  if (RunnerId.includes("csas-dev") && RunnerId.includes("csas-linux"))
+    return RunnerActions.build;
+  else if (
+    RunnerId.includes("csas-dev") &&
+    RunnerId.includes("csas-linux-test")
+  )
+    return RunnerActions.test;
+  else if (RunnerId.includes("csas-ops") && RunnerId.includes("csas-linux"))
+    return RunnerActions.deploy_dev;
+  else if (
+    RunnerId.includes("csas-ops") &&
+    RunnerId.includes("csas-linux-prod")
+  )
+    return RunnerActions.deploy_prod;
+  else return RunnerActions.build; //TODO: FIX it later !!!!!!!!!!!!!!!!!!!!!!!!!
+
+  // throw new Error("Unknown runner ID format");
+}
+
+const verbMap: { [key in JobStates]: string } = {
+  [JobStates.success]: "was",
+  [JobStates.in_progress]: "is being",
+  [JobStates.queued]: "will be",
+  [JobStates.failed]: "failed to be",
+};
+
+const actionMap: { [key in RunnerActions]: string } = {
+  [RunnerActions.build]: "built",
+  [RunnerActions.test]: "tested",
+  [RunnerActions.deploy_dev]: "deployed to dev",
+  [RunnerActions.deploy_prod]: "deployed to prod",
+};
+
+export function tagJoin({
+  action,
+  state,
+}: {
+  action: RunnerActions;
+  state: string;
+}): string {
+  if (!(state in JobStates)) {
+    throw new Error("Unknown job state");
+  }
+  const verb = verbMap[state as JobStates];
+  const actionText = actionMap[action];
+  if (!verb || !actionText) {
+    throw new Error("Unknown job state or action");
+  }
+  return `${verb} ${actionText} by`;
 }
