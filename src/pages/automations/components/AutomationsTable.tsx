@@ -18,24 +18,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
+import Table_cel_title from "@/components/ui/table/table_cel_title";
 
 interface IProps {
   automations: IAutomation[] | IErrorMessage;
 }
-
-// enum Progression {
-//   Queued = 25,
-//   In_Progress = 50,
-//   Failed = 75,
-//   Success = 100,
-// }
-// const status = "In_Progress";
-
-//   console.log(Progression[status as keyof typeof Progression]);
-// <Progress
-//               value={Progression[status as keyof typeof Progression]}
-//               max={100}
-//             />
 
 export default function AutomationsTable(props: IProps) {
   // const navigate = useNavigate();
@@ -59,31 +46,28 @@ export default function AutomationsTable(props: IProps) {
       <TableBody>
         {(props.automations as IAutomation[]).map((a) => (
           <TableRow key={a.id}>
-            <TableCell className="font-medium">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>{abbreviateId(a.id)}</TooltipTrigger>
-                  <TooltipContent
-                    side="right"
-                    align="center"
-                    className="p-2 m-1 text-white bg-gray-800 rounded shadow-lg"
-                  >
-                    <p>{a.id}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+            <TableCell>
+              <Table_cel_title
+                title={a.id.slice(-5)}
+                text={a.id.slice(0, -6).toLowerCase() /*.replace(/_/g, " ")*/}
+              />
             </TableCell>
             <TableCell>{a.state}</TableCell>
             <TableCell>
               {format(new Date(a.last_activity), "dd. MM. yyyy HH:mm:ss")}
             </TableCell>
             <TableCell>{a.type}</TableCell>
-            <TableCell className="text-end">
+            {/* <TableCell className="text-end">
               <Link
                 className={buttonVariants({ variant: "outline" })}
                 to={`/automations/${a.id}`}
               >
-                Detail
+                Metrics
+              </Link>
+            </TableCell> */}
+            <TableCell className="text-end">
+              <Link className={buttonVariants({ variant: "outline" })} to={`#`}>
+                Logs
               </Link>
             </TableCell>
           </TableRow>
