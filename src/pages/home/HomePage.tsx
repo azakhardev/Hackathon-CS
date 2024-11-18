@@ -13,7 +13,7 @@ import H2 from "@/components/ui/typography/H2";
 export default function HomePage() {
   const runnersQuery = useQuery({
     queryKey: ["runners"],
-    queryFn: async () => await RunnerModel.getRunnersLimit("1", "3"),
+    queryFn: async () => await RunnerModel.getRunners(undefined, 3),
   });
 
   if (runnersQuery.data && "error" in runnersQuery.data) {

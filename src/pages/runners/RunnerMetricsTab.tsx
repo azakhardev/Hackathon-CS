@@ -59,10 +59,6 @@ export default function RunnerMetricsTab(props: IProps) {
   const incomingData = createNetworkData(props.runnerMetrics);
   const outgoingData = createFsData(props.runnerMetrics);
 
-  console.log(cpuMetrics.length);
-  console.log(incomingData.length);
-  console.log(outgoingData.length);
-
   if (
     cpuMetrics.length == 0 &&
     incomingData.length == 0 &&

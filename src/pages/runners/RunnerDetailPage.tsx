@@ -30,11 +30,12 @@ export default function RunnerDetailPage() {
   });
 
   const jobsQuery = useQuery({
-    queryKey: ["runnerJobs", runnerId], // Simplified the queryKey to an array with a string and runnerId
-    queryFn: async () => await RunnerModel.getJobs(runnerId, undefined, undefined, undefined, 'asc', undefined),
+    queryKey: ["runnerJobs", runnerId],
+    queryFn: async () =>
+      await RunnerModel.getJobs(runnerId!, -1, 10, undefined, "asc", undefined),
   });
 
-  console.log(runnerId)
+  console.log("runnerId:", runnerId);
 
   if (runnerQuery.data && "error" in runnerQuery.data) {
     return <ErrorMessage errorMessage={runnerQuery.data as IErrorMessage} />;
@@ -48,7 +49,20 @@ export default function RunnerDetailPage() {
     return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
   }
 
-  console.log(jobsQuery.data);
+  console.log(jobsQuery);
+
+  if (
+    (!runnerQuery.data && !runnerQuery.isLoading) ||
+    (!metricsQuery.data && !metricsQuery.isLoading) ||
+    (!jobsQuery.data && !jobsQuery.isLoading)
+  ) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
 
   return (
     <main>
@@ -62,9 +76,9 @@ export default function RunnerDetailPage() {
         runnerQuery.data && (
           <div>
             <div className="h-[10dvh] border-b-2 flex items-center">
-              <h2 className="text-[24px] ml-10 font-bold">{`Runner > ${
-                runnerQuery.data.id?.split("-")[5]
-              }`}</h2>
+              <h2 className="text-[24px] ml-10 font-bold">{`Runner > ${runnerQuery.data.id
+                ?.split("-")[5]
+                .toUpperCase()}`}</h2>
             </div>
             <div className="p-10 w-full h-[80dvh]">
               <Tabs defaultValue="jobs">
@@ -77,7 +91,7 @@ export default function RunnerDetailPage() {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="jobs">
-                  <RunnerDetailJobsFilter/>
+                  <RunnerDetailJobsFilter />
                   <JobsTable jobs={jobsQuery.data as IJobs[]} />
                 </TabsContent>
                 <TabsContent value="metrics">
