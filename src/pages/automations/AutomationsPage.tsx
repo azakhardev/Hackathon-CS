@@ -23,7 +23,7 @@ export default function AutomationsPage() {
     );
   }
 
-  if (!automationsQuery.data && !!automationsQuery.isLoading) {
+  if (!automationsQuery.data && !automationsQuery.isLoading) {
     const error: IErrorMessage = {
       code: "500",
       error: "Internal server error",
