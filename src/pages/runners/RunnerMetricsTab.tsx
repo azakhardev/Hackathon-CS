@@ -1,6 +1,6 @@
-import CustomLineChart from "@/components/charts/CustomLineChart";
+import CustomLineChart from "@/components/features/charts/CustomLineChart";
 import { IMetrics } from "../metrics/types/IMetrics";
-import CustomAreaChart from "@/components/charts/CustomAreaChart";
+import CustomAreaChart from "@/components/features/charts/CustomAreaChart";
 
 interface ICPUMetrics {
   point: string;
@@ -59,13 +59,20 @@ export default function RunnerMetricsTab(props: IProps) {
   const incomingData = createNetworkData(props.runnerMetrics);
   const outgoingData = createFsData(props.runnerMetrics);
 
-  console.log(cpuMetrics.length)
-  console.log(incomingData.length)
-  console.log(outgoingData.length)
+  console.log(cpuMetrics.length);
+  console.log(incomingData.length);
+  console.log(outgoingData.length);
 
-
-  if (cpuMetrics.length == 0 && incomingData.length == 0 && outgoingData.length == 0) {
-    return <div className="font-bold text-[30px] mt-5">Metriky nejsou k dispozici</div>
+  if (
+    cpuMetrics.length == 0 &&
+    incomingData.length == 0 &&
+    outgoingData.length == 0
+  ) {
+    return (
+      <div className="font-bold text-[30px] mt-5">
+        Metriky nejsou k dispozici
+      </div>
+    );
   }
 
   return (
@@ -99,7 +106,7 @@ export default function RunnerMetricsTab(props: IProps) {
 
 function createCpuData(runnerMetrics: IMetrics) {
   let cpuMetrics: ICPUMetrics[] = [];
-  
+
   if (runnerMetrics?.metrics) {
     runnerMetrics.metrics.forEach((m, i) => {
       cpuMetrics.push({
@@ -108,13 +115,13 @@ function createCpuData(runnerMetrics: IMetrics) {
       });
     });
   }
-  
+
   return cpuMetrics;
 }
 
 function createNetworkData(runnerMetrics: IMetrics) {
   let incomingMetrics: IIncomingMetrics[] = [];
-  
+
   if (runnerMetrics?.metrics) {
     runnerMetrics.metrics.forEach((m, i) => {
       incomingMetrics.push({
@@ -124,14 +131,13 @@ function createNetworkData(runnerMetrics: IMetrics) {
       });
     });
   }
-  
+
   return incomingMetrics;
 }
 
-
 function createFsData(runnerMetrics: IMetrics) {
   let outgoingMetrics: IOutgoingMetrics[] = [];
-  
+
   if (runnerMetrics?.metrics) {
     runnerMetrics.metrics.forEach((m, i) => {
       outgoingMetrics.push({
@@ -141,6 +147,6 @@ function createFsData(runnerMetrics: IMetrics) {
       });
     });
   }
-  
+
   return outgoingMetrics;
 }
