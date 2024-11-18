@@ -1,5 +1,5 @@
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { RunnerModel } from "@/lib/Models/RunnerModel";
+import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
@@ -16,7 +16,12 @@ import { DatePickerWithRange } from "@/components/ui/DatePicker";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import RunnerDetailJobsFilter from "./components/RunnerDetailJobsFilters";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@/components/ui/table/table";
 import { formatDistanceToNow } from "date-fns";
 import { Table_cel_state } from "@/components/ui/table/table_cel_state";
 
@@ -80,41 +85,53 @@ export default function RunnerDetailPage() {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="jobs">
-                  <RunnerDetailJobsFilter/>
+                  <RunnerDetailJobsFilter />
                   <Table>
                     <TableBody>
                       {jobsQuery.data?.map((jobs, index) => (
                         <TableRow key={index}>
-                        <TableCell>
-                          <div>
-                            <h3>{jobs.id}</h3>
-                            <p className="text-gray-500 text-[12px]">
-                              {(() => {
-                                const prod = `${jobs.runner.split('-')[1]}-${jobs.runner.split('-')[2]}`;
-                                const action = jobs.runner.split('-').slice(3, -1).join('-');
-                      
-                                switch (`${prod}-${action}`) {
-                                  case "csas-dev-csas-linux":
-                                    return "build aplikace";
-                                  case "csas-dev-csas-linux-test":
-                                    return "testování aplikace";
-                                  case "csas-ops-csas-linux":
-                                    return "Deploy do neprodukčního prostředí";
-                                  case "csas-ops-csas-linux-test":
-                                    return "Deploy do produkčního prostředí";
-                                  default:
-                                    return "Unknown action";
-                                }
-                              })()}
-                            </p>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <Table_cel_state title={jobs.state} text={`(${formatDistanceToNow(new Date(jobs.timestamp), { addSuffix: true })})`} type={jobs.state}/>
-                        </TableCell>
-                        <TableCell>{jobs.SAS}</TableCell>
-                        <TableCell>{jobs.runner.split('-')[5]}</TableCell>
-                      </TableRow>
+                          <TableCell>
+                            <div>
+                              <h3>{jobs.id}</h3>
+                              <p className="text-gray-500 text-[12px]">
+                                {(() => {
+                                  const prod = `${jobs.runner.split("-")[1]}-${
+                                    jobs.runner.split("-")[2]
+                                  }`;
+                                  const action = jobs.runner
+                                    .split("-")
+                                    .slice(3, -1)
+                                    .join("-");
+
+                                  switch (`${prod}-${action}`) {
+                                    case "csas-dev-csas-linux":
+                                      return "build aplikace";
+                                    case "csas-dev-csas-linux-test":
+                                      return "testování aplikace";
+                                    case "csas-ops-csas-linux":
+                                      return "Deploy do neprodukčního prostředí";
+                                    case "csas-ops-csas-linux-test":
+                                      return "Deploy do produkčního prostředí";
+                                    default:
+                                      return "Unknown action";
+                                  }
+                                })()}
+                              </p>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <Table_cel_state
+                              title={jobs.state}
+                              text={`(${formatDistanceToNow(
+                                new Date(jobs.timestamp),
+                                { addSuffix: true }
+                              )})`}
+                              type={jobs.state}
+                            />
+                          </TableCell>
+                          <TableCell>{jobs.SAS}</TableCell>
+                          <TableCell>{jobs.runner.split("-")[5]}</TableCell>
+                        </TableRow>
                       ))}
                     </TableBody>
                   </Table>
@@ -126,7 +143,11 @@ export default function RunnerDetailPage() {
       )}
       <div className="m-4">
         <Button
-          className={jobsQuery.data && jobsQuery.data.length >= limit ? "w-full" : "hidden"}
+          className={
+            jobsQuery.data && jobsQuery.data.length >= limit
+              ? "w-full"
+              : "hidden"
+          }
           variant="outline"
         >
           Load more

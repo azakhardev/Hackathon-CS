@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import JobsTable from "./components/JobsTable";
-import { RunnerModel } from "@/lib/Models/RunnerModel";
-import { IJobs } from "@/lib/types/IJobs";
+import { RunnerModel } from "@/pages/runners/api/RunnerModel";
+import { IJobs } from "@/pages/jobs/types/IJobs";
 import { useSearchParams } from "react-router-dom";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";

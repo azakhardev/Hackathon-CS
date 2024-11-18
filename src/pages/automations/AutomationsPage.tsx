@@ -1,7 +1,7 @@
-import { AutomationModel } from "@/lib/Models/AutomationModel";
+import { AutomationModel } from "@/pages/automations/api/AutomationModel";
 import { useQuery } from "@tanstack/react-query";
 import AutomationsTable from "@/pages/automations/components/AutomationsTable";
-import { IAutomation } from "@/lib/types/IAutomation";
+import { IAutomation } from "@/pages/automations/types/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import H1 from "@/components/ui/typography/H1";

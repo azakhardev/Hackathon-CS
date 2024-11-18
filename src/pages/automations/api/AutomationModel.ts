@@ -1,12 +1,12 @@
 import { IAutomation } from "../types/IAutomation";
 import { IAutomationLog } from "../types/IAutomationLog";
-import { api_auth, api_url } from "../helpers/api/env_vars";
+import { api_auth, api_url } from "../../../lib/utils/env_vars";
 import { IAutomationType } from "../types/IAutomationType";
-import { IErrorMessage } from "../types/IErrorMessage";
+import { IErrorMessage } from "../../../lib/types/IErrorMessage";
 
 export class AutomationModel {
   static async getAutomations(
-    limit = 10,
+    limit = 10
   ): Promise<IAutomation[] | IErrorMessage> {
     const response = await fetch(
       `${api_url}/automations?` +

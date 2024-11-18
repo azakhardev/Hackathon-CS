@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { RunnerModel } from "@/lib/Models/RunnerModel";
+import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import RunnersTable from "@/pages/runners/components/RunnersTable";
-import { IRunner } from "@/lib/types/IRunner";
+import { IRunner } from "@/pages/runners/types/IRunner";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { useState } from "react";

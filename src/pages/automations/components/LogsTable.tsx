@@ -1,4 +1,4 @@
-import { IAutomationLog } from "@/lib/types/IAutomationLog";
+import { IAutomationLog } from "@/pages/automations/types/IAutomationLog";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { format } from "date-fns";
 

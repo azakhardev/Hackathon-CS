@@ -12,7 +12,7 @@ import {
 import { Table_cel_state } from "@/components/ui/table/table_cel_state";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import { IRunner } from "@/lib/types/IRunner";
+import { IRunner } from "@/pages/runners/types/IRunner";
 import { Link } from "react-router-dom";
 interface IProps {
   runners: IRunner[] | IErrorMessage;

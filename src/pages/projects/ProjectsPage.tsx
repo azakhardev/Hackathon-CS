@@ -1,9 +1,9 @@
 import H1 from "@/components/ui/typography/H1";
 import ProjectsTable from "@/pages/projects/components/ProjectsTable";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { RunnerModel } from "@/lib/Models/RunnerModel";
+import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import { IJobs } from "@/lib/types/IJobs";
+import { IJobs } from "@/pages/jobs/types/IJobs";
 import { IProject } from "@/lib/types/IProject";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";

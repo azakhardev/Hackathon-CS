@@ -7,7 +7,7 @@ import {
   // TableHead,
   // TableHeader,
 } from "@/components/ui/table/table";
-import { IAutomation } from "@/lib/types/IAutomation";
+import { IAutomation } from "@/pages/automations/types/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";

@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { AutomationModel } from "../../../lib/Models/AutomationModel";
+import { AutomationModel } from "../api/AutomationModel";
 import {
   Table,
   TableBody,
@@ -10,7 +10,7 @@ import {
 } from "../../../components/ui/table/table";
 import { format } from "date-fns";
 import { IErrorMessage } from "../../../lib/types/IErrorMessage";
-import { IAutomation } from "../../../lib/types/IAutomation";
+import { IAutomation } from "../types/IAutomation";
 
 export default function Automation() {
   const automations = useQuery({

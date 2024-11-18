@@ -1,8 +1,8 @@
 import H1 from "@/components/ui/typography/H1";
 import LogsTable from "@/pages/automations/components/LogsTable";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { AutomationModel } from "@/lib/Models/AutomationModel";
-import { IAutomationLog } from "@/lib/types/IAutomationLog";
+import { AutomationModel } from "@/pages/automations/api/AutomationModel";
+import { IAutomationLog } from "@/pages/automations/types/IAutomationLog";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";

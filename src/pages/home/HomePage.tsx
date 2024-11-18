@@ -1,5 +1,5 @@
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { RunnerModel } from "@/lib/Models/RunnerModel";
+import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import ProjectsTable from "../projects/components/ProjectsTable";
@@ -7,7 +7,7 @@ import RunnersTable from "../runners/components/RunnersTable";
 import JobsTable from "../jobs/components/JobsTable";
 import AutomationsTable from "../automations/components/AutomationsTable";
 import H1 from "@/components/ui/typography/H1";
-import { IRunner } from "@/lib/types/IRunner";
+import { IRunner } from "@/pages/runners/types/IRunner";
 import H2 from "@/components/ui/typography/H2";
 
 export default function HomePage() {
