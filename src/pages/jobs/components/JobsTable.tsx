@@ -13,6 +13,7 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { Link } from "react-router-dom";
 import { badgeVariants } from "@/components/ui/badge";
 import { Table_cel_state } from "@/components/ui/table/table_cel_state";
+import Table_cel_title from "@/components/ui/table/table_cel_title";
 
 interface IProps {
   jobs: IJobs[] | IErrorMessage;
@@ -31,7 +32,12 @@ export default function JobsTable(props: IProps) {
       <TableBody>
         {(props.jobs as IJobs[]).map((j) => (
           <TableRow key={j.id}>
-            <TableCell className="font-medium">{j.id}</TableCell>
+            <TableCell className="font-medium">
+              <Table_cel_title
+                title={j.id}
+                text={buildDescription(parseRunnerAction(j.runner))}
+              />
+            </TableCell>
             <JobCells {...j} />
           </TableRow>
         ))}
@@ -103,13 +109,27 @@ export function parseRunnerAction(RunnerId: string) {
   // throw new Error("Unknown runner ID format");
 }
 
+export function buildDescription(action: RunnerActions) {
+  switch (action) {
+    case RunnerActions.waiting:
+      return "Waiting for runner";
+    case RunnerActions.build:
+      return "Building";
+    case RunnerActions.test:
+      return "Testing";
+    case RunnerActions.deploy_dev:
+      return "Deploying to dev";
+    case RunnerActions.deploy_prod:
+      return "Deploying to prod";
+  }
+}
+
 const verbMap: { [key in JobStates]: string } = {
   [JobStates.success]: "was",
   [JobStates.in_progress]: "is being",
   [JobStates.queued]: "will be",
   [JobStates.failed]: "failed to be",
 };
-
 const actionMap: { [key in RunnerActions]: string } = {
   [RunnerActions.waiting]: "is waiting for runner", //always present tense
   [RunnerActions.build]: "built",
@@ -117,7 +137,6 @@ const actionMap: { [key in RunnerActions]: string } = {
   [RunnerActions.deploy_dev]: "deployed to dev",
   [RunnerActions.deploy_prod]: "deployed to prod",
 };
-
 export function tagJoin({
   action,
   state,
