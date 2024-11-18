@@ -13,7 +13,6 @@ export default function StateNode({
   const circleStyle: React.CSSProperties = {
     width: size,
     height: size,
-    backgroundColor: color,
     borderRadius: "100%",
     display: "inline-block",
   };
@@ -21,7 +20,6 @@ export default function StateNode({
   const lineStyle: React.CSSProperties = {
     width: isCol ? 1.28 : lineLength, // Thickness of the line if vertical; otherwise, length of the line
     height: isCol ? lineLength : 1.28, // Length of the line if vertical; otherwise, thickness of the line
-    backgroundColor: color,
   };
 
   return (

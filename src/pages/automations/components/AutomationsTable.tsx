@@ -48,12 +48,15 @@ export default function AutomationsTable(props: IProps) {
               />
             </TableCell>
             <TableCell>
-              {a.state}
               <div className="flex flex-row">
                 <StateNode color="state_gray" />
                 <StateNode />
-                <StateNode direction="none" />
+                <StateNode color="state_green" direction="none" />
               </div>
+
+              {a.type_object?.states.map((s, index) => (
+                <ul key={index}>{s}</ul>
+              ))}
             </TableCell>
             <TableCell>
               <Badge_timeAgo date={new Date(a.last_activity)} />
