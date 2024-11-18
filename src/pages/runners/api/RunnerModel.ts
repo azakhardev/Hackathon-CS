@@ -106,6 +106,8 @@ export class RunnerModel {
       });
     }
 
+    console.log(`${api_url}/jobs?${params}`)
+
     const response = await fetch(`${api_url}/jobs?${params}`, {
       method: "GET",
       headers: {
