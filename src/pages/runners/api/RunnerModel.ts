@@ -9,7 +9,7 @@ export class RunnerModel {
     const response = await fetch(
       `${api_url}/sas?${new URLSearchParams({
         search: search ?? "",
-      })}`, 
+      })}`,
       {
         method: "GET",
         headers: {
@@ -21,28 +21,35 @@ export class RunnerModel {
     return response.json();
   }
 
-  static async getRunners(search?: string, limit?: number, page?: number, sort?: string, order?: "asc" | "desc", filters?: Record<string, string>): Promise<IRunner[] | IErrorMessage> {
+  static async getRunners(
+    search?: string,
+    limit?: number,
+    page?: number,
+    sort?: string,
+    order?: "asc" | "desc",
+    filters?: Record<string, string>
+  ): Promise<IRunner[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
       limit: limit?.toString() ?? "10",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
-      order: order ?? "asc"
+      order: order ?? "asc",
     });
-  
+
     if (filters) {
       Object.entries(filters).forEach(([key, value]) => {
         params.append(key, value);
       });
     }
-  
+
     const response = await fetch(`${api_url}/runners?${params}`, {
       method: "GET",
       headers: {
         Authorization: `Basic ${api_auth}`,
       },
     });
-  
+
     return response.json();
   }
 
@@ -77,28 +84,35 @@ export class RunnerModel {
     return response.json();
   }
 
-  static async getJobs(search?: string, limit?: number, page?: number, sort?: string, order?: "asc" | "desc", filters?: Record<string, string>): Promise<IJobs[] | IErrorMessage> {
+  static async getJobs(
+    search?: string,
+    limit?: number,
+    page?: number,
+    sort?: string,
+    order?: "asc" | "desc",
+    filters?: Record<string, string>
+  ): Promise<IJobs[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
       limit: limit?.toString() ?? "10",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
-      order: order ?? "asc"
+      order: order ?? "asc",
     });
-  
+
     if (filters) {
       Object.entries(filters).forEach(([key, value]) => {
         params.append(key, value);
       });
     }
-  
+
     const response = await fetch(`${api_url}/jobs?${params}`, {
       method: "GET",
       headers: {
         Authorization: `Basic ${api_auth}`,
       },
     });
-  
+
     return response.json();
   }
 
@@ -157,28 +171,35 @@ export class RunnerModel {
     return response.json();
   }
 
-  static async getMetrics(search?: string, limit?: number, page?: number, sort?: string, order?: "asc" | "desc", filters?: Record<string, string>): Promise<IMetrics[] | IErrorMessage> {
+  static async getMetrics(
+    search?: string,
+    limit?: number,
+    page?: number,
+    sort?: string,
+    order?: "asc" | "desc",
+    filters?: Record<string, string>
+  ): Promise<IMetrics[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
       limit: limit?.toString() ?? "10",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
-      order: order ?? "asc"
+      order: order ?? "asc",
     });
-  
+
     if (filters) {
       Object.entries(filters).forEach(([key, value]) => {
         params.append(key, value);
       });
     }
-  
+
     const response = await fetch(`${api_url}/metrics?${params}`, {
       method: "GET",
       headers: {
         Authorization: `Basic ${api_auth}`,
       },
     });
-  
+
     return response.json();
   }
 

@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 
 export default function RunnerDetailJobsFilter() {
   return (
-    <div className="grid grid-cols-5 gap-10 mt-5">
+    <div className="grid grid-cols-5 gap-10 my-5">
       <Input className="text-white border-gray-100 " placeholder="Find ..." />
       <DatePickerWithRange className="" />
       <Select>

@@ -77,7 +77,7 @@ export default function RunnerDetailPage() {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="jobs">
-                  <RunnerDetailJobsFilter />
+                  <RunnerDetailJobsFilter/>
                   <JobsTable jobs={jobsQuery.data as IJobs[]} />
                 </TabsContent>
                 <TabsContent value="metrics">
