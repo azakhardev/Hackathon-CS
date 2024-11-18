@@ -41,7 +41,7 @@ export default function Layout() {
             </Breadcrumb>
           </div>
         </header> */}
-        <main className="h-full max-w-full px-4 mt-10 md:px-32 bg-bg_secondary">
+        <main className="h-full max-w-full px-4 mt-10 mb-5 md:px-32 bg-bg_secondary">
           <Outlet />
         </main>
       </SidebarInset>

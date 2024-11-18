@@ -10,7 +10,10 @@ import {
 export function Badge_timeAgo({ date }: { date: Date }) {
   return component_timeAgo({
     date,
-    className: badgeVariants({ variant: "outline" }),
+    className: badgeVariants({
+      variant: "outline",
+      className: "border-dashed",
+    }),
   });
 }
 export function Description_timeAgo({ date }: { date: Date }) {
