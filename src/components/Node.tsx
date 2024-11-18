@@ -1,28 +1,45 @@
+export type NodeDirection = "up" | "down" | "left" | "right" | "none" | "<-";
+export type NodeColor = "gray" | "green" | "yellow" | "red";
+
+export interface NodeProps {
+  isBorder?: boolean;
+  isActive?: boolean;
+  color?: NodeColor;
+  direction?: NodeDirection;
+  size?: number;
+  lineLength?: number;
+}
+
 export default function StateNode({
   isBorder = false,
   isActive = false,
-  color = "state_gray",
+  color = "gray",
   direction = "left",
   size = 12,
   lineLength = 10,
-}) {
+}: NodeProps) {
   const isBefore = direction === "<-" || direction === "up";
   const isCol = direction === "up" || direction === "down";
   const isLine = direction === "none";
 
-  // Use complete class names instead of dynamic construction
-  const getNodeClass = () => {
-    if (isActive) {
-      return isBorder
-        ? "border border-1 border-state_yellow"
-        : "bg-state_yellow";
-    }
-    return isBorder ? `border border-1 border-${color}` : `bg-${color}`;
+  // Simplified color mapping
+  const colorClasses: Record<NodeColor, string> = {
+    gray: "bg-state_gray",
+    green: "bg-state_green",
+    yellow: "bg-state_yellow",
+    red: "bg-state_red",
   };
 
-  const getLineClass = () => {
-    return isActive ? "bg-state_gray" : `bg-${color}`;
+  const borderClasses: Record<NodeColor, string> = {
+    gray: "border-state_gray",
+    green: "border-state_green",
+    yellow: "border-state_yellow",
+    red: "border-state_red",
   };
+
+  const nodeClass = isBorder
+    ? `border border-1 ${borderClasses[color]}`
+    : colorClasses[color];
 
   const circleStyle: React.CSSProperties = {
     width: size,
@@ -35,14 +52,21 @@ export default function StateNode({
     width: isCol ? 1.28 : lineLength, // Thickness of the line if vertical; otherwise, length of the line
     height: isCol ? lineLength : 1.28, // Length of the line if vertical; otherwise, thickness of the line
   };
+
   return (
     <div className={`flex items-center ${isCol ? "flex-col" : "flex-row"}`}>
       {isBefore && !isLine && (
-        <div style={lineStyle} className={getLineClass()}></div>
+        <div
+          style={lineStyle}
+          className={isActive ? colorClasses["gray"] : colorClasses[color]}
+        ></div>
       )}
-      <div style={circleStyle} className={getNodeClass()}></div>
+      <div style={circleStyle} className={nodeClass}></div>
       {!isBefore && !isLine && (
-        <div style={lineStyle} className={getLineClass()}></div>
+        <div
+          style={lineStyle}
+          className={isActive ? colorClasses["gray"] : colorClasses[color]}
+        ></div>
       )}
     </div>
   );

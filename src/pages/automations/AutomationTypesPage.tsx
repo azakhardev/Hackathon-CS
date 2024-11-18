@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table/table";
 import { badgeVariants } from "@/components/ui/badge";
-import StateNode from "@/components/Node";
+import StateNode, { NodeDirection } from "@/components/Node";
 
 export default function AutomationTypesPage() {
   const { data, isLoading } = useQuery({
@@ -69,7 +69,7 @@ export default function AutomationTypesPage() {
                     </AccordionTrigger>
                     <AccordionContent>
                       {(x.states as string[]).map((xx, ii) => {
-                        let direction = "down";
+                        let direction: NodeDirection = "down";
                         if (ii == x.states.length - 1) direction = "none";
                         return (
                           <div
@@ -77,8 +77,9 @@ export default function AutomationTypesPage() {
                             className="flex items-start gap-2 ml-[25rem]"
                           >
                             <StateNode
-                              color="state_green"
+                              color="green"
                               direction={direction}
+                              isActive={false}
                             />
                             <div className="mt-[-5px]">
                               {xx.charAt(0).toUpperCase() +
