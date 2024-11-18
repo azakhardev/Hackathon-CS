@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/Button";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
 import { Badge_timeAgo } from "@/components/ui/table/badge_timeAgo";
+import StateNode from "@/components/Node";
 
 interface IProps {
   automations: IAutomation[] | IErrorMessage;
@@ -46,7 +47,14 @@ export default function AutomationsTable(props: IProps) {
                 text={a.id.slice(0, -6).toLowerCase() /*.replace(/_/g, " ")*/}
               />
             </TableCell>
-            <TableCell>{a.state}</TableCell>
+            <TableCell>
+              {a.state}
+              <div className="flex flex-row">
+                <StateNode />
+                <StateNode />
+                <StateNode />
+              </div>
+            </TableCell>
             <TableCell>
               <Badge_timeAgo date={new Date(a.last_activity)} />
             </TableCell>
