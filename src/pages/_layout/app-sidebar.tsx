@@ -22,7 +22,7 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Tooltip,
   TooltipContent,
@@ -104,31 +104,33 @@ const itemsOps: Item[] = [
   },
 ];
 
-const SidebarMenuItems = ({
-  title,
-  items,
-}: {
-  title: string;
-  items: Item[];
-}) => (
-  <SidebarGroup>
-    <SidebarGroupLabel>{title}</SidebarGroupLabel>
-    <SidebarGroupContent>
-      <SidebarMenu>
-        {items.map((item) => (
-          <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild>
-              <Link to={item.url}>
-                <item.icon />
-                <span>{item.title}</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        ))}
-      </SidebarMenu>
-    </SidebarGroupContent>
-  </SidebarGroup>
-);
+function SidebarMenuItems({ title, items }: { title: string; items: Item[] }) {
+  const location = useLocation();
+  return (
+    <SidebarGroup>
+      <SidebarGroupLabel>{title}</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {items.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton
+                asChild
+                className={
+                  location.pathname === item.url ? "bg-slate-700" : undefined
+                }
+              >
+                <Link to={item.url}>
+                  <item.icon />
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
+}
 
 const SidebarHeaderBuilder = ({ title }: { title: string }) => (
   <SidebarMenu>
