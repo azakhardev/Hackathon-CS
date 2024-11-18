@@ -1,4 +1,6 @@
 export default function StateNode({
+  isBorder = false,
+  isActive = false,
   color = "state_gray",
   direction = "left", //up, down, left, right or none
   size = 12,
@@ -7,8 +9,9 @@ export default function StateNode({
   const isBefore = direction === "<-" || direction === "up";
   const isCol = direction === "up" || direction === "down";
   const isLine = direction === "none";
-
-  color = `bg-${color}`;
+  const lineColor = "bg-" + (isActive ? color : "state_gray");
+  color = isActive ? "state_yellow" : color;
+  color = isBorder ? `border border-1 border-${color}` : `bg-${color}`;
 
   const circleStyle: React.CSSProperties = {
     width: size,
@@ -23,10 +26,14 @@ export default function StateNode({
   };
 
   return (
-    <div className={`flex items-center ${isCol ? "flex-col" : ""}`}>
-      {isBefore && !isLine && <div style={lineStyle} className={color}></div>}
+    <div className={`flex items-center ${isCol ? "flex-col" : "flex-row"}`}>
+      {isBefore && !isLine && (
+        <div style={lineStyle} className={lineColor}></div>
+      )}
       <div style={circleStyle} className={color}></div>
-      {!isBefore && !isLine && <div style={lineStyle} className={color}></div>}
+      {!isBefore && !isLine && (
+        <div style={lineStyle} className={lineColor}></div>
+      )}
     </div>
   );
 }
