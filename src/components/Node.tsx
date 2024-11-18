@@ -24,15 +24,14 @@ export default function StateNode({
     width: isCol ? 1.28 : lineLength, // Thickness of the line if vertical; otherwise, length of the line
     height: isCol ? lineLength : 1.28, // Length of the line if vertical; otherwise, thickness of the line
   };
-  console.log(color);
   return (
     <div className={`flex items-center ${isCol ? "flex-col" : "flex-row"}`}>
       {isBefore && !isLine && (
-        <div style={lineStyle} className={lineColor}></div>
+        <div style={lineStyle} className={`${lineColor}`}></div>
       )}
-      <div style={circleStyle} className={color}></div>
+      <div style={circleStyle} className={`${color}`}></div>
       {!isBefore && !isLine && (
-        <div style={lineStyle} className={lineColor}></div>
+        <div style={lineStyle} className={`${lineColor}`}></div>
       )}
     </div>
   );
