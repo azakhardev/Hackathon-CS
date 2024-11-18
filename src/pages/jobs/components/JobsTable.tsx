@@ -65,7 +65,7 @@ export function JobCells(job: IJobs) {
           {job.SAS.toUpperCase().slice(4)}
         </Link>
         <span>{tagJoin({ action, state: job.state })}</span>
-        {action !== RunnerActions.waiting && (
+        {action !== RunnerActions.waiting.toString() && (
           <Link
             to={`/runners?grp=${job.organization}`}
             className={badgeVariants({ variant: "outline" })}
@@ -80,10 +80,11 @@ export function JobCells(job: IJobs) {
 
 enum RunnerActions {
   waiting = "waiting",
-  build = "build",
-  test = "test",
-  deploy_dev = "deploy_dev",
-  deploy_prod = "deploy_prod",
+  build = "Build aplikace",
+  test = "Testování aplikace",
+  deploy_dev = "Deploy do neprodukčního prostředí",
+  deploy_prod = "Deploy do produkčního prostředí",
+  none = "Unknown action"
 }
 enum JobStates {
   queued = "queued",
@@ -93,22 +94,43 @@ enum JobStates {
 }
 
 export function parseRunnerAction(RunnerId: string) {
-  if (RunnerId === "none") return RunnerActions.waiting;
-  else if (RunnerId.includes("csas-dev") && RunnerId.includes("csas-linux"))
-    return RunnerActions.build;
-  else if (
-    RunnerId.includes("csas-dev") &&
-    RunnerId.includes("csas-linux-test")
-  )
-    return RunnerActions.test;
-  else if (RunnerId.includes("csas-ops") && RunnerId.includes("csas-linux"))
-    return RunnerActions.deploy_dev;
-  else if (
-    RunnerId.includes("csas-ops") &&
-    RunnerId.includes("csas-linux-prod")
-  )
-    return RunnerActions.deploy_prod;
-  else return RunnerActions.build; //TODO: FIX it later !!!!!!!!!!!!!!!!!!!!!!!!!
+  // if (RunnerId === "none") return RunnerActions.waiting;
+  // else if (RunnerId.includes("csas-dev") && RunnerId.includes("csas-linux"))
+  //   return RunnerActions.build;
+  // else if (
+  //   RunnerId.includes("csas-dev") &&
+  //   RunnerId.includes("csas-linux-test")
+  // )
+  //   return RunnerActions.test;
+  // else if (RunnerId.includes("csas-ops") && RunnerId.includes("csas-linux"))
+  //   return RunnerActions.deploy_dev;
+  // else if (
+  //   RunnerId.includes("csas-ops") &&
+  //   RunnerId.includes("csas-linux-prod")
+  // )
+  //   return RunnerActions.deploy_prod;
+  // else return RunnerActions.build; //TODO: FIX it later !!!!!!!!!!!!!!!!!!!!!!!!!
+
+  const prod = `${RunnerId.split("-")[1]}-${
+    RunnerId.split("-")[2]
+  }`;
+  const action = RunnerId
+    .split("-")
+    .slice(3, -1)
+    .join("-");
+
+  switch (`${prod}-${action}`) {
+    case "csas-dev-csas-linux":
+      return RunnerActions.build
+    case "csas-dev-csas-linux-test":
+      return RunnerActions.test
+    case "csas-ops-csas-linux":
+      return RunnerActions.deploy_dev;
+    case "csas-ops-csas-linux-test":
+      return RunnerActions.deploy_prod;
+    default:
+      return RunnerActions.none;
+  }
 
   // throw new Error("Unknown runner ID format");
 }
@@ -118,13 +140,15 @@ export function buildDescription(action: RunnerActions) {
     case RunnerActions.waiting:
       return "Waiting for runner";
     case RunnerActions.build:
-      return "Building";
+      return "Build aplikace";
     case RunnerActions.test:
-      return "Testing";
+      return "Testování aplikace";
     case RunnerActions.deploy_dev:
-      return "Deploying to dev";
+      return "Deploy do neprodukčního prostředí";
     case RunnerActions.deploy_prod:
-      return "Deploying to prod";
+      return "Deploy do produkčního prostředí";
+    default:
+      return "Unknown action"
   }
 }
 
@@ -170,10 +194,11 @@ const verbMap: { [key in JobStates]: string } = {
 };
 const actionMap: { [key in RunnerActions]: string } = {
   [RunnerActions.waiting]: "is waiting for runner", //always present tense
-  [RunnerActions.build]: "built",
-  [RunnerActions.test]: "tested",
-  [RunnerActions.deploy_dev]: "deployed to dev",
-  [RunnerActions.deploy_prod]: "deployed to prod",
+  [RunnerActions.build]: "Build aplikace",
+  [RunnerActions.test]: "Testování aplikace",
+  [RunnerActions.deploy_dev]: "Deploy do neprodukčního prostředí",
+  [RunnerActions.deploy_prod]: "Deploy do produkčního prostředí",
+  [RunnerActions.none]: "Uknown action"
 };
 export function tagJoin({
   action,

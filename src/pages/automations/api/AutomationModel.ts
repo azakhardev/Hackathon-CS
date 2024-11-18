@@ -9,7 +9,7 @@ export class AutomationModel {
   static async getAutomations(search?: string, limit?: number, page?: number, sort?: string, order?: "asc" | "desc", filters?: Record<string, string>): Promise<IAutomation[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
-      limit: limit?.toString() ?? "10",
+      limit: limit?.toString() ?? "-1",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc"
@@ -59,7 +59,7 @@ export class AutomationModel {
   static async getAutomationTypes(search?: string, limit?: number, page?: number, sort?: string, order?: "asc" | "desc", filters?: Record<string, string>): Promise<IAutomationType[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
-      limit: limit?.toString() ?? "10",
+      limit: limit?.toString() ?? "-1",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc"

@@ -60,7 +60,7 @@ export default function RunnerMetricsTab(props: IProps) {
   const incomingData = createNetworkData(props.runnerMetrics);
   const outgoingData = createFsData(props.runnerMetrics);
   return (
-    <div className="grid grid-rows-2 gap-4 auto-rows-max grid-cols-2">
+    <div className="grid grid-rows-2 gap-4 auto-rows-max grid-cols-2 mt-5">
       {/* <RunnerMetricsGridCell heading="CPU"> */}
       <CustomLineChart
         chartConfig={CPU_CHART_CONFIG}
