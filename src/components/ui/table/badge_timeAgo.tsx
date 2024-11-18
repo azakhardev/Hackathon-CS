@@ -8,13 +8,30 @@ import {
 } from "../tooltip";
 
 export function Badge_timeAgo({ date }: { date: Date }) {
+  return component_timeAgo({
+    date,
+    className: badgeVariants({ variant: "outline" }),
+  });
+}
+export function Description_timeAgo({ date }: { date: Date }) {
+  return component_timeAgo({
+    date,
+    className: "",
+  });
+}
+
+function component_timeAgo({
+  date,
+  className,
+}: {
+  date: Date;
+  className: string;
+}) {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <div className={badgeVariants({ variant: "outline" })}>
-            {timeAgo(date)}
-          </div>
+          <div className={className}>{timeAgo(date)}</div>
         </TooltipTrigger>
         <TooltipContent>
           <p>{format(date, "dd. MM. yyyy HH:mm:ss")}</p>

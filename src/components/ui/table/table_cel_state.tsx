@@ -1,4 +1,5 @@
 import { CircleIcon } from "lucide-react";
+import { Description_timeAgo } from "./badge_timeAgo";
 
 export enum StateType {
   Gray = "state_gray",
@@ -53,7 +54,11 @@ export function Table_cel_state({
           {formatState(title)}
         </div>
       </div>
-      <div className="text-sm font-light text-muted-foreground">{text}</div>
+      <div className="text-sm font-light text-muted-foreground">
+        {isNaN(Date.parse(text))
+          ? text
+          : Description_timeAgo({ date: new Date(text) })}
+      </div>
     </div>
   );
 }

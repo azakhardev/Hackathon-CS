@@ -51,7 +51,11 @@ export function JobCells(job: IJobs) {
   return (
     <>
       <TableCell>
-        <Table_cel_state title={job.state} text="Date" type={job.state} />
+        <Table_cel_state
+          title={job.state}
+          text={job.timestamp}
+          type={job.state}
+        />
       </TableCell>
       <TableCell>
         <Link
