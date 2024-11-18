@@ -60,11 +60,6 @@ export default function AutomationsTable(props: IProps) {
             </TableCell>
             <TableCell>
               <div className="flex">
-                {/* {a.type_object?.states.slice(0, -1).map((i, index) => (
-                  <StateNode key={index} />
-                ))}
-                <StateNode direction="none" /> */}
-
                 {a.type_object?.states?.map((state, index: number) => {
                   let isBorder = false;
                   let isActive = false;
@@ -86,13 +81,13 @@ export default function AutomationsTable(props: IProps) {
                     direction = "none";
 
                   return (
-                    <TooltipProvider>
+                    <TooltipProvider key={index}>
                       <Tooltip>
                         <TooltipTrigger>
                           <StateNode
-                            key={index}
                             color={color}
                             isBorder={isBorder}
+                            isActive={isActive}
                             direction={direction}
                           />
                         </TooltipTrigger>

@@ -9,7 +9,7 @@ export default function StateNode({
   const isBefore = direction === "<-" || direction === "up";
   const isCol = direction === "up" || direction === "down";
   const isLine = direction === "none";
-  const lineColor = "bg-" + (isActive ? color : "state_gray");
+  const lineColor = "bg-" + (isActive ? "state_gray" : color);
   color = isActive ? "state_yellow" : color;
   color = isBorder ? `border border-1 border-${color}` : `bg-${color}`;
 
@@ -24,7 +24,7 @@ export default function StateNode({
     width: isCol ? 1.28 : lineLength, // Thickness of the line if vertical; otherwise, length of the line
     height: isCol ? lineLength : 1.28, // Length of the line if vertical; otherwise, thickness of the line
   };
-
+  console.log(color);
   return (
     <div className={`flex items-center ${isCol ? "flex-col" : "flex-row"}`}>
       {isBefore && !isLine && (
@@ -37,3 +37,6 @@ export default function StateNode({
     </div>
   );
 }
+
+// Tailwind
+// wierd cashing, it needs to find load the variables then is ok but on rebuild is not visible
