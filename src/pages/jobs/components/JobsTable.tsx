@@ -41,6 +41,7 @@ export default function JobsTable(props: IProps) {
 }
 
 export function JobCells(job: IJobs) {
+  const action = parseRunnerAction(job.runner);
   return (
     <>
       <TableCell>
@@ -53,21 +54,22 @@ export function JobCells(job: IJobs) {
         >
           {job.SAS.toUpperCase().slice(4)}
         </Link>
-        <span>
-          {tagJoin({ action: parseRunnerAction(job.runner), state: job.state })}
-        </span>
-        <Link
-          to={`/runners?grp=${job.organization}`}
-          className={badgeVariants({ variant: "outline" })}
-        >
-          {job.runner.slice(job.runner.length - 5).toUpperCase()}
-        </Link>
+        <span>{tagJoin({ action, state: job.state })}</span>
+        {action !== RunnerActions.waiting && (
+          <Link
+            to={`/runners?grp=${job.organization}`}
+            className={badgeVariants({ variant: "outline" })}
+          >
+            {job.runner.slice(job.runner.length - 5).toUpperCase()}
+          </Link>
+        )}
       </TableCell>
     </>
   );
 }
 
 enum RunnerActions {
+  waiting = "waiting",
   build = "build",
   test = "test",
   deploy_dev = "deploy_dev",
@@ -81,7 +83,8 @@ enum JobStates {
 }
 
 export function parseRunnerAction(RunnerId: string) {
-  if (RunnerId.includes("csas-dev") && RunnerId.includes("csas-linux"))
+  if (RunnerId === "none") return RunnerActions.waiting;
+  else if (RunnerId.includes("csas-dev") && RunnerId.includes("csas-linux"))
     return RunnerActions.build;
   else if (
     RunnerId.includes("csas-dev") &&
@@ -108,6 +111,7 @@ const verbMap: { [key in JobStates]: string } = {
 };
 
 const actionMap: { [key in RunnerActions]: string } = {
+  [RunnerActions.waiting]: "is waiting for runner", //always present tense
   [RunnerActions.build]: "built",
   [RunnerActions.test]: "tested",
   [RunnerActions.deploy_dev]: "deployed to dev",
@@ -124,8 +128,11 @@ export function tagJoin({
   if (!(state in JobStates)) {
     throw new Error("Unknown job state");
   }
-  const verb = verbMap[state as JobStates];
   const actionText = actionMap[action];
+  if (action === RunnerActions.waiting) {
+    return actionText;
+  }
+  const verb = verbMap[state as JobStates];
   if (!verb || !actionText) {
     throw new Error("Unknown job state or action");
   }
