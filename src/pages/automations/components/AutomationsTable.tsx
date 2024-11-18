@@ -19,6 +19,8 @@ import {
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
+import { timeAgo } from "@/lib/utils/ago_convert";
+import { Badge_timeAgo } from "@/components/ui/table/badge_timeAgo";
 
 interface IProps {
   automations: IAutomation[] | IErrorMessage;
@@ -54,9 +56,8 @@ export default function AutomationsTable(props: IProps) {
             </TableCell>
             <TableCell>{a.state}</TableCell>
             <TableCell>
-              {format(new Date(a.last_activity), "dd. MM. yyyy HH:mm:ss")}
+              <Badge_timeAgo date={new Date(a.last_activity)} />
             </TableCell>
-            <TableCell>{a.type}</TableCell>
             {/* <TableCell className="text-end">
               <Link
                 className={buttonVariants({ variant: "outline" })}
