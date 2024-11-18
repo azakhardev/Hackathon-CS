@@ -4,7 +4,7 @@ import ErrorMessage from "@/components/ui/ErrorMessage";
 import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { IJobs } from "@/pages/jobs/types/IJobs";
-import { IProject } from "@/lib/types/IProject";
+import { IProject } from "@/pages/projects/types/IProject";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import SearchBar from "@/components/ui/table/SearchBar";
@@ -57,7 +57,7 @@ export default function ProjectsPage() {
 
   return (
     <>
-      <H1>Projekty</H1>
+      <H1>Projects</H1>
       <div className="mb-4">
         <SearchBar searchText={searchText} setSearchText={setSearchText} />
       </div>

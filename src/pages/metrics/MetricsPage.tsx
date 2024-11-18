@@ -3,8 +3,9 @@ import H1 from "@/components/ui/typography/H1";
 export default function MetricsPage() {
   return (
     <>
-      <H1>Stránka s grafy</H1>
+      <H1>Metrics</H1>
       <ul>
+        <li>Stránka s grafy </li>
         <li>Kolik jobů běží pro devy, kolik pro opsy a jaký je jejich state</li>
         <li>
           Kolik runnerů je v jakém stavu + Např. u kterých runnerů dochází

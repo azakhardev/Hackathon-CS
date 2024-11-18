@@ -20,7 +20,7 @@ export default function AutomationsPage() {
 
   return (
     <>
-      <H1>Automatizace</H1>
+      <H1>Automations</H1>
       {automationsQuery.isLoading && (
         <div className="loader-wrap">
           <div className="loading-spinner"></div>
