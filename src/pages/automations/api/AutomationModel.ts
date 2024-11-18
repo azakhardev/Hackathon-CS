@@ -5,21 +5,29 @@ import { IAutomationType } from "../types/IAutomationType";
 import { IErrorMessage } from "../../../lib/types/IErrorMessage";
 
 export class AutomationModel {
-  static async getAutomations(
-    limit = 10
-  ): Promise<IAutomation[] | IErrorMessage> {
-    const response = await fetch(
-      `${api_url}/automations?` +
-        new URLSearchParams({
-          limit: limit.toString(),
-        }),
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Basic ${api_auth}`,
-        },
-      }
-    );
+
+  static async getAutomations(search?: string, limit?: number, page?: number, sort?: string, order?: "asc" | "desc", filters?: Record<string, string>): Promise<IAutomation[] | IErrorMessage> {
+    const params = new URLSearchParams({
+      search: search ?? "",
+      limit: limit?.toString() ?? "10",
+      page: page?.toString() ?? "1",
+      sort: sort ?? "",
+      order: order ?? "asc"
+    });
+  
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        params.append(key, value);
+      });
+    }
+  
+    const response = await fetch(`${api_url}/automations?${params}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Basic ${api_auth}`,
+      },
+    });
+  
     return response.json();
   }
 
@@ -48,16 +56,28 @@ export class AutomationModel {
     return response.json();
   }
 
-  static async getAutomationTypes(): Promise<
-    IAutomationType[] | IErrorMessage
-  > {
-    const response = await fetch(`${api_url}/automation-types`, {
+  static async getAutomationTypes(search?: string, limit?: number, page?: number, sort?: string, order?: "asc" | "desc", filters?: Record<string, string>): Promise<IAutomationType[] | IErrorMessage> {
+    const params = new URLSearchParams({
+      search: search ?? "",
+      limit: limit?.toString() ?? "10",
+      page: page?.toString() ?? "1",
+      sort: sort ?? "",
+      order: order ?? "asc"
+    });
+  
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        params.append(key, value);
+      });
+    }
+  
+    const response = await fetch(`${api_url}/automation-types?${params}`, {
       method: "GET",
       headers: {
         Authorization: `Basic ${api_auth}`,
       },
     });
-
+  
     return response.json();
   }
 
