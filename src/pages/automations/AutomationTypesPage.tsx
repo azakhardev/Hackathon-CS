@@ -1,7 +1,7 @@
 import H1 from "@/components/ui/typography/H1";
 import { AutomationModel } from "./api/AutomationModel";
 import { useQuery } from "@tanstack/react-query";
-import { IAutomationType } from "./types/IAutomationType";
+import { IAutomationType, ITransition } from "./types/IAutomationType";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import {
@@ -18,6 +18,12 @@ import {
 } from "@/components/ui/table/table";
 import { badgeVariants } from "@/components/ui/badge";
 import StateNode, { NodeDirection } from "@/components/Node";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function AutomationTypesPage() {
   const { data, isLoading } = useQuery({
@@ -37,7 +43,7 @@ export default function AutomationTypesPage() {
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
-  if (data && "error" in data) {
+  if ((data && "error" in data) || !data) {
     return <ErrorMessage errorMessage={data as IErrorMessage} />;
   }
   return (
@@ -68,23 +74,49 @@ export default function AutomationTypesPage() {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      {(x.states as string[]).map((xx, ii) => {
+                      {(x.transitions as ITransition[]).map((xx, ii) => {
                         let direction: NodeDirection = "down";
-                        if (ii == x.states.length - 1) direction = "none";
+                        if (ii == x.transitions.length - 1) direction = "none";
                         return (
                           <div
                             key={ii}
                             className="flex items-start gap-2 ml-[25rem]"
                           >
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger>
+                                  <div className="mt-[-5px]">
+                                    {xx.from_state.charAt(0).toUpperCase() +
+                                      xx.from_state.slice(1).toLowerCase()}
+                                  </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>
+                                    <span className="font-semibold">
+                                      Trigger:
+                                    </span>
+                                    <span className="font-mono">
+                                      {" "}
+                                      {xx.event}
+                                    </span>
+                                  </p>
+                                  <p>
+                                    <span className="font-semibold">
+                                      Action:
+                                    </span>
+                                    <span className="font-mono">
+                                      {" "}
+                                      {xx.action}
+                                    </span>
+                                  </p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
                             <StateNode
                               color="green"
                               direction={direction}
                               isActive={false}
                             />
-                            <div className="mt-[-5px]">
-                              {xx.charAt(0).toUpperCase() +
-                                xx.slice(1).toLowerCase()}
-                            </div>
                           </div>
                         );
                       })}
