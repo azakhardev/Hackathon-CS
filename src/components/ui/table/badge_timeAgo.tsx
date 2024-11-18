@@ -16,7 +16,7 @@ export function Badge_timeAgo({ date }: { date: Date }) {
 export function Description_timeAgo({ date }: { date: Date }) {
   return component_timeAgo({
     date,
-    className: "",
+    className: "ml-4",
   });
 }
 
