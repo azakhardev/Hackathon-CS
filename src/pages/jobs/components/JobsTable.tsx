@@ -80,11 +80,10 @@ export function JobCells(job: IJobs) {
 
 enum RunnerActions {
   waiting = "waiting",
-  build = "Build aplikace",
-  test = "Testování aplikace",
-  deploy_dev = "Deploy do neprodukčního prostředí",
-  deploy_prod = "Deploy do produkčního prostředí",
-  none = "Unknown action"
+  build = "build",
+  test = "test",
+  deploy_dev = "deploy_dev",
+  deploy_prod = "deploy_prod",
 }
 enum JobStates {
   queued = "queued",
@@ -111,25 +110,20 @@ export function parseRunnerAction(RunnerId: string) {
   //   return RunnerActions.deploy_prod;
   // else return RunnerActions.build; //TODO: FIX it later !!!!!!!!!!!!!!!!!!!!!!!!!
 
-  const prod = `${RunnerId.split("-")[1]}-${
-    RunnerId.split("-")[2]
-  }`;
-  const action = RunnerId
-    .split("-")
-    .slice(3, -1)
-    .join("-");
+  const prod = `${RunnerId.split("-")[1]}-${RunnerId.split("-")[2]}`;
+  const action = RunnerId.split("-").slice(3, -1).join("-");
 
   switch (`${prod}-${action}`) {
     case "csas-dev-csas-linux":
-      return RunnerActions.build
+      return RunnerActions.build;
     case "csas-dev-csas-linux-test":
-      return RunnerActions.test
+      return RunnerActions.test;
     case "csas-ops-csas-linux":
       return RunnerActions.deploy_dev;
     case "csas-ops-csas-linux-test":
       return RunnerActions.deploy_prod;
     default:
-      return RunnerActions.none;
+      return RunnerActions.waiting;
   }
 
   // throw new Error("Unknown runner ID format");
@@ -140,15 +134,15 @@ export function buildDescription(action: RunnerActions) {
     case RunnerActions.waiting:
       return "Waiting for runner";
     case RunnerActions.build:
-      return "Build aplikace";
+      return "Building";
     case RunnerActions.test:
-      return "Testování aplikace";
+      return "Testing";
     case RunnerActions.deploy_dev:
-      return "Deploy do neprodukčního prostředí";
+      return "Deploying to dev";
     case RunnerActions.deploy_prod:
-      return "Deploy do produkčního prostředí";
+      return "Deploying to prod";
     default:
-      return "Unknown action"
+      return "Unknown action";
   }
 }
 
@@ -193,12 +187,11 @@ const verbMap: { [key in JobStates]: string } = {
   [JobStates.failed]: "failed to be",
 };
 const actionMap: { [key in RunnerActions]: string } = {
-  [RunnerActions.waiting]: "is waiting for runner", //always present tense
-  [RunnerActions.build]: "Build aplikace",
-  [RunnerActions.test]: "Testování aplikace",
-  [RunnerActions.deploy_dev]: "Deploy do neprodukčního prostředí",
-  [RunnerActions.deploy_prod]: "Deploy do produkčního prostředí",
-  [RunnerActions.none]: "Uknown action"
+  [RunnerActions.waiting]: "is waiting for runner", //always
+  [RunnerActions.build]: "built",
+  [RunnerActions.test]: "tested",
+  [RunnerActions.deploy_dev]: "deployed to dev",
+  [RunnerActions.deploy_prod]: "deployed to prod",
 };
 export function tagJoin({
   action,
