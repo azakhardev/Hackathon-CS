@@ -9,17 +9,9 @@ import {
 } from "@/components/ui/table/table";
 import { IAutomation } from "@/pages/automations/types/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/Button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@radix-ui/react-tooltip";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
-import { timeAgo } from "@/lib/utils/ago_convert";
 import { Badge_timeAgo } from "@/components/ui/table/badge_timeAgo";
 
 interface IProps {
@@ -76,20 +68,4 @@ export default function AutomationsTable(props: IProps) {
       </TableBody>
     </Table>
   );
-}
-
-function abbreviateId(id: string) {
-  const names: string[] = id.split("_");
-  let finalName: string = "";
-
-  names.forEach((n, i) => {
-    if (i !== names.length - 1) {
-      finalName += n[0];
-    } else {
-      const id: string[] = n.split("-");
-      finalName += `${id[0][0]}-`;
-      finalName += `${id[1]}`;
-    }
-  });
-  return finalName;
 }
