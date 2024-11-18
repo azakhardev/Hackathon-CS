@@ -16,6 +16,7 @@ import {
 import H1 from "@/components/ui/typography/H1";
 import SearchBar from "@/components/ui/table/SearchBar";
 import ButtonLoadMore from "@/components/ui/table/Button_LoadMore";
+import { CircleIcon } from "lucide-react";
 export default function RunnersPage() {
   const [searchText, setSearchText] = useState("");
   const [searchGroup, setSearchGroup] = useState(" ");
@@ -94,10 +95,18 @@ export default function RunnersPage() {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value=" ">All States</SelectItem>
-            <SelectItem value="active">Active</SelectItem>
-            <SelectItem value="offline">Offline</SelectItem>
-            <SelectItem value="idle">Idle</SelectItem>
-            <SelectItem value="failed">Failed</SelectItem>
+            <SelectItem value="active">
+              <StateItem title="Active" color="green" />
+            </SelectItem>
+            <SelectItem value="offline">
+              <StateItem title="Offline" color="gray" />
+            </SelectItem>
+            <SelectItem value="idle">
+              <StateItem title="Idle" color="yellow" />
+            </SelectItem>
+            <SelectItem value="failed">
+              <StateItem title="Failed" color="red" />
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -117,3 +126,19 @@ export default function RunnersPage() {
     </>
   );
 }
+
+function StateItem({ title, color }: { title: string; color: string }) {
+  return (
+    <div className="flex flex-row items-center">
+      <CircleIcon size={8} className={`mr-2 fill-state_${color} stroke-none`} />
+      <span>{title}</span>
+    </div>
+  );
+}
+
+// const tailwindFillClassMap = {
+//   [StateType.Gray]: "fill-state_gray",
+//   [StateType.Orange]: "fill-state_yellow",
+//   [StateType.Green]: "fill-state_green",
+//   [StateType.Red]: "fill-state_red",
+// };
