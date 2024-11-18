@@ -128,6 +128,40 @@ export function buildDescription(action: RunnerActions) {
   }
 }
 
+// RUNNER builders
+export function buildRunnerText(action: string) {
+  action = parseRunnerAction(action);
+  switch (action) {
+    case RunnerActions.waiting:
+      return "wtf???";
+    case RunnerActions.build:
+      return "is build runner";
+    case RunnerActions.test:
+      return "is test runner";
+    case RunnerActions.deploy_dev:
+      return "is DEV deployer";
+    case RunnerActions.deploy_prod:
+      return "is PROD deployer";
+  }
+  return action;
+}
+export function buildRunnerDescription(action: string) {
+  action = parseRunnerAction(action);
+  switch (action) {
+    case RunnerActions.waiting:
+      return "wtf???";
+    case RunnerActions.build:
+      return "Build runner";
+    case RunnerActions.test:
+      return "Test runner";
+    case RunnerActions.deploy_dev:
+      return "Dev deployer";
+    case RunnerActions.deploy_prod:
+      return "Prod deployer";
+  }
+  return action;
+}
+
 const verbMap: { [key in JobStates]: string } = {
   [JobStates.success]: "was",
   [JobStates.in_progress]: "is being",
