@@ -1,6 +1,6 @@
 import { IChartConfig } from "@/lib/types/IChartConfig";
 
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 import {
   ChartContainer,
@@ -8,6 +8,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { CurveType } from "recharts/types/shape/Curve";
+import { Grid } from "lucide-react";
 
 interface IProps {
   chartConfig: IChartConfig;
@@ -35,6 +36,7 @@ export default function CustomLineChart(props: IProps) {
           tickMargin={10}
           tickFormatter={(value) => value.slice(0, 3)}
         />
+        <YAxis axisLine={true} />
         <ChartTooltip
           cursor={props.showCursor}
           content={<ChartTooltipContent hideLabel />}

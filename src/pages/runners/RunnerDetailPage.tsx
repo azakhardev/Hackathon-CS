@@ -4,28 +4,14 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { DatePickerWithRange } from "@/components/ui/DatePicker";
+
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import RunnerDetailJobsFilter from "./components/RunnerDetailJobsFilters";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table/table";
-import { formatDistanceToNow } from "date-fns";
-import { Table_cel_state } from "@/components/ui/table/table_cel_state";
 import JobsTable from "../jobs/components/JobsTable";
 import { IJobs } from "../jobs/types/IJobs";
+import RunnerMetricsTab from "./RunnerMetricsTab";
+import { IMetrics } from "../metrics/types/IMetrics";
 
 export default function RunnerDetailPage() {
   const [limit, setLimit] = useState(5);
@@ -60,10 +46,14 @@ export default function RunnerDetailPage() {
     return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
   }
 
+  console.log(runnerQuery);
+  console.log(metricsQuery);
+  console.log(jobsQuery);
+
   return (
     <main>
-      {runnerQuery.isLoading &&
-      metricsQuery.isLoading &&
+      {runnerQuery.isLoading ||
+      metricsQuery.isLoading ||
       jobsQuery.isLoading ? (
         <div className="loader-wrap">
           <div className="loading-spinner"></div>
@@ -82,14 +72,45 @@ export default function RunnerDetailPage() {
                   <TabsTrigger className="w-[100px]" value="jobs">
                     Jobs
                   </TabsTrigger>
-                  <TabsTrigger className="w-[100px]" value="Metrics">
+                  <TabsTrigger className="w-[100px]" value="metrics">
                     Metrics
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="jobs">
                   <RunnerDetailJobsFilter />
                   <JobsTable jobs={jobsQuery.data as IJobs[]} />
-                  {/* <Table>
+                </TabsContent>
+                <TabsContent value="metrics">
+                  <RunnerMetricsTab
+                    runnerMetrics={metricsQuery.data as IMetrics}
+                  />
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
+        )
+      )}
+      <div className="m-4">
+        <Button
+          className={
+            jobsQuery.data && jobsQuery.data.length >= limit
+              ? "w-full"
+              : "hidden"
+          }
+          variant="outline"
+          onClick={() => {
+            setLimit((oldLim) => oldLim + 5);
+          }}
+        >
+          Load more
+        </Button>
+      </div>
+    </main>
+  );
+}
+
+{
+  /* <Table>
                     <TableBody>
                       {jobsQuery.data?.map((jobs, index) => (
                         <TableRow key={index}>
@@ -137,25 +158,5 @@ export default function RunnerDetailPage() {
                         </TableRow>
                       ))}
                     </TableBody>
-                  </Table> */}
-                </TabsContent>
-              </Tabs>
-            </div>
-          </div>
-        )
-      )}
-      <div className="m-4">
-        <Button
-          className={
-            jobsQuery.data && jobsQuery.data.length >= limit
-              ? "w-full"
-              : "hidden"
-          }
-          variant="outline"
-        >
-          Load more
-        </Button>
-      </div>
-    </main>
-  );
+                  </Table> */
 }

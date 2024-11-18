@@ -1,6 +1,6 @@
 import { IChartConfig } from "@/lib/types/IChartConfig";
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   ChartContainer,
@@ -16,7 +16,7 @@ interface IProps {
   lineType: CurveType;
   showCursor: boolean;
 }
-export default function CustomLineChart(props: IProps) {
+export default function CustomAreaChart(props: IProps) {
   return (
     <ChartContainer config={props.chartConfig}>
       <AreaChart
@@ -28,6 +28,7 @@ export default function CustomLineChart(props: IProps) {
         }}
       >
         <CartesianGrid vertical={false} />
+        <YAxis />
         <XAxis
           dataKey={props.dataKey}
           tickLine={true}
