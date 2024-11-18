@@ -50,9 +50,9 @@ export default function AutomationsTable(props: IProps) {
             <TableCell>
               {a.state}
               <div className="flex flex-row">
+                <StateNode color="state_gray" />
                 <StateNode />
-                <StateNode />
-                <StateNode />
+                <StateNode direction="none" />
               </div>
             </TableCell>
             <TableCell>

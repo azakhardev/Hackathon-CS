@@ -1,5 +1,5 @@
 export default function StateNode({
-  color = "red",
+  color = "state_gray",
   direction = "left", //up, down, left, right or none
   size = 12,
   lineLength = 10,
@@ -7,6 +7,8 @@ export default function StateNode({
   const isBefore = direction === "<-" || direction === "up";
   const isCol = direction === "up" || direction === "down";
   const isLine = direction === "none";
+
+  color = `bg-${color}`;
 
   const circleStyle: React.CSSProperties = {
     width: size,
@@ -24,9 +26,9 @@ export default function StateNode({
 
   return (
     <div className={`flex items-center ${isCol ? "flex-col" : ""}`}>
-      {isBefore && !isLine && <div style={lineStyle}></div>}
-      <div style={circleStyle}></div>
-      {!isBefore && !isLine && <div style={lineStyle}></div>}
+      {isBefore && !isLine && <div style={lineStyle} className={color}></div>}
+      <div style={circleStyle} className={color}></div>
+      {!isBefore && !isLine && <div style={lineStyle} className={color}></div>}
     </div>
   );
 }
