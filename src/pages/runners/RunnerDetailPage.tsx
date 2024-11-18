@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/table/table";
 import { formatDistanceToNow } from "date-fns";
 import { Table_cel_state } from "@/components/ui/table/table_cel_state";
+import JobsTable from "../jobs/components/JobsTable";
+import { IJobs } from "../jobs/types/IJobs";
 
 export default function RunnerDetailPage() {
   const [limit, setLimit] = useState(5);
@@ -86,7 +88,8 @@ export default function RunnerDetailPage() {
                 </TabsList>
                 <TabsContent value="jobs">
                   <RunnerDetailJobsFilter />
-                  <Table>
+                  <JobsTable jobs={jobsQuery.data as IJobs[]} />
+                  {/* <Table>
                     <TableBody>
                       {jobsQuery.data?.map((jobs, index) => (
                         <TableRow key={index}>
@@ -134,7 +137,7 @@ export default function RunnerDetailPage() {
                         </TableRow>
                       ))}
                     </TableBody>
-                  </Table>
+                  </Table> */}
                 </TabsContent>
               </Tabs>
             </div>
