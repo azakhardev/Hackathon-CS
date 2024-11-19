@@ -46,8 +46,9 @@ export default function LogsTable(props: IProps) {
           ? ("none" as NodeDirection)
           : ("right" as NodeDirection),
     };
-
-    if (currentIndex === fromIndex || currentIndex === toIndex) {
+    if (type === "SUCCESS") {
+      props.color = "green";
+    } else if (currentIndex === fromIndex || currentIndex === toIndex) {
       switch (type) {
         case "INFO":
           props.color = "log_blue";
@@ -66,7 +67,6 @@ export default function LogsTable(props: IProps) {
     } else {
       props.color = "gray";
     }
-
     return props;
   };
 
@@ -77,6 +77,10 @@ export default function LogsTable(props: IProps) {
     };
 
     switch (type) {
+      case "SUCCESS":
+        props2.color = "green";
+        props2.icon = <InfoIcon className="text-state_green" />;
+        break;
       case "INFO":
         props2.color = "log_blue";
         props2.icon = <InfoIcon className="text-log_blue" />;
@@ -92,7 +96,6 @@ export default function LogsTable(props: IProps) {
       default:
         break;
     }
-    console.log(type);
 
     return props2;
   };
@@ -107,10 +110,25 @@ export default function LogsTable(props: IProps) {
       </Table>
     );
   }
+
   return (
     <Table>
       <TableBody>
         {(props.logs as IAutomationLog[]).map((l) => {
+          let isSuccess = false;
+          if (!l.type_object?.states) return <div>Error 20340</div>;
+          const toIndex: number =
+            l.type_object.states.indexOf(l.to_state) ?? -1;
+          const fromIndex: number =
+            l.type_object.states.indexOf(l.from_state) ?? -1;
+          const totalStates = l.type_object.states.length ?? 0;
+          // prettier-ignore
+          if ( fromIndex === 0 && toIndex === l.type_object.states.length - 1)
+            isSuccess = true;
+
+          if (isSuccess) {
+            l.level = "SUCCESS";
+          }
           const pp = getTitleProps(l.level);
           return (
             <TableRow key={l.timestamp}>
@@ -122,25 +140,14 @@ export default function LogsTable(props: IProps) {
                   color={pp.color}
                 />
               </TableCell>
-              {/* <TableCell>
-              <h3>{l.type}</h3>
-              <p>{l.description}</p>
-              <span>
-                {l.to_state} {l.from_state}
-              </span>
-            </TableCell> */}
               <TableCell>
                 <div className="flex">
                   {l.type_object?.states?.map((state, index) => {
-                    const toIndex =
-                      l.type_object?.states.indexOf(l.to_state) ?? -1;
-                    const fromIndex =
-                      l.type_object?.states.indexOf(l.from_state) ?? -1;
                     const nodeProps = getNodeProps(
                       index,
                       toIndex,
                       fromIndex,
-                      l.type_object?.states?.length ?? 0,
+                      totalStates,
                       l.level
                     );
 
@@ -152,6 +159,7 @@ export default function LogsTable(props: IProps) {
                           </TooltipTrigger>
                           <TooltipContent>
                             <p>{state}</p>
+                            {fromIndex} → {toIndex}
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
