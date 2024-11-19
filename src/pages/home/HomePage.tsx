@@ -1,22 +1,12 @@
 import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import { useQuery } from "@tanstack/react-query";
-import RunnersTable from "../runners/components/RunnersTable";
-import { IRunner } from "@/pages/runners/types/IRunner";
 import ProjectDataTable from "../projects/components/ProjectDataTable";
 import Button_More from "@/components/ButtonLoadMore";
 import { Link } from "react-router-dom";
 import RunnersDataTable from "../runners/components/RunnersDataTable";
-import JobsDataTable from "../jobs/components/JobDataTable";
-import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
 import AutomationTypesDataTable from "../automations/automationTypes/AutomationsTypeDataTable";
 
 export default function HomePage() {
-  // API
-  const runnersQuery = useQuery({
-    queryKey: ["runners"],
-    queryFn: async () => await RunnerModel.getRunners(undefined, 3),
-  });
-
   const limit = 3;
   return (
     <div className="flex flex-col gap-32">
