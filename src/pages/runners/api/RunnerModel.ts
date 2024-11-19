@@ -6,17 +6,16 @@ import { IRunner } from "../types/IRunner";
 
 export class RunnerModel {
   static async getSAS(search: string): Promise<string[] | IErrorMessage> {
-    const response = await fetch(
-      `${api_url}/sas?${new URLSearchParams({
-        search: search ?? "",
-      })}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Basic ${api_auth}`,
-        },
-      }
-    );
+    const params = new URLSearchParams({
+      search: search ?? "",
+    });
+
+    const response = await fetch(`${api_url}/sas?${params}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Basic ${api_auth}`,
+      },
+    });
 
     return response.json();
   }
@@ -74,7 +73,7 @@ export class RunnerModel {
   ): Promise<IJobs[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
-      limit: limit?.toString() ? limit!.toString(): "-1",
+      limit: limit?.toString() ? limit!.toString() : "-1",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc",
@@ -86,7 +85,7 @@ export class RunnerModel {
       });
     }
 
-    console.log(`${api_url}/jobs?${params}`)
+    console.log(`${api_url}/jobs?${params}`);
 
     const response = await fetch(`${api_url}/jobs?${params}`, {
       method: "GET",
@@ -96,7 +95,7 @@ export class RunnerModel {
     });
 
     return response.json();
-  }  
+  }
 
   static async getProjectLatestJobs(
     limit: string,
@@ -143,7 +142,7 @@ export class RunnerModel {
   ): Promise<IMetrics[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
-      limit: limit?.toString() && search ? limit!.toString(): "-1" ,
+      limit: limit?.toString() && search ? limit!.toString() : "-1",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc",

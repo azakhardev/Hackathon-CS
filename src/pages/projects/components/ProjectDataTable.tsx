@@ -21,7 +21,7 @@ export default function ProjectsDataTable({
 
   // API
   const sasQuery = useQuery({
-    queryKey: ["sas", searchText],
+    queryKey: ["sas"], //searchText - api cant filter, always same all response (cache with single key)
     queryFn: async () => await RunnerModel.getSAS(searchText),
   });
 

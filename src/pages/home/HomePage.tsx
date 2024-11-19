@@ -1,9 +1,7 @@
 import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import { useQuery } from "@tanstack/react-query";
 import RunnersTable from "../runners/components/RunnersTable";
-import H1 from "@/components/ui/typography/H1";
 import { IRunner } from "@/pages/runners/types/IRunner";
-import H2 from "@/components/ui/typography/H2";
 import ProjectDataTable from "../projects/components/ProjectDataTable";
 import ButtonLoadMore from "@/components/ButtonLoadmore";
 import { Link } from "react-router-dom";
