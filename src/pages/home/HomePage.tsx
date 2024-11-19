@@ -14,62 +14,51 @@ export default function HomePage() {
     queryKey: ["runners"],
     queryFn: async () => await RunnerModel.getRunners(undefined, 3),
   });
-  const jobsQuery = useQuery({
-    queryKey: ["runners"],
-    queryFn: async () => await RunnerModel.getRunners(undefined, 3),
-  });
-  const automationsQuery = useQuery({
-    queryKey: ["runners"],
-    queryFn: async () => await RunnerModel.getRunners(undefined, 3),
-  });
-  const automationTypesQuery = useQuery({
-    queryKey: ["runners"],
-    queryFn: async () => await RunnerModel.getRunners(undefined, 3),
-  });
+
   const limit = 3;
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-32">
       {/* <H1>Homepage</H1> */}
       <div>
-        <H1 className="w-full mb-0 text-center">Dev</H1>
+        <H1x>Dev</H1x>
         <div className="flex flex-col gap-6">
           <div>
-            <H2>Projects</H2>
+            <H2x>Projects</H2x>
             <ProjectDataTable limit={limit} isNav={false} />
             <MoreBtn to="/projects" />
           </div>
           <div>
-            <H2>Runners</H2>
+            <H2x>Runners</H2x>
             <Loader isLoading={runnersQuery.isLoading}>
               <RunnersTable runners={runnersQuery.data as IRunner[]} />
             </Loader>
             <MoreBtn to="/runners" />
           </div>
           <div>
-            <H2>Jobs</H2>
-            <Loader isLoading={jobsQuery.isLoading}>
+            <H2x>Jobs</H2x>
+            <Loader isLoading={runnersQuery.isLoading}>
               {/* <JobsTable jobs={[]} /> */}
-              <RunnersTable runners={jobsQuery.data as IRunner[]} />
+              <RunnersTable runners={runnersQuery.data as IRunner[]} />
             </Loader>
             <MoreBtn to="/jobs" />
           </div>
         </div>
       </div>
       <div>
-        <H1 className="w-full mb-0 text-center">Ops</H1>
+        <H1x>Ops</H1x>
         <div className="flex flex-col gap-6">
           <div>
-            <H2>Automations</H2>
-            <Loader isLoading={automationsQuery.isLoading}>
+            <H2x>Automations</H2x>
+            <Loader isLoading={runnersQuery.isLoading}>
               {/* <AutomationsTable automations={[]} /> */}
-              <RunnersTable runners={automationsQuery.data as IRunner[]} />
+              <RunnersTable runners={runnersQuery.data as IRunner[]} />
             </Loader>
             <MoreBtn to="/automations" />
           </div>
           <div>
-            <H2>Automation Types</H2>
-            <Loader isLoading={automationTypesQuery.isLoading}>
-              <RunnersTable runners={automationTypesQuery.data as IRunner[]} />
+            <H2x>Automation Types</H2x>
+            <Loader isLoading={runnersQuery.isLoading}>
+              <RunnersTable runners={runnersQuery.data as IRunner[]} />
             </Loader>
             <MoreBtn to="/automationTypes" />
           </div>
@@ -96,6 +85,24 @@ export function Loader({
         children
       )}
     </>
+  );
+}
+
+function H1x({ children }: { children: React.ReactNode }) {
+  return (
+    <h1
+      className={`text-4xl font-extrabold tracking-tight scroll-m-20 lg:text-7xl w-full text-center`}
+    >
+      {children}
+    </h1>
+  );
+}
+
+function H2x({ children }: { children: React.ReactNode }) {
+  return (
+    <h2 className="mb-4 text-4xl font-bold tracking-tight scroll-m-20 first:mt-0">
+      {children}
+    </h2>
   );
 }
 
