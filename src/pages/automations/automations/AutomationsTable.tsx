@@ -64,50 +64,55 @@ export default function AutomationsTable(props: IProps) {
   return (
     <Table className="overflow-x-auto">
       <TableBody>
-        {(props.automations as IAutomation[]).map((a: IAutomation) => (
-          <TableRow key={a.id}>
-            <TableCell>
-              <Table_cel_title
-                title={a.id.slice(-5)}
-                text={a.id.slice(0, -6).toLowerCase()}
-              />
-            </TableCell>
-            <TableCell>
-              <div className="flex">
-                {a.type_object?.states?.map((state, index) => {
-                  const activeIndex =
-                    a.type_object?.states.indexOf(a.state) ?? -1;
-                  const nodeProps = getNodeProps(
-                    index,
-                    activeIndex,
-                    a.type_object?.states?.length ?? 0
-                  );
+        {(props.automations as IAutomation[]).map(
+          (a: IAutomation, index: number) => (
+            <TableRow key={`${a.id}-${index}`}>
+              <TableCell>
+                <Table_cel_title
+                  title={a.id.slice(-5)}
+                  text={a.id.slice(0, -6).toLowerCase()}
+                />
+              </TableCell>
+              <TableCell>
+                <div className="flex">
+                  {a.type_object?.states?.map((state, index) => {
+                    const activeIndex =
+                      a.type_object?.states.indexOf(a.state) ?? -1;
+                    const nodeProps = getNodeProps(
+                      index,
+                      activeIndex,
+                      a.type_object?.states?.length ?? 0
+                    );
 
-                  return (
-                    <TooltipProvider key={index}>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <StateNode {...nodeProps} />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{state}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  );
-                })}
-              </div>
-            </TableCell>
-            <TableCell>
-              <Badge_timeAgo date={new Date(a.last_activity)} />
-            </TableCell>
-            <TableCell className="text-end">
-              <Link className={buttonVariants({ variant: "outline" })} to={`#`}>
-                Logs
-              </Link>
-            </TableCell>
-          </TableRow>
-        ))}
+                    return (
+                      <TooltipProvider key={index}>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <StateNode {...nodeProps} />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{state}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    );
+                  })}
+                </div>
+              </TableCell>
+              <TableCell>
+                <Badge_timeAgo date={new Date(a.last_activity)} />
+              </TableCell>
+              <TableCell className="text-end">
+                <Link
+                  className={buttonVariants({ variant: "outline" })}
+                  to={`#`}
+                >
+                  Logs
+                </Link>
+              </TableCell>
+            </TableRow>
+          )
+        )}
       </TableBody>
     </Table>
   );
