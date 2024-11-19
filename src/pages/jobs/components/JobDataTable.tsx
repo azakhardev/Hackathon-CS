@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import JobsTable from "./JobsTable";
 import { Button } from "@/components/ui/Button";
 import { RunnerModel } from "@/pages/runners/api/RunnerModel";
@@ -28,6 +28,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { api_auth, api_url } from "@/lib/utils/env_vars";
 
 export default function JobsDataTable({
   limit = -1,
@@ -36,65 +37,65 @@ export default function JobsDataTable({
   limit: number | undefined;
   isNav: boolean;
 }) {
+  const fetchJobs = async ({ pageParam }: { pageParam: number }) => {
+    const limit = 5;
+    const res = await fetch(
+      `${api_url}/jobs?limit=${limit}&page=${pageParam}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Basic ${api_auth}`,
+        },
+      }
+    );
+    return res.json();
+  };
+
   const [searchText, setSearchText] = useState("");
   const [searchAction, setSearchAction] = useState("");
   const [searchState, setSearchState] = useState("");
   const [searchDate, setSearchDate] = useState<Date>();
-  //const [limit, setLimit] = useState(25);
 
-  console.log(searchText);
-
-  const jobsQuery = useQuery({
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
     queryKey: [
-      "jobs",
-      searchText,
-      limit,
-      searchState,
-      searchAction,
-      searchDate,
+      "runners",
+      {
+        search: searchText,
+        limit: limit,
+        searchAction: searchAction,
+        searchDate: searchDate,
+        searchState: searchState,
+      },
     ],
-    queryFn: async () => {
-      const filters = {
-        ...(searchState &&
-          searchState.trim() !== "" && { state_eq: searchState }),
-        ...(searchDate && {
-          timestamp_start: format(searchDate, "yyyy-MM-dd").toString(),
-        }),
-        ...(searchAction &&
-          searchAction.trim() !== "" && { runner_start: searchAction }),
-        ...(searchText && searchText.trim() !== "" && { id_start: searchText }),
-      };
-
-      return await RunnerModel.getJobs(
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        "asc",
-        filters
-      );
+    queryFn: fetchJobs,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      // if (lastPage.length === 0) {
+      //   return undefined;
+      // }
+      return lastPageParam + 1;
+    },
+    getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
+      if (firstPageParam <= 1) {
+        return undefined;
+      }
+      return firstPageParam - 1;
     },
   });
-
-  if (jobsQuery.data && "error" in jobsQuery.data) {
-    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
-  }
-
-  if (!jobsQuery.data && !jobsQuery.isLoading) {
-    const error: IErrorMessage = {
-      code: "500",
-      error: "Internal server error",
-      message: "Server responded with undefined",
-    };
-    return <ErrorMessage errorMessage={error}></ErrorMessage>;
-  }
-  let jobs: IJobs[] = [];
-
-  if (!jobsQuery.isLoading) {
-    if (jobsQuery.data) {
-      jobs = jobsQuery.data;
-    }
-  }
+  if (status === "pending") return <p>Loading...</p>;
+  if (status === "error") return <p>Error: {error.message}</p>;
+  let allData: IJobs[] = [];
+  data?.pages.forEach((page) => {
+    allData = allData.concat(page);
+  });
 
   return (
     <>
@@ -170,18 +171,23 @@ export default function JobsDataTable({
           </SelectContent>
         </Select>
       </div>
-      {jobsQuery.isLoading && (
-        <div className="loader-wrap">
-          <div className="loading-spinner"></div>
+      <JobsTable jobs={allData} />
+      {isNav && (
+        <div className="w-full mt-4">
+          <Button
+            variant="outline"
+            onClick={() => fetchNextPage()}
+            className="w-full"
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            {isFetchingNextPage
+              ? "Loading more..."
+              : hasNextPage
+              ? "Load More"
+              : "Nothing more to load"}
+          </Button>
         </div>
       )}
-      {!jobsQuery.isLoading && <JobsTable jobs={jobsQuery.data as IJobs[]} />}
-      {/*<div className="mt-4">
-        <ButtonLoadMore
-          show={jobs.length >= limit}
-          onClick={() => setLimit(limit + 25)}
-        />
-      </div>*/}
     </>
   );
 }
