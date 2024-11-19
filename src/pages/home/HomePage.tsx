@@ -3,8 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import RunnersTable from "../runners/components/RunnersTable";
 import { IRunner } from "@/pages/runners/types/IRunner";
 import ProjectDataTable from "../projects/components/ProjectDataTable";
-import Button_More from "@/components/ButtonLoadmore";
+import Button_More from "@/components/ButtonLoadMore";
 import { Link } from "react-router-dom";
+import RunnersDataTable from "../runners/components/RunnersDataTable";
 
 export default function HomePage() {
   // API
@@ -27,9 +28,7 @@ export default function HomePage() {
           </div>
           <div>
             <H2x>Runners</H2x>
-            <Loader isLoading={runnersQuery.isLoading}>
-              <RunnersTable runners={runnersQuery.data as IRunner[]} />
-            </Loader>
+            <RunnersDataTable limit2={limit} isNav={false} />
             <MoreBtn to="/runners" />
           </div>
           <div>
