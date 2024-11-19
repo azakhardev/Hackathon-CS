@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/tooltip";
 import TableCelTitleLog from "@/components/ui/table/table_cel_titleLog";
 import {
+  CircleCheckIcon,
   InfoIcon,
   OctagonAlert,
   SearchXIcon,
@@ -65,8 +66,10 @@ export default function LogsTable(props: IProps) {
       }
       props.isActive = true;
     } else {
+      if (currentIndex > toIndex) props.isBorder = true;
       props.color = "gray";
     }
+
     return props;
   };
 
@@ -79,7 +82,7 @@ export default function LogsTable(props: IProps) {
     switch (type) {
       case "SUCCESS":
         props2.color = "green";
-        props2.icon = <InfoIcon className="text-state_green" />;
+        props2.icon = <CircleCheckIcon className="text-state_green" />;
         break;
       case "INFO":
         props2.color = "log_blue";
@@ -126,9 +129,10 @@ export default function LogsTable(props: IProps) {
           if ( fromIndex === 0 && toIndex === l.type_object.states.length - 1)
             isSuccess = true;
 
-          if (isSuccess) {
-            l.level = "SUCCESS";
-          }
+          if (isSuccess) l.level = "SUCCESS";
+
+          let isStateWrong = false;
+          if (fromIndex === -1 || toIndex === -1) isStateWrong = true;
           const pp = getTitleProps(l.level);
           return (
             <TableRow key={l.timestamp}>
@@ -141,30 +145,38 @@ export default function LogsTable(props: IProps) {
                 />
               </TableCell>
               <TableCell>
-                <div className="flex">
-                  {l.type_object?.states?.map((state, index) => {
-                    const nodeProps = getNodeProps(
-                      index,
-                      toIndex,
-                      fromIndex,
-                      totalStates,
-                      l.level
-                    );
+                <div className="flex flex-col justify-center">
+                  <div className="flex">
+                    {l.type_object?.states?.map((state, index) => {
+                      const nodeProps = getNodeProps(
+                        index,
+                        toIndex,
+                        fromIndex,
+                        totalStates,
+                        l.level
+                      );
 
-                    return (
-                      <TooltipProvider key={index}>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <StateNode {...nodeProps} />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>{state}</p>
-                            {fromIndex} → {toIndex}
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    );
-                  })}
+                      return (
+                        <TooltipProvider key={index}>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <StateNode {...nodeProps} />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{state}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      );
+                    })}
+                  </div>
+                  {isStateWrong ? (
+                    <span className="text-center text-muted-foreground">
+                      {`(${l.from_state.toLowerCase()} → ${l.to_state.toLowerCase()})`}
+                    </span>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </TableCell>
               <TableCell className="font-medium">
