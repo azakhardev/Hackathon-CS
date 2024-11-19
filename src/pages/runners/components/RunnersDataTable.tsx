@@ -1,9 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { RunnerModel } from "@/pages/runners/api/RunnerModel";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import RunnersTable from "@/pages/runners/components/RunnersTable";
-import { IRunner } from "@/pages/runners/types/IRunner";
-import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import ErrorMessage from "@/components/ui/ErrorMessage";
+// import { IRunner } from "@/pages/runners/types/IRunner";
 import { useState } from "react";
 import {
   Select,
@@ -12,93 +9,102 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import SearchBar from "@/components/ui/table/SearchBar";
-import ButtonLoadMore from "@/components/ui/table/Button_LoadMore";
-import { CircleIcon } from "lucide-react";
 
-// ------------------------------↓
-export default function RunnersDataTable({
+import SearchBar from "@/components/ui/table/SearchBar";
+import { CircleIcon } from "lucide-react";
+import { api_auth, api_url } from "@/lib/utils/env_vars";
+import { IRunner } from "../types/IRunner";
+import { Button } from "@/components/ui/Button";
+
+export default function RunnersPage({
   limit2 = -1,
   isNav = true,
 }: {
-  limit2: number;
+  limit2: number | undefined;
   isNav: boolean;
 }) {
+  const fetchRunners = async ({ pageParam }: { pageParam: number }) => {
+    const limit = 5;
+    const res = await fetch(
+      `${api_url}/runners?limit=${limit}&page=${pageParam}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Basic ${api_auth}`,
+        },
+      }
+    );
+    return res.json();
+  };
+
   const [searchText, setSearchText] = useState("");
   const [searchGroup, setSearchGroup] = useState(" ");
   const [searchOrganization, setSearchOrganization] = useState(" ");
   const [searchState, setSearchState] = useState(" ");
   const [limit, setLimit] = useState(limit2);
-  const [isFiltered, setIsFiltered] = useState(false);
 
-  function activeFilter() {
-    console.log("text:", searchText.trim() !== "");
-    console.log("grp:", searchGroup.trim() !== "");
-    console.log("org:", searchOrganization.trim() !== "");
-    console.log("state:", searchState.trim() !== "");
-    if (
-      searchText.trim() !== "" ||
-      searchGroup.trim() !== "" ||
-      searchOrganization.trim() !== "" ||
-      searchState.trim() !== ""
-    ) {
-      if (isFiltered == false) setIsFiltered(true);
-      return;
-    }
-    if (isFiltered === true) {
-      setIsFiltered(false);
-    }
-  }
+  // async () => {
+  //   const filters = {
+  //     ...(searchGroup &&
+  //       searchGroup.trim() !== "" && { id_like: searchGroup }),
+  //     ...(searchOrganization &&
+  //       searchOrganization.trim() !== "" && {
+  //         organization_eq: searchOrganization,
+  //       }),
+  //     ...(searchState &&
+  //       searchState.trim() !== "" && { state_eq: searchState }),
+  //   };
 
-  activeFilter();
-  //console.log(isFiltered);
+  //   return await RunnerModel.getRunners(
+  //     searchText,
+  //     limit,
+  //     undefined,
+  //     "group",
+  //     "asc",
+  //     filters
+  //   );
+  // },
 
-  const runnersQuery = useQuery({
-    queryKey: ["runners", searchText, limit, isFiltered],
-    queryFn: async () =>
-      await RunnerModel.getRunners(searchText, isFiltered ? -1 : limit),
-  });
-
-  if (runnersQuery.data && "error" in runnersQuery.data) {
-    const errorData = runnersQuery.data as IErrorMessage;
-    return <ErrorMessage errorMessage={errorData} />;
-  }
-
-  if (!runnersQuery.data && !runnersQuery.isLoading) {
-    const error: IErrorMessage = {
-      code: "500",
-      error: "Internal server error",
-      message: "Server responded with undefined",
-    };
-    return <ErrorMessage errorMessage={error}></ErrorMessage>;
-  }
-
-  let filteredRunners: IRunner[] = [];
-  if (!runnersQuery.isLoading) {
-    filteredRunners = (runnersQuery.data as IRunner[]).filter(
-      (runner: IRunner) => {
-        let matchesState = true;
-        let matchesGroup = true;
-        let matchesOrganization = true;
-
-        if (searchGroup != " ") {
-          matchesGroup = runner.runner_group === searchGroup;
-        }
-
-        if (searchOrganization != " ") {
-          matchesOrganization = runner.organization === searchOrganization;
-        }
-
-        if (searchState != " ") {
-          matchesOrganization = runner.state === searchState;
-        }
-
-        return matchesGroup && matchesOrganization && matchesState;
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: [
+      "runners",
+      {
+        search: searchText,
+        limit: limit,
+        searchGroup: searchGroup,
+        searchOrganization: searchOrganization,
+        searchState: searchState,
+      },
+    ],
+    queryFn: fetchRunners,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      // if (lastPage.length === 0) {
+      //   return undefined;
+      // }
+      return lastPageParam + 1;
+    },
+    getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
+      if (firstPageParam <= 1) {
+        return undefined;
       }
-    );
-  }
-
-  //console.log(filteredRunners.length);
+      return firstPageParam - 1;
+    },
+  });
+  if (status === "pending") return <p>Loading...</p>;
+  if (status === "error") return <p>Error: {error.message}</p>;
+  let allData: IRunner[] = [];
+  data?.pages.forEach((page) => {
+    allData = allData.concat(page);
+  });
 
   return (
     <>
@@ -123,7 +129,6 @@ export default function RunnersDataTable({
           <Select
             onValueChange={(e) => {
               setSearchOrganization(e);
-              activeFilter();
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -138,7 +143,6 @@ export default function RunnersDataTable({
           <Select
             onValueChange={(e) => {
               setSearchState(e);
-              activeFilter();
             }}
           >
             <SelectTrigger className="w-[180px]">
@@ -162,15 +166,22 @@ export default function RunnersDataTable({
           </Select>
         </div>
       )}
-      {runnersQuery.isLoading && (
-        <div className="loader-wrap">
-          <div className="loading-spinner"></div>
-        </div>
-      )}
-      {!runnersQuery.isLoading && <RunnersTable runners={filteredRunners} />}
+      <RunnersTable runners={allData} />
+      {/* TODO: use global component */}
       {isNav && (
-        <div className="mt-4">
-          <ButtonLoadMore onClick={() => setLimit(limit + 25)} />
+        <div className="w-full mt-4">
+          <Button
+            variant="outline"
+            onClick={() => fetchNextPage()}
+            className="w-full"
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            {isFetchingNextPage
+              ? "Loading more..."
+              : hasNextPage
+              ? "Load More"
+              : "Nothing more to load"}
+          </Button>
         </div>
       )}
     </>
@@ -185,10 +196,3 @@ function StateItem({ title, color }: { title: string; color: string }) {
     </div>
   );
 }
-
-// const tailwindFillClassMap = {
-//   [StateType.Gray]: "fill-state_gray",
-//   [StateType.Orange]: "fill-state_yellow",
-//   [StateType.Green]: "fill-state_green",
-//   [StateType.Red]: "fill-state_red",
-// };
