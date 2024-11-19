@@ -16,7 +16,7 @@ export default {
         state_yellow: "hsl(var(--state_yellow))",
         state_green: "hsl(var(--state_green))",
         state_red: "hsl(var(--state_red))",
-        log_red: "hsl(var(--log_red))",
+        log_yellow: "hsl(var(--log_yellow))",
         log_blue: "hsl(var(--log_blue))",
         log_red: "hsl(var(--log_red))",
         // ShadCn
