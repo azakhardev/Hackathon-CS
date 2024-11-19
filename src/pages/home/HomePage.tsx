@@ -36,15 +36,14 @@ export default function HomePage() {
           <div>
             <H2>Projects</H2>
             <ProjectDataTable limit={limit} isNav={false} />
-            <Link to="/projects">
-              <ButtonLoadMore className="mt-3" />
-            </Link>
+            <MoreBtn to="/projects" />
           </div>
           <div>
             <H2>Runners</H2>
             <Loader isLoading={runnersQuery.isLoading}>
               <RunnersTable runners={runnersQuery.data as IRunner[]} />
             </Loader>
+            <MoreBtn to="/runners" />
           </div>
           <div>
             <H2>Jobs</H2>
@@ -52,6 +51,7 @@ export default function HomePage() {
               {/* <JobsTable jobs={[]} /> */}
               <RunnersTable runners={jobsQuery.data as IRunner[]} />
             </Loader>
+            <MoreBtn to="/jobs" />
           </div>
         </div>
       </div>
@@ -64,12 +64,14 @@ export default function HomePage() {
               {/* <AutomationsTable automations={[]} /> */}
               <RunnersTable runners={automationsQuery.data as IRunner[]} />
             </Loader>
+            <MoreBtn to="/automations" />
           </div>
           <div>
             <H2>Automation Types</H2>
             <Loader isLoading={automationTypesQuery.isLoading}>
               <RunnersTable runners={automationTypesQuery.data as IRunner[]} />
             </Loader>
+            <MoreBtn to="/automationTypes" />
           </div>
         </div>
       </div>
@@ -94,5 +96,13 @@ export function Loader({
         children
       )}
     </>
+  );
+}
+
+function MoreBtn({ to }: { to: string }) {
+  return (
+    <Link to={to}>
+      <ButtonLoadMore className="mt-3" />
+    </Link>
   );
 }
