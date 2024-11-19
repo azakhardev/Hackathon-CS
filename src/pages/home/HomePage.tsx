@@ -1,25 +1,15 @@
-import ErrorMessage from "@/components/ui/ErrorMessage";
 import { RunnerModel } from "@/pages/runners/api/RunnerModel";
-import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
-import ProjectsTable from "../projects/components/ProjectsTable";
 import RunnersTable from "../runners/components/RunnersTable";
-import JobsTable from "../jobs/components/JobsTable";
-import AutomationsTable from "../automations/automations/AutomationsTable";
 import H1 from "@/components/ui/typography/H1";
 import { IRunner } from "@/pages/runners/types/IRunner";
 import H2 from "@/components/ui/typography/H2";
-import { IAutomation } from "../automations/_shared/IAutomation";
-import { IProject } from "../projects/types/IProject";
-import { Divide } from "lucide-react";
+import ProjectDataTable from "../projects/components/ProjectDataTable";
 import ButtonLoadMore from "@/components/ButtonLoadmore";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   // API
-  const projectsQuery = useQuery({
-    queryKey: ["runners"],
-    queryFn: async () => await RunnerModel.getRunners(undefined, 3),
-  });
   const runnersQuery = useQuery({
     queryKey: ["runners"],
     queryFn: async () => await RunnerModel.getRunners(undefined, 3),
@@ -36,7 +26,7 @@ export default function HomePage() {
     queryKey: ["runners"],
     queryFn: async () => await RunnerModel.getRunners(undefined, 3),
   });
-
+  const limit = 3;
   return (
     <div className="flex flex-col gap-10">
       {/* <H1>Homepage</H1> */}
@@ -45,11 +35,10 @@ export default function HomePage() {
         <div className="flex flex-col gap-6">
           <div>
             <H2>Projects</H2>
-            <Loader isLoading={projectsQuery.isLoading}>
-              {/* <ProjectsTable projects={projectsQuery.data} /> */}
-              <RunnersTable runners={projectsQuery.data as IRunner[]} />
-            </Loader>
-            <ButtonLoadMore className="mt-2" />
+            <ProjectDataTable limit={limit} isNav={false} />
+            <Link to="/projects">
+              <ButtonLoadMore className="mt-3" />
+            </Link>
           </div>
           <div>
             <H2>Runners</H2>

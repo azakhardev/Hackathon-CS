@@ -10,13 +10,16 @@ interface ButtonLoadMoreProps {
 export default function ButtonLoadMore({
   className = "",
   title = "More",
-}: ButtonLoadMoreProps) {
+  onClick,
+}: ButtonLoadMoreProps & { onClick?: () => void }) {
   return (
     <div
       className={`flex flex-row justify-center items-center overflow-hidden ${className}`}
     >
       <Separator className="flex-grow" />
-      <Button variant="outline">{title}</Button>
+      <Button variant="outline" onClick={onClick}>
+        {title}
+      </Button>
       <Separator className="flex-grow" />
     </div>
   );
