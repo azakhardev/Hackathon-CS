@@ -66,31 +66,29 @@ const StateNodeWithTooltip = ({
   transitions: ITransition[];
   direction: NodeDirection;
 }) => (
-  <div>
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>
-          <div className="flex items-start gap-2 ml-[25rem]">
-            <StateNode color="green" direction={direction} isActive={false} />
-            {state.charAt(0).toUpperCase() + state.slice(1).toLowerCase()}
-          </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          {transitions.length > 0 ? (
-            transitions.map((transition, i) => (
-              <TransitionDetails
-                key={i}
-                transition={transition}
-                isLast={i === transitions.length - 1}
-              />
-            ))
-          ) : (
-            <p>No outgoing transitions</p>
-          )}
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  </div>
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger>
+        <div className="flex items-start gap-2 ml-[25rem]">
+          <StateNode color="green" direction={direction} isActive={false} />
+          {state.charAt(0).toUpperCase() + state.slice(1).toLowerCase()}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>
+        {transitions.length > 0 ? (
+          transitions.map((transition, i) => (
+            <TransitionDetails
+              key={i}
+              transition={transition}
+              isLast={i === transitions.length - 1}
+            />
+          ))
+        ) : (
+          <p>No outgoing transitions</p>
+        )}
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
 );
 
 export default function AutomationTypesPage() {
@@ -142,19 +140,23 @@ export default function AutomationTypesPage() {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      {x.states.map((state, stateIndex) => (
-                        <StateNodeWithTooltip
-                          key={state}
-                          state={state}
-                          transitions={getTransitionsForState(
-                            state,
-                            x.transitions
-                          )}
-                          direction={
-                            stateIndex === x.states.length - 1 ? "none" : "down"
-                          }
-                        />
-                      ))}
+                      <div className="flex flex-col">
+                        {x.states.map((state, stateIndex) => (
+                          <StateNodeWithTooltip
+                            key={state}
+                            state={state}
+                            transitions={getTransitionsForState(
+                              state,
+                              x.transitions
+                            )}
+                            direction={
+                              stateIndex === x.states.length - 1
+                                ? "none"
+                                : "down"
+                            }
+                          />
+                        ))}
+                      </div>
                     </AccordionContent>
                   </AccordionItem>
                 ))}
