@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import RunnersDataTable from "../runners/components/RunnersDataTable";
 import JobsDataTable from "../jobs/components/JobDataTable";
 import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
+import AutomationTypesDataTable from "../automations/automationTypes/AutomationsTypeDataTable";
 
 export default function HomePage() {
   // API
@@ -46,14 +47,12 @@ export default function HomePage() {
         <div className="flex flex-col gap-6">
           <div>
             <H2x>Automations</H2x>
-            <AutomationsDataTable limit={limit} isNav={false} />
+            {/* <AutomationsDataTable limit={limit} isNav={false} /> */}
             <MoreBtn to="/automations" />
           </div>
           <div>
             <H2x>Automation Types</H2x>
-            <Loader isLoading={runnersQuery.isLoading}>
-              <RunnersTable runners={runnersQuery.data as IRunner[]} />
-            </Loader>
+            <AutomationTypesDataTable limit={limit} isNav={false} />
             <MoreBtn to="/automationTypes" />
           </div>
         </div>
