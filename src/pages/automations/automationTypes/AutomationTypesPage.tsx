@@ -28,24 +28,33 @@ import {
 export default function AutomationTypesPage() {
   const { data, isLoading } = useQuery({
     queryKey: ["automationTypes"],
-    queryFn: async () => await AutomationModel.getAutomationTypes(),
+    queryFn: async () => await AutomationModel.getAutomationTypes("", 9999),
     gcTime: 0,
   });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!data) {
+    return (
+      <ErrorMessage
+        errorMessage={{
+          code: "500",
+          error: "Internal Server Error",
+          message: "Failed to load automation types",
+        }}
+      />
+    );
+  }
+
+  if ("error" in data) {
+    return <ErrorMessage errorMessage={data} />;
+  }
+
   const types = data as IAutomationType[];
   console.log(types);
 
-  if (!types && !isLoading) {
-    const error: IErrorMessage = {
-      code: "500",
-      error: "Internal server error",
-      message: "Server responded with undefined",
-    };
-    return <ErrorMessage errorMessage={error}></ErrorMessage>;
-  }
-
-  if ((data && "error" in data) || !data) {
-    return <ErrorMessage errorMessage={data as IErrorMessage} />;
-  }
   return (
     <>
       <H1>Automation Types</H1>
