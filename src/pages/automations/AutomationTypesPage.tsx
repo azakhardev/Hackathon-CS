@@ -25,6 +25,74 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+const getTransitionsForState = (state: string, transitions: ITransition[]) => {
+  return transitions.filter((t) => t.from_state === state);
+};
+
+const TransitionDetails = ({
+  transition,
+  isLast,
+}: {
+  transition: ITransition;
+  isLast: boolean;
+}) => (
+  <div>
+    <p>
+      <span className="font-semibold">To: </span>
+      <span className="font-mono">{transition.to_state}</span>
+    </p>
+    {transition.event && (
+      <p>
+        <span className="font-semibold">Trigger: </span>
+        <span className="font-mono">{transition.event}</span>
+      </p>
+    )}
+    {transition.action && (
+      <p>
+        <span className="font-semibold">Action: </span>
+        <span className="font-mono">{transition.action}</span>
+      </p>
+    )}
+    {!isLast && <hr className="my-2" />}
+  </div>
+);
+
+const StateNodeWithTooltip = ({
+  state,
+  transitions,
+  direction,
+}: {
+  state: string;
+  transitions: ITransition[];
+  direction: NodeDirection;
+}) => (
+  <div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <div className="flex items-start gap-2 ml-[25rem]">
+            <StateNode color="green" direction={direction} isActive={false} />
+            {state.charAt(0).toUpperCase() + state.slice(1).toLowerCase()}
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          {transitions.length > 0 ? (
+            transitions.map((transition, i) => (
+              <TransitionDetails
+                key={i}
+                transition={transition}
+                isLast={i === transitions.length - 1}
+              />
+            ))
+          ) : (
+            <p>No outgoing transitions</p>
+          )}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  </div>
+);
+
 export default function AutomationTypesPage() {
   const { data, isLoading } = useQuery({
     queryKey: ["automationTypes"],
@@ -54,7 +122,7 @@ export default function AutomationTypesPage() {
           <TableRow>
             <TableCell>
               <Accordion type="single" collapsible>
-                {(data as IAutomationType[]).map((x, i) => (
+                {(data as IAutomationType[]).map((x) => (
                   <AccordionItem
                     key={x.type}
                     value={x.type}
@@ -74,44 +142,19 @@ export default function AutomationTypesPage() {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent>
-                      {(x.transitions as ITransition[]).map((xx, ii) => {
-                        let direction: NodeDirection = "down";
-                        if (ii == x.transitions.length - 1) direction = "none";
-                        return (
-                          <TooltipProvider key={ii}>
-                            <Tooltip>
-                              <TooltipTrigger>
-                                <div className="flex items-start gap-2 ml-[25rem]">
-                                  {" "}
-                                  {/* mt-[-5px] - broken */}
-                                  <StateNode
-                                    color="green"
-                                    direction={direction}
-                                    isActive={false}
-                                  />
-                                  {xx.from_state.charAt(0).toUpperCase() +
-                                    xx.from_state.slice(1).toLowerCase()}
-                                </div>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>
-                                  <span className="font-semibold">
-                                    Trigger:
-                                  </span>
-                                  <span className="font-mono"> {xx.event}</span>
-                                </p>
-                                <p>
-                                  <span className="font-semibold">Action:</span>
-                                  <span className="font-mono">
-                                    {" "}
-                                    {xx.action}
-                                  </span>
-                                </p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        );
-                      })}
+                      {x.states.map((state, stateIndex) => (
+                        <StateNodeWithTooltip
+                          key={state}
+                          state={state}
+                          transitions={getTransitionsForState(
+                            state,
+                            x.transitions
+                          )}
+                          direction={
+                            stateIndex === x.states.length - 1 ? "none" : "down"
+                          }
+                        />
+                      ))}
                     </AccordionContent>
                   </AccordionItem>
                 ))}
