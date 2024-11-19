@@ -6,6 +6,7 @@ import ProjectDataTable from "../projects/components/ProjectDataTable";
 import Button_More from "@/components/ButtonLoadMore";
 import { Link } from "react-router-dom";
 import RunnersDataTable from "../runners/components/RunnersDataTable";
+import JobsDataTable from "../jobs/components/JobDataTable";
 
 export default function HomePage() {
   // API
@@ -33,10 +34,8 @@ export default function HomePage() {
           </div>
           <div>
             <H2x>Jobs</H2x>
-            <Loader isLoading={runnersQuery.isLoading}>
-              {/* <JobsTable jobs={[]} /> */}
-              <RunnersTable runners={runnersQuery.data as IRunner[]} />
-            </Loader>
+            {/* jobs not have limit yet */}
+            {/* <JobsDataTable limit={limit} isNav={false} /> */}
             <MoreBtn to="/jobs" />
           </div>
         </div>
