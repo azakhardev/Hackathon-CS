@@ -105,7 +105,7 @@ export default function AutomationsTable(props: IProps) {
               <TableCell className="text-end">
                 <Link
                   className={buttonVariants({ variant: "outline" })}
-                  to={`#`}
+                  to={`${a.id}`}
                 >
                   Logs
                 </Link>
