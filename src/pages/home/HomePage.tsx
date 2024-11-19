@@ -7,6 +7,7 @@ import Button_More from "@/components/ButtonLoadMore";
 import { Link } from "react-router-dom";
 import RunnersDataTable from "../runners/components/RunnersDataTable";
 import JobsDataTable from "../jobs/components/JobDataTable";
+import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
 
 export default function HomePage() {
   // API
@@ -45,10 +46,7 @@ export default function HomePage() {
         <div className="flex flex-col gap-6">
           <div>
             <H2x>Automations</H2x>
-            <Loader isLoading={runnersQuery.isLoading}>
-              {/* <AutomationsTable automations={[]} /> */}
-              <RunnersTable runners={runnersQuery.data as IRunner[]} />
-            </Loader>
+            <AutomationsDataTable limit={limit} isNav={false} />
             <MoreBtn to="/automations" />
           </div>
           <div>
