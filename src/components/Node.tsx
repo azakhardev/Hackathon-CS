@@ -61,7 +61,10 @@ export default function StateNode({
           className={isActive ? colorClasses["gray"] : colorClasses[color]}
         ></div>
       )}
-      <div style={circleStyle} className={nodeClass}></div>
+      <div
+        style={circleStyle}
+        className={`${nodeClass} transition-transform hover:scale-150`}
+      ></div>
       {!isBefore && !isLine && (
         <div
           style={lineStyle}
