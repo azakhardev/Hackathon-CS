@@ -24,12 +24,8 @@ export default function AutomationsPage() {
     queryFn: async () => await AutomationModel.getAutomationTypes("", 9999),
   });
 
-  if (automationsQuery.data && "error" in automationsQuery.data) {
-    return (
-      <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />
-    );
-  }
-
+  if (automationsQuery.data && "error" in automationsQuery.data)
+    <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />;
   if (!automationsQuery.data && !automationsQuery.isLoading) {
     const error: IErrorMessage = {
       code: "500",
@@ -40,24 +36,19 @@ export default function AutomationsPage() {
   }
 
   // Data joining logic
-  const automationsWithTypes = automationsQuery.data?.map(
+  if (!automationsQuery.data || !automationsTypesQuery.data)
+    return <H1>Error at data joining</H1>;
+
+  const automationsWithTypes = (automationsQuery.data as IAutomation[]).map(
     (automation: IAutomation) => {
       const matchedType = Array.isArray(automationsTypesQuery.data)
         ? automationsTypesQuery.data.find(
             (type: IAutomationType) => type.type === automation.type
           )
         : null;
-
-      // Return enriched object with type_object property
-      return {
-        ...automation,
-        type_object: matchedType || null, // Attach the matched type or null if not found
-      };
+      return { ...automation, type_object: matchedType || null };
     }
   );
-  if (automationsWithTypes === undefined || automationsTypesQuery === null) {
-    return <H1>automationsWithTypes</H1>;
-  }
 
   return (
     <>

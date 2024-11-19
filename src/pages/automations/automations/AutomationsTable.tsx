@@ -23,6 +23,8 @@ interface IProps {
 }
 
 export default function AutomationsTable(props: IProps) {
+  if (props.automations === undefined || props.automations === null)
+    return <h1>Error at data joining</h1>;
   const getNodeProps = (
     currentIndex: number,
     activeIndex: number,

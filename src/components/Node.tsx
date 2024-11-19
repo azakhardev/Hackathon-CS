@@ -1,5 +1,12 @@
+export type NodeColor =
+  | "gray"
+  | "green"
+  | "yellow"
+  | "red"
+  | "log_yellow"
+  | "log_blue"
+  | "log_red";
 export type NodeDirection = "up" | "down" | "left" | "right" | "none" | "<-";
-export type NodeColor = "gray" | "green" | "yellow" | "red";
 
 export interface NodeProps {
   isBorder?: boolean;
@@ -28,6 +35,9 @@ export default function StateNode({
     green: "bg-state_green",
     yellow: "bg-state_yellow",
     red: "bg-state_red",
+    log_yellow: "bg-log_yellow",
+    log_blue: "bg-log_blue",
+    log_red: "bg-log_red",
   };
 
   const borderClasses: Record<NodeColor, string> = {
@@ -35,6 +45,9 @@ export default function StateNode({
     green: "border-state_green",
     yellow: "border-state_yellow",
     red: "border-state_red",
+    log_yellow: "border-log_yellow",
+    log_blue: "border-log_blue",
+    log_red: "border-log_red",
   };
 
   const nodeClass = isBorder
