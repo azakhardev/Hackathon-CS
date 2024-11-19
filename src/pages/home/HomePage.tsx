@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import RunnersTable from "../runners/components/RunnersTable";
 import { IRunner } from "@/pages/runners/types/IRunner";
 import ProjectDataTable from "../projects/components/ProjectDataTable";
-import ButtonLoadMore from "@/components/ButtonLoadmore";
+import Button_More from "@/components/ButtonLoadmore";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
@@ -107,7 +107,7 @@ function H2x({ children }: { children: React.ReactNode }) {
 function MoreBtn({ to }: { to: string }) {
   return (
     <Link to={to}>
-      <ButtonLoadMore className="mt-3" />
+      <Button_More className="mt-3" />
     </Link>
   );
 }

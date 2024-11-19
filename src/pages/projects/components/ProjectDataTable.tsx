@@ -7,7 +7,7 @@ import { IProject } from "@/pages/projects/types/IProject";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import SearchBar from "@/components/ui/table/SearchBar";
-import ButtonLoadMore from "@/components/ButtonLoadmore";
+import ButtonLoadMore from "@/components/ui/table/Button_LoadMore";
 
 export default function ProjectsDataTable({
   limit = -1,

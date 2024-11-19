@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "./ui/Button";
 import { Separator } from "./ui/separator";
 
@@ -7,7 +6,7 @@ interface ButtonLoadMoreProps {
   title?: string;
 }
 
-export default function ButtonLoadMore({
+export default function Button_More({
   className = "",
   title = "More",
   onClick,
