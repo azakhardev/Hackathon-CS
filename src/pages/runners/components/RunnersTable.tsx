@@ -42,10 +42,10 @@ export default function RunnersTable(props: IProps) {
         </TableRow>
       </TableHeader> */}
       <TableBody>
-        {(props.runners as IRunner[]).map((r) => {
+        {(props.runners as IRunner[]).map((r, index) => {
           const title = r.id.slice(r.id.length - 5).toUpperCase();
           return (
-            <TableRow key={r.id}>
+            <TableRow key={index}>
               <TableCell className="font-medium">
                 <Table_cel_title
                   title={title}

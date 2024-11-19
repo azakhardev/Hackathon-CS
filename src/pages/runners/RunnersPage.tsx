@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import RunnersTable from "@/pages/runners/components/RunnersTable";
-import { IRunner } from "@/pages/runners/types/IRunner";
+// import { IRunner } from "@/pages/runners/types/IRunner";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { useEffect, useState } from "react";
@@ -17,40 +17,41 @@ import H1 from "@/components/ui/typography/H1";
 import SearchBar from "@/components/ui/table/SearchBar";
 import ButtonLoadMore from "@/components/ui/table/Button_LoadMore";
 import { CircleIcon } from "lucide-react";
+import { IRunner } from "./types/IRunner";
 export default function RunnersPage() {
   const [searchText, setSearchText] = useState("");
   const [searchGroup, setSearchGroup] = useState(" ");
   const [searchOrganization, setSearchOrganization] = useState(" ");
   const [searchState, setSearchState] = useState(" ");
   const [limit, setLimit] = useState(25);
-  const [isFiltered, setIsFiltered] = useState(false);
-
-  function activeFilter() {
-    console.log("text:", searchText.trim() !== "");
-    console.log("grp:", searchGroup.trim() !== "");
-    console.log("org:", searchOrganization.trim() !== "");
-    console.log("state:", searchState.trim() !== "");
-    if (
-      searchText.trim() !== "" ||
-      searchGroup.trim() !== "" ||
-      searchOrganization.trim() !== "" ||
-      searchState.trim() !== ""
-    ) {
-      if (isFiltered == false) setIsFiltered(true);
-      return;
-    }
-    if (isFiltered === true) {
-      setIsFiltered(false);
-    }
-  }
-
-  activeFilter();
-  console.log(isFiltered);
 
   const runnersQuery = useQuery({
-    queryKey: ["runners", searchText, limit, isFiltered],
-    queryFn: async () =>
-      await RunnerModel.getRunners(searchText, isFiltered ? -1 : limit),
+    queryKey: [
+      "runners",
+      {
+        search: searchText,
+        limit: limit,
+        searchGroup: searchGroup,
+        searchOrganization: searchOrganization,
+        searchState: searchState,
+      },
+    ],
+    queryFn: async () => {
+      const filters = {
+        ...(searchGroup && searchGroup.trim() !== "" && { id_like: searchGroup }),
+        ...(searchOrganization && searchOrganization.trim() !== "" && { organization_eq: searchOrganization }),
+        ...(searchState && searchState.trim() !== "" && { state_eq: searchState }),
+      };
+  
+      return await RunnerModel.getRunners(
+        searchText,
+        limit,
+        undefined,
+        "group",
+        "asc",
+        filters
+      );
+    },
   });
 
   if (runnersQuery.data && "error" in runnersQuery.data) {
@@ -67,32 +68,33 @@ export default function RunnersPage() {
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
-  let filteredRunners: IRunner[] = [];
-  if (!runnersQuery.isLoading) {
-    filteredRunners = (runnersQuery.data as IRunner[]).filter(
-      (runner: IRunner) => {
-        let matchesState = true;
-        let matchesGroup = true;
-        let matchesOrganization = true;
+  
+  // let filteredRunners: IRunner[] = [];
+  // if (!runnersQuery.isLoading) {
+  //   filteredRunners = (runnersQuery.data as IRunner[]).filter(
+  //     (runner: IRunner) => {
+  //       let matchesState = true;
+  //       let matchesGroup = true;
+  //       let matchesOrganization = true;
 
-        if (searchGroup != " ") {
-          matchesGroup = runner.runner_group === searchGroup;
-        }
+  //       if (searchGroup != " ") {
+  //         matchesGroup = runner.runner_group === searchGroup;
+  //       }
 
-        if (searchOrganization != " ") {
-          matchesOrganization = runner.organization === searchOrganization;
-        }
+  //       if (searchOrganization != " ") {
+  //         matchesOrganization = runner.organization === searchOrganization;
+  //       }
 
-        if (searchState != " ") {
-          matchesOrganization = runner.state === searchState;
-        }
+  //       if (searchState != " ") {
+  //         matchesOrganization = runner.state === searchState;
+  //       }
 
-        return matchesGroup && matchesOrganization && matchesState;
-      }
-    );
-  }
+  //       return matchesGroup && matchesOrganization && matchesState;
+  //     }
+  //   );
+  // }
 
-  console.log(filteredRunners.length);
+  // console.log(filteredRunners.length);
 
   return (
     <>
@@ -117,7 +119,6 @@ export default function RunnersPage() {
         <Select
           onValueChange={(e) => {
             setSearchOrganization(e);
-            activeFilter();
           }}
         >
           <SelectTrigger className="w-[180px]">
@@ -132,7 +133,6 @@ export default function RunnersPage() {
         <Select
           onValueChange={(e) => {
             setSearchState(e);
-            activeFilter();
           }}
         >
           <SelectTrigger className="w-[180px]">
@@ -161,10 +161,21 @@ export default function RunnersPage() {
           <div className="loading-spinner"></div>
         </div>
       )}
-      {!runnersQuery.isLoading && <RunnersTable runners={filteredRunners} />}
+      {runnersQuery.data && runnersQuery.data.length < 1 && (
+        <h3>Žádna data nebyla nalezena</h3>
+      )}
+        
+
+      {!runnersQuery.isLoading && <RunnersTable runners={runnersQuery.data!} />}
       <div className="mt-4">
-        <ButtonLoadMore show={true} onClick={() => setLimit(limit + 25)} />
-      </div>
+        {/* <ButtonLoadMore onClick={(e) => {
+          e!.preventDefault();
+          setLimit(limit + 25)
+        }} /> */}
+        <div className="mt-4">
+          <ButtonLoadMore onClick={() => {setLimit((prevLimit) => prevLimit + 25)}} />
+        </div>
+        </div>
     </>
   );
 }

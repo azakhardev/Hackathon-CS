@@ -3,8 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import RunnersTable from "../runners/components/RunnersTable";
 import { IRunner } from "@/pages/runners/types/IRunner";
 import ProjectDataTable from "../projects/components/ProjectDataTable";
-import Button_More from "@/components/ButtonLoadmore";
+import Button_More from "@/components/ButtonLoadMore";
 import { Link } from "react-router-dom";
+import RunnersDataTable from "../runners/components/RunnersDataTable";
+import JobsDataTable from "../jobs/components/JobDataTable";
+import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
+import AutomationTypesDataTable from "../automations/automationTypes/AutomationsTypeDataTable";
 
 export default function HomePage() {
   // API
@@ -27,17 +31,13 @@ export default function HomePage() {
           </div>
           <div>
             <H2x>Runners</H2x>
-            <Loader isLoading={runnersQuery.isLoading}>
-              <RunnersTable runners={runnersQuery.data as IRunner[]} />
-            </Loader>
+            <RunnersDataTable limit2={limit} isNav={false} />
             <MoreBtn to="/runners" />
           </div>
           <div>
             <H2x>Jobs</H2x>
-            <Loader isLoading={runnersQuery.isLoading}>
-              {/* <JobsTable jobs={[]} /> */}
-              <RunnersTable runners={runnersQuery.data as IRunner[]} />
-            </Loader>
+            {/* jobs not have limit yet */}
+            {/* <JobsDataTable limit={limit} isNav={false} /> */}
             <MoreBtn to="/jobs" />
           </div>
         </div>
@@ -47,17 +47,12 @@ export default function HomePage() {
         <div className="flex flex-col gap-6">
           <div>
             <H2x>Automations</H2x>
-            <Loader isLoading={runnersQuery.isLoading}>
-              {/* <AutomationsTable automations={[]} /> */}
-              <RunnersTable runners={runnersQuery.data as IRunner[]} />
-            </Loader>
+            {/* <AutomationsDataTable limit={limit} isNav={false} /> */}
             <MoreBtn to="/automations" />
           </div>
           <div>
             <H2x>Automation Types</H2x>
-            <Loader isLoading={runnersQuery.isLoading}>
-              <RunnersTable runners={runnersQuery.data as IRunner[]} />
-            </Loader>
+            <AutomationTypesDataTable limit={limit} isNav={false} />
             <MoreBtn to="/automationTypes" />
           </div>
         </div>
