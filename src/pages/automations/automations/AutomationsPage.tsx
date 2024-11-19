@@ -10,11 +10,18 @@ import { IAutomationType } from "../automationTypes/IAutomationType";
 export default function AutomationsPage() {
   const automationsQuery = useQuery({
     queryKey: ["automation"],
-    queryFn: async () => await AutomationModel.getAutomations(),
+    queryFn: async () =>
+      await AutomationModel.getAutomations(
+        "",
+        undefined,
+        undefined,
+        "last_activity",
+        "desc"
+      ),
   });
   const automationsTypesQuery = useQuery({
     queryKey: ["automationTypes"],
-    queryFn: async () => await AutomationModel.getAutomationTypes(),
+    queryFn: async () => await AutomationModel.getAutomationTypes("", 9999),
   });
 
   if (automationsQuery.data && "error" in automationsQuery.data) {
