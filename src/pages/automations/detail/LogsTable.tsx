@@ -5,12 +5,11 @@ import { format } from "date-fns";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableHead,
-  TableHeader,
   TableRow,
 } from "@/components/ui/table/table";
+import { Badge_timeAgo } from "@/components/ui/table/badge_timeAgo";
+import Badge_Link from "@/components/ui/table/Badge_Link";
 
 interface IProps {
   logs: IAutomationLog[] | IErrorMessage;
@@ -39,7 +38,9 @@ export default function LogsTable(props: IProps) {
             </TableCell>
             <TableCell>Status si tady namaluj</TableCell>
             <TableCell className="font-medium">
-              {format(new Date(l.timestamp), "dd. MM. yyyy HH:mm:ss")}
+              <Badge_timeAgo date={new Date(l.timestamp)} />
+              <span>new log was created on</span>
+              <Badge_Link title={l.automation_id.slice(-5)} route="#" />
             </TableCell>
           </TableRow>
         ))}
