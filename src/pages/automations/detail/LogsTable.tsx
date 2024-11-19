@@ -17,16 +17,19 @@ interface IProps {
 }
 
 export default function LogsTable(props: IProps) {
+  if (!Array.isArray(props.logs) || props.logs.length === 0) {
+    return (
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell className="text-center">No data available</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    );
+  }
   return (
     <Table>
-      <TableCaption></TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[400px] text-white">Type</TableHead>
-          <TableHead className="text-white">Status</TableHead>
-          <TableHead className="text-white">Time</TableHead>
-        </TableRow>
-      </TableHeader>
       <TableBody>
         {(props.logs as IAutomationLog[]).map((l) => (
           <TableRow key={l.timestamp}>
