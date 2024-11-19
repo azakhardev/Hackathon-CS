@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import ProjectsTable from "../projects/components/ProjectsTable";
 import RunnersTable from "../runners/components/RunnersTable";
 import JobsTable from "../jobs/components/JobsTable";
-import AutomationsTable from "../automations/components/AutomationsTable";
+import AutomationsTable from "../automations/automations/AutomationsTable";
 import H1 from "@/components/ui/typography/H1";
 import { IRunner } from "@/pages/runners/types/IRunner";
 import H2 from "@/components/ui/typography/H2";

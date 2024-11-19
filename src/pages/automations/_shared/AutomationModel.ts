@@ -1,7 +1,7 @@
-import { IAutomation } from "../types/IAutomation";
-import { IAutomationLog } from "../types/IAutomationLog";
+import { IAutomation } from "./IAutomation";
+import { IAutomationLog } from "../detail/IAutomationLog";
 import { api_auth, api_url } from "../../../lib/utils/env_vars";
-import { IAutomationType } from "../types/IAutomationType";
+import { IAutomationType } from "../automationTypes/IAutomationType";
 import { IErrorMessage } from "../../../lib/types/IErrorMessage";
 
 export class AutomationModel {

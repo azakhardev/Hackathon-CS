@@ -1,4 +1,4 @@
-import { IAutomationType } from "./IAutomationType";
+import { IAutomationType } from "../automationTypes/IAutomationType";
 
 export interface IAutomation {
   id: string;

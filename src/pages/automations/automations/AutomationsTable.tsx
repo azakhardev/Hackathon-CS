@@ -4,7 +4,7 @@ import {
   TableCell,
   TableRow,
 } from "@/components/ui/table/table";
-import { IAutomation } from "@/pages/automations/types/IAutomation";
+import { IAutomation } from "@/pages/automations/_shared/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { Link } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/Button";

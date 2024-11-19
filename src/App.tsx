@@ -2,16 +2,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./pages/home/HomePage";
 import RunnersPage from "./pages/runners/RunnersPage";
-import AutomationsPage from "./pages/automations/AutomationsPage";
+import AutomationsPage from "./pages/automations/automations/AutomationsPage";
 import Layout from "./pages/_layout/_Layout";
 import ChartTest from "./components/features/charts/ChartTest";
 import JobsPage from "./pages/jobs/JobsPage";
 import RunnerDetailPage from "./pages/runners/RunnerDetailPage";
-import AutomationDetailPage from "./pages/automations/AutomationDetailPage";
+import AutomationDetailPage from "./pages/automations/detail/AutomationDetailPage";
 import { ThemeProvider } from "./components/theme-provider";
 import MetricsPage from "./pages/metrics/MetricsPage";
 import ProjectsPage from "./pages/projects/ProjectsPage";
-import AutomationTypesPage from "./pages/automations/AutomationTypesPage";
+import AutomationTypesPage from "./pages/automations/automationTypes/AutomationTypesPage";
 
 const queryClient = new QueryClient();
 

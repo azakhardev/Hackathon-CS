@@ -1,7 +1,7 @@
 import H1 from "@/components/ui/typography/H1";
-import { AutomationModel } from "./api/AutomationModel";
+import { AutomationModel } from "../_shared/AutomationModel";
 import { useQuery } from "@tanstack/react-query";
-import { IAutomationType, ITransition } from "./types/IAutomationType";
+import { IAutomationType, ITransition } from "./IAutomationType";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import {
@@ -24,72 +24,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-const getTransitionsForState = (state: string, transitions: ITransition[]) => {
-  return transitions.filter((t) => t.from_state === state);
-};
-
-const TransitionDetails = ({
-  transition,
-  isLast,
-}: {
-  transition: ITransition;
-  isLast: boolean;
-}) => (
-  <div>
-    <p>
-      <span className="font-semibold">To: </span>
-      <span className="font-mono">{transition.to_state}</span>
-    </p>
-    {transition.event && (
-      <p>
-        <span className="font-semibold">Trigger: </span>
-        <span className="font-mono">{transition.event}</span>
-      </p>
-    )}
-    {transition.action && (
-      <p>
-        <span className="font-semibold">Action: </span>
-        <span className="font-mono">{transition.action}</span>
-      </p>
-    )}
-    {!isLast && <hr className="my-2" />}
-  </div>
-);
-
-const StateNodeWithTooltip = ({
-  state,
-  transitions,
-  direction,
-}: {
-  state: string;
-  transitions: ITransition[];
-  direction: NodeDirection;
-}) => (
-  <TooltipProvider>
-    <Tooltip>
-      <TooltipTrigger>
-        <div className="flex items-start gap-2 ml-[25rem]">
-          <StateNode color="green" direction={direction} isActive={false} />
-          {state.charAt(0).toUpperCase() + state.slice(1).toLowerCase()}
-        </div>
-      </TooltipTrigger>
-      <TooltipContent>
-        {transitions.length > 0 ? (
-          transitions.map((transition, i) => (
-            <TransitionDetails
-              key={i}
-              transition={transition}
-              isLast={i === transitions.length - 1}
-            />
-          ))
-        ) : (
-          <p>No outgoing transitions</p>
-        )}
-      </TooltipContent>
-    </Tooltip>
-  </TooltipProvider>
-);
 
 export default function AutomationTypesPage() {
   const { data, isLoading } = useQuery({
@@ -168,3 +102,71 @@ export default function AutomationTypesPage() {
     </>
   );
 }
+
+// -----------------------------------------------------------------------
+
+const getTransitionsForState = (state: string, transitions: ITransition[]) => {
+  return transitions.filter((t) => t.from_state === state);
+};
+
+const TransitionDetails = ({
+  transition,
+  isLast,
+}: {
+  transition: ITransition;
+  isLast: boolean;
+}) => (
+  <div>
+    <p>
+      <span className="font-semibold">To: </span>
+      <span className="font-mono">{transition.to_state}</span>
+    </p>
+    {transition.event && (
+      <p>
+        <span className="font-semibold">Trigger: </span>
+        <span className="font-mono">{transition.event}</span>
+      </p>
+    )}
+    {transition.action && (
+      <p>
+        <span className="font-semibold">Action: </span>
+        <span className="font-mono">{transition.action}</span>
+      </p>
+    )}
+    {!isLast && <hr className="my-2" />}
+  </div>
+);
+
+const StateNodeWithTooltip = ({
+  state,
+  transitions,
+  direction,
+}: {
+  state: string;
+  transitions: ITransition[];
+  direction: NodeDirection;
+}) => (
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger>
+        <div className="flex items-start gap-2 ml-[25rem]">
+          <StateNode color="green" direction={direction} isActive={false} />
+          {state.charAt(0).toUpperCase() + state.slice(1).toLowerCase()}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>
+        {transitions.length > 0 ? (
+          transitions.map((transition, i) => (
+            <TransitionDetails
+              key={i}
+              transition={transition}
+              isLast={i === transitions.length - 1}
+            />
+          ))
+        ) : (
+          <p>No outgoing transitions</p>
+        )}
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
+);
