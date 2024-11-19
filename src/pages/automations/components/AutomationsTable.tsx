@@ -38,12 +38,20 @@ export default function AutomationsTable(props: IProps) {
           : ("right" as NodeDirection),
     };
 
+    // If the last node is active, make all nodes green
+    if (activeIndex === totalStates - 1) {
+      props.color = "green";
+      props.isActive = currentIndex === activeIndex;
+      return props;
+    }
+
     if (currentIndex < activeIndex) {
       props.color = "gray";
     } else if (currentIndex > activeIndex) {
       props.color = "gray";
       props.isBorder = true;
     } else if (currentIndex === activeIndex) {
+      // Change color to green if it's the last state, otherwise yellow
       props.color = "yellow";
       props.isActive = true;
     } else {
