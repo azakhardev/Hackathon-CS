@@ -37,18 +37,42 @@ export default function JobsDataTable({
   limit: number | undefined;
   isNav: boolean;
 }) {
-  const fetchJobs = async ({ pageParam }: { pageParam: number }) => {
-    const limit = 5;
-    const res = await fetch(
-      `${api_url}/jobs?limit=${limit}&page=${pageParam}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Basic ${api_auth}`,
-        },
-      }
-    );
-    return res.json();
+  limit = 30; //TODO: change limit
+
+  const fetchJobs = async (
+    page?: number,
+    search?: string,
+    limit?: number,
+    sort?: string,
+    order?: "asc" | "desc",
+    filters?: Record<string, string>
+  ): Promise<IJobs[] | IErrorMessage> => {
+    const params = new URLSearchParams({
+      search: search ?? "",
+      limit: limit?.toString() ? limit!.toString() : "-1",
+      page: page?.toString() ?? "1",
+      sort: sort ?? "",
+      order: order ?? "asc",
+    });
+    console.log("par", page);
+
+    // if (filters) {
+    //   Object.entries(filters).forEach(([key, value]) => {
+    //     params.append(key, value);
+    //   });
+    // }
+
+    console.log(`${api_url}/jobs?${params}`);
+    //https://hackaton-api.fly.dev/api/v1/jobs?search=&limit=5&page=2&sort=&order=asc
+
+    const response = await fetch(`${api_url}/jobs?${params}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Basic ${api_auth}`,
+      },
+    });
+
+    return response.json();
   };
 
   const [searchText, setSearchText] = useState("");
@@ -75,12 +99,15 @@ export default function JobsDataTable({
         searchState: searchState,
       },
     ],
-    queryFn: fetchJobs,
+    //queryFn: ({ pageParam }) => fetchJobs({ pageParam, limit }),
+    queryFn: ({ pageParam }) =>
+      fetchJobs(pageParam, searchText, limit, searchAction),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      // if (lastPage.length === 0) {
-      //   return undefined;
-      // }
+      if (lastPage.length === 0) {
+        //it stops so idk
+        return undefined;
+      }
       return lastPageParam + 1;
     },
     getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
