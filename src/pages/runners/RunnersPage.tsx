@@ -5,7 +5,7 @@ export default function RunnersPage() {
   return (
     <div>
       <H1>Runners</H1>
-      <RunnersDataTable isNav={true} limit2={14} />
+      <RunnersDataTable isNav={true} limit2={5} />
     </div>
   );
 }
