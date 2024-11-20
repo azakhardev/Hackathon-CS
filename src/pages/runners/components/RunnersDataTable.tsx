@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/Button";
 import { RunnerModel } from "../api/RunnerModel";
 
 export default function RunnersPage({
+  limit2 = 5,
   isNav = true,
 }: {
   limit2: number | undefined;
@@ -39,7 +40,7 @@ export default function RunnersPage({
   const [searchGroup, setSearchGroup] = useState(" ");
   const [searchOrganization, setSearchOrganization] = useState(" ");
   const [searchState, setSearchState] = useState(" ");
-  const [limit, _] = useState(5);
+  const [limit, _] = useState(limit2);
 
   // // async () => {
   // //   const filters = {
