@@ -1,13 +1,9 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import JobsTable from "./JobsTable";
 import { Button } from "@/components/ui/Button";
 import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import { IJobs } from "@/pages/jobs/types/IJobs";
-import { useSearchParams } from "react-router-dom";
 import { CircleIcon } from "lucide-react";
-import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import ErrorMessage from "@/components/ui/ErrorMessage";
-import H1 from "@/components/ui/typography/H1";
 import { useState } from "react";
 import {
   Select,
@@ -17,7 +13,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import SearchBar from "@/components/ui/table/SearchBar";
-import ButtonLoadMore from "@/components/ui/table/Button_LoadMore";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
@@ -38,58 +33,94 @@ export default function JobsDataTable({
   limit: number | undefined;
   isNav: boolean;
 }) {
-  limit = 30; //TODO: change limit
+  limit = 5; //TODO: change limit
 
-  const fetchJobs = async (
-    page?: number,
-    search?: string,
-    limit?: number,
-    sort?: string,
-    order?: "asc" | "desc",
-    filters?: Record<string, string>
-  ): Promise<IJobs[] | IErrorMessage> => {
-    const params = new URLSearchParams({
-      search: search ?? "",
-      limit: limit?.toString() ? limit!.toString() : "-1",
-      page: page?.toString() ?? "1",
-      sort: sort ?? "",
-      order: order ?? "asc",
-    });
-    console.log("par", page);
+  // const fetchJobs = async (
+  //   page?: number,
+  //   search?: string,
+  //   limit?: number,
+  //   sort?: string,
+  //   order?: "asc" | "desc",
+  //   filters?: Record<string, string>
+  // ): Promise<IJobs[] | IErrorMessage> => {
+  //   const params = new URLSearchParams({
+  //     search: search ?? "",
+  //     limit: limit?.toString() ? limit!.toString() : "-1",
+  //     page: page?.toString() ?? "1",
+  //     sort: sort ?? "",
+  //     order: order ?? "asc",
+  //   });
+  //   console.log("par", page);
 
-    // if (filters) {
-    //   Object.entries(filters).forEach(([key, value]) => {
-    //     params.append(key, value);
-    //   });
-    // }
+  //   // if (filters) {
+  //   //   Object.entries(filters).forEach(([key, value]) => {
+  //   //     params.append(key, value);
+  //   //   });
+  //   // }
 
-    console.log(`${api_url}/jobs?${params}`);
-    //https://hackaton-api.fly.dev/api/v1/jobs?search=&limit=5&page=2&sort=&order=asc
+  //   console.log(`${api_url}/jobs?${params}`);
+  //   //https://hackaton-api.fly.dev/api/v1/jobs?search=&limit=5&page=2&sort=&order=asc
 
-    const response = await fetch(`${api_url}/jobs?${params}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Basic ${api_auth}`,
-      },
-    });
+  //   const response = await fetch(`${api_url}/jobs?${params}`, {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: `Basic ${api_auth}`,
+  //     },
+  //   });
 
-    return response.json();
-  };
+  //   return response.json();
+  // };
 
   const [searchText, setSearchText] = useState("");
   const [searchAction, setSearchAction] = useState("");
   const [searchState, setSearchState] = useState("");
   const [searchDate, setSearchDate] = useState<Date>();
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery({
+  // const {
+  //   data,
+  //   error,
+  //   fetchNextPage,
+  //   hasNextPage,
+  //   isFetching,
+  //   isFetchingNextPage,
+  //   status,
+  // } = useInfiniteQuery({
+  //   queryKey: [
+  //     "runners",
+  //     {
+  //       search: searchText,
+  //       limit: limit,
+  //       searchAction: searchAction,
+  //       searchDate: searchDate,
+  //       searchState: searchState,
+  //     },
+  //   ],
+  //   //queryFn: ({ pageParam }) => fetchJobs({ pageParam, limit }),
+  //   queryFn: ({ pageParam }) =>
+  //     fetchJobs(pageParam, searchText, limit, searchAction),
+  //   initialPageParam: 1,
+  //   getNextPageParam: (lastPage, allPages, lastPageParam) => {
+  //     if (lastPage.length === 0) {
+  //       //it stops so idk
+  //       return undefined;
+  //     }
+  //     return lastPageParam + 1;
+  //   },
+  //   getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
+  //     if (firstPageParam <= 1) {
+  //       return undefined;
+  //     }
+  //     return firstPageParam - 1;
+  //   },
+  // });
+  // if (status === "pending") return <p>Loading...</p>;
+  // if (status === "error") return <p>Error: {error.message}</p>;
+  // let allData: IJobs[] = [];
+  // data?.pages.forEach((page) => {
+  //   allData = allData.concat(page);
+  // });
+
+  const dataQuery = useInfiniteQuery({
     queryKey: [
       "runners",
       {
@@ -100,29 +131,48 @@ export default function JobsDataTable({
         searchState: searchState,
       },
     ],
-    //queryFn: ({ pageParam }) => fetchJobs({ pageParam, limit }),
-    queryFn: ({ pageParam }) =>
-      fetchJobs(pageParam, searchText, limit, searchAction),
+    queryFn: ({ pageParam = 1 }) => {
+      const filters = {
+        ...(searchState &&
+          searchState.trim() !== "" && { state_eq: searchState }),
+        ...(searchDate && {
+          timestamp_start: format(searchDate, "yyyy-MM-dd").toString(),
+        }),
+        ...(searchAction &&
+          searchAction.trim() !== "" && { runner_start: searchAction }),
+        ...(searchText && searchText.trim() !== "" && { id_start: searchText }),
+      };
+
+      return RunnerModel.getJobs(
+        searchText,
+        limit,
+        pageParam,
+        "group",
+        "asc",
+        filters
+      );
+    },
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPage.length === 0) {
-        //it stops so idk
-        return undefined;
-      }
+    getNextPageParam: (_, __, lastPageParam) => {
       return lastPageParam + 1;
     },
-    getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
+    getPreviousPageParam: (_, __, firstPageParam) => {
       if (firstPageParam <= 1) {
         return undefined;
       }
       return firstPageParam - 1;
     },
   });
-  if (status === "pending") return <p>Loading...</p>;
-  if (status === "error") return <p>Error: {error.message}</p>;
+
+  if (dataQuery.isError) return <p>Error: {dataQuery.error?.message}</p>;
+
   let allData: IJobs[] = [];
-  data?.pages.forEach((page) => {
-    allData = allData.concat(page);
+  dataQuery.data?.pages.forEach((page) => {
+    if (Array.isArray(page)) {
+      allData = allData.concat(page);
+    } else {
+      console.error("Unexpected response format:", page);
+    }
   });
 
   const actionsVals: ISelectItem[] = [
@@ -188,13 +238,13 @@ export default function JobsDataTable({
         <div className="w-full mt-4">
           <Button
             variant="outline"
-            onClick={() => fetchNextPage()}
+            onClick={() => dataQuery.fetchNextPage()}
             className="w-full"
-            disabled={!hasNextPage || isFetchingNextPage}
+            disabled={!dataQuery.hasNextPage || dataQuery.isFetchingNextPage}
           >
-            {isFetchingNextPage
+            {dataQuery.isFetchingNextPage
               ? "Loading more..."
-              : hasNextPage
+              : dataQuery.hasNextPage
               ? "Load More"
               : "Nothing more to load"}
           </Button>
