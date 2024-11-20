@@ -87,9 +87,9 @@ export default function RunnersPage({
     queryFn: fetchRunners,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      // if (lastPage.length === 0) {
-      //   return undefined;
-      // }
+      if (lastPage.length === 0) {
+        return undefined;
+      }
       return lastPageParam + 1;
     },
     getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
