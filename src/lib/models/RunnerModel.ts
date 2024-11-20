@@ -1,8 +1,8 @@
-import { api_auth, api_url } from "../../../lib/utils/env_vars";
-import { IErrorMessage } from "../../../lib/types/IErrorMessage";
-import { IJobs } from "../../jobs/types/IJobs";
-import { IMetrics } from "../../metrics/types/IMetrics";
+import { IErrorMessage } from "../types/IErrorMessage";
+import { IJobs } from "../types/IJobs";
+import { IMetrics } from "../types/IMetrics";
 import { IRunner } from "../types/IRunner";
+import { api_auth, api_url } from "../utils/env_vars";
 
 export class RunnerModel {
   static async getSAS(search: string): Promise<string[] | IErrorMessage> {

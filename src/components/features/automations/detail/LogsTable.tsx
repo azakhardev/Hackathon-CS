@@ -1,4 +1,4 @@
-import { IAutomationLog } from "@/pages/automations/detail/IAutomationLog";
+import { IAutomationLog } from "@/lib/types/IAutomationLog";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 
 import {

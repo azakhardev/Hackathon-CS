@@ -1,5 +1,5 @@
 import H1 from "@/components/ui/typography/H1";
-import RunnersDataTable from "./components/RunnersDataTable";
+import RunnersDataTable from "../../components/features/runners/RunnersDataTable";
 
 export default function RunnersPage() {
   return (

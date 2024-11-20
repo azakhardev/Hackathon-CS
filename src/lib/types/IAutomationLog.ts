@@ -1,4 +1,4 @@
-import { IAutomationType } from "../automationTypes/IAutomationType";
+import { IAutomationType } from "./IAutomationType";
 
 export interface IAutomationLog {
   automation_id: string;

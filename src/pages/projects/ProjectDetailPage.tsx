@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { RunnerModel } from "../runners/api/RunnerModel";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import JobsTable from "../jobs/components/JobsTable";
+import JobsTable from "../../components/features/jobs/JobsTable";
 import { useState } from "react";
 import {
   Select,
@@ -24,6 +23,7 @@ import format from "date-fns/format";
 import SearchBar from "@/components/ui/table/SearchBar";
 import { Calendar } from "@/components/ui/calendar";
 import { CircleIcon } from "lucide-react";
+import { RunnerModel } from "@/lib/models/RunnerModel";
 
 export default function ProjectDetailPage() {
   const params = useParams();

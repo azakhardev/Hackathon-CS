@@ -1,5 +1,5 @@
 import CustomLineChart from "@/components/features/charts/CustomLineChart";
-import { IMetrics } from "../metrics/types/IMetrics";
+import { IMetrics } from "../../../lib/types/IMetrics";
 import CustomAreaChart from "@/components/features/charts/CustomAreaChart";
 
 interface ICPUMetrics {

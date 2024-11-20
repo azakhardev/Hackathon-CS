@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import RunnersTable from "@/pages/runners/components/RunnersTable";
+import RunnersTable from "@/components/features/runners/RunnersTable";
 import { useState } from "react";
 import {
   Select,
@@ -11,10 +11,10 @@ import {
 
 import SearchBar from "@/components/ui/table/SearchBar";
 import { CircleIcon } from "lucide-react";
-import { IRunner } from "../types/IRunner";
+import { IRunner } from "../../../lib/types/IRunner";
 import { Button } from "@/components/ui/Button";
-import { RunnerModel } from "../api/RunnerModel";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
+import { RunnerModel } from "@/lib/models/RunnerModel";
 
 export default function RunnersPage({
   limit2 = 5,

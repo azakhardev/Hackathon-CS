@@ -1,8 +1,8 @@
-import { IAutomation } from "./IAutomation";
-import { IAutomationLog } from "../detail/IAutomationLog";
-import { api_auth, api_url } from "../../../lib/utils/env_vars";
-import { IAutomationType } from "../automationTypes/IAutomationType";
-import { IErrorMessage } from "../../../lib/types/IErrorMessage";
+import { IAutomationLog } from "../types/IAutomationLog";
+import { api_auth, api_url } from "../utils/env_vars";
+import { IAutomationType } from "../types/IAutomationType";
+import { IErrorMessage } from "../types/IErrorMessage";
+import { IAutomation } from "../types/IAutomation";
 
 export class AutomationModel {
   static async getAutomations(

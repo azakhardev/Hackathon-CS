@@ -1,7 +1,7 @@
 import H1 from "@/components/ui/typography/H1";
 import { useParams } from "react-router-dom";
-import LogsDataTable from "./LogsDataTable";
 import H2 from "@/components/ui/typography/H2";
+import LogsDataTable from "@/components/features/automations/detail/LogsDataTable";
 
 export default function AutomationDetailPage() {
   const params = useParams();

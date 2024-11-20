@@ -4,7 +4,6 @@ import {
   TableCell,
   TableRow,
 } from "@/components/ui/table/table";
-import { IAutomation } from "@/pages/automations/_shared/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { Link } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/Button";
@@ -17,6 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { IAutomation } from "@/lib/types/IAutomation";
 
 interface IProps {
   automations: IAutomation[] | IErrorMessage;

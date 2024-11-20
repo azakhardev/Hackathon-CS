@@ -1,11 +1,11 @@
-import { AutomationModel } from "@/pages/automations/_shared/AutomationModel";
+import { AutomationModel } from "@/lib/models/AutomationModel";
 import { useQuery } from "@tanstack/react-query";
 import AutomationsTable from "@/pages/automations/automations/AutomationsTable";
-import { IAutomation } from "@/pages/automations/_shared/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import H1 from "@/components/ui/typography/H1";
-import { IAutomationType } from "../automationTypes/IAutomationType";
+import { IAutomationType } from "../../../lib/types/IAutomationType";
+import { IAutomation } from "@/lib/types/IAutomation";
 
 export default function AutomationsDataTable({
   limit = -1,

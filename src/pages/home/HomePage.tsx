@@ -1,10 +1,8 @@
-import { RunnerModel } from "@/pages/runners/api/RunnerModel";
-import { useQuery } from "@tanstack/react-query";
-import ProjectDataTable from "../projects/components/ProjectDataTable";
+import ProjectDataTable from "../../components/features/projects/ProjectDataTable";
 import Button_More from "@/components/ButtonLoadMore";
 import { Link } from "react-router-dom";
-import RunnersDataTable from "../runners/components/RunnersDataTable";
-import AutomationTypesDataTable from "../automations/automationTypes/AutomationsTypeDataTable";
+import RunnersDataTable from "../../components/features/runners/RunnersDataTable";
+import AutomationTypesDataTable from "@/components/features/automations/automationTypes/AutomationsTypeDataTable";
 
 export default function HomePage() {
   const limit = 3;

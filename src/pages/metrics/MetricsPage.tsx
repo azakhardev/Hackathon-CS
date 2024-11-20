@@ -1,6 +1,6 @@
 import H1 from "@/components/ui/typography/H1";
 import { useQuery } from "@tanstack/react-query";
-import { AutomationModel } from "../automations/_shared/AutomationModel";
+import { AutomationModel } from "../../lib/models/AutomationModel";
 import { useState } from "react";
 import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
 import { Button } from "@/components/ui/Button";
@@ -9,11 +9,11 @@ import { Calendar } from "@/components/ui/calendar";
 import { PopoverContent } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import MetricsPageCharts from "./types/MetricsPageCharts";
-import { IAutomation } from "../automations/_shared/IAutomation";
-import { IJobs } from "../jobs/types/IJobs";
-import { IRunner } from "../runners/types/IRunner";
-import { RunnerModel } from "../runners/api/RunnerModel";
+import MetricsPageCharts from "../../components/features/metrics/MetricsPageCharts";
+import { IJobs } from "../../lib/types/IJobs";
+import { IRunner } from "../../lib/types/IRunner";
+import { RunnerModel } from "@/lib/models/RunnerModel";
+import { IAutomation } from "@/lib/types/IAutomation";
 
 export default function MetricsPage() {
   const [dateStart, setDateStart] = useState<Date>();

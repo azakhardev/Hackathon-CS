@@ -13,8 +13,8 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import {
   buildRunnerDescription,
   buildRunnerText,
-} from "@/pages/jobs/components/JobsTable";
-import { IRunner } from "@/pages/runners/types/IRunner";
+} from "@/components/features/jobs/JobsTable";
+import { IRunner } from "@/lib/types/IRunner";
 import { Link } from "react-router-dom";
 import IconButton from "@/components/IconButton";
 import { CheckIcon, PieChartIcon } from "lucide-react";

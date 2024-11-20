@@ -1,13 +1,13 @@
-import ProjectsTable from "@/pages/projects/components/ProjectsTable";
+import ProjectsTable from "@/components/features/projects/ProjectsTable";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import { IJobs } from "@/pages/jobs/types/IJobs";
-import { IProject } from "@/pages/projects/types/IProject";
+import { IJobs } from "@/lib/types/IJobs";
+import { IProject } from "@/lib/types/IProject";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import SearchBar from "@/components/ui/table/SearchBar";
 import ButtonLoadMore from "@/components/ui/table/Button_LoadMore";
+import { RunnerModel } from "@/lib/models/RunnerModel";
 
 export default function ProjectsDataTable({
   limit = -1,

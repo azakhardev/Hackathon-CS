@@ -1,8 +1,8 @@
 import CustomBarChart from "@/components/features/charts/CustomBarChart";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
 import { IAutomation } from "@/pages/automations/_shared/IAutomation";
-import { IJobs } from "@/pages/jobs/types/IJobs";
-import { IRunner } from "@/pages/runners/types/IRunner";
+import { IJobs } from "@/lib/types/IJobs";
+import { IRunner } from "@/lib/types/IRunner";
 
 class JobState {
   organization: string;

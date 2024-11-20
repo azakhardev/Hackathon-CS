@@ -1,10 +1,10 @@
-import LogsTable from "@/pages/automations/detail/LogsTable";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { AutomationModel } from "@/pages/automations/_shared/AutomationModel";
-import { IAutomationLog } from "@/pages/automations/detail/IAutomationLog";
+import { AutomationModel } from "@/lib/models/AutomationModel";
+import { IAutomationLog } from "@/lib/types/IAutomationLog";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
-import { IAutomationType } from "../automationTypes/IAutomationType";
+import LogsTable from "./LogsTable";
+import { IAutomationType } from "@/lib/types/IAutomationType";
 
 export default function LogsDataTable({
   automationId,

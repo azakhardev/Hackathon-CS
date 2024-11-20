@@ -1,25 +1,18 @@
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { RunnerModel } from "@/pages/runners/api/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import JobsTable from "../jobs/components/JobsTable";
-import { IJobs } from "../jobs/types/IJobs";
-import RunnerMetricsTab from "./RunnerMetricsTab";
-import { IMetrics } from "../metrics/types/IMetrics";
+import JobsTable from "../../components/features/jobs/JobsTable";
+import { IJobs } from "../../lib/types/IJobs";
+import RunnerMetricsTab from "../../components/features/runners/RunnerMetricsTab";
+import { IMetrics } from "../../lib/types/IMetrics";
 import SearchBar from "@/components/ui/table/SearchBar";
 import { CircleIcon } from "lucide-react";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
+import { RunnerModel } from "@/lib/models/RunnerModel";
 
 export default function RunnerDetailPage() {
   const [limit, setLimit] = useState(5);

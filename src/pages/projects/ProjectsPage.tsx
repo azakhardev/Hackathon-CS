@@ -1,5 +1,5 @@
 import H1 from "@/components/ui/typography/H1";
-import ProjectDataTable from "./components/ProjectDataTable";
+import ProjectDataTable from "../../components/features/projects/ProjectDataTable";
 
 export default function ProjectsPage() {
   return (

@@ -1,17 +1,9 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import JobsTable from "./JobsTable";
 import { Button } from "@/components/ui/Button";
-import { RunnerModel } from "@/pages/runners/api/RunnerModel";
-import { IJobs } from "@/pages/jobs/types/IJobs";
+import { IJobs } from "@/lib/types/IJobs";
 import { CircleIcon } from "lucide-react";
 import { useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import SearchBar from "@/components/ui/table/SearchBar";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -23,8 +15,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { api_auth, api_url } from "@/lib/utils/env_vars";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
+import { RunnerModel } from "@/lib/models/RunnerModel";
 
 export default function JobsDataTable({
   limit = -1,

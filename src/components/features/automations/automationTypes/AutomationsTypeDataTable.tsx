@@ -1,6 +1,4 @@
-import { AutomationModel } from "../_shared/AutomationModel";
 import { useQuery } from "@tanstack/react-query";
-import { IAutomationType, ITransition } from "./IAutomationType";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import {
   Accordion,
@@ -22,6 +20,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { AutomationModel } from "@/lib/models/AutomationModel";
+import { IAutomationType, ITransition } from "@/lib/types/IAutomationType";
 //-----------------------------------------↓
 export default function AutomationTypesDataTable({
   limit = -1,
