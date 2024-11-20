@@ -93,38 +93,38 @@ enum JobStates {
 }
 
 export function parseRunnerAction(RunnerId: string) {
-  // if (RunnerId === "none") return RunnerActions.waiting;
-  // else if (RunnerId.includes("csas-dev") && RunnerId.includes("csas-linux"))
-  //   return RunnerActions.build;
-  // else if (
-  //   RunnerId.includes("csas-dev") &&
-  //   RunnerId.includes("csas-linux-test")
-  // )
-  //   return RunnerActions.test;
-  // else if (RunnerId.includes("csas-ops") && RunnerId.includes("csas-linux"))
-  //   return RunnerActions.deploy_dev;
-  // else if (
-  //   RunnerId.includes("csas-ops") &&
-  //   RunnerId.includes("csas-linux-prod")
-  // )
-  //   return RunnerActions.deploy_prod;
+  if (RunnerId === "none") return RunnerActions.waiting;
+  else if (RunnerId.includes("csas-dev") && RunnerId.includes("csas-linux"))
+    return RunnerActions.build;
+  else if (
+    RunnerId.includes("csas-dev") &&
+    RunnerId.includes("csas-linux-test")
+  )
+    return RunnerActions.test;
+  else if (RunnerId.includes("csas-ops") && RunnerId.includes("csas-linux"))
+    return RunnerActions.deploy_dev;
+  else if (
+    RunnerId.includes("csas-ops") &&
+    RunnerId.includes("csas-linux-prod")
+  )
+    return RunnerActions.deploy_prod;
   // else return RunnerActions.build; //TODO: FIX it later !!!!!!!!!!!!!!!!!!!!!!!!!
 
-  const prod = `${RunnerId.split("-")[1]}-${RunnerId.split("-")[2]}`;
-  const action = RunnerId.split("-").slice(3, -1).join("-");
+  // const prod = `${RunnerId.split("-")[1]}-${RunnerId.split("-")[2]}`;
+  // const action = RunnerId.split("-").slice(3, -1).join("-");
 
-  switch (`${prod}-${action}`) {
-    case "csas-dev-csas-linux":
-      return RunnerActions.build;
-    case "csas-dev-csas-linux-test":
-      return RunnerActions.test;
-    case "csas-ops-csas-linux":
-      return RunnerActions.deploy_dev;
-    case "csas-ops-csas-linux-test":
-      return RunnerActions.deploy_prod;
-    default:
-      return RunnerActions.waiting;
-  }
+  // switch (`${prod}-${action}`) {
+  //   case "csas-dev-csas-linux":
+  //     return RunnerActions.build;
+  //   case "csas-dev-csas-linux-test":
+  //     return RunnerActions.test;
+  //   case "csas-ops-csas-linux":
+  //     return RunnerActions.deploy_dev;
+  //   case "csas-ops-csas-linux-test":
+  //     return RunnerActions.deploy_prod;
+  //   default:
+  //     return RunnerActions.waiting;
+  // }
 
   // throw new Error("Unknown runner ID format");
 }
