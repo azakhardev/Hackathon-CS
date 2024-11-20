@@ -16,7 +16,8 @@ import { Table_cel_state } from "@/components/ui/table/table_cel_state";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
 
 interface IProps {
-  jobs: IJobs[] | IErrorMessage;
+  jobs: IJobs[] | IErrorMessage | undefined;
+  searchText?: string;
 }
 
 export default function JobsTable(props: IProps) {
@@ -36,6 +37,7 @@ export default function JobsTable(props: IProps) {
               <Table_cel_title
                 title={j.id}
                 text={buildDescription(parseRunnerAction(j.runner))}
+                searchText={props.searchText}
               />
             </TableCell>
             <JobCells {...j} />

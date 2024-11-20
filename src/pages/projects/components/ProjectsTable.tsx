@@ -32,9 +32,9 @@ export default function ProjectsTable(props: IProps) {
             <TableCell className="text-end">
               <Link
                 className={buttonVariants({ variant: "outline" })}
-                to={`/jobs?sas=${p.job.SAS}`}
+                to={`/projects/${p.name}`}
               >
-                Jobs
+                Detail
               </Link>
             </TableCell>
           </TableRow>

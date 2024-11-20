@@ -72,8 +72,8 @@ export class RunnerModel {
     filters?: Record<string, string>
   ): Promise<IJobs[] | IErrorMessage> {
     const params = new URLSearchParams({
-      search: search ?? "",
-      limit: limit?.toString() ? limit!.toString() : "-1",
+      id_like: search ?? "",
+      limit: limit?.toString() ? limit!.toString() : "99999",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc",
@@ -84,7 +84,6 @@ export class RunnerModel {
         params.append(key, value);
       });
     }
-
     console.log(`${api_url}/jobs?${params}`);
 
     const response = await fetch(`${api_url}/jobs?${params}`, {

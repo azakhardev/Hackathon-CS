@@ -12,6 +12,7 @@ import { ThemeProvider } from "./components/theme-provider";
 import MetricsPage from "./pages/metrics/MetricsPage";
 import ProjectsPage from "./pages/projects/ProjectsPage";
 import AutomationTypesPage from "./pages/automations/automationTypes/AutomationTypesPage";
+import ProjectDetailPage from "./pages/projects/ProjectDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "/projects", element: <ProjectsPage /> },
+      { path: "/projects/:id", element: <ProjectDetailPage /> },
       { path: "/runners", element: <RunnersPage /> },
       { path: "/runners/:id", element: <RunnerDetailPage /> },
       { path: "/jobs", element: <JobsPage /> },
