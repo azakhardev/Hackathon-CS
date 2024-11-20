@@ -95,21 +95,26 @@ enum JobStates {
 }
 
 export function parseRunnerAction(RunnerId: string) {
+  const buildRegex = /^runner-csas-dev-csas-linux-[a-zA-Z0-9]{5}$/
+  const deployDevRegex = /^runner-csas-ops-csas-linux-[a-zA-Z0-9]{5}$/
+
   if (RunnerId === "none") return RunnerActions.waiting;
-  else if (RunnerId.includes("csas-dev") && RunnerId.includes("csas-linux"))
+  else if (RunnerId.includes("csas-dev") && buildRegex.test(RunnerId))
     return RunnerActions.build;
   else if (
     RunnerId.includes("csas-dev") &&
     RunnerId.includes("csas-linux-test")
   )
     return RunnerActions.test;
-  else if (RunnerId.includes("csas-ops") && RunnerId.includes("csas-linux"))
+  else if (RunnerId.includes("csas-ops") && deployDevRegex.test(RunnerId))
     return RunnerActions.deploy_dev;
   else if (
     RunnerId.includes("csas-ops") &&
     RunnerId.includes("csas-linux-prod")
   )
     return RunnerActions.deploy_prod;
+
+  return RunnerActions.waiting;
   // else return RunnerActions.build; //TODO: FIX it later !!!!!!!!!!!!!!!!!!!!!!!!!
 
   // const prod = `${RunnerId.split("-")[1]}-${RunnerId.split("-")[2]}`;

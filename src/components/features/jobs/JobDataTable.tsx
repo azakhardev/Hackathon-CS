@@ -27,90 +27,10 @@ export default function JobsDataTable({
 }) {
   limit = 5; //TODO: change limit
 
-  // const fetchJobs = async (
-  //   page?: number,
-  //   search?: string,
-  //   limit?: number,
-  //   sort?: string,
-  //   order?: "asc" | "desc",
-  //   filters?: Record<string, string>
-  // ): Promise<IJobs[] | IErrorMessage> => {
-  //   const params = new URLSearchParams({
-  //     search: search ?? "",
-  //     limit: limit?.toString() ? limit!.toString() : "-1",
-  //     page: page?.toString() ?? "1",
-  //     sort: sort ?? "",
-  //     order: order ?? "asc",
-  //   });
-  //   console.log("par", page);
-
-  //   // if (filters) {
-  //   //   Object.entries(filters).forEach(([key, value]) => {
-  //   //     params.append(key, value);
-  //   //   });
-  //   // }
-
-  //   console.log(`${api_url}/jobs?${params}`);
-  //   //https://hackaton-api.fly.dev/api/v1/jobs?search=&limit=5&page=2&sort=&order=asc
-
-  //   const response = await fetch(`${api_url}/jobs?${params}`, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: `Basic ${api_auth}`,
-  //     },
-  //   });
-
-  //   return response.json();
-  // };
-
   const [searchText, setSearchText] = useState("");
   const [searchAction, setSearchAction] = useState("");
   const [searchState, setSearchState] = useState("");
   const [searchDate, setSearchDate] = useState<Date>();
-
-  // const {
-  //   data,
-  //   error,
-  //   fetchNextPage,
-  //   hasNextPage,
-  //   isFetching,
-  //   isFetchingNextPage,
-  //   status,
-  // } = useInfiniteQuery({
-  //   queryKey: [
-  //     "runners",
-  //     {
-  //       search: searchText,
-  //       limit: limit,
-  //       searchAction: searchAction,
-  //       searchDate: searchDate,
-  //       searchState: searchState,
-  //     },
-  //   ],
-  //   //queryFn: ({ pageParam }) => fetchJobs({ pageParam, limit }),
-  //   queryFn: ({ pageParam }) =>
-  //     fetchJobs(pageParam, searchText, limit, searchAction),
-  //   initialPageParam: 1,
-  //   getNextPageParam: (lastPage, allPages, lastPageParam) => {
-  //     if (lastPage.length === 0) {
-  //       //it stops so idk
-  //       return undefined;
-  //     }
-  //     return lastPageParam + 1;
-  //   },
-  //   getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
-  //     if (firstPageParam <= 1) {
-  //       return undefined;
-  //     }
-  //     return firstPageParam - 1;
-  //   },
-  // });
-  // if (status === "pending") return <p>Loading...</p>;
-  // if (status === "error") return <p>Error: {error.message}</p>;
-  // let allData: IJobs[] = [];
-  // data?.pages.forEach((page) => {
-  //   allData = allData.concat(page);
-  // });
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -124,20 +44,24 @@ export default function JobsDataTable({
       },
     ],
     queryFn: ({ pageParam = 1 }) => {
-      const filters = {
-        ...(searchState &&
-          searchState.trim() !== "" && { state_eq: searchState }),
-        ...(searchDate && {
-          timestamp_start: format(searchDate, "yyyy-MM-dd").toString(),
-        }),
-        ...(searchAction &&
-          searchAction.trim() !== "" && { runner_start: searchAction }),
-        ...(searchText && searchText.trim() !== "" && { id_start: searchText }),
-      };
+      const buildRegex = /^runner-csas-dev-csas-linux-[a-zA-Z0-9]{5}$/;
+const deployDevRegex = /^runner-csas-ops-csas-linux-[a-zA-Z0-9]{5}$/;
 
+const filters = {
+  ...(searchState && searchState.trim() !== "" && { state_eq: searchState }),
+  ...(searchDate && {
+    timestamp_start: format(searchDate, "yyyy-MM-dd").toString(),
+  }),
+  ...(searchAction && searchAction.trim() !== "" && {
+    runner_like: searchAction, // Partial match with `csas-dev-csas-linux`
+    runner_ne: `${searchAction}-test`, // Exclude exact match with `csas-dev-csas-linux-test`
+  }),
+  ...(searchText && searchText.trim() !== "" && { id_start: searchText }),
+};
+  
       return RunnerModel.getJobs(
         searchText,
-        limit,
+        9999999,
         pageParam,
         "group",
         "asc",
@@ -155,6 +79,7 @@ export default function JobsDataTable({
       return firstPageParam - 1;
     },
   });
+  
 
   if (dataQuery.isError) return <p>Error: {dataQuery.error?.message}</p>;
 
@@ -168,7 +93,6 @@ export default function JobsDataTable({
   });
 
   const actionsVals: ISelectItem[] = [
-    { value: "none", content: "Waiting for runner" },
     { value: "csas-dev-csas-linux", content: "Building" },
     { value: "csas-dev-csas-linux-test", content: "Testing" },
     { value: "csas-ops-csas-linux", content: "Deploying to dev" },

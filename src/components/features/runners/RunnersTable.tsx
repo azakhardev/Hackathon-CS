@@ -1,6 +1,4 @@
-import React from "react";
 import { badgeVariants } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/Button";
 import {
   Table,
   TableBody,
