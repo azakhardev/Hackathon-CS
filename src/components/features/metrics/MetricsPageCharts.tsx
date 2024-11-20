@@ -83,7 +83,7 @@ export default function MetricsPageCharts(props: IProps) {
         <CustomBarChart
           chartConfig={JOBS_CHART_CONFIG}
           chartData={jStateData}
-          showCursor={true}
+          showCursor={false}
           dataKey="organization"
         />
       </div>

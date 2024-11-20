@@ -18,6 +18,11 @@ interface ICPUMetrics {
   percents: number;
 }
 
+interface IRAMMetrics {
+  point: string;
+  memory: number;
+}
+
 interface IIncomingMetrics {
   point: string;
   recieve: number;
@@ -38,6 +43,13 @@ const CPU_CHART_CONFIG = {
   percents: {
     label: "Percents",
     color: "hsl(var(--chart-1))",
+  },
+};
+
+const RAM_CHART_CONFIG = {
+  memory: {
+    label: "GB",
+    color: "hsl(var(--chart-5))",
   },
 };
 
@@ -67,6 +79,7 @@ export default function RunnerMetricsTab(props: IProps) {
   if (props.runnerMetrics === null) return <div>Missing data</div>;
 
   const cpuMetrics = createCpuData(props.runnerMetrics);
+  const ramData = createRamData(props.runnerMetrics);
   const incomingData = createNetworkData(props.runnerMetrics);
   const outgoingData = createFsData(props.runnerMetrics);
 
@@ -137,6 +150,23 @@ export default function RunnerMetricsTab(props: IProps) {
           />
         }
       />
+      <ChartCard
+        header={
+          <div className="flex items-center gap-2">
+            <MemoryStick size={40} className="-mb-1" />
+            <span className="text-5xl font-bold">RAM</span>
+          </div>
+        }
+        content={
+          <CustomLineChart
+            chartConfig={RAM_CHART_CONFIG}
+            dataKey="point"
+            lineType="step"
+            showCursor={true}
+            chartData={ramData}
+          />
+        }
+      />
     </div>
   );
 }
@@ -154,6 +184,21 @@ function createCpuData(runnerMetrics: IMetrics) {
   }
 
   return cpuMetrics;
+}
+
+function createRamData(runnerMetrics: IMetrics) {
+  let ramMetrics: IRAMMetrics[] = [];
+
+  if (runnerMetrics?.metrics) {
+    runnerMetrics.metrics.forEach((m, i) => {
+      ramMetrics.push({
+        point: (runnerMetrics.metrics.length - i).toString(),
+        memory: m.memory / 1073741824,
+      });
+    });
+  }
+
+  return ramMetrics;
 }
 
 function createNetworkData(runnerMetrics: IMetrics) {
