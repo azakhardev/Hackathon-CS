@@ -35,7 +35,7 @@ export default function ProjectsTable(props: IProps) {
               <JobCells {...p.job} />
               <TableCell className="flex flex-row justify-end gap-2">
                 <IconButton
-                  url={`/projects?id=${p.job.SAS}`}
+                  url={`/projects/${p.job.SAS}`}
                   icon={<CheckIcon size={16} />}
                   text={`${name.toLowerCase()}'s JOBS`}
                 />
