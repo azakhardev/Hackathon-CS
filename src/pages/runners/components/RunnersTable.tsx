@@ -16,29 +16,31 @@ import {
 } from "@/pages/jobs/components/JobsTable";
 import { IRunner } from "@/pages/runners/types/IRunner";
 import { Link } from "react-router-dom";
+import IconButton from "@/components/IconButton";
+import { CheckIcon, PieChartIcon } from "lucide-react";
 
 interface IProps {
   runners: (IRunner[] | IErrorMessage)[] | undefined;
 }
 
 export default function RunnersTable(props: IProps) {
-
   // onClick={() => handleRowClick(r.id)}
   // const navigate = useNavigate();
 
   // function handleRowClick(id: string) {
   //   navigate(`/runners/${id}`);
   // }
-  const runnerData = props.runners
-    ?.filter((item): item is IRunner[] => Array.isArray(item))
-    .flat() || [];
+  const runnerData =
+    props.runners
+      ?.filter((item): item is IRunner[] => Array.isArray(item))
+      .flat() || [];
 
   if (!runnerData.length) {
     return <p>No runners available or an error occurred.</p>;
   }
 
   return (
-    <Table> 
+    <Table>
       {/* <TableCaption></TableCaption>
       <TableHeader>
         <TableRow>
@@ -71,13 +73,17 @@ export default function RunnersTable(props: IProps) {
                 </Link>
                 {buildRunnerText(r.id)}
               </TableCell>
-              <TableCell className="text-end">
-                <Link
-                  className={buttonVariants({ variant: "outline" })}
-                  to={`/runners/${r.id}`}
-                >
-                  Detail
-                </Link>
+              <TableCell className="flex flex-row justify-end gap-2">
+                <IconButton
+                  url={`/runners/${r.id}`}
+                  icon={<CheckIcon size={16} />}
+                  text={`${title.toLowerCase()}'s JOBS`}
+                />
+                <IconButton
+                  url={`/runners/${r.id}`}
+                  icon={<PieChartIcon size={16} />}
+                  text={`${title.toLowerCase()}'s METRICS`}
+                />
               </TableCell>
             </TableRow>
           );
@@ -102,4 +108,3 @@ export default function RunnersTable(props: IProps) {
 </Link>
 </TableCell> */
 }
-

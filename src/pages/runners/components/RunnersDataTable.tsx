@@ -14,6 +14,7 @@ import { CircleIcon } from "lucide-react";
 import { IRunner } from "../types/IRunner";
 import { Button } from "@/components/ui/Button";
 import { RunnerModel } from "../api/RunnerModel";
+import SelectInput, { ISelectItem } from "@/components/SelectInput";
 
 export default function RunnersPage({
   limit2 = 5,
@@ -154,6 +155,19 @@ export default function RunnersPage({
     }
   });
 
+  // const actionsVals: ISelectItem[] = [
+  //   { value: "csas-dev-csas-linux", content: "Building" },
+  //   { value: "csas-dev-csas-linux-test", content: "Testing" },
+  //   { value: "csas-ops-csas-linux", content: "Deploying to dev" },
+  //   { value: "csas-ops-csas-linux-test", content: "Deploying to prod" },
+  // ];
+  const statesVals: ISelectItem[] = [
+    { value: "active", content: <StateItem title="Active" color="green" /> },
+    { value: "offline", content: <StateItem title="Offline" color="gray" /> }, // prettier-ignore
+    { value: "idle", content: <StateItem title="Idle" color="yellow" />  }, // prettier-ignore
+    { value: "failed", content: <StateItem title="Failed" color="red" /> },
+  ];
+
   return (
     <>
       {isNav && (
@@ -188,30 +202,17 @@ export default function RunnersPage({
               <SelectItem value="csas-ops">csas-ops</SelectItem>
             </SelectContent>
           </Select>
-          <Select
-            onValueChange={(e) => {
-              setSearchState(e);
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All States" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value=" ">All States</SelectItem>
-              <SelectItem value="active">
-                <StateItem title="Active" color="green" />
-              </SelectItem>
-              <SelectItem value="offline">
-                <StateItem title="Offline" color="gray" />
-              </SelectItem>
-              <SelectItem value="idle">
-                <StateItem title="Idle" color="yellow" />
-              </SelectItem>
-              <SelectItem value="failed">
-                <StateItem title="Failed" color="red" />
-              </SelectItem>
-            </SelectContent>
-          </Select>
+
+          {/* <SelectInput
+            placeholder="All States"
+            items={actionsVals}
+            onValueChange={(e) => setSearchAction(e)}
+          /> */}
+          <SelectInput
+            placeholder="All States"
+            items={statesVals}
+            onValueChange={(e) => setSearchState(e)}
+          />
         </div>
       )}
       {dataQuery.isLoading ? (

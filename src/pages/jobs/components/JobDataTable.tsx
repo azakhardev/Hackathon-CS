@@ -29,6 +29,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { api_auth, api_url } from "@/lib/utils/env_vars";
+import SelectInput, { ISelectItem } from "@/components/SelectInput";
 
 export default function JobsDataTable({
   limit = -1,
@@ -124,6 +125,20 @@ export default function JobsDataTable({
     allData = allData.concat(page);
   });
 
+  const actionsVals: ISelectItem[] = [
+    { value: "none", content: "Waiting for runner" },
+    { value: "csas-dev-csas-linux", content: "Building" },
+    { value: "csas-dev-csas-linux-test", content: "Testing" },
+    { value: "csas-ops-csas-linux", content: "Deploying to dev" },
+    { value: "csas-ops-csas-linux-test", content: "Deploying to prod" },
+  ];
+  const statesVals: ISelectItem[] = [
+    { value: "success", content: <StateItem title="Success" color="green" /> },
+    { value: "queued", content: <StateItem title="Queued" color="gray" /> }, // prettier-ignore
+    { value: "in_progress", content: <StateItem title="In Progress" color="yellow" /> }, // prettier-ignore
+    { value: "failed", content: <StateItem title="Failed" color="red" /> },
+  ];
+
   return (
     <>
       <div className="flex justify-between gap-4 mb-4">
@@ -157,46 +172,16 @@ export default function JobsDataTable({
             />
           </PopoverContent>
         </Popover>
-
-        <Select onValueChange={(e) => setSearchAction(e)}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="All Actions" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value=" ">All Actions</SelectItem>
-            <SelectItem value="none">Waiting for runner</SelectItem>
-            <SelectItem value="runner-csas-dev-csas-linux">Building</SelectItem>
-            <SelectItem value="runner-csas-dev-csas-linux-test">
-              Testing
-            </SelectItem>
-            <SelectItem value="runner-csas-ops-csas-linux">
-              Deploying to dev
-            </SelectItem>
-            <SelectItem value="runner-csas-ops-csas-linux-test">
-              Deploying to prod
-            </SelectItem>
-          </SelectContent>
-        </Select>
-        <Select onValueChange={(e) => setSearchState(e)}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="All States" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value=" ">All States</SelectItem>
-            <SelectItem value="success">
-              <StateItem title="Success" color="green" />
-            </SelectItem>
-            <SelectItem value="queued">
-              <StateItem title="Queued" color="gray" />
-            </SelectItem>
-            <SelectItem value="in_progress">
-              <StateItem title="In Progress" color="yellow" />
-            </SelectItem>
-            <SelectItem value="failed">
-              <StateItem title="Failed" color="red" />
-            </SelectItem>
-          </SelectContent>
-        </Select>
+        <SelectInput
+          placeholder="All actions"
+          items={actionsVals}
+          onValueChange={(e) => setSearchAction(e)}
+        />
+        <SelectInput
+          placeholder="All States"
+          items={statesVals}
+          onValueChange={(e) => setSearchState(e)}
+        />
       </div>
       <JobsTable jobs={allData} />
       {isNav && (
