@@ -1,7 +1,7 @@
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
@@ -22,6 +22,10 @@ export default function RunnerDetailPage() {
 
   const params = useParams();
   const runnerId = params.id;
+
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get("tabs"); // Extract the `tabs` parameter
+  const defaultTab = tabParam || "jobs";
 
   function StateItem({ title, color }: { title: string; color: string }) {
     return (
@@ -56,6 +60,7 @@ export default function RunnerDetailPage() {
     ],
     queryFn: async () => {
       const filters = {
+        ...(runnerId && {runner_eq: runnerId}),
         ...(searchText && searchText.trim() !== "" && { id_like: searchText }),
         ...(searchAction &&
           searchAction.trim() !== "" && { runner_like: searchAction }),
@@ -64,7 +69,7 @@ export default function RunnerDetailPage() {
       };
 
       return RunnerModel.getJobs(
-        runnerId,
+        undefined,
         99999999,
         undefined,
         "state",
@@ -108,7 +113,7 @@ export default function RunnerDetailPage() {
           }`}</h2>
         </div>
         <div className="p-10 w-full h-[80dvh]">
-          <Tabs defaultValue="jobs">
+          <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">
               <TabsTrigger className="w-[100px]" value="jobs">
                 Jobs

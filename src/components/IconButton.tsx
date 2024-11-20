@@ -13,14 +13,17 @@ interface IconButtonProps {
   url: string;
   icon: React.ReactNode;
   text: string;
+  tab?: string
 }
 
-export default function IconButton({ url, icon, text }: IconButtonProps) {
+export default function IconButton({ url, icon, text, tab = ""}: IconButtonProps) {
+  const fullUrl = `${url}?tabs=${tab}`;
+  
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <Link className={buttonVariants({ variant: "outline" })} to={url}>
+          <Link className={buttonVariants({ variant: "outline" })} to={fullUrl}>
             {icon}
           </Link>
         </TooltipTrigger>

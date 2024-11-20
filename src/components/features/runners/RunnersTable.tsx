@@ -78,11 +78,13 @@ export default function RunnersTable(props: IProps) {
                   url={`/runners/${r.id}`}
                   icon={<CheckIcon size={16} />}
                   text={`${title.toLowerCase()}'s JOBS`}
+                  tab="jobs"
                 />
                 <IconButton
                   url={`/runners/${r.id}`}
                   icon={<PieChartIcon size={16} />}
                   text={`${title.toLowerCase()}'s METRICS`}
+                  tab="metrics"
                 />
               </TableCell>
             </TableRow>
