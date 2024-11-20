@@ -1,6 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import RunnersTable from "@/pages/runners/components/RunnersTable";
-// import { IRunner } from "@/pages/runners/types/IRunner";
 import { useState } from "react";
 import {
   Select,
@@ -12,94 +11,92 @@ import {
 
 import SearchBar from "@/components/ui/table/SearchBar";
 import { CircleIcon } from "lucide-react";
-import { api_auth, api_url } from "@/lib/utils/env_vars";
 import { IRunner } from "../types/IRunner";
 import { Button } from "@/components/ui/Button";
 import { RunnerModel } from "../api/RunnerModel";
 
 export default function RunnersPage({
-  limit2 = -1,
   isNav = true,
 }: {
   limit2: number | undefined;
   isNav: boolean;
 }) {
-  // const fetchRunners = async ({ pageParam }: { pageParam: number }) => {
-  //   const limit = 5;
-  //   const res = await fetch(
-  //     `${api_url}/runners?limit=${limit}&page=${pageParam}`,
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `Basic ${api_auth}`,
-  //       },
-  //     }
-  //   );
-  //   return res.json();
-  // };
+  // // const fetchRunners = async ({ pageParam }: { pageParam: number }) => {
+  // //   const limit = 5;
+  // //   const res = await fetch(
+  // //     `${api_url}/runners?limit=${limit}&page=${pageParam}`,
+  // //     {
+  // //       method: "GET",
+  // //       headers: {
+  // //         Authorization: `Basic ${api_auth}`,
+  // //       },
+  // //     }
+  // //   );
+  // //   return res.json();
+  // // };
 
   const [searchText, setSearchText] = useState("");
   const [searchGroup, setSearchGroup] = useState(" ");
   const [searchOrganization, setSearchOrganization] = useState(" ");
   const [searchState, setSearchState] = useState(" ");
-  const [limit, setLimit] = useState(5);
+  const [limit, _] = useState(5);
 
-  // async () => {
-  //   const filters = {
-  //     ...(searchGroup &&
-  //       searchGroup.trim() !== "" && { id_like: searchGroup }),
-  //     ...(searchOrganization &&
-  //       searchOrganization.trim() !== "" && {
-  //         organization_eq: searchOrganization,
-  //       }),
-  //     ...(searchState &&
-  //       searchState.trim() !== "" && { state_eq: searchState }),
-  //   };
+  // // async () => {
+  // //   const filters = {
+  // //     ...(searchGroup &&
+  // //       searchGroup.trim() !== "" && { id_like: searchGroup }),
+  // //     ...(searchOrganization &&
+  // //       searchOrganization.trim() !== "" && {
+  // //         organization_eq: searchOrganization,
+  // //       }),
+  // //     ...(searchState &&
+  // //       searchState.trim() !== "" && { state_eq: searchState }),
+  // //   };
 
-  //   return await RunnerModel.getRunners(
-  //     searchText,
-  //     limit,
-  //     undefined,
-  //     "group",
-  //     "asc",
-  //     filters
-  //   );
-  // },
+  // //   return await RunnerModel.getRunners(
+  // //     searchText,
+  // //     limit,
+  // //     undefined,
+  // //     "group",
+  // //     "asc",
+  // //     filters
+  // //   );
+  // // },
 
-  // const {
-  //   data,
-  //   error,
-  //   fetchNextPage,
-  //   hasNextPage,
-  //   isFetching,
-  //   isFetchingNextPage,
-  //   status,
-  // } = useInfiniteQuery({
-  //   queryKey: [
-  //     "runners",
-  //     {
-  //       search: searchText,
-  //       limit: limit,
-  //       searchGroup: searchGroup,
-  //       searchOrganization: searchOrganization,
-  //       searchState: searchState,
-  //     },
-  //   ],
-  //   queryFn: fetchRunners,
-  //   initialPageParam: 1,
-  //   getNextPageParam: (lastPage, allPages, lastPageParam) => {
+  // // const {
+  // //   data,
+  // //   error,
+  // //   fetchNextPage,
+  // //   hasNextPage,
+  // //   isFetching,
+  // //   isFetchingNextPage,
+  // //   status,
+  // // } = useInfiniteQuery({
+  // //   queryKey: [
+  // //     "runners",
+  // //     {
+  // //       search: searchText,
+  // //       limit: limit,
+  // //       searchGroup: searchGroup,
+  // //       searchOrganization: searchOrganization,
+  // //       searchState: searchState,
+  // //     },
+  // //   ],
+  // //   queryFn: fetchRunners,
+  // //   initialPageParam: 1,
+  // //   getNextPageParam: (lastPage, allPages, lastPageParam) => {
   //     // if (lastPage.length === 0) {
   //     //   return undefined;
   //     // }
-  //     return lastPageParam + 1;
-  //   },
-  //   getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
-  //     if (firstPageParam <= 1) {
-  //       return undefined;
-  //     }
-  //     return firstPageParam - 1;
-  //   },
-  // });
+  // //     return lastPageParam + 1;
+  // //   },
+  // //   getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
+  // //     if (firstPageParam <= 1) {
+  // //       return undefined;
+  // //     }
+  // //     return firstPageParam - 1;
+  // //   },
+  // // });
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -155,7 +152,6 @@ export default function RunnersPage({
       console.error("Unexpected response format:", page);
     }
   });
-  
 
   return (
     <>
@@ -170,7 +166,7 @@ export default function RunnersPage({
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="All Groups" />
             </SelectTrigger>
-            <SelectContent defaultValue={searchGroup}>
+            <SelectContent>
               <SelectItem value=" ">All Groups</SelectItem>
               <SelectItem value="csas-linux">csas-linux</SelectItem>
               <SelectItem value="csas-linux-test">csas-linux-test</SelectItem>
@@ -224,25 +220,31 @@ export default function RunnersPage({
       ) : (
         <div>
           <RunnersTable runners={dataQuery.data?.pages} />
-          {/* TODO: use global component */ }
-          {isNav && dataQuery.data && (dataQuery.data?.pages[dataQuery.data.pageParams.length - 1] as IRunner[]).length >= 5 && (
-            <div className="w-full mt-4">
-              <Button
-                variant="outline"
-                onClick={() => dataQuery.fetchNextPage()}
-                className="w-full"
-                disabled={
-                  !dataQuery.hasNextPage || dataQuery.isFetchingNextPage
-                }
-              >
-                {dataQuery.isFetchingNextPage
-                  ? "Loading more..."
-                  : dataQuery.hasNextPage
-                  ? "Load More"
-                  : "Nothing more to load"}
-              </Button>
-            </div>
-          )}
+          {/* TODO: use global component */}
+          {isNav &&
+            dataQuery.data &&
+            (
+              dataQuery.data?.pages[
+                dataQuery.data.pageParams.length - 1
+              ] as IRunner[]
+            ).length >= 5 && (
+              <div className="w-full mt-4">
+                <Button
+                  variant="outline"
+                  onClick={() => dataQuery.fetchNextPage()}
+                  className="w-full"
+                  disabled={
+                    !dataQuery.hasNextPage || dataQuery.isFetchingNextPage
+                  }
+                >
+                  {dataQuery.isFetchingNextPage
+                    ? "Loading more..."
+                    : dataQuery.hasNextPage
+                    ? "Load More"
+                    : "Nothing more to load"}
+                </Button>
+              </div>
+            )}
         </div>
       )}
     </>

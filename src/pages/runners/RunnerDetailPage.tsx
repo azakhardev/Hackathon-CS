@@ -4,20 +4,42 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import RunnerDetailJobsFilter from "./components/RunnerDetailJobsFilters";
 import JobsTable from "../jobs/components/JobsTable";
 import { IJobs } from "../jobs/types/IJobs";
 import RunnerMetricsTab from "./RunnerMetricsTab";
 import { IMetrics } from "../metrics/types/IMetrics";
+import SearchBar from "@/components/ui/table/SearchBar";
+import { CircleIcon } from "lucide-react";
 
 export default function RunnerDetailPage() {
   const [limit, setLimit] = useState(5);
+  const [searchText, setSearchText] = useState("");
+  const [searchAction, setSearchAction] = useState("");
+  const [searchState, setSearchState] = useState("");
 
   const params = useParams();
   const runnerId = params.id;
+
+  function StateItem({ title, color }: { title: string; color: string }) {
+    return (
+      <div className="flex flex-row items-center">
+        <CircleIcon
+          size={8}
+          className={`mr-2 fill-state_${color} stroke-none`}
+        />
+        <span>{title}</span>
+      </div>
+    );
+  }
 
   const runnerQuery = useQuery({
     queryKey: ["runner", runnerId],
@@ -30,19 +52,33 @@ export default function RunnerDetailPage() {
   });
 
   const jobsQuery = useQuery({
-    queryKey: ["runnerJobs", runnerId],
-    queryFn: async () =>
-      await RunnerModel.getJobs(
-        runnerId!,
-        9999,
-        1,
-        undefined,
-        "asc",
-        undefined
-      ),
-  });
+    queryKey: [
+      "jobsQuery",
+      {
+        search: searchText,
+        searchAction: searchAction,
+        searchState: searchState,
+      },
+    ],
+    queryFn: async () => {
+      const filters = {
+        ...(searchText && searchText.trim() !== "" && { id_like: searchText }),
+        ...(searchAction &&
+          searchAction.trim() !== "" && { runner_like: searchAction }),
+        ...(searchState &&
+          searchState.trim() !== "" && { state_eq: searchState }),
+      };
 
-  console.log("runnerId:", runnerId);
+      return RunnerModel.getJobs(
+        runnerId,
+        99999999,
+        undefined,
+        "state",
+        "asc",
+        filters
+      );
+    },
+  });
 
   if (runnerQuery.data && "error" in runnerQuery.data) {
     return <ErrorMessage errorMessage={runnerQuery.data as IErrorMessage} />;
@@ -56,61 +92,90 @@ export default function RunnerDetailPage() {
     return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
   }
 
-  console.log(jobsQuery);
-
-  if (
-    (!runnerQuery.data && !runnerQuery.isLoading) ||
-    (!metricsQuery.data && !metricsQuery.isLoading) ||
-    (!jobsQuery.data && !jobsQuery.isLoading)
-  ) {
-    const error: IErrorMessage = {
-      code: "500",
-      error: "Internal server error",
-      message: "Server responded with undefined",
-    };
-    return <ErrorMessage errorMessage={error}></ErrorMessage>;
-  }
-
   return (
     <main>
-      {runnerQuery.isLoading ||
-      metricsQuery.isLoading ||
-      jobsQuery.isLoading ? (
-        <div className="loader-wrap">
-          <div className="loading-spinner"></div>
+      <div>
+        <div className="h-[10dvh] border-b-2 flex items-center">
+          <h2 className="text-[24px] ml-10 font-bold">{`Runner > ${
+            runnerQuery.data?.id?.split("-")[5]
+          }`}</h2>
         </div>
-      ) : (
-        runnerQuery.data && (
-          <div>
-            <div className="h-[10dvh] border-b-2 flex items-center">
-              <h2 className="text-[24px] ml-10 font-bold">{`Runner > ${runnerQuery.data.id
-                ?.split("-")[5]
-                .toUpperCase()}`}</h2>
-            </div>
-            <div className="p-10 w-full h-[80dvh]">
-              <Tabs defaultValue="jobs">
-                <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">
-                  <TabsTrigger className="w-[100px]" value="jobs">
-                    Jobs
-                  </TabsTrigger>
-                  <TabsTrigger className="w-[100px]" value="metrics">
-                    Metrics
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="jobs">
-                  <RunnerDetailJobsFilter />
+        <div className="p-10 w-full h-[80dvh]">
+          <Tabs defaultValue="jobs">
+            <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">
+              <TabsTrigger className="w-[100px]" value="jobs">
+                Jobs
+              </TabsTrigger>
+              <TabsTrigger className="w-[100px]" value="metrics">
+                Metrics
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="jobs">
+              <div className="flex justify-between gap-4 mb-4">
+                <SearchBar
+                  searchText={searchText ?? ""}
+                  setSearchText={setSearchText}
+                />
+
+                <Select onValueChange={(e) => setSearchAction(e)}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="All Actions" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value=" ">All Actions</SelectItem>
+                    <SelectItem value="csas-dev-csas-linux">
+                      Building
+                    </SelectItem>
+                    <SelectItem value="csas-dev-csas-linux-test">
+                      Testing
+                    </SelectItem>
+                    <SelectItem value="csas-ops-csas-linux">
+                      Deploying to dev
+                    </SelectItem>
+                    <SelectItem value="csas-ops-csas-linux-test">
+                      Deploying to prod
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select onValueChange={(e) => setSearchState(e)}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="All States" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value=" ">All States</SelectItem>
+                    <SelectItem value="success">
+                      <StateItem title="Success" color="green" />
+                    </SelectItem>
+                    <SelectItem value="queued">
+                      <StateItem title="Queued" color="gray" />
+                    </SelectItem>
+                    <SelectItem value="in_progress">
+                      <StateItem title="In Progress" color="yellow" />
+                    </SelectItem>
+                    <SelectItem value="failed">
+                      <StateItem title="Failed" color="red" />
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {runnerQuery.isLoading ||
+              metricsQuery.isLoading ||
+              jobsQuery.isLoading ? (
+                <div className="loader-wrap">
+                  <div className="loading-spinner"></div>
+                </div>
+              ) : (
+                (jobsQuery.data?.length === 0 ? <h3>Nebyly nalezeny žádné jobs</h3> : (
                   <JobsTable jobs={jobsQuery.data as IJobs[]} />
-                </TabsContent>
-                <TabsContent value="metrics">
-                  <RunnerMetricsTab
-                    runnerMetrics={metricsQuery.data as IMetrics}
-                  />
-                </TabsContent>
-              </Tabs>
-            </div>
-          </div>
-        )
-      )}
+                ))
+              )}
+            </TabsContent>
+            <TabsContent value="metrics">
+              <RunnerMetricsTab runnerMetrics={metricsQuery.data as IMetrics} />
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
       <div className="m-4">
         <Button
           className={
