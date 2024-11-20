@@ -1,6 +1,17 @@
 import CustomLineChart from "@/components/features/charts/CustomLineChart";
 import { IMetrics } from "../metrics/types/IMetrics";
 import CustomAreaChart from "@/components/features/charts/CustomAreaChart";
+import {
+  CpuIcon,
+  EthernetPort,
+  EthernetPortIcon,
+  HardDriveIcon,
+  MemoryStick,
+  WifiIcon,
+} from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import ChartCard from "@/components/features/charts/ChartCard";
 
 interface ICPUMetrics {
   point: string;
@@ -72,29 +83,59 @@ export default function RunnerMetricsTab(props: IProps) {
   }
 
   return (
-    <div className="grid grid-rows-2 gap-4 auto-rows-max grid-cols-2 mt-5">
+    <div className="flex flex-col gap-8">
       {/* <RunnerMetricsGridCell heading="CPU"> */}
-      <CustomLineChart
-        chartConfig={CPU_CHART_CONFIG}
-        chartData={cpuMetrics}
-        dataKey="point"
-        lineType="step"
-        showCursor={true}
+      <ChartCard
+        header={
+          <div className="flex items-center gap-2">
+            <CpuIcon size={40} className="-mb-1" />
+            <span className="text-5xl font-bold">CPU</span>
+          </div>
+        }
+        content={
+          <CustomLineChart
+            chartConfig={CPU_CHART_CONFIG}
+            chartData={cpuMetrics}
+            dataKey="point"
+            lineType="step"
+            showCursor={true}
+          />
+        }
       />
       {/* </RunnerMetricsGridCell> */}
-      <CustomLineChart
-        chartConfig={INCOMING_CHART_CONFIG}
-        chartData={incomingData}
-        dataKey="point"
-        lineType="linear"
-        showCursor={true}
+      <ChartCard
+        header={
+          <div className="flex items-center gap-2">
+            <WifiIcon size={40} className="-mb-1" />
+            <span className="text-5xl font-bold">Network</span>
+          </div>
+        }
+        content={
+          <CustomLineChart
+            chartConfig={INCOMING_CHART_CONFIG}
+            chartData={incomingData}
+            dataKey="point"
+            lineType="linear"
+            showCursor={true}
+          />
+        }
       />
-      <CustomAreaChart
-        chartConfig={OUTGOING_CHART_CONFIG}
-        dataKey="point"
-        lineType="natural"
-        showCursor={true}
-        chartData={outgoingData}
+      <ChartCard
+        header={
+          <div className="flex items-center gap-2">
+            <HardDriveIcon size={40} className="-mb-1" />
+            <span className="text-5xl font-bold">Disk</span>
+          </div>
+        }
+        content={
+          <CustomAreaChart
+            chartConfig={OUTGOING_CHART_CONFIG}
+            dataKey="point"
+            lineType="natural"
+            showCursor={true}
+            chartData={outgoingData}
+          />
+        }
       />
     </div>
   );
