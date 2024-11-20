@@ -137,16 +137,18 @@ export default function LogsTable(props: IProps) {
           return (
             <TableRow key={l.timestamp}>
               <TableCell>
-                <TableCelTitleLog
-                  title={l.type}
-                  text={l.description}
-                  icon={pp.icon}
-                  color={pp.color}
-                />
+                <div className="flex justify-start">
+                  <TableCelTitleLog
+                    title={l.type}
+                    text={l.description}
+                    icon={pp.icon}
+                    color={pp.color}
+                  />
+                </div>
               </TableCell>
               <TableCell>
                 <div className="flex flex-col justify-center">
-                  <div className="flex">
+                  <div className="flex justify-center">
                     {l.type_object?.states?.map((state, index) => {
                       const nodeProps = getNodeProps(
                         index,
