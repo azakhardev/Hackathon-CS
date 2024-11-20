@@ -78,9 +78,10 @@ export default function JobsDataTable({
     queryFn: fetchJobs,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      // if (lastPage.length === 0) {
-      //   return undefined;
-      // }
+      if (lastPage.length === 0) {
+        return undefined;
+      }
+      console.log("lastPage", lastPage.length);
       return lastPageParam + 1;
     },
     getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
