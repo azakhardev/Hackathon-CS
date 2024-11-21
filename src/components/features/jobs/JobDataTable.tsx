@@ -20,7 +20,6 @@ import { RunnerModel } from "@/lib/models/RunnerModel";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import Throbber from "@/components/ui/Throbber";
-import { timeStamp } from "console";
 
 export default function JobsDataTable({
   limit = 25,
@@ -49,9 +48,9 @@ export default function JobsDataTable({
       case '12h':
         return subHours(now, 12); // 12 hours ago
       case '8h':
-        return subHours(now, 8); // 8 hours ago
+        return subHours(now, 9); // 8 hours ago
       case '1h':
-        return subHours(now, 1); // 1 hour ago
+        return subHours(now, 2); // 1 hour ago
       case '30m':
         return subMinutes(now, 30); // 30 minutes ago
       case '15m':
