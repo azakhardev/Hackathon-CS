@@ -14,6 +14,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import ChartCard from "@/components/features/charts/ChartCard";
+import H2 from "@/components/ui/typography/H2";
 
 interface ICPUMetrics {
   point: string;
@@ -126,145 +127,158 @@ export default function RunnerMetricsTab(props: IProps) {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <ChartCard
-        header={
-          <div className="flex items-center gap-2">
-            <CpuIcon size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">CPU</span>
-          </div>
-        }
-        content={
-          <CustomLineChart
-            chartConfig={CPU_CHART_CONFIG}
-            chartData={cpuMetrics}
-            dataKey="point"
-            lineType="step"
-            showCursor={true}
-          />
-        }
-      />
-      <ChartCard
-        header={
-          <div className="flex items-center gap-2">
-            <MemoryStick size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">RAM</span>
-          </div>
-        }
-        content={
-          <CustomLineChart
-            chartConfig={RAM_CHART_CONFIG}
-            dataKey="point"
-            lineType="step"
-            showCursor={true}
-            chartData={ramData}
-          />
-        }
-      />
-      <ChartCard
-        header={
-          <div className="flex items-center gap-2">
-            <WifiIcon size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">Receive</span>
-          </div>
-        }
-        content={
-          <CustomLineChart
-            chartConfig={NETWORK_IN_CONFIG}
-            chartData={incomingData}
-            dataKey="point"
-            lineType="linear"
-            showCursor={true}
-          />
-        }
-      />
-      <ChartCard
-        header={
-          <div className="flex items-center gap-2">
-            <WifiIcon size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">Transmit</span>
-          </div>
-        }
-        content={
-          <CustomLineChart
-            chartConfig={NETWORK_OUT_CONFIG}
-            chartData={outgoingData}
-            dataKey="point"
-            lineType="linear"
-            showCursor={true}
-          />
-        }
-      />
+    <div className="flex flex-col w-full gap-8">
+      <H2>Components</H2>
+      <div className="flex flex-col gap-2 md:flex-row">
+        <ChartCard
+          header={
+            <div className="flex items-center gap-2">
+              <CpuIcon size={40} className="-mb-1" />
+              <span className="text-5xl font-bold">CPU</span>
+            </div>
+          }
+          content={
+            <CustomLineChart
+              chartConfig={CPU_CHART_CONFIG}
+              chartData={cpuMetrics}
+              dataKey="point"
+              lineType="step"
+              showCursor={true}
+            />
+          }
+        />
+        <ChartCard
+          header={
+            <div className="flex items-center gap-2">
+              <MemoryStick size={40} className="-mb-1" />
+              <span className="text-5xl font-bold">RAM</span>
+            </div>
+          }
+          content={
+            <CustomLineChart
+              chartConfig={RAM_CHART_CONFIG}
+              dataKey="point"
+              lineType="step"
+              showCursor={true}
+              chartData={ramData}
+            />
+          }
+        />
+      </div>
 
-      <ChartCard
-        header={
-          <div className="flex items-center gap-2">
-            <HardDriveIcon size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">Write</span>
-          </div>
-        }
-        content={
-          <CustomLineChart
-            chartConfig={DISK_WRITE_CONFIG}
-            chartData={incomingData}
-            dataKey="point"
-            lineType="linear"
-            showCursor={true}
-          />
-        }
-      />
-      <ChartCard
-        header={
-          <div className="flex items-center gap-2">
-            <HardDriveIcon size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">Read</span>
-          </div>
-        }
-        content={
-          <CustomLineChart
-            chartConfig={DISK_READ_CONFIG}
-            chartData={outgoingData}
-            dataKey="point"
-            lineType="linear"
-            showCursor={true}
-          />
-        }
-      />
+      <H2>Network</H2>
+      <div className="flex flex-col gap-2 md:flex-row">
+        <ChartCard
+          header={
+            <div className="flex items-center gap-2">
+              <WifiIcon size={40} className="-mb-1" />
+              <span className="text-5xl font-bold">Receive</span>
+            </div>
+          }
+          content={
+            <CustomLineChart
+              chartConfig={NETWORK_IN_CONFIG}
+              chartData={incomingData}
+              dataKey="point"
+              lineType="linear"
+              showCursor={true}
+            />
+          }
+        />
+        <ChartCard
+          header={
+            <div className="flex items-center gap-2">
+              <WifiIcon size={40} className="-mb-1" />
+              <span className="text-5xl font-bold">Transmit</span>
+            </div>
+          }
+          content={
+            <CustomLineChart
+              chartConfig={NETWORK_OUT_CONFIG}
+              chartData={outgoingData}
+              dataKey="point"
+              lineType="linear"
+              showCursor={true}
+            />
+          }
+        />
+      </div>
 
-      <ChartCard
-        header={
-          <div className="flex items-center gap-2">
-            <Download size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">Incoming Data</span>
-          </div>
-        }
-        content={
-          <CustomAreaChart
-            chartConfig={INCOMING_CHART_CONFIG}
-            chartData={incomingData}
-            dataKey="point"
-            lineType="natural"
-            showCursor={true}
-          />
-        }
-      />
-      <ChartCard
-        header={
-          <div className="flex items-center gap-2">
-            <UploadIcon size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">Outgoing Data</span>
-          </div>
-        }
-        content={
-          <CustomAreaChart
-            chartConfig={OUTGOING_CHART_CONFIG}
-            dataKey="point"
-            lineType="natural"
-            showCursor={true}
-            chartData={outgoingData}
-          />
-        }
-      />
+      <H2>Disk</H2>
+      <div className="flex flex-col gap-2 md:flex-row">
+        <ChartCard
+          header={
+            <div className="flex items-center gap-2">
+              <HardDriveIcon size={40} className="-mb-1" />
+              <span className="text-5xl font-bold">Write</span>
+            </div>
+          }
+          content={
+            <CustomLineChart
+              chartConfig={DISK_WRITE_CONFIG}
+              chartData={incomingData}
+              dataKey="point"
+              lineType="linear"
+              showCursor={true}
+            />
+          }
+        />
+        <ChartCard
+          header={
+            <div className="flex items-center gap-2">
+              <HardDriveIcon size={40} className="-mb-1" />
+              <span className="text-5xl font-bold">Read</span>
+            </div>
+          }
+          content={
+            <CustomLineChart
+              chartConfig={DISK_READ_CONFIG}
+              chartData={outgoingData}
+              dataKey="point"
+              lineType="linear"
+              showCursor={true}
+            />
+          }
+        />
+      </div>
+      <Separator />
+      <H2>Combined</H2>
+      <div className="flex flex-col gap-2 md:flex-row">
+        <ChartCard
+          header={
+            <div className="flex items-center gap-2">
+              <Download size={40} className="-mb-1" />
+              <span className="text-5xl font-bold">Incoming Data</span>
+            </div>
+          }
+          content={
+            <CustomAreaChart
+              chartConfig={INCOMING_CHART_CONFIG}
+              chartData={incomingData}
+              dataKey="point"
+              lineType="natural"
+              showCursor={true}
+            />
+          }
+        />
+        <ChartCard
+          header={
+            <div className="flex items-center gap-2">
+              <UploadIcon size={40} className="-mb-1" />
+              <span className="text-5xl font-bold">Outgoing Data</span>
+            </div>
+          }
+          content={
+            <CustomAreaChart
+              chartConfig={OUTGOING_CHART_CONFIG}
+              dataKey="point"
+              lineType="natural"
+              showCursor={true}
+              chartData={outgoingData}
+            />
+          }
+        />
+      </div>
     </div>
   );
 }

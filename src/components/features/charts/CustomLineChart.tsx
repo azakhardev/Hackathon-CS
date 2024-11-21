@@ -8,7 +8,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { CurveType } from "recharts/types/shape/Curve";
-import { Grid } from "lucide-react";
 
 interface IProps {
   chartConfig: IChartConfig;
