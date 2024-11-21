@@ -1,6 +1,6 @@
 import CustomBarChart from "@/components/features/charts/CustomBarChart";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
-import { IAutomation } from "@/pages/automations/_shared/IAutomation";
+import { IAutomation } from "@/lib/types/IAutomation";
 import { IJobs } from "@/lib/types/IJobs";
 import { IRunner } from "@/lib/types/IRunner";
 

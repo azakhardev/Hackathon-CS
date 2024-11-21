@@ -56,6 +56,7 @@ export default function JobsDataTable({
           searchAction.trim() !== "" && {
             runner_like: `${searchAction}-${idRegex}`,
           }),
+        ...(searchText && searchText.trim() !== "" && { id_start: searchText }),
       };
 
       return RunnerModel.getJobs(
@@ -147,7 +148,17 @@ export default function JobsDataTable({
           onValueChange={(e) => setSearchState(e)}
         />
       </div>
-      <JobsTable jobs={allData} searchText={searchText} />
+
+      {dataQuery.isLoading && (
+        <div className="loader-wrap">
+          <div className="loading-spinner"></div>
+        </div>
+      )}
+
+      {!dataQuery.isLoading && (
+        <JobsTable jobs={allData} searchText={searchText} />
+      )}
+
       {isNav &&
         dataQuery.data &&
         (dataQuery.data?.pages[dataQuery.data.pageParams.length - 1] as IJobs[])

@@ -80,8 +80,15 @@ export default function ProjectsDataTable({
           <SearchBar searchText={searchText} setSearchText={setSearchText} />
         </div>
       )}
+      {(sasQuery.isLoading || jobsQuery.isLoading) && (
+        <div className="loader-wrap">
+          <div className="loading-spinner"></div>
+        </div>
+      )}
 
-      <ProjectsTable projects={displayedProjects} searchText={searchText} />
+      {!sasQuery.isLoading && !jobsQuery.isLoading && (
+        <ProjectsTable projects={displayedProjects} searchText={searchText} />
+      )}
 
       {isNav && totalProjects > displayLimit && displayLimit != -1 && (
         <ButtonLoadMore onClick={handleLoadMore} />

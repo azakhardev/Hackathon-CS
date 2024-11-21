@@ -59,7 +59,7 @@ const NETWORK_IN_CONFIG = {
   recieve: {
     label: "Recieve MB/s ",
     color: "hsl(var(--chart-1))",
-  }, 
+  },
 };
 
 const NETWORK_OUT_CONFIG = {
@@ -69,8 +69,7 @@ const NETWORK_OUT_CONFIG = {
   },
 };
 
-
-const DISK_WRITE_CONFIG = {  
+const DISK_WRITE_CONFIG = {
   write: {
     label: "Writes MB/s ",
     color: "hsl(var(--chart-2))",
@@ -83,7 +82,6 @@ const DISK_READ_CONFIG = {
     color: "hsl(var(--chart-2))",
   },
 };
-
 
 const INCOMING_CHART_CONFIG = {
   recieve: {
@@ -145,7 +143,7 @@ export default function RunnerMetricsTab(props: IProps) {
             showCursor={true}
           />
         }
-      />   
+      />
       <ChartCard
         header={
           <div className="flex items-center gap-2">
@@ -162,7 +160,7 @@ export default function RunnerMetricsTab(props: IProps) {
             chartData={ramData}
           />
         }
-      />   
+      />
       <ChartCard
         header={
           <div className="flex items-center gap-2">
@@ -198,7 +196,7 @@ export default function RunnerMetricsTab(props: IProps) {
         }
       />
 
-<ChartCard
+      <ChartCard
         header={
           <div className="flex items-center gap-2">
             <HardDriveIcon size={40} className="-mb-1" />
@@ -232,7 +230,7 @@ export default function RunnerMetricsTab(props: IProps) {
           />
         }
       />
-      
+
       <ChartCard
         header={
           <div className="flex items-center gap-2">
@@ -267,7 +265,6 @@ export default function RunnerMetricsTab(props: IProps) {
           />
         }
       />
-      
     </div>
   );
 }

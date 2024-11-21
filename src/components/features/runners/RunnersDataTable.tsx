@@ -135,12 +135,6 @@ export default function RunnersPage({
               <SelectItem value="csas-ops">csas-ops</SelectItem>
             </SelectContent>
           </Select>
-
-          {/* <SelectInput
-            placeholder="All States"
-            items={actionsVals}
-            onValueChange={(e) => setSearchAction(e)}
-          /> */}
           <SelectInput
             placeholder="All States"
             items={statesVals}
