@@ -27,8 +27,7 @@ export default function RunnersPage({
   isNav: boolean;
 }) {
   const [searchText, setSearchText] = useState("");
-  const [searchGroup, setSearchGroup] = useState(" ");
-  const [searchOrganization, setSearchOrganization] = useState(" ");
+  const [searchAction, setSearchAction] = useState(" ");
   const [searchState, setSearchState] = useState(" ");
   const [limit, _] = useState(limit2);
 
@@ -38,22 +37,15 @@ export default function RunnersPage({
       {
         search: searchText,
         limit: limit,
-        searchGroup: searchGroup,
-        searchOrganization: searchOrganization,
+        searchAction: searchAction,
         searchState: searchState,
       },
     ],
     queryFn: ({ pageParam = 1 }) => {
       const idRegex = "[a-zA-Z0-9]{5}";
       const filters = {
-        ...(searchGroup &&
-          searchGroup.trim() !== "" && {
-            id_like: `${searchGroup}-${idRegex}`,
-          }),
-        ...(searchOrganization &&
-          searchOrganization.trim() !== "" && {
-            organization_eq: searchOrganization,
-          }),
+        ...(searchAction &&
+          searchAction.trim() !== "" && { id_like: `${searchAction}-${idRegex}` }),
         ...(searchState &&
           searchState.trim() !== "" && { state_eq: searchState }),
       };
@@ -102,13 +94,12 @@ export default function RunnersPage({
     }
   });
 
-  // const actionsVals: ISelectItem[] = [
-  //   { value: "csas-dev-csas-linux", content: "Building" },
-  //   { value: "csas-dev-csas-linux-test", content: "Testing" },
-  //   { value: "csas-ops-csas-linux", content: "Deploying to dev" },
-  //   { value: "csas-ops-csas-linux-test", content: "Deploying to prod" },
-  // ];
-
+  const actionsVals: ISelectItem[] = [
+    { value: "csas-dev-csas-linux", content: "Build runner" },
+    { value: "csas-dev-csas-linux-test", content: "Test runner" },
+    { value: "csas-ops-csas-linux", content: "Dev deployer" },
+    { value: "csas-ops-csas-linux-prod", content: "Prod deployer" },
+  ];
   const statesVals: ISelectItem[] = [
     { value: "active", content: <StateItem title="Active" color="green" /> },
     { value: "offline", content: <StateItem title="Offline" color="gray" /> }, // prettier-ignore
@@ -121,35 +112,11 @@ export default function RunnersPage({
       {isNav && (
         <div className="flex justify-between gap-4 mb-4">
           <SearchBar searchText={searchText} setSearchText={setSearchText} />
-          <Select
-            onValueChange={(e) => {
-              setSearchGroup(e);
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All Groups" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value=" ">All Groups</SelectItem>
-              <SelectItem value="csas-linux">csas-linux</SelectItem>
-              <SelectItem value="csas-linux-test">csas-linux-test</SelectItem>
-              <SelectItem value="csas-linux-prod">csas-linux-prod</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select
-            onValueChange={(e) => {
-              setSearchOrganization(e);
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All Organizations" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value=" ">All Organizations</SelectItem>
-              <SelectItem value="csas-dev">csas-dev</SelectItem>
-              <SelectItem value="csas-ops">csas-ops</SelectItem>
-            </SelectContent>
-          </Select>
+          <SelectInput
+          placeholder="All actions"
+          items={actionsVals}
+          onValueChange={(e) => setSearchAction(e)}
+        />
           <SelectInput
             placeholder="All States"
             items={statesVals}

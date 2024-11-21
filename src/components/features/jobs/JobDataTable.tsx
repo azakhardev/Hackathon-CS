@@ -5,7 +5,7 @@ import { IJobs } from "@/lib/types/IJobs";
 import { CircleIcon } from "lucide-react";
 import { useState } from "react";
 import SearchBar from "@/components/ui/table/SearchBar";
-import { format } from "date-fns";
+import { format, subDays, subHours, subMinutes } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -20,6 +20,7 @@ import { RunnerModel } from "@/lib/models/RunnerModel";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import Throbber from "@/components/ui/Throbber";
+import { timeStamp } from "console";
 
 export default function JobsDataTable({
   limit = 25,
@@ -34,6 +35,31 @@ export default function JobsDataTable({
   const [searchAction, setSearchAction] = useState("");
   const [searchState, setSearchState] = useState("");
   const [searchDate, setSearchDate] = useState<Date>();
+  const [searchTime, setSearchTime] = useState('')
+
+  const calculateTimeFilter = (time: string) => {
+    const now = new Date();
+    switch (time) {
+      case '14d':
+        return null; // all
+      case '7d':
+        return subDays(now, 7); // 7 days ago
+      case '1d':
+        return subDays(now, 1); // 1 day ago
+      case '12h':
+        return subHours(now, 12); // 12 hours ago
+      case '8h':
+        return subHours(now, 8); // 8 hours ago
+      case '1h':
+        return subHours(now, 1); // 1 hour ago
+      case '30m':
+        return subMinutes(now, 30); // 30 minutes ago
+      case '15m':
+        return subMinutes(now, 15); // 15 minutes ago
+      default:
+        return null;
+    }
+  };
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -44,10 +70,13 @@ export default function JobsDataTable({
         searchAction: searchAction,
         searchDate: searchDate,
         searchState: searchState,
+        searchTime: searchTime,
       },
     ],
     queryFn: ({ pageParam = 1 }) => {
       const idRegex = "[a-zA-Z0-9]{5}";
+
+      const calculatedTime = searchTime ? calculateTimeFilter(searchTime) : null;
 
       const filters = {
         ...(searchState &&
@@ -60,13 +89,16 @@ export default function JobsDataTable({
             runner_like: `${searchAction}-${idRegex}`,
           }),
         ...(searchText && searchText.trim() !== "" && { id_start: searchText }),
+        ...(calculatedTime && {
+          timestamp_gte: format(calculatedTime, "yyyy-MM-dd'T'HH:mm:ss"),
+        }),
       };
 
       return RunnerModel.getJobs(
         searchText,
         limit,
         pageParam,
-        "group",
+        "timestamp",
         "asc",
         filters
       );
@@ -112,6 +144,18 @@ export default function JobsDataTable({
     { value: "csas-ops-csas-linux", content: "Deploying to dev" },
     { value: "csas-ops-csas-linux-prod", content: "Deploying to prod" },
   ];
+
+  const timeVals: ISelectItem[] = [
+    { value: "14d", content: "14d > " },
+    { value: "7d", content: "7d" },
+    { value: "1d", content: "1d" },
+    { value: "12h", content: "12h" },
+    { value: "8h", content: "8h" },
+    { value: "1h", content: "1h" },
+    { value: "30m", content: "30m" },
+    { value: "15m", content: "15m" },
+  ];
+
   const statesVals: ISelectItem[] = [
     { value: "success", content: <StateItem title="Success" color="green" /> },
     { value: "queued", content: <StateItem title="Queued" color="gray" /> }, // prettier-ignore
@@ -152,6 +196,11 @@ export default function JobsDataTable({
             />
           </PopoverContent>
         </Popover>
+        <SelectInput 
+          placeholder="Time"
+          items={timeVals}
+          onValueChange={(e) => setSearchTime(e)}
+        />
         <SelectInput
           placeholder="All actions"
           items={actionsVals}
