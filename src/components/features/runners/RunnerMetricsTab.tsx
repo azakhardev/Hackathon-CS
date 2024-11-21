@@ -3,10 +3,12 @@ import { IMetrics } from "../../../lib/types/IMetrics";
 import CustomAreaChart from "@/components/features/charts/CustomAreaChart";
 import {
   CpuIcon,
+  Download,
   EthernetPort,
   EthernetPortIcon,
   HardDriveIcon,
   MemoryStick,
+  UploadIcon,
   WifiIcon,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
@@ -41,21 +43,51 @@ interface IProps {
 
 const CPU_CHART_CONFIG = {
   percents: {
-    label: "Percents",
-    color: "hsl(var(--chart-1))",
+    label: "% ",
+    color: "hsl(var(--chart-4))",
   },
 };
 
 const RAM_CHART_CONFIG = {
   memory: {
-    label: "GB",
+    label: "GB ",
     color: "hsl(var(--chart-5))",
   },
 };
 
+const NETWORK_IN_CONFIG = {
+  recieve: {
+    label: "Recieve MB/s ",
+    color: "hsl(var(--chart-1))",
+  }, 
+};
+
+const NETWORK_OUT_CONFIG = {
+  transmit: {
+    label: "Transmit MB/s ",
+    color: "hsl(var(--chart-1))",
+  },
+};
+
+
+const DISK_WRITE_CONFIG = {  
+  write: {
+    label: "Writes MB/s ",
+    color: "hsl(var(--chart-2))",
+  },
+};
+
+const DISK_READ_CONFIG = {
+  read: {
+    label: "Recieve MB/s ",
+    color: "hsl(var(--chart-2))",
+  },
+};
+
+
 const INCOMING_CHART_CONFIG = {
   recieve: {
-    label: "Recieve MB/s",
+    label: "Recieve MB/s ",
     color: "hsl(var(--chart-1))",
   },
   write: {
@@ -66,12 +98,12 @@ const INCOMING_CHART_CONFIG = {
 
 const OUTGOING_CHART_CONFIG = {
   read: {
-    label: "Reads MB/s",
-    color: "hsl(var(--chart-1))",
+    label: "Reads MB/s ",
+    color: "hsl(var(--chart-2))",
   },
   transmit: {
-    label: "Transmits MB/s",
-    color: "hsl(var(--chart-2))",
+    label: "Transmits MB/s ",
+    color: "hsl(var(--chart-1))",
   },
 };
 
@@ -97,7 +129,6 @@ export default function RunnerMetricsTab(props: IProps) {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* <RunnerMetricsGridCell heading="CPU"> */}
       <ChartCard
         header={
           <div className="flex items-center gap-2">
@@ -114,42 +145,7 @@ export default function RunnerMetricsTab(props: IProps) {
             showCursor={true}
           />
         }
-      />
-      {/* </RunnerMetricsGridCell> */}
-      <ChartCard
-        header={
-          <div className="flex items-center gap-2">
-            <WifiIcon size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">Network</span>
-          </div>
-        }
-        content={
-          <CustomLineChart
-            chartConfig={INCOMING_CHART_CONFIG}
-            chartData={incomingData}
-            dataKey="point"
-            lineType="linear"
-            showCursor={true}
-          />
-        }
-      />
-      <ChartCard
-        header={
-          <div className="flex items-center gap-2">
-            <HardDriveIcon size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">Disk</span>
-          </div>
-        }
-        content={
-          <CustomAreaChart
-            chartConfig={OUTGOING_CHART_CONFIG}
-            dataKey="point"
-            lineType="natural"
-            showCursor={true}
-            chartData={outgoingData}
-          />
-        }
-      />
+      />   
       <ChartCard
         header={
           <div className="flex items-center gap-2">
@@ -166,7 +162,112 @@ export default function RunnerMetricsTab(props: IProps) {
             chartData={ramData}
           />
         }
+      />   
+      <ChartCard
+        header={
+          <div className="flex items-center gap-2">
+            <WifiIcon size={40} className="-mb-1" />
+            <span className="text-5xl font-bold">Recieve</span>
+          </div>
+        }
+        content={
+          <CustomLineChart
+            chartConfig={NETWORK_IN_CONFIG}
+            chartData={incomingData}
+            dataKey="point"
+            lineType="linear"
+            showCursor={true}
+          />
+        }
       />
+      <ChartCard
+        header={
+          <div className="flex items-center gap-2">
+            <WifiIcon size={40} className="-mb-1" />
+            <span className="text-5xl font-bold">Transmit</span>
+          </div>
+        }
+        content={
+          <CustomLineChart
+            chartConfig={NETWORK_OUT_CONFIG}
+            chartData={outgoingData}
+            dataKey="point"
+            lineType="linear"
+            showCursor={true}
+          />
+        }
+      />
+
+<ChartCard
+        header={
+          <div className="flex items-center gap-2">
+            <HardDriveIcon size={40} className="-mb-1" />
+            <span className="text-5xl font-bold">Write</span>
+          </div>
+        }
+        content={
+          <CustomLineChart
+            chartConfig={DISK_WRITE_CONFIG}
+            chartData={incomingData}
+            dataKey="point"
+            lineType="linear"
+            showCursor={true}
+          />
+        }
+      />
+      <ChartCard
+        header={
+          <div className="flex items-center gap-2">
+            <HardDriveIcon size={40} className="-mb-1" />
+            <span className="text-5xl font-bold">Read</span>
+          </div>
+        }
+        content={
+          <CustomLineChart
+            chartConfig={DISK_READ_CONFIG}
+            chartData={outgoingData}
+            dataKey="point"
+            lineType="linear"
+            showCursor={true}
+          />
+        }
+      />
+      
+      <ChartCard
+        header={
+          <div className="flex items-center gap-2">
+            <Download size={40} className="-mb-1" />
+            <span className="text-5xl font-bold">Incoming Data</span>
+          </div>
+        }
+        content={
+          <CustomAreaChart
+            chartConfig={INCOMING_CHART_CONFIG}
+            chartData={incomingData}
+            dataKey="point"
+            lineType="natural"
+            showCursor={true}
+          />
+        }
+      />
+      <ChartCard
+        header={
+          <div className="flex items-center gap-2">
+            <UploadIcon size={40} className="-mb-1" />
+            <span className="text-5xl font-bold">Outgoing Data</span>
+          </div>
+        }
+        content={
+          <CustomAreaChart
+            chartConfig={OUTGOING_CHART_CONFIG}
+            dataKey="point"
+            lineType="natural"
+            showCursor={true}
+            chartData={outgoingData}
+          />
+        }
+      />
+      
     </div>
   );
 }
