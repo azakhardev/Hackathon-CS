@@ -33,12 +33,7 @@ export default function AutomationsDataTable({
   if (automationsQuery.data && "error" in automationsQuery.data)
     <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />;
 
-  if (
-    !automationsQuery.data &&
-    !automationsQuery.isLoading &&
-    !automationsTypesQuery.data &&
-    !automationsTypesQuery.isLoading
-  ) {
+  if (automationsQuery.error || automationsTypesQuery.error) {
     const error: IErrorMessage = {
       code: "500",
       error: "Internal server error",
@@ -47,8 +42,7 @@ export default function AutomationsDataTable({
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
-  // Data joining logic
-  if (!automationsQuery.data || !automationsTypesQuery.data) {
+  if (automationsQuery.isLoading || automationsTypesQuery.isLoading) {
     return (
       <div className="loader-wrap">
         <div className="loading-spinner"></div>
@@ -56,6 +50,7 @@ export default function AutomationsDataTable({
     );
   }
 
+  // Data joining logic
   const automationsWithTypes = (automationsQuery.data as IAutomation[]).map(
     (automation: IAutomation) => {
       const matchedType = Array.isArray(automationsTypesQuery.data)
@@ -69,9 +64,7 @@ export default function AutomationsDataTable({
 
   return (
     <>
-      {!automationsQuery.isLoading && !automationsTypesQuery.isLoading && (
-        <AutomationsTable automations={automationsWithTypes as IAutomation[]} />
-      )}
+      <AutomationsTable automations={automationsWithTypes as IAutomation[]} />
     </>
   );
 }
