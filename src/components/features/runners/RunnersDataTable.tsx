@@ -15,6 +15,8 @@ import { IRunner } from "../../../lib/types/IRunner";
 import { Button } from "@/components/ui/Button";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
+import { IErrorMessage } from "@/lib/types/IErrorMessage";
+import ErrorMessage from "@/components/ui/ErrorMessage";
 
 export default function RunnersPage({
   limit2 = 25,
@@ -76,7 +78,19 @@ export default function RunnersPage({
     },
   });
 
-  if (dataQuery.isError) return <p>Error: {dataQuery.error?.message}</p>;
+  if (dataQuery.data && "error" in dataQuery.data)
+    return (
+      <ErrorMessage errorMessage={dataQuery.data.error as IErrorMessage} />
+    );
+
+  if (dataQuery.error) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
 
   let allData: IRunner[] = [];
   dataQuery.data?.pages.forEach((page) => {

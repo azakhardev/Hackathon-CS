@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/tooltip";
 import { AutomationModel } from "@/lib/models/AutomationModel";
 import { IAutomationType, ITransition } from "@/lib/types/IAutomationType";
+import { IErrorMessage } from "@/lib/types/IErrorMessage";
 //-----------------------------------------↓
 export default function AutomationTypesDataTable({
   limit = -1,
@@ -30,13 +31,27 @@ export default function AutomationTypesDataTable({
   limit: number | undefined;
   isNav: boolean;
 }) {
-  const { data, isLoading } = useQuery({
+  const automationsTypeQuery = useQuery({
     queryKey: ["automationTypes"],
-    queryFn: async () => await AutomationModel.getAutomationTypes("", 9999),
+    queryFn: async () => await AutomationModel.getAutomationTypes("", limit),
     gcTime: 0,
   });
 
-  if (isLoading) {
+  if (automationsTypeQuery.data && "error" in automationsTypeQuery.data)
+    return (
+      <ErrorMessage errorMessage={automationsTypeQuery.data as IErrorMessage} />
+    );
+
+  if (automationsTypeQuery.error) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
+
+  if (automationsTypeQuery.isLoading) {
     return (
       <div className="loader-wrap">
         <div className="loading-spinner"></div>
@@ -44,23 +59,6 @@ export default function AutomationTypesDataTable({
     );
   }
 
-  if (!data) {
-    return (
-      <ErrorMessage
-        errorMessage={{
-          code: "500",
-          error: "Internal Server Error",
-          message: "Failed to load automation types",
-        }}
-      />
-    );
-  }
-
-  if ("error" in data) {
-    return <ErrorMessage errorMessage={data} />;
-  }
-
-  const types = data as IAutomationType[];
   console.log(limit, isNav);
   return (
     <>
@@ -69,7 +67,7 @@ export default function AutomationTypesDataTable({
           <TableRow>
             <TableCell>
               <Accordion type="single" collapsible>
-                {(data as IAutomationType[]).map((x) => (
+                {(automationsTypeQuery.data as IAutomationType[]).map((x) => (
                   <AccordionItem
                     key={x.type}
                     value={x.type}

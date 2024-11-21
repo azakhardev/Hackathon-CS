@@ -23,27 +23,7 @@ interface IProps {
   automations: IAutomation[] | IErrorMessage;
 }
 
-// enum Progression {
-//   Queued = 25,
-//   In_Progress = 50,
-//   Failed = 75,
-//   Success = 100,
-// }
-// const status = "In_Progress";
-
-//   console.log(Progression[status as keyof typeof Progression]);
-// <Progress
-//               value={Progression[status as keyof typeof Progression]}
-//               max={100}
-//             />
-
 export default function AutomationsTable(props: IProps) {
-  // const navigate = useNavigate();
-  // onClick={() => handleRowClick(a.id)}
-  // function handleRowClick(id: string) {
-  //   navigate(`/automations/${id}`);
-  // }
-
   return (
     <Table className="overflow-x-auto">
       <TableCaption></TableCaption>

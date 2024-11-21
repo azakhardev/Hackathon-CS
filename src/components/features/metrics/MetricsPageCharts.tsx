@@ -64,10 +64,8 @@ interface IProps {
 }
 
 export default function MetricsPageCharts(props: IProps) {
-  console.log(props.jobsData);
   const aStateData = createAutomationsStateData(props.automationsData);
   const jStateData = createJobsData(props.jobsData);
-  console.log(jStateData);
   return (
     <>
       <div>

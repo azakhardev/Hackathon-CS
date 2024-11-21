@@ -26,13 +26,30 @@ export default function LogsDataTable({
   });
 
   if (automationQuery.data && "error" in automationQuery.data)
-    <ErrorMessage errorMessage={automationQuery.data as IErrorMessage} />;
+    return (
+      <ErrorMessage errorMessage={automationQuery.data as IErrorMessage} />
+    );
   if (logsQuery.data && "error" in logsQuery.data)
     return <ErrorMessage errorMessage={logsQuery.data as IErrorMessage} />;
+  if (automationsTypesQuery.data && "error" in automationsTypesQuery.data)
+    return (
+      <ErrorMessage
+        errorMessage={automationsTypesQuery.data as IErrorMessage}
+      />
+    );
+
+  if (automationQuery.error || automationsTypesQuery.error || logsQuery.error) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
 
   // Data joining logic
-  if (!logsQuery.data || !automationsTypesQuery.data)
-    return <h1>Error at data joining</h1>;
+  // if (!logsQuery.data || !automationsTypesQuery.data)
+  //   return <h1>Error at data joining</h1>;
   const logsWithTypes = (logsQuery.data as IAutomationLog[]).map(
     (log: IAutomationLog) => {
       const matchedType = Array.isArray(automationsTypesQuery.data)

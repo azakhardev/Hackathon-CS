@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import { IErrorMessage } from "../../../../lib/types/IErrorMessage";
 import { IAutomation } from "../../../../lib/types/IAutomation";
 import { AutomationModel } from "@/lib/models/AutomationModel";
+import ErrorMessage from "@/components/ui/ErrorMessage";
 
 export default function Automation() {
   const automations = useQuery({
@@ -27,11 +28,21 @@ export default function Automation() {
     },
   });
 
-  if (automations.isError) return <div>Error: {automations.error.message}</div>;
+  if (automations.data && "error" in automations.data)
+    return <ErrorMessage errorMessage={automations.data as IErrorMessage} />;
 
-  if (automations.data && "error" in automations.data) {
-    const errorData = automations.data as IErrorMessage;
-    return <div>Error: {errorData.message}</div>;
+  if (getLogsMutation.data && "error" in getLogsMutation.data)
+    return (
+      <ErrorMessage errorMessage={getLogsMutation.data as IErrorMessage} />
+    );
+
+  if (automations.error || getLogsMutation.error) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
   const handleRowClick = (id: string) => {

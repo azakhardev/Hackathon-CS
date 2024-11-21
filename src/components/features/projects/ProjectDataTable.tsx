@@ -35,6 +35,15 @@ export default function ProjectsDataTable({
   if (sasQuery.data && "error" in sasQuery.data)
     return <ErrorMessage errorMessage={sasQuery.data as IErrorMessage} />;
 
+  if (jobsQuery.error || sasQuery.error) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
+
   let projects: IProject[] = [];
   if (!jobsQuery.isLoading && !sasQuery.isLoading) {
     (sasQuery.data as string[])

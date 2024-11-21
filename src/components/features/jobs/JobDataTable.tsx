@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/popover";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
+import ErrorMessage from "@/components/ui/ErrorMessage";
+import { IErrorMessage } from "@/lib/types/IErrorMessage";
 
 export default function JobsDataTable({
   limit = 25,
@@ -80,7 +82,19 @@ export default function JobsDataTable({
     },
   });
 
-  if (dataQuery.isError) return <p>Error: {dataQuery.error?.message}</p>;
+  if (dataQuery.data && "error" in dataQuery.data)
+    return (
+      <ErrorMessage errorMessage={dataQuery.data.error as IErrorMessage} />
+    );
+
+  if (dataQuery.error) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
 
   let allData: IJobs[] = [];
   dataQuery.data?.pages.forEach((page) => {

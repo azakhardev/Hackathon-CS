@@ -31,7 +31,9 @@ export default function AutomationsDataTable({
   });
 
   if (automationsQuery.data && "error" in automationsQuery.data)
-    <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />;
+    return (
+      <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />
+    );
 
   if (automationsQuery.error || automationsTypesQuery.error) {
     const error: IErrorMessage = {
