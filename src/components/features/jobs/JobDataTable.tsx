@@ -5,7 +5,7 @@ import { IJobs } from "@/lib/types/IJobs";
 import { CircleIcon } from "lucide-react";
 import { useState } from "react";
 import SearchBar from "@/components/ui/table/SearchBar";
-import { format, subDays, subHours, subMinutes } from "date-fns";
+import { format, subDays, subHours, subMinutes, subMonths } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -20,6 +20,7 @@ import { RunnerModel } from "@/lib/models/RunnerModel";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import Throbber from "@/components/ui/Throbber";
+import { calculateTimeFilter } from "@/lib/utils/calculateTimeFilter";
 
 export default function JobsDataTable({
   limit = 25,
@@ -36,29 +37,7 @@ export default function JobsDataTable({
   const [searchDate, setSearchDate] = useState<Date>();
   const [searchTime, setSearchTime] = useState('')
 
-  const calculateTimeFilter = (time: string) => {
-    const now = new Date();
-    switch (time) {
-      case '14d':
-        return null; // all
-      case '7d':
-        return subDays(now, 7); // 7 days ago
-      case '1d':
-        return subDays(now, 1); // 1 day ago
-      case '12h':
-        return subHours(now, 12); // 12 hours ago
-      case '8h':
-        return subHours(now, 9); // 8 hours ago
-      case '1h':
-        return subHours(now, 2); // 1 hour ago
-      case '30m':
-        return subMinutes(now, 30); // 30 minutes ago
-      case '15m':
-        return subMinutes(now, 15); // 15 minutes ago
-      default:
-        return null;
-    }
-  };
+  
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -145,14 +124,13 @@ export default function JobsDataTable({
   ];
 
   const timeVals: ISelectItem[] = [
-    { value: "14d", content: "14d > " },
+    { value: '1m', content: '1m' },
+    { value: "14d", content: "14d" },
     { value: "7d", content: "7d" },
     { value: "1d", content: "1d" },
     { value: "12h", content: "12h" },
     { value: "8h", content: "8h" },
     { value: "1h", content: "1h" },
-    { value: "30m", content: "30m" },
-    { value: "15m", content: "15m" },
   ];
 
   const statesVals: ISelectItem[] = [
@@ -196,7 +174,7 @@ export default function JobsDataTable({
           </PopoverContent>
         </Popover>
         <SelectInput 
-          placeholder="Time"
+          placeholder="All time"
           items={timeVals}
           onValueChange={(e) => setSearchTime(e)}
         />
