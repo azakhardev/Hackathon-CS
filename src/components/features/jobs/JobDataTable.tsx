@@ -19,13 +19,13 @@ import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 
 export default function JobsDataTable({
-  limit = -1,
+  limit = 25,
   isNav = true,
 }: {
   limit: number | undefined;
   isNav: boolean;
 }) {
-  limit = 5; //TODO: change limit
+  limit = 25; //TODO: change limit
 
   const [searchText, setSearchText] = useState("");
   const [searchAction, setSearchAction] = useState("");
@@ -60,7 +60,7 @@ export default function JobsDataTable({
   
       return RunnerModel.getJobs(
         searchText,
-        9999999,
+        limit,
         pageParam,
         "group",
         "asc",
@@ -95,7 +95,7 @@ export default function JobsDataTable({
     { value: "csas-dev-csas-linux", content: "Building" },
     { value: "csas-dev-csas-linux-test", content: "Testing" },
     { value: "csas-ops-csas-linux", content: "Deploying to dev" },
-    { value: "csas-ops-csas-linux-test", content: "Deploying to prod" },
+    { value: "csas-ops-csas-linux-prod", content: "Deploying to prod" },
   ];
   const statesVals: ISelectItem[] = [
     { value: "success", content: <StateItem title="Success" color="green" /> },
@@ -149,7 +149,13 @@ export default function JobsDataTable({
         />
       </div>
       <JobsTable jobs={allData} />
-      {isNav && (
+      {isNav &&
+            dataQuery.data &&
+            (
+              dataQuery.data?.pages[
+                dataQuery.data.pageParams.length - 1
+              ] as IJobs[]
+            ).length >= limit && (
         <div className="w-full mt-4">
           <Button
             variant="outline"

@@ -5,7 +5,7 @@ export default function JobsPage() {
   return (
     <>
       <H1>Jobs</H1>
-      <JobsDataTable limit={-1} isNav={true} />
+      <JobsDataTable limit={25} isNav={true} />
     </>
   );
 }

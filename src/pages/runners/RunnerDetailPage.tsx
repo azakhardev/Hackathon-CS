@@ -59,11 +59,13 @@ export default function RunnerDetailPage() {
       },
     ],
     queryFn: async () => {
+      const idRegex = "[a-zA-Z0-9]{5}";
+
       const filters = {
         ...(runnerId && {runner_eq: runnerId}),
         ...(searchText && searchText.trim() !== "" && { id_like: searchText }),
         ...(searchAction &&
-          searchAction.trim() !== "" && { runner_like: searchAction }),
+          searchAction.trim() !== "" && { runner_like: `${searchAction}-${idRegex}`, }),
         ...(searchState &&
           searchState.trim() !== "" && { state_eq: searchState }),
       };

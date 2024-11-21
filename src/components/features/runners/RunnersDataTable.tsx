@@ -17,88 +17,17 @@ import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 
 export default function RunnersPage({
-  limit2 = 5,
+  limit2 = 25,
   isNav = true,
 }: {
   limit2: number | undefined;
   isNav: boolean;
 }) {
-  // // const fetchRunners = async ({ pageParam }: { pageParam: number }) => {
-  // //   const limit = 5;
-  // //   const res = await fetch(
-  // //     `${api_url}/runners?limit=${limit}&page=${pageParam}`,
-  // //     {
-  // //       method: "GET",
-  // //       headers: {
-  // //         Authorization: `Basic ${api_auth}`,
-  // //       },
-  // //     }
-  // //   );
-  // //   return res.json();
-  // // };
-
   const [searchText, setSearchText] = useState("");
   const [searchGroup, setSearchGroup] = useState(" ");
   const [searchOrganization, setSearchOrganization] = useState(" ");
   const [searchState, setSearchState] = useState(" ");
   const [limit, _] = useState(limit2);
-
-  // // async () => {
-  // //   const filters = {
-  // //     ...(searchGroup &&
-  // //       searchGroup.trim() !== "" && { id_like: searchGroup }),
-  // //     ...(searchOrganization &&
-  // //       searchOrganization.trim() !== "" && {
-  // //         organization_eq: searchOrganization,
-  // //       }),
-  // //     ...(searchState &&
-  // //       searchState.trim() !== "" && { state_eq: searchState }),
-  // //   };
-
-  // //   return await RunnerModel.getRunners(
-  // //     searchText,
-  // //     limit,
-  // //     undefined,
-  // //     "group",
-  // //     "asc",
-  // //     filters
-  // //   );
-  // // },
-
-  // // const {
-  // //   data,
-  // //   error,
-  // //   fetchNextPage,
-  // //   hasNextPage,
-  // //   isFetching,
-  // //   isFetchingNextPage,
-  // //   status,
-  // // } = useInfiniteQuery({
-  // //   queryKey: [
-  // //     "runners",
-  // //     {
-  // //       search: searchText,
-  // //       limit: limit,
-  // //       searchGroup: searchGroup,
-  // //       searchOrganization: searchOrganization,
-  // //       searchState: searchState,
-  // //     },
-  // //   ],
-  // //   queryFn: fetchRunners,
-  // //   initialPageParam: 1,
-  // //   getNextPageParam: (lastPage, allPages, lastPageParam) => {
-  //     // if (lastPage.length === 0) {
-  //     //   return undefined;
-  //     // }
-  // //     return lastPageParam + 1;
-  // //   },
-  // //   getPreviousPageParam: (firstPage, allPages, firstPageParam) => {
-  // //     if (firstPageParam <= 1) {
-  // //       return undefined;
-  // //     }
-  // //     return firstPageParam - 1;
-  // //   },
-  // // });
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -112,9 +41,10 @@ export default function RunnersPage({
       },
     ],
     queryFn: ({ pageParam = 1 }) => {
+      const idRegex = "[a-zA-Z0-9]{5}";
       const filters = {
         ...(searchGroup &&
-          searchGroup.trim() !== "" && { id_like: searchGroup }),
+          searchGroup.trim() !== "" && { id_like: `${searchGroup}-${idRegex}` }),
         ...(searchOrganization &&
           searchOrganization.trim() !== "" && {
             organization_eq: searchOrganization,
@@ -161,6 +91,7 @@ export default function RunnersPage({
   //   { value: "csas-ops-csas-linux", content: "Deploying to dev" },
   //   { value: "csas-ops-csas-linux-test", content: "Deploying to prod" },
   // ];
+
   const statesVals: ISelectItem[] = [
     { value: "active", content: <StateItem title="Active" color="green" /> },
     { value: "offline", content: <StateItem title="Offline" color="gray" /> }, // prettier-ignore
@@ -229,12 +160,12 @@ export default function RunnersPage({
               dataQuery.data?.pages[
                 dataQuery.data.pageParams.length - 1
               ] as IRunner[]
-            ).length >= 5 && (
+            ).length >= limit2 && (
               <div className="w-full mt-4">
                 <Button
                   variant="outline"
                   onClick={() => dataQuery.fetchNextPage()}
-                  className="w-full"
+                  className={`w-full`}
                   disabled={
                     !dataQuery.hasNextPage || dataQuery.isFetchingNextPage
                   }

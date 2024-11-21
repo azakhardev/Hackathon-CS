@@ -46,6 +46,8 @@ export default function ProjectDetailPage() {
       searchAction,
     ],
     queryFn: async () => {
+      const idRegex = "[a-zA-Z0-9]{5}";
+
       const filters = {
         ...(id && { SAS_eq: id }),
         ...(searchDate && {
@@ -54,7 +56,7 @@ export default function ProjectDetailPage() {
         ...(searchState &&
           searchState.trim() != "" && { state_eq: searchState }),
         ...(searchAction &&
-          searchAction.trim() != "" && { runner_start: searchAction }),
+          searchAction.trim() != "" && { runner_like: searchAction != 'none' ? `${searchAction}-${idRegex}` : searchAction }),
       };
 
       return RunnerModel.getJobs(
