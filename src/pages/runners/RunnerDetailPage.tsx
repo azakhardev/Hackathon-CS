@@ -14,6 +14,8 @@ import { CircleIcon } from "lucide-react";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import Throbber from "@/components/ui/Throbber";
+import H1 from "@/components/ui/typography/H1";
+import H2 from "@/components/ui/typography/H2";
 
 export default function RunnerDetailPage() {
   const [limit, setLimit] = useState(5);
@@ -108,15 +110,15 @@ export default function RunnerDetailPage() {
     { value: "failed", content: <StateItem title="Failed" color="red" /> },
   ];
 
+  const title = runnerQuery.data?.id.slice(-5).toUpperCase() ?? "";
   return (
     <main>
       <div>
-        <div className="h-[10dvh] border-b-2 flex items-center">
-          <h2 className="text-[24px] ml-10 font-bold">{`Runner > ${runnerQuery.data?.id
-            .substring(runnerQuery.data.id.length - 5)
-            .toUpperCase()}`}</h2>
+        <div>
+          <H2>Runner</H2>
+          <H1>{title}</H1>
         </div>
-        <div className="p-10 w-full h-[80dvh]">
+        <div className="w-full">
           <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">
               <TabsTrigger className="w-[100px]" value="jobs">
@@ -127,21 +129,23 @@ export default function RunnerDetailPage() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="jobs">
-              <div className="flex justify-between gap-4 mb-4">
+              <div className="flex justify-between gap-2 mb-4">
                 <SearchBar
                   searchText={searchText ?? ""}
                   setSearchText={setSearchText}
                 />
-                <SelectInput
-                  placeholder="All actions"
-                  items={actionsVals}
-                  onValueChange={(e) => setSearchAction(e)}
-                />
-                <SelectInput
-                  placeholder="All States"
-                  items={statesVals}
-                  onValueChange={(e) => setSearchState(e)}
-                />
+                <div className="flex flex-1 gap-2">
+                  <SelectInput
+                    placeholder="All actions"
+                    items={actionsVals}
+                    onValueChange={(e) => setSearchAction(e)}
+                  />
+                  <SelectInput
+                    placeholder="All States"
+                    items={statesVals}
+                    onValueChange={(e) => setSearchState(e)}
+                  />
+                </div>
               </div>
               {runnerQuery.isLoading ||
               metricsQuery.isLoading ||

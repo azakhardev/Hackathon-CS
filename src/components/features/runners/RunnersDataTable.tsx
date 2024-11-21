@@ -159,18 +159,20 @@ export default function RunnersPage({
   return (
     <>
       {isNav && (
-        <div className="flex justify-between gap-4 mb-4">
+        <div className="flex justify-between gap-2 mb-4">
           <SearchBar searchText={searchText} setSearchText={setSearchText} />
-          <SelectInput
-            placeholder="All actions"
-            items={actionsVals}
-            onValueChange={(e) => setSearchAction(e)}
-          />
-          <SelectInput
-            placeholder="All States"
-            items={statesVals}
-            onValueChange={(e) => setSearchState(e)}
-          />
+          <div className="flex flex-1 gap-2">
+            <SelectInput
+              placeholder="All actions"
+              items={actionsVals}
+              onValueChange={(e) => setSearchAction(e)}
+            />
+            <SelectInput
+              placeholder="All States"
+              items={statesVals}
+              onValueChange={(e) => setSearchState(e)}
+            />
+          </div>
         </div>
       )}
       {dataQuery.isLoading ? (

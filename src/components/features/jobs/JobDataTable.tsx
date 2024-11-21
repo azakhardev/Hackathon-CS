@@ -35,9 +35,7 @@ export default function JobsDataTable({
   const [searchAction, setSearchAction] = useState("");
   const [searchState, setSearchState] = useState("");
   const [searchDate, setSearchDate] = useState<Date>();
-  const [searchTime, setSearchTime] = useState('')
-
-  
+  const [searchTime, setSearchTime] = useState("");
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -54,7 +52,9 @@ export default function JobsDataTable({
     queryFn: ({ pageParam = 1 }) => {
       const idRegex = "[a-zA-Z0-9]{5}";
 
-      const calculatedTime = searchTime ? calculateTimeFilter(searchTime) : null;
+      const calculatedTime = searchTime
+        ? calculateTimeFilter(searchTime)
+        : null;
 
       const filters = {
         ...(searchState &&
@@ -124,7 +124,7 @@ export default function JobsDataTable({
   ];
 
   const timeVals: ISelectItem[] = [
-    { value: '1m', content: '1m' },
+    { value: "1m", content: "1m" },
     { value: "14d", content: "14d" },
     { value: "7d", content: "7d" },
     { value: "1d", content: "1d" },
@@ -147,47 +147,50 @@ export default function JobsDataTable({
           searchText={searchText ?? ""}
           setSearchText={setSearchText}
         />
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant={"outline"}
-              className={cn(
-                "w-[280px] justify-start text-left font-normal",
-                !searchDate && "text-muted-foreground"
-              )}
-            >
-              <CalendarIcon />
-              {searchDate ? (
-                format(searchDate, "yyyy-MM-dd")
-              ) : (
-                <span>Pick a date</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar
-              mode="single"
-              selected={searchDate}
-              onSelect={setSearchDate}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-        <SelectInput 
-          placeholder="All time"
-          items={timeVals}
-          onValueChange={(e) => setSearchTime(e)}
-        />
-        <SelectInput
-          placeholder="All actions"
-          items={actionsVals}
-          onValueChange={(e) => setSearchAction(e)}
-        />
-        <SelectInput
-          placeholder="All States"
-          items={statesVals}
-          onValueChange={(e) => setSearchState(e)}
-        />
+
+        <div className="flex flex-1 gap-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-[280px] justify-start text-left font-normal",
+                  !searchDate && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon />
+                {searchDate ? (
+                  format(searchDate, "yyyy-MM-dd")
+                ) : (
+                  <span>Pick a date</span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={searchDate}
+                onSelect={setSearchDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          {/* <SelectInput
+            placeholder="All time"
+            items={timeVals}
+            onValueChange={(e) => setSearchTime(e)}
+          /> */}
+          <SelectInput
+            placeholder="All actions"
+            items={actionsVals}
+            onValueChange={(e) => setSearchAction(e)}
+          />
+          <SelectInput
+            placeholder="All States"
+            items={statesVals}
+            onValueChange={(e) => setSearchState(e)}
+          />
+        </div>
       </div>
 
       {dataQuery.isLoading && <Throbber />}

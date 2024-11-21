@@ -8,6 +8,7 @@ import { IAutomation } from "@/lib/types/IAutomation";
 import Throbber from "@/components/ui/Throbber";
 import SearchBar from "@/components/ui/table/SearchBar";
 import { useState } from "react";
+import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import {
@@ -130,14 +131,14 @@ export default function AutomationsDataTable({
               searchText={searchText ?? ""}
               setSearchText={setSearchText}
             />
-            <div className={cn("w-1/2")}>
+            <div className="flex">
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     id="date"
                     variant={"outline"}
                     className={cn(
-                      "w-[300px] justify-start text-left font-normal",
+                      "w-[210px] justify-start text-left font-normal",
                       !searchDate && "text-muted-foreground"
                     )}
                   >

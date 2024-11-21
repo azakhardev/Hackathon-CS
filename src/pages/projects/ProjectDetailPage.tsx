@@ -228,20 +228,19 @@ export default function ProjectDetailPage() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="jobs">
-              <div className="flex justify-between gap-4 mb-4">
+              <div className="flex justify-between gap-2 mb-4">
                 <SearchBar
                   searchText={searchText ?? ""}
                   setSearchText={setSearchText}
                 />
-
-                <div className={cn("")}>
+                <div className="flex flex-1 gap-2">
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
                         id="date"
                         variant={"outline"}
                         className={cn(
-                          "w-[300px] justify-start text-left font-normal",
+                          "w-[210px] justify-start text-left font-normal",
                           !searchDate && "text-muted-foreground"
                         )}
                       >
@@ -271,17 +270,18 @@ export default function ProjectDetailPage() {
                       />
                     </PopoverContent>
                   </Popover>
+
+                  <SelectInput
+                    placeholder="All actions"
+                    items={actionsVals}
+                    onValueChange={(e) => setSearchAction(e)}
+                  />
+                  <SelectInput
+                    placeholder="All States"
+                    items={statesVals}
+                    onValueChange={(e) => setSearchState(e)}
+                  />
                 </div>
-                <SelectInput
-                  placeholder="All actions"
-                  items={actionsVals}
-                  onValueChange={(e) => setSearchAction(e)}
-                />
-                <SelectInput
-                  placeholder="All States"
-                  items={statesVals}
-                  onValueChange={(e) => setSearchState(e)}
-                />
               </div>
               {jobsQuery.isLoading ? (
                 <Throbber />
@@ -292,19 +292,19 @@ export default function ProjectDetailPage() {
               )}
             </TabsContent>
             <TabsContent value="automations">
-              <div className="flex justify-between gap-4 mb-4">
+              <div className="flex justify-between gap-2 mb-4">
                 <SearchBar
                   searchText={automationsSearchText ?? ""}
                   setSearchText={setAutomationsSearchText}
                 />
-                <div className={cn("w-1/2 flex content-stretch")}>
+                <div className="flex justify-end flex-1 gap-2">
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
                         id="date"
                         variant={"outline"}
                         className={cn(
-                          "w-[300px] justify-start text-left font-normal",
+                          "w-[210px] justify-start text-left font-normal",
                           !searchDateAutomations && "text-muted-foreground"
                         )}
                       >
