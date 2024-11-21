@@ -19,6 +19,7 @@ import IconButton from "@/components/IconButton";
 
 interface IProps {
   projects: IProject[] | IErrorMessage;
+  searchText?: string;
 }
 
 export default function ProjectsTable(props: IProps) {
@@ -30,7 +31,11 @@ export default function ProjectsTable(props: IProps) {
           return (
             <TableRow key={p.name}>
               <TableCell className="font-medium">
-                <Table_cel_title title={name} text="" />
+                <Table_cel_title
+                  title={name}
+                  text=""
+                  searchText={props.searchText}
+                />
               </TableCell>
               <JobCells {...p.job} />
               <TableCell className="flex flex-row justify-end gap-2">

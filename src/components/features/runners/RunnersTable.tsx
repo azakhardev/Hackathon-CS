@@ -19,6 +19,7 @@ import { CheckIcon, PieChartIcon } from "lucide-react";
 
 interface IProps {
   runners: (IRunner[] | IErrorMessage)[] | undefined;
+  searchText?: string;
 }
 
 export default function RunnersTable(props: IProps) {
@@ -57,19 +58,23 @@ export default function RunnersTable(props: IProps) {
                 <Table_cel_title
                   title={title}
                   text={buildRunnerDescription(r.id)}
+                  searchText={props.searchText}
                 />
               </TableCell>
               <TableCell>
                 <Table_cel_state title={r.state} text="" type={r.state} />
               </TableCell>
               <TableCell>
-                <Badge variant="outline" title={title}> {title}</Badge>
+                <Badge variant="outline" title={title}>
+                  {" "}
+                  {title}
+                </Badge>
                 {/* <Link
                   to={`/runners?grp=${r.runner_group}`}
                   className={badgeVariants({ variant: "outline" })}
                 >                  
                 </Link>*/}
-                {runnerRoleText(r.id)} 
+                {runnerRoleText(r.id)}
               </TableCell>
               <TableCell className="flex flex-row justify-end gap-2">
                 <IconButton

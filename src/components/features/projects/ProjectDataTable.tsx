@@ -81,7 +81,7 @@ export default function ProjectsDataTable({
         </div>
       )}
 
-      <ProjectsTable projects={displayedProjects} />
+      <ProjectsTable projects={displayedProjects} searchText={searchText} />
 
       {isNav && totalProjects > displayLimit && displayLimit != -1 && (
         <ButtonLoadMore onClick={handleLoadMore} />

@@ -44,7 +44,9 @@ export default function RunnersPage({
       const idRegex = "[a-zA-Z0-9]{5}";
       const filters = {
         ...(searchGroup &&
-          searchGroup.trim() !== "" && { id_like: `${searchGroup}-${idRegex}` }),
+          searchGroup.trim() !== "" && {
+            id_like: `${searchGroup}-${idRegex}`,
+          }),
         ...(searchOrganization &&
           searchOrganization.trim() !== "" && {
             organization_eq: searchOrganization,
@@ -152,7 +154,10 @@ export default function RunnersPage({
         </div>
       ) : (
         <div>
-          <RunnersTable runners={dataQuery.data?.pages} />
+          <RunnersTable
+            runners={dataQuery.data?.pages}
+            searchText={searchText}
+          />
           {/* TODO: use global component */}
           {isNav &&
             dataQuery.data &&
