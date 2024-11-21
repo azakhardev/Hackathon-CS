@@ -79,6 +79,7 @@ export default function JobsDataTable({
       return firstPageParam - 1;
     },
   });
+
   if (dataQuery.isError) return <p>Error: {dataQuery.error?.message}</p>;
 
   let allData: IJobs[] = [];
@@ -154,7 +155,9 @@ export default function JobsDataTable({
         </div>
       )}
 
-      {!dataQuery.isLoading && <JobsTable jobs={allData} />}
+      {!dataQuery.isLoading && (
+        <JobsTable jobs={allData} searchText={searchText} />
+      )}
 
       {isNav &&
         dataQuery.data &&

@@ -148,7 +148,10 @@ export default function RunnersPage({
         </div>
       ) : (
         <div>
-          <RunnersTable runners={dataQuery.data?.pages} />
+          <RunnersTable
+            runners={dataQuery.data?.pages}
+            searchText={searchText}
+          />
           {/* TODO: use global component */}
           {isNav &&
             dataQuery.data &&

@@ -87,7 +87,7 @@ export default function ProjectsDataTable({
       )}
 
       {!sasQuery.isLoading && !jobsQuery.isLoading && (
-        <ProjectsTable projects={displayedProjects} />
+        <ProjectsTable projects={displayedProjects} searchText={searchText} />
       )}
 
       {isNav && totalProjects > displayLimit && displayLimit != -1 && (
