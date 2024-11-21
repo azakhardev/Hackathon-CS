@@ -70,20 +70,28 @@ export default function MetricsPageCharts(props: IProps) {
     <>
       <div>
         <h1>Automations States</h1>
-        <CustomPieChart
-          chartConfig={AUTOMATIONS_STATE_CHART_CONFIG}
-          chartData={aStateData}
-          innerRadius={0}
-        />
+        {props.automationsData.length > 0 ? (
+          <CustomPieChart
+            chartConfig={AUTOMATIONS_STATE_CHART_CONFIG}
+            chartData={aStateData}
+            innerRadius={0}
+          />
+        ) : (
+          <p>No data for this date range</p>
+        )}
       </div>
       <div>
         <h1>Jobs Stats</h1>
-        <CustomBarChart
-          chartConfig={JOBS_CHART_CONFIG}
-          chartData={jStateData}
-          showCursor={false}
-          dataKey="organization"
-        />
+        {props.jobsData.length > 0 ? (
+          <CustomBarChart
+            chartConfig={JOBS_CHART_CONFIG}
+            chartData={jStateData}
+            showCursor={false}
+            dataKey="organization"
+          />
+        ) : (
+          <p>No data for this date range</p>
+        )}
       </div>
     </>
   );

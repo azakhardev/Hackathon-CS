@@ -25,7 +25,6 @@ export default function CustomPieChart(props: IProps) {
         <Pie
           data={props.chartData}
           dataKey={Object.keys(props.chartConfig).at(0) as string}
-          label
           nameKey={nKey}
           innerRadius={props.innerRadius}
         />
