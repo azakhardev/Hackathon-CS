@@ -61,7 +61,7 @@ export function JobCells(job: IJobs) {
       </TableCell>
       <TableCell>
         <Link
-          to={"#" /*`/jobs/${job.runner}`*/}
+          to={`/projects/${job.SAS}?tabs=jobs` /*`/jobs/${job.runner}`*/}
           className={badgeVariants({ variant: "outline" })}
         >
           {job.SAS.toUpperCase().slice(4)}

@@ -1,4 +1,4 @@
-import { badgeVariants } from "@/components/ui/badge";
+import { Badge, badgeVariants } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -10,7 +10,7 @@ import Table_cel_title from "@/components/ui/table/table_cel_title";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import {
   buildRunnerDescription,
-  buildRunnerText,
+  buildRunnerText as runnerRoleText,
 } from "@/components/features/jobs/JobsTable";
 import { IRunner } from "@/lib/types/IRunner";
 import { Link } from "react-router-dom";
@@ -63,13 +63,13 @@ export default function RunnersTable(props: IProps) {
                 <Table_cel_state title={r.state} text="" type={r.state} />
               </TableCell>
               <TableCell>
-                <Link
+                <Badge variant="outline" title={title}> {title}</Badge>
+                {/* <Link
                   to={`/runners?grp=${r.runner_group}`}
                   className={badgeVariants({ variant: "outline" })}
-                >
-                  {title}
-                </Link>
-                {buildRunnerText(r.id)}
+                >                  
+                </Link>*/}
+                {runnerRoleText(r.id)} 
               </TableCell>
               <TableCell className="flex flex-row justify-end gap-2">
                 <IconButton
