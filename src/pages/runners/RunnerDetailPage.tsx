@@ -14,8 +14,7 @@ import { CircleIcon } from "lucide-react";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import Throbber from "@/components/ui/Throbber";
-import H1 from "@/components/ui/typography/H1";
-import H2 from "@/components/ui/typography/H2";
+import DetailHeader from "@/components/DetailHeader";
 
 export default function RunnerDetailPage() {
   const [limit, setLimit] = useState(5);
@@ -114,10 +113,7 @@ export default function RunnerDetailPage() {
   return (
     <main>
       <div>
-        <div>
-          <H2>Runner</H2>
-          <H1>{title}</H1>
-        </div>
+        <DetailHeader section="Runner" title={title} />
         <div className="w-full">
           <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">

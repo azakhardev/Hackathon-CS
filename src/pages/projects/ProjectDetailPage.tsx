@@ -27,6 +27,7 @@ import { IAutomation } from "@/lib/types/IAutomation";
 import { IAutomationType } from "@/lib/types/IAutomationType";
 import AutomationsTable from "../automations/automations/AutomationsTable";
 import { DateRange } from "react-day-picker";
+import DetailHeader from "@/components/DetailHeader";
 
 export default function ProjectDetailPage() {
   const params = useParams();
@@ -208,16 +209,12 @@ export default function ProjectDetailPage() {
     { value: "failed", content: <StateItem title="Failed" color="red" /> },
   ];
 
+  const title = id?.split("_")[1] ?? "";
   return (
     <main>
       <div>
-        <div className="h-[10dvh] border-b-2 flex items-center mb-4">
-          <h2 className="text-[24px] ml-10 font-bold">{`Project > ${
-            id?.split("_")[1]
-          }
-          `}</h2>
-        </div>
-        <div className="p-10 w-full h-[80dvh]">
+        <DetailHeader section="Project" title={title} />
+        <div>
           <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">
               <TabsTrigger className="w-[100px]" value="jobs">
