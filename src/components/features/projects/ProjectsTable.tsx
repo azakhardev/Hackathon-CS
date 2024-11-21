@@ -9,8 +9,6 @@ import {
   // TableHead,
   // TableHeader,
 } from "@/components/ui/table/table";
-import { Link } from "react-router-dom";
-import { buttonVariants } from "@/components/ui/Button";
 import { IProject } from "@/lib/types/IProject";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
 import { JobCells } from "@/components/features/jobs/JobsTable";

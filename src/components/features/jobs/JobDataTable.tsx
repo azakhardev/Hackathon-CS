@@ -19,6 +19,7 @@ import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
+import Throbber from "@/components/ui/Throbber";
 
 export default function JobsDataTable({
   limit = 25,
@@ -163,11 +164,7 @@ export default function JobsDataTable({
         />
       </div>
 
-      {dataQuery.isLoading && (
-        <div className="loader-wrap">
-          <div className="loading-spinner"></div>
-        </div>
-      )}
+      {dataQuery.isLoading && <Throbber />}
 
       {!dataQuery.isLoading && (
         <JobsTable jobs={allData} searchText={searchText} />

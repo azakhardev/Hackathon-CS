@@ -5,6 +5,7 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import LogsTable from "./LogsTable";
 import { IAutomationType } from "@/lib/types/IAutomationType";
+import Throbber from "@/components/ui/Throbber";
 
 export default function LogsDataTable({
   automationId,
@@ -47,6 +48,14 @@ export default function LogsDataTable({
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
+  if (
+    automationQuery.isLoading ||
+    logsQuery.isLoading ||
+    automationsTypesQuery.isLoading
+  ) {
+    return <Throbber />;
+  }
+
   // Data joining logic
   // if (!logsQuery.data || !automationsTypesQuery.data)
   //   return <h1>Error at data joining</h1>;
@@ -62,11 +71,6 @@ export default function LogsDataTable({
 
   return (
     <>
-      {(automationQuery.isLoading || logsQuery.isLoading) && (
-        <div className="loader-wrap">
-          <div className="loading-spinner"></div>
-        </div>
-      )}
       {!automationQuery.isLoading && !logsQuery.isLoading && (
         <LogsTable logs={logsWithTypes as IAutomationLog[]} />
       )}

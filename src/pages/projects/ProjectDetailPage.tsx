@@ -24,6 +24,7 @@ import SearchBar from "@/components/ui/table/SearchBar";
 import { Calendar } from "@/components/ui/calendar";
 import { CircleIcon } from "lucide-react";
 import { RunnerModel } from "@/lib/models/RunnerModel";
+import Throbber from "@/components/ui/Throbber";
 
 export default function ProjectDetailPage() {
   const params = useParams();
@@ -56,7 +57,12 @@ export default function ProjectDetailPage() {
         ...(searchState &&
           searchState.trim() != "" && { state_eq: searchState }),
         ...(searchAction &&
-          searchAction.trim() != "" && { runner_like: searchAction != 'none' ? `${searchAction}-${idRegex}` : searchAction }),
+          searchAction.trim() != "" && {
+            runner_like:
+              searchAction != "none"
+                ? `${searchAction}-${idRegex}`
+                : searchAction,
+          }),
       };
 
       return RunnerModel.getJobs(
@@ -157,9 +163,7 @@ export default function ProjectDetailPage() {
           </Select>
         </div>
         {jobsQuery.isLoading ? (
-          <div className="loader-wrap">
-            <div className="loading-spinner"></div>
-          </div>
+          <Throbber />
         ) : (
           <JobsTable
             jobs={jobsQuery.data}

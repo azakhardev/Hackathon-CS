@@ -23,6 +23,7 @@ import {
 import { AutomationModel } from "@/lib/models/AutomationModel";
 import { IAutomationType, ITransition } from "@/lib/types/IAutomationType";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
+import Throbber from "@/components/ui/Throbber";
 //-----------------------------------------↓
 export default function AutomationTypesDataTable({
   limit = -1,
@@ -52,11 +53,7 @@ export default function AutomationTypesDataTable({
   }
 
   if (automationsTypeQuery.isLoading) {
-    return (
-      <div className="loader-wrap">
-        <div className="loading-spinner"></div>
-      </div>
-    );
+    return <Throbber />;
   }
 
   console.log(limit, isNav);

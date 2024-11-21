@@ -8,6 +8,7 @@ import { useState } from "react";
 import SearchBar from "@/components/ui/table/SearchBar";
 import ButtonLoadMore from "@/components/ui/table/Button_LoadMore";
 import { RunnerModel } from "@/lib/models/RunnerModel";
+import Throbber from "@/components/ui/Throbber";
 
 export default function ProjectsDataTable({
   limit = -1,
@@ -89,11 +90,7 @@ export default function ProjectsDataTable({
           <SearchBar searchText={searchText} setSearchText={setSearchText} />
         </div>
       )}
-      {(sasQuery.isLoading || jobsQuery.isLoading) && (
-        <div className="loader-wrap">
-          <div className="loading-spinner"></div>
-        </div>
-      )}
+      {(sasQuery.isLoading || jobsQuery.isLoading) && <Throbber />}
 
       {!sasQuery.isLoading && !jobsQuery.isLoading && (
         <ProjectsTable projects={displayedProjects} searchText={searchText} />

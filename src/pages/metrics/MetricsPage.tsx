@@ -14,6 +14,9 @@ import { IJobs } from "../../lib/types/IJobs";
 import { IRunner } from "../../lib/types/IRunner";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import { IAutomation } from "@/lib/types/IAutomation";
+import { IErrorMessage } from "@/lib/types/IErrorMessage";
+import ErrorMessage from "@/components/ui/ErrorMessage";
+import Throbber from "@/components/ui/Throbber";
 
 export default function MetricsPage() {
   const [dateStart, setDateStart] = useState<Date>();
@@ -59,7 +62,24 @@ export default function MetricsPage() {
     },
   });
 
+  if (automationsQuery.data && "error" in automationsQuery.data)
+    return (
+      <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />
+    );
+
+  if (jobsQuery.data && "error" in jobsQuery.data)
+    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
+
+  if (runnersQuery.data && "error" in runnersQuery.data)
+    return <ErrorMessage errorMessage={runnersQuery.data as IErrorMessage} />;
+
   if (automationsQuery.error || jobsQuery.error || runnersQuery.error) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
   return (
@@ -104,11 +124,7 @@ export default function MetricsPage() {
       </ul>
       {(jobsQuery.isLoading ||
         automationsQuery.isLoading ||
-        runnersQuery.isLoading) && (
-        <div className="loader-wrap h-100%">
-          <div className="loading-spinner"></div>
-        </div>
-      )}
+        runnersQuery.isLoading) && <Throbber />}
       {!jobsQuery.isLoading &&
         !automationsQuery.isLoading &&
         !runnersQuery.isLoading && (

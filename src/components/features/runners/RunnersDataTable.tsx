@@ -17,6 +17,7 @@ import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
+import Throbber from "@/components/ui/Throbber";
 
 export default function RunnersPage({
   limit2 = 25,
@@ -157,9 +158,7 @@ export default function RunnersPage({
         </div>
       )}
       {dataQuery.isLoading ? (
-        <div className="loader-wrap">
-          <div className="loading-spinner"></div>
-        </div>
+        <Throbber />
       ) : (
         <div>
           <RunnersTable

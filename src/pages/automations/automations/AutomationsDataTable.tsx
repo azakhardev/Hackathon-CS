@@ -6,6 +6,7 @@ import ErrorMessage from "@/components/ui/ErrorMessage";
 import H1 from "@/components/ui/typography/H1";
 import { IAutomationType } from "../../../lib/types/IAutomationType";
 import { IAutomation } from "@/lib/types/IAutomation";
+import Throbber from "@/components/ui/Throbber";
 
 export default function AutomationsDataTable({
   limit = 9999,
@@ -45,11 +46,7 @@ export default function AutomationsDataTable({
   }
 
   if (automationsQuery.isLoading || automationsTypesQuery.isLoading) {
-    return (
-      <div className="loader-wrap">
-        <div className="loading-spinner"></div>
-      </div>
-    );
+    return <Throbber />;
   }
 
   // Data joining logic

@@ -13,6 +13,7 @@ import SearchBar from "@/components/ui/table/SearchBar";
 import { CircleIcon } from "lucide-react";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
+import Throbber from "@/components/ui/Throbber";
 
 export default function RunnerDetailPage() {
   const [limit, setLimit] = useState(5);
@@ -145,9 +146,7 @@ export default function RunnerDetailPage() {
               {runnerQuery.isLoading ||
               metricsQuery.isLoading ||
               jobsQuery.isLoading ? (
-                <div className="loader-wrap">
-                  <div className="loading-spinner"></div>
-                </div>
+                <Throbber />
               ) : jobsQuery.data?.length === 0 ? (
                 <h3>Nebyly nalezeny žádné jobs</h3>
               ) : (
