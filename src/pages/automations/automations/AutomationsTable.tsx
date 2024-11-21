@@ -20,6 +20,7 @@ import { IAutomation } from "@/lib/types/IAutomation";
 
 interface IProps {
   automations: IAutomation[] | IErrorMessage;
+  searchText?: string;
 }
 
 export default function AutomationsTable(props: IProps) {
@@ -86,6 +87,7 @@ export default function AutomationsTable(props: IProps) {
                     <Table_cel_title
                       title={a.id.slice(-5)}
                       text={a.id.slice(0, -6).toLowerCase()}
+                      searchText={props.searchText}
                     />
                   </div>
                 </TableCell>

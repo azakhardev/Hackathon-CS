@@ -14,8 +14,8 @@ export class AutomationModel {
     filters?: Record<string, string>
   ): Promise<IAutomation[] | IErrorMessage> {
     const params = new URLSearchParams({
-      search: search ?? "",
-      limit: limit?.toString() ? limit!.toString() : "-1",
+      id_like: search ?? "",
+      limit: limit?.toString() ? limit!.toString() : "99999",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc",
@@ -72,7 +72,7 @@ export class AutomationModel {
   ): Promise<IAutomationType[] | IErrorMessage> {
     const params = new URLSearchParams({
       search: search ?? "",
-      limit: limit?.toString() ? limit!.toString() : "-1",
+      limit: limit?.toString() ? limit!.toString() : "999999",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc",

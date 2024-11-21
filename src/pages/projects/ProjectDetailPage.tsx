@@ -26,16 +26,26 @@ import { AutomationModel } from "@/lib/models/AutomationModel";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { IAutomationType } from "@/lib/types/IAutomationType";
 import AutomationsTable from "../automations/automations/AutomationsTable";
+import { DateRange } from "react-day-picker";
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const id = params.id;
 
   const [searchText, setSearchText] = useState("");
-  const [searchDate, setSearchDate] = useState<Date>();
   const [searchState, setSearchState] = useState("");
   const [searchAction, setSearchAction] = useState("");
   const [automationsSearchText, setAutomationsSearchText] = useState("");
+  const [searchDate, setSearchDate] = useState<DateRange | undefined>({
+    from: undefined,
+    to: undefined,
+  });
+  const [searchDateAutomations, setSearchDateAutomations] = useState<
+    DateRange | undefined
+  >({
+    from: undefined,
+    to: undefined,
+  });
 
   const [searchParams] = useSearchParams();
   const tabParam = searchParams.get("tabs");
@@ -57,9 +67,27 @@ export default function ProjectDetailPage() {
 
       const filters = {
         ...(id && { SAS_eq: id }),
-        ...(searchDate && {
-          timestamp_start: format(searchDate, "yyyy-MM-dd").toString(),
-        }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to == undefined && {
+            timestamp_start: format(searchDate.from, "yyyy-MM-dd").toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            timestamp_gte: format(
+              searchDate.from,
+              "yyyy-MM-dd'T'HH:mm:ss"
+            ).toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            timestamp_lte: format(
+              searchDate.to,
+              "yyyy-MM-dd'T'23:59:59"
+            ).toString(),
+          }),
         ...(searchState &&
           searchState.trim() != "" && { state_eq: searchState }),
         ...(searchAction &&
@@ -83,10 +111,39 @@ export default function ProjectDetailPage() {
   });
 
   const automationsQuery = useQuery({
-    queryKey: ["automationsSAS", id, automationsSearchText],
+    queryKey: [
+      "automationsSAS",
+      id,
+      automationsSearchText,
+      searchDateAutomations,
+    ],
     queryFn: async () => {
       const filters = {
         ...(id && { sas_eq: id }),
+        ...(searchDateAutomations &&
+          searchDateAutomations.from &&
+          searchDateAutomations.to == undefined && {
+            last_activity_start: format(
+              searchDateAutomations.from,
+              "yyyy-MM-dd"
+            ).toString(),
+          }),
+        ...(searchDateAutomations &&
+          searchDateAutomations.from &&
+          searchDateAutomations.to && {
+            last_activity_gte: format(
+              searchDateAutomations.from,
+              "yyyy-MM-dd'T'HH:mm:ss"
+            ).toString(),
+          }),
+        ...(searchDateAutomations &&
+          searchDateAutomations.from &&
+          searchDateAutomations.to && {
+            last_activity_lte: format(
+              searchDateAutomations.to,
+              "yyyy-MM-dd'T'23:59:59"
+            ).toString(),
+          }),
       };
 
       return AutomationModel.getAutomations(
@@ -177,32 +234,44 @@ export default function ProjectDetailPage() {
                   setSearchText={setSearchText}
                 />
 
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[280px] justify-start text-left font-normal",
-                        !searchDate && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon />
-                      {searchDate ? (
-                        format(searchDate, "yyyy-MM-dd")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={searchDate}
-                      onSelect={setSearchDate}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <div className={cn("grid gap-2")}>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="date"
+                        variant={"outline"}
+                        className={cn(
+                          "w-[300px] justify-start text-left font-normal",
+                          !searchDate && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon />
+                        {searchDate?.from ? (
+                          searchDate.to ? (
+                            <>
+                              {format(searchDate.from, "yyyy-MM-dd")} -{" "}
+                              {format(searchDate.to, "yyyy-MM-dd")}
+                            </>
+                          ) : (
+                            format(searchDate.from, "yyyy-MM-dd")
+                          )
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        initialFocus
+                        mode="range"
+                        defaultMonth={searchDate?.from}
+                        selected={searchDate}
+                        onSelect={setSearchDate}
+                        numberOfMonths={2}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
                 <SelectInput
                   placeholder="All actions"
                   items={actionsVals}
@@ -223,6 +292,51 @@ export default function ProjectDetailPage() {
               )}
             </TabsContent>
             <TabsContent value="automations">
+              <div className="flex justify-between gap-4 mb-4">
+                <SearchBar
+                  searchText={automationsSearchText ?? ""}
+                  setSearchText={setAutomationsSearchText}
+                />
+                <div className={cn("w-1/2 flex content-stretch")}>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="date"
+                        variant={"outline"}
+                        className={cn(
+                          "w-[300px] justify-start text-left font-normal",
+                          !searchDateAutomations && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon />
+                        {searchDateAutomations?.from ? (
+                          searchDateAutomations.to ? (
+                            <>
+                              {format(searchDateAutomations.from, "yyyy-MM-dd")}{" "}
+                              - {format(searchDateAutomations.to, "yyyy-MM-dd")}
+                            </>
+                          ) : (
+                            format(searchDateAutomations.from, "yyyy-MM-dd")
+                          )
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        initialFocus
+                        mode="range"
+                        defaultMonth={searchDateAutomations?.from}
+                        selected={searchDateAutomations}
+                        onSelect={setSearchDateAutomations}
+                        numberOfMonths={2}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+
               {automationsQuery.isLoading || automationsTypesQuery.isLoading ? (
                 <Throbber />
               ) : jobsQuery.data?.length === 0 ? (
@@ -230,6 +344,7 @@ export default function ProjectDetailPage() {
               ) : (
                 <AutomationsTable
                   automations={automationsWithTypes as IAutomation[]}
+                  searchText={automationsSearchText}
                 />
               )}
             </TabsContent>

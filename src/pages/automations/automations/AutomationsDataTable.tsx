@@ -69,9 +69,9 @@ export default function AutomationsDataTable({
   }
 
   // Data joining logic
-  let automationsWithTypes = null
+  let automationsWithTypes = null;
 
-  if (!(automationsQuery.isLoading || automationsTypesQuery.isLoading )) {
+  if (!(automationsQuery.isLoading || automationsTypesQuery.isLoading)) {
     automationsWithTypes = (automationsQuery.data as IAutomation[]).map(
       (automation: IAutomation) => {
         const matchedType = Array.isArray(automationsTypesQuery.data)
@@ -82,7 +82,7 @@ export default function AutomationsDataTable({
         return { ...automation, type_object: matchedType || null };
       }
     );
-  }   
+  }
 
   const timeVals: ISelectItem[] = [
     { value: "2y", content: "2y" },
@@ -98,22 +98,23 @@ export default function AutomationsDataTable({
     <>
       <div>
         <div className="grid grid-cols-2">
-        <SearchBar
-          searchText={searchText ?? ""}
-          setSearchText={setSearchText}
-        />
-        <SelectInput
-          placeholder="All time"
-          items={timeVals}
-          onValueChange={(e) => setSearchTime(e)}
-        />
+          <SearchBar
+            searchText={searchText ?? ""}
+            setSearchText={setSearchText}
+          />
+          <SelectInput
+            placeholder="All time"
+            items={timeVals}
+            onValueChange={(e) => setSearchTime(e)}
+          />
         </div>
-        
+
         {automationsQuery.isLoading || automationsTypesQuery.isLoading ? (
           <Throbber />
         ) : (
           <AutomationsTable
             automations={automationsWithTypes as IAutomation[]}
+            searchText={searchText}
           />
         )}
       </div>
