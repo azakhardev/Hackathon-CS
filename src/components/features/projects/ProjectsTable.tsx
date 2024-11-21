@@ -41,11 +41,13 @@ export default function ProjectsTable(props: IProps) {
                   url={`/projects/${p.job.SAS}`}
                   icon={<CheckIcon size={16} />}
                   text={`${name.toLowerCase()}'s JOBS`}
+                  tab="jobs"
                 />
                 <IconButton
-                  url={`/jobs?sas=${p.job.SAS}`}
+                  url={`/projects/${p.job.SAS}`}
                   icon={<WorkflowIcon size={16} />}
                   text={`${name.toLowerCase()}'s AUTOMATIONS`}
+                  tab="automations"
                 />
               </TableCell>
             </TableRow>
