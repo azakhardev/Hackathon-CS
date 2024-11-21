@@ -2,11 +2,15 @@ import CustomLineChart from "@/components/features/charts/CustomLineChart";
 import { IMetrics } from "../../../lib/types/IMetrics";
 import CustomAreaChart from "@/components/features/charts/CustomAreaChart";
 import {
+  CloudDownload,
+  CloudUpload,
   CpuIcon,
   Download,
   EthernetPort,
   EthernetPortIcon,
+  HardDriveDownloadIcon,
   HardDriveIcon,
+  HardDriveUploadIcon,
   MemoryStick,
   UploadIcon,
   WifiIcon,
@@ -171,24 +175,7 @@ export default function RunnerMetricsTab(props: IProps) {
         <ChartCard
           header={
             <div className="flex items-center gap-2">
-              <WifiIcon size={40} className="-mb-1" />
-              <span className="text-5xl font-bold">Receive</span>
-            </div>
-          }
-          content={
-            <CustomLineChart
-              chartConfig={NETWORK_IN_CONFIG}
-              chartData={incomingData}
-              dataKey="point"
-              lineType="linear"
-              showCursor={true}
-            />
-          }
-        />
-        <ChartCard
-          header={
-            <div className="flex items-center gap-2">
-              <WifiIcon size={40} className="-mb-1" />
+              <CloudUpload size={40} className="-mb-1" />
               <span className="text-5xl font-bold">Transmit</span>
             </div>
           }
@@ -202,6 +189,23 @@ export default function RunnerMetricsTab(props: IProps) {
             />
           }
         />
+        <ChartCard
+          header={
+            <div className="flex items-center gap-2">
+              <CloudDownload size={40} className="-mb-1" />
+              <span className="text-5xl font-bold">Receive</span>
+            </div>
+          }
+          content={
+            <CustomLineChart
+              chartConfig={NETWORK_IN_CONFIG}
+              chartData={incomingData}
+              dataKey="point"
+              lineType="linear"
+              showCursor={true}
+            />
+          }
+        />
       </div>
 
       <H2>Disk</H2>
@@ -209,7 +213,7 @@ export default function RunnerMetricsTab(props: IProps) {
         <ChartCard
           header={
             <div className="flex items-center gap-2">
-              <HardDriveIcon size={40} className="-mb-1" />
+              <HardDriveUploadIcon size={40} className="-mb-1" />
               <span className="text-5xl font-bold">Write</span>
             </div>
           }
@@ -226,7 +230,7 @@ export default function RunnerMetricsTab(props: IProps) {
         <ChartCard
           header={
             <div className="flex items-center gap-2">
-              <HardDriveIcon size={40} className="-mb-1" />
+              <HardDriveDownloadIcon size={40} className="-mb-1" />
               <span className="text-5xl font-bold">Read</span>
             </div>
           }
@@ -247,23 +251,6 @@ export default function RunnerMetricsTab(props: IProps) {
         <ChartCard
           header={
             <div className="flex items-center gap-2">
-              <Download size={40} className="-mb-1" />
-              <span className="text-5xl font-bold">Incoming Data</span>
-            </div>
-          }
-          content={
-            <CustomAreaChart
-              chartConfig={INCOMING_CHART_CONFIG}
-              chartData={incomingData}
-              dataKey="point"
-              lineType="natural"
-              showCursor={true}
-            />
-          }
-        />
-        <ChartCard
-          header={
-            <div className="flex items-center gap-2">
               <UploadIcon size={40} className="-mb-1" />
               <span className="text-5xl font-bold">Outgoing Data</span>
             </div>
@@ -275,6 +262,23 @@ export default function RunnerMetricsTab(props: IProps) {
               lineType="natural"
               showCursor={true}
               chartData={outgoingData}
+            />
+          }
+        />
+        <ChartCard
+          header={
+            <div className="flex items-center gap-2">
+              <Download size={40} className="-mb-1" />
+              <span className="text-5xl font-bold">Incoming Data</span>
+            </div>
+          }
+          content={
+            <CustomAreaChart
+              chartConfig={INCOMING_CHART_CONFIG}
+              chartData={incomingData}
+              dataKey="point"
+              lineType="natural"
+              showCursor={true}
             />
           }
         />
