@@ -27,7 +27,7 @@ interface IRAMMetrics {
 
 interface IIncomingMetrics {
   point: string;
-  recieve: number;
+  receive: number;
   write: number;
 }
 
@@ -56,8 +56,8 @@ const RAM_CHART_CONFIG = {
 };
 
 const NETWORK_IN_CONFIG = {
-  recieve: {
-    label: "Recieve MB/s ",
+  receive: {
+    label: "Receive MB/s ",
     color: "hsl(var(--chart-1))",
   },
 };
@@ -78,14 +78,14 @@ const DISK_WRITE_CONFIG = {
 
 const DISK_READ_CONFIG = {
   read: {
-    label: "Recieve MB/s ",
+    label: "Receive MB/s ",
     color: "hsl(var(--chart-2))",
   },
 };
 
 const INCOMING_CHART_CONFIG = {
-  recieve: {
-    label: "Recieve MB/s ",
+  receive: {
+    label: "Receive MB/s ",
     color: "hsl(var(--chart-1))",
   },
   write: {
@@ -165,7 +165,7 @@ export default function RunnerMetricsTab(props: IProps) {
         header={
           <div className="flex items-center gap-2">
             <WifiIcon size={40} className="-mb-1" />
-            <span className="text-5xl font-bold">Recieve</span>
+            <span className="text-5xl font-bold">Receive</span>
           </div>
         }
         content={
@@ -306,7 +306,7 @@ function createNetworkData(runnerMetrics: IMetrics) {
     runnerMetrics.metrics.forEach((m, i) => {
       incomingMetrics.push({
         point: (runnerMetrics.metrics.length - i).toString(),
-        recieve: Math.round(m.network_receive / 64),
+        receive: Math.round(m.network_receive / 64),
         write: Math.round(m.fs_writes / 64),
       });
     });
