@@ -26,7 +26,7 @@ export default function HomePage() {
           </div>
           <div>
             <H2x>Jobs</H2x>
-            {/* <JobsDataTable limit={limit} isNav={false} /> */}
+            <JobsDataTable limit={limit} isNav={false} />
             <MoreBtn to="/jobs" />
           </div>
         </div>
