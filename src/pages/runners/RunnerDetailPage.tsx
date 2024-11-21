@@ -14,7 +14,8 @@ import { CircleIcon } from "lucide-react";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import Throbber from "@/components/ui/Throbber";
-import DetailHeader from "@/components/DetailHeader";
+import DetailHeader, { DetailRunnerHeader } from "@/components/DetailHeader";
+import "@/components/features/runners/circle.css";
 
 export default function RunnerDetailPage() {
   const [limit, setLimit] = useState(5);
@@ -109,11 +110,17 @@ export default function RunnerDetailPage() {
     { value: "failed", content: <StateItem title="Failed" color="red" /> },
   ];
 
-  const title = runnerQuery.data?.id.slice(-5).toUpperCase() ?? "";
+  const title = runnerQuery.data?.id
+    ? runnerQuery.data.id.slice(-5).toUpperCase()
+    : "";
   return (
     <main>
       <div>
-        <DetailHeader section="Runner" title={title} />
+        <DetailRunnerHeader
+          section="Runner"
+          title={title}
+          state={runnerQuery.data?.state}
+        />
         <div className="w-full">
           <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">
