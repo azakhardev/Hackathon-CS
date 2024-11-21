@@ -44,20 +44,19 @@ export default function JobsDataTable({
       },
     ],
     queryFn: ({ pageParam = 1 }) => {
-      const buildRegex = /^runner-csas-dev-csas-linux-[a-zA-Z0-9]{5}$/;
-const deployDevRegex = /^runner-csas-ops-csas-linux-[a-zA-Z0-9]{5}$/;
+      const idRegex = "[a-zA-Z0-9]{5}";
 
-const filters = {
-  ...(searchState && searchState.trim() !== "" && { state_eq: searchState }),
-  ...(searchDate && {
-    timestamp_start: format(searchDate, "yyyy-MM-dd").toString(),
-  }),
-  ...(searchAction && searchAction.trim() !== "" && {
-    runner_like: searchAction, // Partial match with `csas-dev-csas-linux`
-    runner_ne: `${searchAction}-test`, // Exclude exact match with `csas-dev-csas-linux-test`
-  }),
-  ...(searchText && searchText.trim() !== "" && { id_start: searchText }),
-};
+      const filters = {
+        ...(searchState && searchState.trim() !== "" && { state_eq: searchState }),
+        ...(searchDate && {
+          timestamp_start: format(searchDate, "yyyy-MM-dd").toString(),
+        }),
+        ...(searchAction && searchAction.trim() !== "" && {
+          runner_like: `${searchAction}-${idRegex}`,
+        }),
+        ...(searchText && searchText.trim() !== "" && { id_start: searchText }),
+      };
+      
   
       return RunnerModel.getJobs(
         searchText,
