@@ -112,9 +112,9 @@ export default function RunnerDetailPage() {
     <main>
       <div>
         <div className="h-[10dvh] border-b-2 flex items-center">
-          <h2 className="text-[24px] ml-10 font-bold">{`Runner > ${
-            runnerQuery.data?.id?.split("-")[5]
-          }`}</h2>
+          <h2 className="text-[24px] ml-10 font-bold">{`Runner > ${runnerQuery.data?.id
+            ?.substring(runnerQuery.data?.id?.length - 5)
+            .toUpperCase()}`}</h2>
         </div>
         <div className="p-10 w-full h-[80dvh]">
           <Tabs defaultValue={defaultTab}>
