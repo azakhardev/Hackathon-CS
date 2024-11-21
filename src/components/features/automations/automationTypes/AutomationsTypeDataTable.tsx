@@ -37,7 +37,11 @@ export default function AutomationTypesDataTable({
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loader-wrap">
+        <div className="loading-spinner"></div>
+      </div>
+    );
   }
 
   if (!data) {

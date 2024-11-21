@@ -5,7 +5,7 @@ export default function AutomationTypesPage() {
   return (
     <>
       <H1>Automation Types</H1>
-      <AutomationTypesDataTable isNav={true} limit={-1} />
+      <AutomationTypesDataTable isNav={true} limit={9999} />
     </>
   );
 }

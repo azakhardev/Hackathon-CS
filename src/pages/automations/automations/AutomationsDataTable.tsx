@@ -8,18 +8,18 @@ import { IAutomationType } from "../../../lib/types/IAutomationType";
 import { IAutomation } from "@/lib/types/IAutomation";
 
 export default function AutomationsDataTable({
-  limit = -1,
-  isNav = true,
+  limit = 9999,
+  isNav = false,
 }: {
   limit: number | undefined;
-  isNav: boolean;
+  isNav: boolean | undefined;
 }) {
   const automationsQuery = useQuery({
     queryKey: ["automation"],
     queryFn: async () =>
       await AutomationModel.getAutomations(
         "",
-        undefined,
+        limit,
         undefined,
         "last_activity",
         "desc"
@@ -32,7 +32,13 @@ export default function AutomationsDataTable({
 
   if (automationsQuery.data && "error" in automationsQuery.data)
     <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />;
-  if (!automationsQuery.data && !automationsQuery.isLoading) {
+
+  if (
+    !automationsQuery.data &&
+    !automationsQuery.isLoading &&
+    !automationsTypesQuery.data &&
+    !automationsTypesQuery.isLoading
+  ) {
     const error: IErrorMessage = {
       code: "500",
       error: "Internal server error",
@@ -42,8 +48,13 @@ export default function AutomationsDataTable({
   }
 
   // Data joining logic
-  if (!automationsQuery.data || !automationsTypesQuery.data)
-    return <H1>Error at data joining</H1>;
+  if (!automationsQuery.data || !automationsTypesQuery.data) {
+    return (
+      <div className="loader-wrap">
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  }
 
   const automationsWithTypes = (automationsQuery.data as IAutomation[]).map(
     (automation: IAutomation) => {
@@ -56,15 +67,9 @@ export default function AutomationsDataTable({
     }
   );
 
-  console.log(limit, isNav);
   return (
     <>
-      {automationsQuery.isLoading && (
-        <div className="loader-wrap">
-          <div className="loading-spinner"></div>
-        </div>
-      )}
-      {!automationsQuery.isLoading && (
+      {!automationsQuery.isLoading && !automationsTypesQuery.isLoading && (
         <AutomationsTable automations={automationsWithTypes as IAutomation[]} />
       )}
     </>

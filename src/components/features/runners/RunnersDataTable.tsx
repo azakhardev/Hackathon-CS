@@ -44,7 +44,9 @@ export default function RunnersPage({
       const idRegex = "[a-zA-Z0-9]{5}";
       const filters = {
         ...(searchGroup &&
-          searchGroup.trim() !== "" && { id_like: `${searchGroup}-${idRegex}` }),
+          searchGroup.trim() !== "" && {
+            id_like: `${searchGroup}-${idRegex}`,
+          }),
         ...(searchOrganization &&
           searchOrganization.trim() !== "" && {
             organization_eq: searchOrganization,
@@ -133,12 +135,6 @@ export default function RunnersPage({
               <SelectItem value="csas-ops">csas-ops</SelectItem>
             </SelectContent>
           </Select>
-
-          {/* <SelectInput
-            placeholder="All States"
-            items={actionsVals}
-            onValueChange={(e) => setSearchAction(e)}
-          /> */}
           <SelectInput
             placeholder="All States"
             items={statesVals}

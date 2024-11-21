@@ -3,6 +3,8 @@ import Button_More from "@/components/ButtonLoadMore";
 import { Link } from "react-router-dom";
 import RunnersDataTable from "../../components/features/runners/RunnersDataTable";
 import AutomationTypesDataTable from "@/components/features/automations/automationTypes/AutomationsTypeDataTable";
+import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
+import JobsDataTable from "@/components/features/jobs/JobDataTable";
 
 export default function HomePage() {
   const limit = 3;
@@ -24,7 +26,6 @@ export default function HomePage() {
           </div>
           <div>
             <H2x>Jobs</H2x>
-            {/* jobs not have limit yet */}
             {/* <JobsDataTable limit={limit} isNav={false} /> */}
             <MoreBtn to="/jobs" />
           </div>
@@ -35,7 +36,7 @@ export default function HomePage() {
         <div className="flex flex-col gap-6">
           <div>
             <H2x>Automations</H2x>
-            {/* <AutomationsDataTable limit={limit} isNav={false} /> */}
+            <AutomationsDataTable limit={limit} isNav={false} />
             <MoreBtn to="/automations" />
           </div>
           <div>

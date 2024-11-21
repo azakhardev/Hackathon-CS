@@ -47,17 +47,18 @@ export default function JobsDataTable({
       const idRegex = "[a-zA-Z0-9]{5}";
 
       const filters = {
-        ...(searchState && searchState.trim() !== "" && { state_eq: searchState }),
+        ...(searchState &&
+          searchState.trim() !== "" && { state_eq: searchState }),
         ...(searchDate && {
           timestamp_start: format(searchDate, "yyyy-MM-dd").toString(),
         }),
-        ...(searchAction && searchAction.trim() !== "" && {
-          runner_like: `${searchAction}-${idRegex}`,
-        }),
+        ...(searchAction &&
+          searchAction.trim() !== "" && {
+            runner_like: `${searchAction}-${idRegex}`,
+          }),
         ...(searchText && searchText.trim() !== "" && { id_start: searchText }),
       };
-      
-  
+
       return RunnerModel.getJobs(
         searchText,
         limit,
@@ -78,8 +79,6 @@ export default function JobsDataTable({
       return firstPageParam - 1;
     },
   });
-  
-
   if (dataQuery.isError) return <p>Error: {dataQuery.error?.message}</p>;
 
   let allData: IJobs[] = [];
@@ -148,29 +147,34 @@ export default function JobsDataTable({
           onValueChange={(e) => setSearchState(e)}
         />
       </div>
-      <JobsTable jobs={allData} />
-      {isNav &&
-            dataQuery.data &&
-            (
-              dataQuery.data?.pages[
-                dataQuery.data.pageParams.length - 1
-              ] as IJobs[]
-            ).length >= limit && (
-        <div className="w-full mt-4">
-          <Button
-            variant="outline"
-            onClick={() => dataQuery.fetchNextPage()}
-            className="w-full"
-            disabled={!dataQuery.hasNextPage || dataQuery.isFetchingNextPage}
-          >
-            {dataQuery.isFetchingNextPage
-              ? "Loading more..."
-              : dataQuery.hasNextPage
-              ? "Load More"
-              : "Nothing more to load"}
-          </Button>
+
+      {dataQuery.isLoading && (
+        <div className="loader-wrap">
+          <div className="loading-spinner"></div>
         </div>
       )}
+
+      {!dataQuery.isLoading && <JobsTable jobs={allData} />}
+
+      {isNav &&
+        dataQuery.data &&
+        (dataQuery.data?.pages[dataQuery.data.pageParams.length - 1] as IJobs[])
+          .length >= limit && (
+          <div className="w-full mt-4">
+            <Button
+              variant="outline"
+              onClick={() => dataQuery.fetchNextPage()}
+              className="w-full"
+              disabled={!dataQuery.hasNextPage || dataQuery.isFetchingNextPage}
+            >
+              {dataQuery.isFetchingNextPage
+                ? "Loading more..."
+                : dataQuery.hasNextPage
+                ? "Load More"
+                : "Nothing more to load"}
+            </Button>
+          </div>
+        )}
     </>
   );
 }

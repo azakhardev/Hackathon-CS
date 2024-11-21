@@ -59,6 +59,9 @@ export default function MetricsPage() {
     },
   });
 
+  if (automationsQuery.error || jobsQuery.error || runnersQuery.error) {
+  }
+
   return (
     <>
       <H1>Metrics</H1>
@@ -97,18 +100,24 @@ export default function MetricsPage() {
         <li>
           Zobrazovat počet logů automatizací v určitém intervalu, tak by se
           mohla poznat jejich zatíženost
-        </li>        
+        </li>
       </ul>
-      {(jobsQuery.isLoading || automationsQuery.isLoading) && (
-        <div>Loading...</div>
+      {(jobsQuery.isLoading ||
+        automationsQuery.isLoading ||
+        runnersQuery.isLoading) && (
+        <div className="loader-wrap h-100%">
+          <div className="loading-spinner"></div>
+        </div>
       )}
-      {!jobsQuery.isLoading && !automationsQuery.isLoading && (
-        <MetricsPageCharts
-          automationsData={automationsQuery.data as IAutomation[]}
-          runnersData={runnersQuery.data as IRunner[]}
-          jobsData={jobsQuery.data as IJobs[]}
-        />
-      )}
+      {!jobsQuery.isLoading &&
+        !automationsQuery.isLoading &&
+        !runnersQuery.isLoading && (
+          <MetricsPageCharts
+            automationsData={automationsQuery.data as IAutomation[]}
+            runnersData={runnersQuery.data as IRunner[]}
+            jobsData={jobsQuery.data as IJobs[]}
+          />
+        )}
     </>
   );
 }
