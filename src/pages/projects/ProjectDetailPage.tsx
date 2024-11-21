@@ -234,7 +234,7 @@ export default function ProjectDetailPage() {
                   setSearchText={setSearchText}
                 />
 
-                <div className={cn("grid gap-2")}>
+                <div className={cn("")}>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button

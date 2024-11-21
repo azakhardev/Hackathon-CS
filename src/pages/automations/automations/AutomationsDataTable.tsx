@@ -11,6 +11,16 @@ import { useState } from "react";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { calculateTimeFilter } from "@/lib/utils/calculateTimeFilter";
 import { format } from "date-fns";
+import { DateRange } from "react-day-picker";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/Button";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
 
 export default function AutomationsDataTable({
   limit = 9999,
@@ -20,27 +30,46 @@ export default function AutomationsDataTable({
   isNav: boolean | undefined;
 }) {
   const [searchText, setSearchText] = useState("");
-  const [searchTime, setSearchTime] = useState("");
+  const [searchDate, setSearchDate] = useState<DateRange | undefined>({
+    from: undefined,
+    to: undefined,
+  });
 
   const automationsQuery = useQuery({
     queryKey: [
       "automation",
-      { searchText: searchText, searchTime: searchTime },
+      { searchText: searchText, searchDate: searchDate },
     ],
     queryFn: async () => {
-      const calculatedTime = searchTime
-        ? calculateTimeFilter(searchTime)
-        : null;
-
       const filters = {
-        ...(searchText && searchText.trim() !== "" && { id_like: searchText }),
-        ...(calculatedTime && {
-          last_activity_gte: format(calculatedTime, "yyyy-MM-dd'T'HH:mm:ss"),
-        }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to == undefined && {
+            last_activity_start: format(
+              searchDate.from,
+              "yyyy-MM-dd"
+            ).toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            last_activity_gte: format(
+              searchDate.from,
+              "yyyy-MM-dd'T'HH:mm:ss"
+            ).toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            last_activity_lte: format(
+              searchDate.to,
+              "yyyy-MM-dd'T'23:59:59"
+            ).toString(),
+          }),
       };
 
       return AutomationModel.getAutomations(
-        undefined,
+        searchText,
         limit,
         undefined,
         "timestamp",
@@ -97,16 +126,49 @@ export default function AutomationsDataTable({
   return (
     <>
       <div>
-        <div className="grid grid-cols-2">
+        <div className="flex justify-between gap-4 mb-4">
           <SearchBar
             searchText={searchText ?? ""}
             setSearchText={setSearchText}
           />
-          <SelectInput
-            placeholder="All time"
-            items={timeVals}
-            onValueChange={(e) => setSearchTime(e)}
-          />
+          <div className={cn("w-1/2")}>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="date"
+                  variant={"outline"}
+                  className={cn(
+                    "w-[300px] justify-start text-left font-normal",
+                    !searchDate && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon />
+                  {searchDate?.from ? (
+                    searchDate.to ? (
+                      <>
+                        {format(searchDate.from, "yyyy-MM-dd")} -{" "}
+                        {format(searchDate.to, "yyyy-MM-dd")}
+                      </>
+                    ) : (
+                      format(searchDate.from, "yyyy-MM-dd")
+                    )
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  initialFocus
+                  mode="range"
+                  defaultMonth={searchDate?.from}
+                  selected={searchDate}
+                  onSelect={setSearchDate}
+                  numberOfMonths={2}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
 
         {automationsQuery.isLoading || automationsTypesQuery.isLoading ? (
