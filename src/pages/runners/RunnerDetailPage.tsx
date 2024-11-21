@@ -62,16 +62,17 @@ export default function RunnerDetailPage() {
       const idRegex = "[a-zA-Z0-9]{5}";
 
       const filters = {
-        ...(runnerId && {runner_eq: runnerId}),
-        ...(searchText && searchText.trim() !== "" && { id_like: searchText }),
+        ...(runnerId && { runner_eq: runnerId }),
         ...(searchAction &&
-          searchAction.trim() !== "" && { runner_like: `${searchAction}-${idRegex}`, }),
+          searchAction.trim() !== "" && {
+            runner_like: `${searchAction}-${idRegex}`,
+          }),
         ...(searchState &&
           searchState.trim() !== "" && { state_eq: searchState }),
       };
 
       return RunnerModel.getJobs(
-        undefined,
+        searchText,
         99999999,
         undefined,
         "state",
@@ -150,7 +151,10 @@ export default function RunnerDetailPage() {
               ) : jobsQuery.data?.length === 0 ? (
                 <h3>Nebyly nalezeny žádné jobs</h3>
               ) : (
-                <JobsTable jobs={jobsQuery.data as IJobs[]} />
+                <JobsTable
+                  jobs={jobsQuery.data as IJobs[]}
+                  searchText={searchText}
+                />
               )}
             </TabsContent>
             <TabsContent value="metrics">
