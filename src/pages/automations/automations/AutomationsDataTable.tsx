@@ -8,8 +8,6 @@ import { IAutomation } from "@/lib/types/IAutomation";
 import Throbber from "@/components/ui/Throbber";
 import SearchBar from "@/components/ui/table/SearchBar";
 import { useState } from "react";
-import SelectInput, { ISelectItem } from "@/components/SelectInput";
-import { calculateTimeFilter } from "@/lib/utils/calculateTimeFilter";
 import { format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import {
@@ -24,7 +22,7 @@ import { Calendar } from "@/components/ui/calendar";
 
 export default function AutomationsDataTable({
   limit = 9999,
-  isNav = false,
+  isNav = true,
 }: {
   limit: number | undefined;
   isNav: boolean | undefined;
@@ -113,64 +111,65 @@ export default function AutomationsDataTable({
     );
   }
 
-  const timeVals: ISelectItem[] = [
-    { value: "2y", content: "2y" },
-    { value: "1y", content: "1y" },
-    { value: "6m", content: "6m" },
-    { value: "3m", content: "3m" },
-    { value: "1m", content: "1m" },
-    { value: "14d", content: "14d" },
-    { value: "7d", content: "7d" },
-  ];
+  // const timeVals: ISelectItem[] = [
+  //   { value: "2y", content: "2y" },
+  //   { value: "1y", content: "1y" },
+  //   { value: "6m", content: "6m" },
+  //   { value: "3m", content: "3m" },
+  //   { value: "1m", content: "1m" },
+  //   { value: "14d", content: "14d" },
+  //   { value: "7d", content: "7d" },
+  // ];
 
   return (
     <>
       <div>
-        <div className="flex justify-between gap-4 mb-4">
-          <SearchBar
-            searchText={searchText ?? ""}
-            setSearchText={setSearchText}
-          />
-          <div className={cn("w-1/2")}>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  id="date"
-                  variant={"outline"}
-                  className={cn(
-                    "w-[300px] justify-start text-left font-normal",
-                    !searchDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon />
-                  {searchDate?.from ? (
-                    searchDate.to ? (
-                      <>
-                        {format(searchDate.from, "yyyy-MM-dd")} -{" "}
-                        {format(searchDate.to, "yyyy-MM-dd")}
-                      </>
+        {isNav && (
+          <div className="flex justify-between gap-4 mb-4">
+            <SearchBar
+              searchText={searchText ?? ""}
+              setSearchText={setSearchText}
+            />
+            <div className={cn("w-1/2")}>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    id="date"
+                    variant={"outline"}
+                    className={cn(
+                      "w-[300px] justify-start text-left font-normal",
+                      !searchDate && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon />
+                    {searchDate?.from ? (
+                      searchDate.to ? (
+                        <>
+                          {format(searchDate.from, "yyyy-MM-dd")} -{" "}
+                          {format(searchDate.to, "yyyy-MM-dd")}
+                        </>
+                      ) : (
+                        format(searchDate.from, "yyyy-MM-dd")
+                      )
                     ) : (
-                      format(searchDate.from, "yyyy-MM-dd")
-                    )
-                  ) : (
-                    <span>Pick a date</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  initialFocus
-                  mode="range"
-                  defaultMonth={searchDate?.from}
-                  selected={searchDate}
-                  onSelect={setSearchDate}
-                  numberOfMonths={2}
-                />
-              </PopoverContent>
-            </Popover>
+                      <span>Pick a date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    initialFocus
+                    mode="range"
+                    defaultMonth={searchDate?.from}
+                    selected={searchDate}
+                    onSelect={setSearchDate}
+                    numberOfMonths={2}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
-        </div>
-
+        )}
         {automationsQuery.isLoading || automationsTypesQuery.isLoading ? (
           <Throbber />
         ) : (

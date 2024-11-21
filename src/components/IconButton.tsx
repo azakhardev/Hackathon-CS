@@ -6,19 +6,23 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { Link } from "react-router-dom";
-import { WorkflowIcon } from "lucide-react";
 import { buttonVariants } from "./ui/Button";
 
 interface IconButtonProps {
   url: string;
   icon: React.ReactNode;
   text: string;
-  tab?: string
+  tab?: string;
 }
 
-export default function IconButton({ url, icon, text, tab = ""}: IconButtonProps) {
+export default function IconButton({
+  url,
+  icon,
+  text,
+  tab = "",
+}: IconButtonProps) {
   const fullUrl = `${url}?tabs=${tab}`;
-  
+
   return (
     <TooltipProvider>
       <Tooltip>
