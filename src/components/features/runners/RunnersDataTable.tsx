@@ -10,7 +10,12 @@ import {
 } from "@/components/ui/select";
 
 import SearchBar from "@/components/ui/table/SearchBar";
-import { CircleIcon } from "lucide-react";
+import {
+  CircleIcon,
+  HammerIcon,
+  ServerIcon,
+  TestTubeDiagonalIcon,
+} from "lucide-react";
 import { IRunner } from "../../../lib/types/IRunner";
 import { Button } from "@/components/ui/Button";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
@@ -18,6 +23,12 @@ import { RunnerModel } from "@/lib/models/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import Throbber from "@/components/ui/Throbber";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function RunnersPage({
   limit2 = 25,
@@ -45,7 +56,9 @@ export default function RunnersPage({
       const idRegex = "[a-zA-Z0-9]{5}";
       const filters = {
         ...(searchAction &&
-          searchAction.trim() !== "" && { id_like: `${searchAction}-${idRegex}` }),
+          searchAction.trim() !== "" && {
+            id_like: `${searchAction}-${idRegex}`,
+          }),
         ...(searchState &&
           searchState.trim() !== "" && { state_eq: searchState }),
       };
@@ -95,10 +108,46 @@ export default function RunnersPage({
   });
 
   const actionsVals: ISelectItem[] = [
-    { value: "csas-dev-csas-linux", content: "Build runner" },
-    { value: "csas-dev-csas-linux-test", content: "Test runner" },
-    { value: "csas-ops-csas-linux", content: "Dev deployer" },
-    { value: "csas-ops-csas-linux-prod", content: "Prod deployer" },
+    {
+      value: "csas-dev-csas-linux",
+      content: (
+        <IconItem
+          title="Build"
+          icon={<HammerIcon size={15} />}
+          text="Build runners"
+        />
+      ),
+    },
+    {
+      value: "csas-dev-csas-linux-test",
+      content: (
+        <IconItem
+          title="Test"
+          icon={<TestTubeDiagonalIcon size={15} />}
+          text="Test runners"
+        />
+      ),
+    },
+    {
+      value: "csas-ops-csas-linux",
+      content: (
+        <IconItem
+          title="DEV"
+          icon={<ServerIcon size={15} />}
+          text="DEV deployers"
+        />
+      ),
+    },
+    {
+      value: "csas-ops-csas-linux-prod",
+      content: (
+        <IconItem
+          title="PROD"
+          icon={<ServerIcon size={15} className="stroke-log_red" />}
+          text="PROD deployers"
+        />
+      ),
+    },
   ];
   const statesVals: ISelectItem[] = [
     { value: "active", content: <StateItem title="Active" color="green" /> },
@@ -113,10 +162,10 @@ export default function RunnersPage({
         <div className="flex justify-between gap-4 mb-4">
           <SearchBar searchText={searchText} setSearchText={setSearchText} />
           <SelectInput
-          placeholder="All actions"
-          items={actionsVals}
-          onValueChange={(e) => setSearchAction(e)}
-        />
+            placeholder="All actions"
+            items={actionsVals}
+            onValueChange={(e) => setSearchAction(e)}
+          />
           <SelectInput
             placeholder="All States"
             items={statesVals}
@@ -169,5 +218,31 @@ function StateItem({ title, color }: { title: string; color: string }) {
       <CircleIcon size={8} className={`mr-2 fill-state_${color} stroke-none`} />
       <span>{title}</span>
     </div>
+  );
+}
+
+function IconItem({
+  title,
+  icon,
+  text,
+}: {
+  title?: string;
+  icon?: React.ReactNode;
+  text?: string;
+}) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>
+          <div className="flex flex-row items-center gap-2">
+            {icon}
+            <span>{title}</span>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>{text}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
