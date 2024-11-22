@@ -10,7 +10,7 @@ export class AutomationModel {
     limit?: number,
     page?: number,
     sort?: string,
-    order?: "asc" | "desc",
+    order?: string,
     filters?: Record<string, string>
   ): Promise<IAutomation[] | IErrorMessage> {
     const params = new URLSearchParams({
@@ -67,7 +67,7 @@ export class AutomationModel {
     limit?: number,
     page?: number,
     sort?: string,
-    order?: "asc" | "desc",
+    order?: string,
     filters?: Record<string, string>
   ): Promise<IAutomationType[] | IErrorMessage> {
     const params = new URLSearchParams({

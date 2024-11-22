@@ -14,14 +14,16 @@ export interface ISelectItem {
 export default function SelectInput({
   placeholder,
   items,
+  defaultValue,
   onValueChange,
 }: {
+  defaultValue: string
   placeholder: string;
   items: ISelectItem[];
   onValueChange: (value: string) => void;
 }) {
   return (
-    <Select onValueChange={onValueChange}>
+    <Select onValueChange={onValueChange} defaultValue={defaultValue}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

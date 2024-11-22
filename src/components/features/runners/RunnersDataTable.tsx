@@ -1,14 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import RunnersTable from "@/components/features/runners/RunnersTable";
 import { useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import SearchBar from "@/components/ui/table/SearchBar";
 import {
   CircleIcon,
@@ -43,6 +35,7 @@ export default function RunnersPage({
   const [searchAction, setSearchAction] = useState(" ");
   const [searchState, setSearchState] = useState(" ");
   const [limit, _] = useState(limit2);
+  const [sort, setSort] = useState({ column: "", direction: "asc"})
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -52,6 +45,7 @@ export default function RunnersPage({
         limit: limit,
         searchAction: searchAction,
         searchState: searchState,
+        sort: sort
       },
     ],
     queryFn: ({ pageParam = 1 }) => {
@@ -69,8 +63,8 @@ export default function RunnersPage({
         searchText,
         limit,
         pageParam,
-        "group",
-        "asc",
+        sort.column,
+        sort.direction,
         filters
       );
     },
@@ -108,6 +102,10 @@ export default function RunnersPage({
       console.error("Unexpected response format:", page);
     }
   });
+
+  const cols: ISelectItem[] = [
+    { value: 'id', content: 'Název'},
+  ];
 
   const actionsVals: ISelectItem[] = [
     {
@@ -168,16 +166,18 @@ export default function RunnersPage({
           right={
             <>
               <SelectInput
+                defaultValue={searchAction}
                 placeholder="All actions"
                 items={actionsVals}
                 onValueChange={(e) => setSearchAction(e)}
               />
               <SelectInput
+                defaultValue={searchState}
                 placeholder="All States"
                 items={statesVals}
                 onValueChange={(e) => setSearchState(e)}
               />
-              <ButtonSort />
+              <ButtonSort sort={sort} setSort={setSort} items={cols}/>
             </>
           }
         />

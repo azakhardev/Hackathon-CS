@@ -11,6 +11,7 @@ import { RunnerModel } from "@/lib/models/RunnerModel";
 import Throbber from "@/components/ui/Throbber";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
+import { ISelectItem } from "@/components/SelectInput";
 
 export default function ProjectsDataTable({
   limit = -1,
@@ -21,10 +22,10 @@ export default function ProjectsDataTable({
 }) {
   const [searchText, setSearchText] = useState("");
   const [displayLimit, setDisplayLimit] = useState(limit);
+  const [sort, setSort] = useState({ column: "", direction: "asc"})
 
-  // API
   const sasQuery = useQuery({
-    queryKey: ["sas"], //searchText - api cant filter, always same all response (cache with single key)
+    queryKey: ["sas"],
     queryFn: async () => await RunnerModel.getSAS(searchText),
   });
 
@@ -70,7 +71,12 @@ export default function ProjectsDataTable({
           projects.push(newProject);
         }
       });
-    projects.sort((a, b) => a.name.localeCompare(b.name));
+      sort.direction === 'asc' ? projects.sort((a, b) => a.name.localeCompare(b.name)) : projects.sort((a,b) => b.name.localeCompare(a.name))
+    
+  }
+
+  if (sort.column == 'id') {
+    projects.sort()
   }
 
   const totalProjects = projects.length;
@@ -86,6 +92,10 @@ export default function ProjectsDataTable({
     setDisplayLimit((prev) => prev + 10);
   };
 
+  const cols: ISelectItem[] = [
+    { value: 'id', content: 'Název'},
+  ];
+
   return (
     <div>
       {isNav && (
@@ -93,7 +103,7 @@ export default function ProjectsDataTable({
           left={
             <SearchBar searchText={searchText} setSearchText={setSearchText} />
           }
-          right={<ButtonSort />}
+          right={<ButtonSort sort={sort} setSort={setSort} items={cols}/>}
         />
       )}
       {(sasQuery.isLoading || jobsQuery.isLoading) && <Throbber />}

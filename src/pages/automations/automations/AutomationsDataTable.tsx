@@ -8,21 +8,12 @@ import { IAutomation } from "@/lib/types/IAutomation";
 import Throbber from "@/components/ui/Throbber";
 import SearchBar from "@/components/ui/table/SearchBar";
 import { useState } from "react";
-import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { format } from "date-fns";
 import { DateRange } from "react-day-picker";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/Button";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
+import { ISelectItem } from "@/components/SelectInput";
 
 export default function AutomationsDataTable({
   limit = 9999,
@@ -38,11 +29,12 @@ export default function AutomationsDataTable({
     from: undefined,
     to: undefined,
   });
+  const [sort, setSort] = useState({ column: "", direction: "asc"})
 
   const automationsQuery = useQuery({
     queryKey: [
       "automation",
-      { searchText: searchText, searchDate: searchDate },
+      { searchText: searchText, searchDate: searchDate, sort: sort },
     ],
     queryFn: async () => {
       const filters = {
@@ -77,15 +69,15 @@ export default function AutomationsDataTable({
         searchText,
         limit,
         undefined,
-        "timestamp",
-        "desc",
+        sort.column,
+        sort.direction,
         filters
       );
     },
   });
   const automationsTypesQuery = useQuery({
     queryKey: ["automationTypes"],
-    queryFn: async () => await AutomationModel.getAutomationTypes("", 9999),
+    queryFn: async () => await AutomationModel.getAutomationTypes(undefined, 999999),
   });
 
   if (automationsQuery.data && "error" in automationsQuery.data)
@@ -127,6 +119,9 @@ export default function AutomationsDataTable({
   //   { value: "14d", content: "14d" },
   //   { value: "7d", content: "7d" },
   // ];
+  const cols: ISelectItem[] = [
+    { value: 'id', content: 'Název'},
+  ];
 
   return (
     <>
@@ -145,7 +140,7 @@ export default function AutomationsDataTable({
                   dateRange={searchDate}
                   setSearchDate={setSearchDate}
                 />
-                <ButtonSort />
+                <ButtonSort sort={sort} setSort={setSort} items={cols}/>
               </>
             }
           />

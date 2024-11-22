@@ -13,16 +13,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 import SelectInput, { ISelectItem } from "./SelectInput";
 
-export function ButtonSort() {
+interface SortState {
+  column: string;
+  direction: string;
+}
+
+
+interface ButtonSortProps {
+  sort: SortState;
+  setSort: React.Dispatch<React.SetStateAction<SortState>>;
+  items: ISelectItem[];
+}
+
+export function ButtonSort({ sort, setSort, items }: ButtonSortProps) {
   const directions: ISelectItem[] = [
-    { value: "asc", content: <ArrowDownAZIcon /> },
+    { value: "asc", content: <ArrowDownAZIcon/> },
     { value: "desc", content: <ArrowDownZAIcon /> },
-  ];
-  const cols: ISelectItem[] = [
-    { value: "id", content: "Id" },
-    { value: "state", content: "State" },
-    { value: "runner_group", content: "Group" },
-    { value: "organization", content: "Organization" },
   ];
 
   return (
@@ -39,8 +45,9 @@ export function ButtonSort() {
               <span className="text-sm text-muted-foreground">Sort by</span>
               <SelectInput
                 placeholder=""
-                items={cols}
-                onValueChange={(e) => console.log(e)}
+                defaultValue={sort.column}
+                items={items}
+                onValueChange={(e) => setSort((prev) => ({ ...prev, column: e }))}
               />
             </div>
             <div className="flex flex-col gap-2 p-1">
@@ -49,8 +56,9 @@ export function ButtonSort() {
               </span>
               <SelectInput
                 placeholder=""
+                defaultValue={sort.direction}
                 items={directions}
-                onValueChange={(e) => console.log(e)}
+                onValueChange={(e) => setSort((prev) => ({ ...prev, direction: e }))}
               />
             </div>
           </div>

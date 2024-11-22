@@ -25,11 +25,11 @@ export class RunnerModel {
     limit?: number,
     page?: number,
     sort?: string,
-    order?: "asc" | "desc",
+    order?: string,
     filters?: Record<string, string>
   ): Promise<IRunner[] | IErrorMessage> {
     const params = new URLSearchParams({
-      id_like: search ? "runner-csas-dev-csas-linux-" + search || "runner-csas-dev-csas-linux-test-" + search || "runner-csas-ops-csas-linux-" + search || "runner-csas-ops-csas-linux-prod-" + search : "",
+      id_like: search ?? "",
       limit: limit?.toString() ? limit!.toString() : "99999",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
@@ -68,7 +68,7 @@ export class RunnerModel {
     limit?: number,
     page?: number,
     sort?: string,
-    order?: "asc" | "desc",
+    order?: string,
     filters?: Record<string, string>
   ): Promise<IJobs[] | IErrorMessage> {
     const params = new URLSearchParams({

@@ -5,7 +5,7 @@ import { IJobs } from "@/lib/types/IJobs";
 import { CircleIcon } from "lucide-react";
 import { useState } from "react";
 import SearchBar from "@/components/ui/table/SearchBar";
-import { format, subDays, subHours, subMinutes, subMonths } from "date-fns";
+import { format } from "date-fns";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import ErrorMessage from "@/components/ui/ErrorMessage";
@@ -30,10 +30,13 @@ export default function JobsDataTable({
   const [searchText, setSearchText] = useState("");
   const [searchAction, setSearchAction] = useState("");
   const [searchState, setSearchState] = useState("");
+  const [sort, setSort] = useState({ column: "", direction: "asc"})
   const [searchDate, setSearchDate] = useState<DateRange | undefined>({
     from: undefined,
     to: undefined,
   });
+
+  console.log(sort)
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -44,6 +47,7 @@ export default function JobsDataTable({
         searchAction: searchAction,
         searchDate: searchDate,
         searchState: searchState,
+        sort: sort
       },
     ],
     queryFn: ({ pageParam = 1 }) => {
@@ -86,8 +90,8 @@ export default function JobsDataTable({
         searchText,
         limit,
         pageParam,
-        "timestamp",
-        "asc",
+        sort.column,
+        sort.direction,
         filters
       );
     },
@@ -140,6 +144,11 @@ export default function JobsDataTable({
     { value: "failed", content: <StateItem title="Failed" color="red" /> },
   ];
 
+  const cols: ISelectItem[] = [
+    { value: 'id', content: 'Název'},
+    { value: 'timestamp', content: 'Čas'}
+  ];
+
   return (
     <>
       {isNav && (
@@ -158,15 +167,17 @@ export default function JobsDataTable({
               />
               <SelectInput
                 placeholder="All actions"
+                defaultValue={searchAction}
                 items={actionsVals}
                 onValueChange={(e) => setSearchAction(e)}
               />
               <SelectInput
                 placeholder="All States"
+                defaultValue={searchState}
                 items={statesVals}
                 onValueChange={(e) => setSearchState(e)}
               />
-              <ButtonSort />{" "}
+              <ButtonSort sort={sort} setSort={setSort} items={cols}/>{" "}
             </>
           }
         />
