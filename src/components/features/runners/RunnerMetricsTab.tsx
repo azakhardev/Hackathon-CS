@@ -336,6 +336,6 @@ function createFsData(runnerMetrics: IMetrics) {
   return outgoingMetrics;
 }
 
-function H3({ children }: { children: React.ReactNode }) {
+export function H3({ children }: { children: React.ReactNode }) {
   return <h3 className="mb-4 text-4xl font-bold text-center">{children}</h3>;
 }

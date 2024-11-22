@@ -20,6 +20,7 @@ import Throbber from "@/components/ui/Throbber";
 import H2 from "@/components/ui/typography/H2";
 import RunnersDataTable from "@/components/features/runners/RunnersDataTable";
 import { MoreBtn } from "../home/HomePage";
+import { Separator } from "@radix-ui/react-dropdown-menu";
 
 export default function MetricsPage() {
   const [dateStart, setDateStart] = useState<Date>();
@@ -88,63 +89,58 @@ export default function MetricsPage() {
   return (
     <>
       <H1>Metrics</H1>
-      <div>
-        <H2>Global</H2>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant={"outline"}
-              className={cn(
-                "w-[280px] justify-start text-left font-normal",
-                !dateStart && "text-muted-foreground"
-              )}
-            >
-              <CalendarIcon />
-              {dateStart ? (
-                format(dateStart, "yyyy-MM-dd")
-              ) : (
-                <span>Pick a date</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar
-              mode="single"
-              selected={dateStart}
-              onSelect={setDateStart}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-        {/* <ul>
-        <li>Stránka s grafy </li>
-        <li>
-          Kolik runnerů je v jakém stavu + Např. u kterých runnerů dochází
-          uložiště (jen alert) a když tak to dělat nemusíme
-        </li>
-        <li>
-          Zobrazovat počet logů automatizací v určitém intervalu, tak by se
-          mohla poznat jejich zatíženost
-        </li>
-      </ul> */}
-        {(jobsQuery.isLoading ||
-          automationsQuery.isLoading ||
-          runnersQuery.isLoading) && <Throbber />}
-        {!jobsQuery.isLoading &&
-          !automationsQuery.isLoading &&
-          !runnersQuery.isLoading && (
-            <MetricsPageCharts
-              automationsData={automationsQuery.data as IAutomation[]}
-              runnersData={runnersQuery.data as IRunner[]}
-              jobsData={jobsQuery.data as IJobs[]}
-            />
-          )}
-      </div>
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
+            <div className="flex justify-between">
+              <H2>Total</H2>
 
-      <div>
-        <H2>Runners</H2>
-        <RunnersDataTable limit2={3} isNav={false} />
-        <MoreBtn to="/runners" />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[200px] justify-start text-left font-normal",
+                      !dateStart && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon />
+                    {dateStart ? (
+                      format(dateStart, "yyyy-MM-dd")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={dateStart}
+                    onSelect={setDateStart}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            {(jobsQuery.isLoading ||
+              automationsQuery.isLoading ||
+              runnersQuery.isLoading) && <Throbber />}
+            {!jobsQuery.isLoading &&
+              !automationsQuery.isLoading &&
+              !runnersQuery.isLoading && (
+                <MetricsPageCharts
+                  automationsData={automationsQuery.data as IAutomation[]}
+                  runnersData={runnersQuery.data as IRunner[]}
+                  jobsData={jobsQuery.data as IJobs[]}
+                />
+              )}
+          </div>
+        </div>
+        <div>
+          <H2>Runners</H2>
+          <RunnersDataTable limit2={3} isNav={false} />
+          <MoreBtn to="/runners" />
+        </div>
       </div>
     </>
   );

@@ -4,7 +4,8 @@ import H2 from "@/components/ui/typography/H2";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { IJobs } from "@/lib/types/IJobs";
 import { IRunner } from "@/lib/types/IRunner";
-import ChartCard from "../charts/ChartCard";
+import ChartCard, { ChartCard2 } from "../charts/ChartCard";
+import { CheckIcon, Workflow } from "lucide-react";
 
 class JobState {
   organization: string;
@@ -73,8 +74,10 @@ export default function MetricsPageCharts(props: IProps) {
     <>
       <div className="flex flex-row gap-4">
         {props.automationsData.length > 0 ? (
-          <ChartCard
-            header={<H2>Automations</H2>}
+          <ChartCard2
+            header="Automations"
+            description="Current state of automations"
+            icon={<Workflow />}
             content={
               <CustomPieChart
                 chartConfig={AUTOMATIONS_STATE_CHART_CONFIG}
@@ -87,8 +90,10 @@ export default function MetricsPageCharts(props: IProps) {
           <p>No data for this date range</p>
         )}
         {props.jobsData.length > 0 ? (
-          <ChartCard
-            header={<H2>Jobs</H2>}
+          <ChartCard2
+            header="Jobs"
+            description="Current state of automations"
+            icon={<CheckIcon />}
             content={
               <CustomBarChart
                 chartConfig={JOBS_CHART_CONFIG}
