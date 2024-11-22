@@ -25,9 +25,11 @@ import DateRangePicker from "@/components/ui/table/DateRangePicker";
 export default function AutomationsDataTable({
   limit = 9999,
   isNav = true,
+  id,
 }: {
   limit: number | undefined;
   isNav: boolean | undefined;
+  id?: string;
 }) {
   const [searchText, setSearchText] = useState("");
   const [searchDate, setSearchDate] = useState<DateRange | undefined>({
@@ -66,6 +68,7 @@ export default function AutomationsDataTable({
               "yyyy-MM-dd'T'23:59:59"
             ).toString(),
           }),
+        ...(id && id.trim() && { sas_eq: id }),
       };
 
       return AutomationModel.getAutomations(

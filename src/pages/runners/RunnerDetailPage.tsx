@@ -3,44 +3,20 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
-import { Button } from "@/components/ui/Button";
-import JobsTable from "../../components/features/jobs/JobsTable";
-import { IJobs } from "../../lib/types/IJobs";
 import RunnerMetricsTab from "../../components/features/runners/RunnerMetricsTab";
 import { IMetrics } from "../../lib/types/IMetrics";
-import SearchBar from "@/components/ui/table/SearchBar";
-import { CircleIcon } from "lucide-react";
-import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
-import Throbber from "@/components/ui/Throbber";
 import DetailHeader, { DetailRunnerHeader } from "@/components/DetailHeader";
 import "@/components/features/runners/circle.css";
+import JobsDataTable from "@/components/features/jobs/JobDataTable";
 
 export default function RunnerDetailPage() {
-  const [limit, setLimit] = useState(5);
-  const [searchText, setSearchText] = useState("");
-  const [searchAction, setSearchAction] = useState("");
-  const [searchState, setSearchState] = useState("");
-
   const params = useParams();
   const runnerId = params.id;
 
   const [searchParams] = useSearchParams();
   const tabParam = searchParams.get("tabs"); // Extract the `tabs` parameter
   const defaultTab = tabParam || "jobs";
-
-  function StateItem({ title, color }: { title: string; color: string }) {
-    return (
-      <div className="flex flex-row items-center">
-        <CircleIcon
-          size={8}
-          className={`mr-2 fill-state_${color} stroke-none`}
-        />
-        <span>{title}</span>
-      </div>
-    );
-  }
 
   const runnerQuery = useQuery({
     queryKey: ["runner", runnerId],
@@ -52,39 +28,6 @@ export default function RunnerDetailPage() {
     queryFn: async () => await RunnerModel.getMetricsByRunner(runnerId!),
   });
 
-  const jobsQuery = useQuery({
-    queryKey: [
-      "jobsQuery",
-      {
-        search: searchText,
-        searchAction: searchAction,
-        searchState: searchState,
-      },
-    ],
-    queryFn: async () => {
-      const idRegex = "[a-zA-Z0-9]{5}";
-
-      const filters = {
-        ...(runnerId && { runner_eq: runnerId }),
-        ...(searchAction &&
-          searchAction.trim() !== "" && {
-            runner_like: `${searchAction}-${idRegex}`,
-          }),
-        ...(searchState &&
-          searchState.trim() !== "" && { state_eq: searchState }),
-      };
-
-      return RunnerModel.getJobs(
-        searchText,
-        99999999,
-        undefined,
-        "state",
-        "asc",
-        filters
-      );
-    },
-  });
-
   if (runnerQuery.data && "error" in runnerQuery.data) {
     return <ErrorMessage errorMessage={runnerQuery.data as IErrorMessage} />;
   }
@@ -92,23 +35,6 @@ export default function RunnerDetailPage() {
   if (metricsQuery.data && "error" in metricsQuery.data) {
     return <ErrorMessage errorMessage={metricsQuery.data as IErrorMessage} />;
   }
-
-  if (jobsQuery.data && "error" in jobsQuery.data) {
-    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
-  }
-
-  const actionsVals: ISelectItem[] = [
-    { value: "csas-dev-csas-linux", content: "Building" },
-    { value: "csas-dev-csas-linux-test", content: "Testing" },
-    { value: "csas-ops-csas-linux", content: "Deploying to dev" },
-    { value: "csas-ops-csas-linux-test", content: "Deploying to prod" },
-  ];
-  const statesVals: ISelectItem[] = [
-    { value: "success", content: <StateItem title="Success" color="green" /> },
-    { value: "queued", content: <StateItem title="Queued" color="gray" /> }, // prettier-ignore
-    { value: "in_progress", content: <StateItem title="In Progress" color="yellow" /> }, // prettier-ignore
-    { value: "failed", content: <StateItem title="Failed" color="red" /> },
-  ];
 
   const title = runnerQuery.data?.id
     ? runnerQuery.data.id.slice(-5).toUpperCase()
@@ -132,57 +58,13 @@ export default function RunnerDetailPage() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="jobs">
-              <div className="flex justify-between gap-2 mb-4">
-                <SearchBar
-                  searchText={searchText ?? ""}
-                  setSearchText={setSearchText}
-                />
-                <div className="flex flex-1 gap-2">
-                  <SelectInput
-                    placeholder="All actions"
-                    items={actionsVals}
-                    onValueChange={(e) => setSearchAction(e)}
-                  />
-                  <SelectInput
-                    placeholder="All States"
-                    items={statesVals}
-                    onValueChange={(e) => setSearchState(e)}
-                  />
-                </div>
-              </div>
-              {runnerQuery.isLoading ||
-              metricsQuery.isLoading ||
-              jobsQuery.isLoading ? (
-                <Throbber />
-              ) : jobsQuery.data?.length === 0 ? (
-                <h3>Nebyly nalezeny žádné jobs</h3>
-              ) : (
-                <JobsTable
-                  jobs={jobsQuery.data as IJobs[]}
-                  searchText={searchText}
-                />
-              )}
+              <JobsDataTable limit={25} isNav={true} runnerId={runnerId} />
             </TabsContent>
             <TabsContent value="metrics">
               <RunnerMetricsTab runnerMetrics={metricsQuery.data as IMetrics} />
             </TabsContent>
           </Tabs>
         </div>
-      </div>
-      <div className="m-4">
-        <Button
-          className={
-            jobsQuery.data && jobsQuery.data.length >= limit
-              ? "w-full"
-              : "hidden"
-          }
-          variant="outline"
-          onClick={() => {
-            setLimit((oldLim) => oldLim + 5);
-          }}
-        >
-          Load more
-        </Button>
       </div>
     </main>
   );
