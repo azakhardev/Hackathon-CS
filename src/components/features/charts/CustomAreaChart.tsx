@@ -16,7 +16,7 @@ interface IProps {
   dataKey: string;
   lineType: CurveType;
   showCursor: boolean;
-  tooltipText: string;
+  tooltipText?: string;
 }
 export default function CustomAreaChart(props: IProps) {
   return (

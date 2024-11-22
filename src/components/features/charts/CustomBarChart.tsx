@@ -11,7 +11,7 @@ interface IProps {
   chartData: any[];
   dataKey: string;
   showCursor: boolean;
-  stacked: boolean;
+  stacked?: boolean;
 }
 
 export default function CustomBarChart(props: IProps) {
