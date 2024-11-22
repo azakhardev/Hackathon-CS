@@ -6,17 +6,12 @@ import {
   CloudUpload,
   CpuIcon,
   Download,
-  EthernetPort,
-  EthernetPortIcon,
   HardDriveDownloadIcon,
-  HardDriveIcon,
   HardDriveUploadIcon,
   MemoryStick,
   UploadIcon,
-  WifiIcon,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import ChartCard from "@/components/features/charts/ChartCard";
 import H2 from "@/components/ui/typography/H2";
 
@@ -48,64 +43,64 @@ interface IProps {
 
 const CPU_CHART_CONFIG = {
   percents: {
-    label: "% ",
+    label: "CPU",
     color: "hsl(var(--chart-4))",
   },
 };
 
 const RAM_CHART_CONFIG = {
   memory: {
-    label: "GB ",
+    label: "RAM",
     color: "hsl(var(--chart-5))",
   },
 };
 
 const NETWORK_IN_CONFIG = {
   receive: {
-    label: "Receive MB/s ",
+    label: "Receives",
     color: "hsl(var(--chart-1))",
   },
 };
 
 const NETWORK_OUT_CONFIG = {
   transmit: {
-    label: "Transmit MB/s ",
+    label: "Transmits",
     color: "hsl(var(--chart-1))",
   },
 };
 
 const DISK_WRITE_CONFIG = {
   write: {
-    label: "Writes MB/s ",
+    label: "Writes",
     color: "hsl(var(--chart-2))",
   },
 };
 
 const DISK_READ_CONFIG = {
   read: {
-    label: "Receive MB/s ",
+    label: "Receives",
     color: "hsl(var(--chart-2))",
   },
 };
 
 const INCOMING_CHART_CONFIG = {
   receive: {
-    label: "Receive MB/s ",
+    label: "Receives",
     color: "hsl(var(--chart-1))",
   },
   write: {
-    label: "Writes MB/s",
+    label: "Writes",
     color: "hsl(var(--chart-2))",
   },
 };
 
 const OUTGOING_CHART_CONFIG = {
   read: {
-    label: "Reads MB/s ",
+    label: "Reads",
     color: "hsl(var(--chart-2))",
   },
   transmit: {
-    label: "Transmits MB/s ",
+    label: "Transmits",
     color: "hsl(var(--chart-1))",
   },
 };
@@ -148,6 +143,7 @@ export default function RunnerMetricsTab(props: IProps) {
               dataKey="point"
               lineType="step"
               showCursor={true}
+              tooltipText=" %"
             />
           }
         />
@@ -165,6 +161,7 @@ export default function RunnerMetricsTab(props: IProps) {
               lineType="step"
               showCursor={true}
               chartData={ramData}
+              tooltipText="GB"
             />
           }
         />
@@ -186,6 +183,7 @@ export default function RunnerMetricsTab(props: IProps) {
               dataKey="point"
               lineType="linear"
               showCursor={true}
+              tooltipText="MB/s"
             />
           }
         />
@@ -203,6 +201,7 @@ export default function RunnerMetricsTab(props: IProps) {
               dataKey="point"
               lineType="linear"
               showCursor={true}
+              tooltipText="MB/s"
             />
           }
         />
@@ -224,6 +223,7 @@ export default function RunnerMetricsTab(props: IProps) {
               dataKey="point"
               lineType="linear"
               showCursor={true}
+              tooltipText="MB/s"
             />
           }
         />
@@ -241,6 +241,7 @@ export default function RunnerMetricsTab(props: IProps) {
               dataKey="point"
               lineType="linear"
               showCursor={true}
+              tooltipText="MB/s"
             />
           }
         />
@@ -262,6 +263,7 @@ export default function RunnerMetricsTab(props: IProps) {
               lineType="natural"
               showCursor={true}
               chartData={outgoingData}
+              tooltipText="MB/s"
             />
           }
         />
@@ -279,6 +281,7 @@ export default function RunnerMetricsTab(props: IProps) {
               dataKey="point"
               lineType="natural"
               showCursor={true}
+              tooltipText="MB/s"
             />
           }
         />
@@ -309,7 +312,7 @@ function createRamData(runnerMetrics: IMetrics) {
     runnerMetrics.metrics.forEach((m, i) => {
       ramMetrics.push({
         point: (runnerMetrics.metrics.length - i).toString(),
-        memory: m.memory / 1073741824,
+        memory: Math.round((m.memory / 1073741824) * 100) / 100,
       });
     });
   }

@@ -15,6 +15,7 @@ interface IProps {
   dataKey: string;
   lineType: CurveType;
   showCursor: boolean;
+  tooltipText: string;
 }
 export default function CustomAreaChart(props: IProps) {
   return (
@@ -39,6 +40,18 @@ export default function CustomAreaChart(props: IProps) {
         <ChartTooltip
           cursor={props.showCursor}
           content={<ChartTooltipContent hideLabel indicator="dot" />}
+          formatter={(value, name) => (
+            <div className="flex min-w-[130px] items-center text-xs text-muted-foreground">
+              {props.chartConfig[name as keyof typeof props.chartConfig]
+                ?.label || name}
+              <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
+                {value}
+                <span className="font-normal text-muted-foreground">
+                  {props.tooltipText}
+                </span>
+              </div>
+            </div>
+          )}
         />
 
         {Object.keys(props.chartConfig).map((p, i) => (

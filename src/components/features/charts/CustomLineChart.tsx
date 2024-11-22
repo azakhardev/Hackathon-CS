@@ -15,6 +15,7 @@ interface IProps {
   dataKey: string;
   lineType: CurveType;
   showCursor: boolean;
+  tooltipText: string;
 }
 export default function CustomLineChart(props: IProps) {
   return (
@@ -37,6 +38,18 @@ export default function CustomLineChart(props: IProps) {
         />
         <YAxis axisLine={true} />
         <ChartTooltip
+          formatter={(value, name) => (
+            <div className="flex min-w-[130px] items-center text-xs text-muted-foreground">
+              {props.chartConfig[name as keyof typeof props.chartConfig]
+                ?.label || name}
+              <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
+                {value}
+                <span className="font-normal text-muted-foreground">
+                  {props.tooltipText}
+                </span>
+              </div>
+            </div>
+          )}
           cursor={props.showCursor}
           content={<ChartTooltipContent hideLabel />}
         />
@@ -46,7 +59,7 @@ export default function CustomLineChart(props: IProps) {
             key={i}
             dataKey={p}
             type={props.lineType}
-            dot={props.lineType === "linear"}
+            dot={false}
             stroke={props.chartConfig[p].color}
             strokeWidth={2}
             radius={8}
