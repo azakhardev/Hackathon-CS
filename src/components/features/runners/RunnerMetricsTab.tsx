@@ -205,7 +205,7 @@ export default function RunnerMetricsTab(props: IProps) {
           <ChartCard2
             header="Write"
             description="Write speed in MB/s"
-            icon={<HardDriveUploadIcon />}
+            icon={<HardDriveDownloadIcon />}
             content={
               <CustomLineChart
                 chartConfig={DISK_WRITE_CONFIG}
@@ -220,7 +220,7 @@ export default function RunnerMetricsTab(props: IProps) {
           <ChartCard2
             header="Read"
             description="Read speed in MB/s"
-            icon={<HardDriveDownloadIcon />}
+            icon={<HardDriveUploadIcon />}
             content={
               <CustomLineChart
                 chartConfig={DISK_READ_CONFIG}

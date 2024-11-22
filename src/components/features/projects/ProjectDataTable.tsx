@@ -70,6 +70,7 @@ export default function ProjectsDataTable({
           projects.push(newProject);
         }
       });
+    projects.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   const totalProjects = projects.length;

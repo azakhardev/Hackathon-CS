@@ -7,7 +7,7 @@ import { IRunner } from "@/lib/types/IRunner";
 import ChartCard, { ChartCard2 } from "../charts/ChartCard";
 import { CheckIcon, Workflow } from "lucide-react";
 
-class JobState {
+class MetricsStats {
   organization: string;
   success: number = 0;
   failed: number = 0;
@@ -59,7 +59,25 @@ const JOBS_CHART_CONFIG = {
   },
 };
 
-const RUNNERS_CHART_CONFIG = {};
+const RUNNERS_CHART_CONFIG = {
+  success: {
+    label: "Succeed Jobs",
+    color: "hsl(var(--state_green))",
+  },
+  in_progress: {
+    label: "Jobs in Progression",
+    color: "hsl(var(--state_yellow))",
+  },
+
+  failed: {
+    label: "Failed Jobs",
+    color: "hsl(var(--state_red))",
+  },
+  queued: {
+    label: "Queued Jobs",
+    color: "hsl(var(--state_gray))",
+  },
+};
 
 interface IProps {
   automationsData: IAutomation[];
@@ -70,6 +88,8 @@ interface IProps {
 export default function MetricsPageCharts(props: IProps) {
   const aStateData = createAutomationsStateData(props.automationsData);
   const jStateData = createJobsData(props.jobsData);
+  const rStateData = createRunnersData(props.runnersData);
+  console.log(rStateData);
   return (
     <>
       <div className="flex flex-row gap-4">
@@ -100,6 +120,7 @@ export default function MetricsPageCharts(props: IProps) {
                 chartData={jStateData}
                 showCursor={false}
                 dataKey="organization"
+                stacked={true}
               />
             }
           />
@@ -116,17 +137,17 @@ function createAutomationsStateData(data: IAutomation[]) {
   const initialA = {
     state: "initial",
     count: 0,
-    fill: "hsl(var(--chart-1))",
+    fill: "hsl(var(--state_gray))",
   };
   const progressA = {
     state: "in_progress",
     count: 0,
-    fill: "hsl(var(--chart-3))",
+    fill: "hsl(var(--state_yellow)",
   };
   const finishedA = {
     state: "finished",
     count: 0,
-    fill: "hsl(var(--chart-2))",
+    fill: "hsl(var(--state_green))",
   };
 
   data.forEach((a) => {
@@ -145,12 +166,12 @@ function createAutomationsStateData(data: IAutomation[]) {
 
 function createJobsData(data: IJobs[]) {
   let newData: object[] = [];
-  const dev = new JobState("Dev");
-  const ops = new JobState("Ops");
+  const dev = new MetricsStats("Dev");
+  const ops = new MetricsStats("Ops");
 
   data.forEach((j) => {
-    if (j.organization.includes("csas-dev")) countJobStats(dev, j.state);
-    else countJobStats(ops, j.state);
+    if (j.organization.includes("csas-dev")) countJobsStats(dev, j.state);
+    else countJobsStats(ops, j.state);
   });
 
   newData.push(dev, ops);
@@ -158,7 +179,7 @@ function createJobsData(data: IJobs[]) {
   return newData;
 }
 
-function countJobStats(job: JobState, state: string) {
+function countJobsStats(job: MetricsStats, state: string) {
   if (state === "success") job.success++;
   else if (state === "failed") job.failed++;
   else if (state === "queued") job.queued++;
@@ -167,4 +188,17 @@ function countJobStats(job: JobState, state: string) {
   }
 }
 
-function createRunnersData() {}
+function createRunnersData(data: IRunner[]) {
+  let newData: object[] = [];
+  const dev = new MetricsStats("Dev");
+  const ops = new MetricsStats("Ops");
+
+  data.forEach((r) => {
+    if (r.organization.includes("csas-dev")) countJobsStats(dev, r.state);
+    else countJobsStats(ops, r.state);
+  });
+
+  newData.push(dev, ops);
+
+  return newData;
+}
