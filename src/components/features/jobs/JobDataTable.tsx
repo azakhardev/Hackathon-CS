@@ -15,6 +15,10 @@ import { DateRange } from "react-day-picker";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
+import {
+  actionsVals,
+  states2Vals,
+} from "@/components/ui/table/Select_items_list";
 
 export default function JobsDataTable({
   limit = 25,
@@ -130,20 +134,6 @@ export default function JobsDataTable({
     }
   });
 
-  const actionsVals: ISelectItem[] = [
-    { value: "csas-dev-csas-linux", content: "Building" },
-    { value: "csas-dev-csas-linux-test", content: "Testing" },
-    { value: "csas-ops-csas-linux", content: "Deploying to dev" },
-    { value: "csas-ops-csas-linux-prod", content: "Deploying to prod" },
-  ];
-
-  const statesVals: ISelectItem[] = [
-    { value: "success", content: <StateItem title="Success" color="green" /> },
-    { value: "queued", content: <StateItem title="Queued" color="gray" /> }, // prettier-ignore
-    { value: "in_progress", content: <StateItem title="In Progress" color="yellow" /> }, // prettier-ignore
-    { value: "failed", content: <StateItem title="Failed" color="red" /> },
-  ];
-
   const cols: ISelectItem[] = [
     { value: "id", content: "Name" },
     { value: "timestamp", content: "Time" },
@@ -174,7 +164,7 @@ export default function JobsDataTable({
               <SelectInput
                 placeholder="All States"
                 defaultValue={searchState}
-                items={statesVals}
+                items={states2Vals}
                 onValueChange={(e) => setSearchState(e)}
               />
               <ButtonSort sort={sort} setSort={setSort} items={cols} />{" "}

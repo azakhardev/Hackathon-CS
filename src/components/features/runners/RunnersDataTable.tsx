@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/tooltip";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
+import { IconItem, statesVals } from "@/components/ui/table/Select_items_list";
 
 export default function RunnersPage({
   limit2 = 25,
@@ -147,12 +148,6 @@ export default function RunnersPage({
       ),
     },
   ];
-  const statesVals: ISelectItem[] = [
-    { value: "active", content: <StateItem title="Active" color="green" /> },
-    { value: "offline", content: <StateItem title="Offline" color="gray" /> }, // prettier-ignore
-    { value: "idle", content: <StateItem title="Idle" color="yellow" />  }, // prettier-ignore
-    { value: "failed", content: <StateItem title="Failed" color="red" /> },
-  ];
 
   return (
     <>
@@ -216,40 +211,5 @@ export default function RunnersPage({
         </div>
       )}
     </>
-  );
-}
-
-function StateItem({ title, color }: { title: string; color: string }) {
-  return (
-    <div className="flex flex-row items-center">
-      <CircleIcon size={8} className={`mr-2 fill-state_${color} stroke-none`} />
-      <span>{title}</span>
-    </div>
-  );
-}
-
-function IconItem({
-  title,
-  icon,
-  text,
-}: {
-  title?: string;
-  icon?: React.ReactNode;
-  text?: string;
-}) {
-  return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>
-          <div className="flex flex-row items-center gap-2">
-            {icon}
-            <span>{title}</span>
-          </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{text}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
   );
 }
