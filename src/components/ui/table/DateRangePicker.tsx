@@ -13,11 +13,13 @@ import format from "date-fns/format";
 interface IDateRangePicker {
   dateRange: DateRange | undefined;
   setSearchDate: (dateRange: DateRange | undefined) => void;
+  className?: string;
 }
 
 export default function DateRangePicker({
   dateRange,
   setSearchDate: setSearchDate,
+  className,
 }: IDateRangePicker) {
   return (
     <Popover>
@@ -26,7 +28,7 @@ export default function DateRangePicker({
           id="date"
           variant={"outline"}
           className={cn(
-            "w-[210px] justify-start text-left font-normal",
+            `max-w-[210px] justify-start text-left font-normal ${className}`,
             !dateRange && "text-muted-foreground"
           )}
         >
