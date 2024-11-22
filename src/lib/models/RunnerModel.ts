@@ -29,7 +29,7 @@ export class RunnerModel {
     filters?: Record<string, string>
   ): Promise<IRunner[] | IErrorMessage> {
     const params = new URLSearchParams({
-      id_like: search ?? "",
+      search: search ?? "",
       limit: limit?.toString() ? limit!.toString() : "99999",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
@@ -41,7 +41,9 @@ export class RunnerModel {
         params.append(key, value);
       });
     }
-    
+
+    console.log(`${api_url}/runners?${params}`);
+
     const response = await fetch(`${api_url}/runners?${params}`, {
       method: "GET",
       headers: {
