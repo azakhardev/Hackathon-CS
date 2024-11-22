@@ -29,6 +29,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
+import { CommandDialogDemo } from "./command";
 
 export function AppSidebar() {
   return (
@@ -41,6 +42,7 @@ export function AppSidebar() {
         <SidebarMenuItems title="Ops" items={itemsOps} />
       </SidebarContent>
       <SidebarFooter>
+        <CommandDialogDemo />
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
