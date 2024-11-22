@@ -13,7 +13,7 @@ interface IProps {
   chartConfig: IChartConfig;
   chartData: any[];
   innerRadius: number;
-  label: boolean;
+  label?: boolean;
 }
 
 export default function CustomPieChart(props: IProps) {

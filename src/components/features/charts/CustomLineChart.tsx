@@ -15,7 +15,7 @@ interface IProps {
   dataKey: string;
   lineType: CurveType;
   showCursor: boolean;
-  tooltipText: string;
+  tooltipText?: string;
 }
 export default function CustomLineChart(props: IProps) {
   return (

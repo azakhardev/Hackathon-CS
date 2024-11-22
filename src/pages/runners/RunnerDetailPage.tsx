@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RunnerMetricsTab from "../../components/features/runners/RunnerMetricsTab";
 import { IMetrics } from "../../lib/types/IMetrics";
 import { RunnerModel } from "@/lib/models/RunnerModel";
-import DetailHeader, { DetailRunnerHeader } from "@/components/DetailHeader";
+import { DetailRunnerHeader } from "@/components/DetailHeader";
 import "@/components/features/runners/circle.css";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
 
@@ -36,16 +36,19 @@ export default function RunnerDetailPage() {
     return <ErrorMessage errorMessage={metricsQuery.data as IErrorMessage} />;
   }
 
-  const title = runnerQuery.data?.id
-    ? runnerQuery.data.id.slice(-5).toUpperCase()
-    : "";
+  const title =
+    runnerQuery.data && !("error" in runnerQuery.data) && runnerQuery.data.id
+      ? runnerQuery.data.id.slice(-5).toUpperCase()
+      : "";
   return (
     <main>
       <div>
         <DetailRunnerHeader
           section="Runner"
           title={title}
-          state={runnerQuery.data?.state}
+          state={
+            "state" in runnerQuery.data ? runnerQuery.data.state : undefined
+          }
         />
         <div className="w-full">
           <Tabs defaultValue={defaultTab}>
