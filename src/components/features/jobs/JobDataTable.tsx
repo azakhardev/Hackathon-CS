@@ -21,6 +21,7 @@ import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import Throbber from "@/components/ui/Throbber";
 import { calculateTimeFilter } from "@/lib/utils/calculateTimeFilter";
+import { DateRange } from "react-day-picker";
 
 export default function JobsDataTable({
   limit = 25,
@@ -32,8 +33,10 @@ export default function JobsDataTable({
   const [searchText, setSearchText] = useState("");
   const [searchAction, setSearchAction] = useState("");
   const [searchState, setSearchState] = useState("");
-  const [searchDate, setSearchDate] = useState<Date>();
-  const [searchTime, setSearchTime] = useState("");
+  const [searchDate, setSearchDate] = useState<DateRange | undefined>({
+    from: undefined,
+    to: undefined,
+  });
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -44,30 +47,40 @@ export default function JobsDataTable({
         searchAction: searchAction,
         searchDate: searchDate,
         searchState: searchState,
-        searchTime: searchTime,
       },
     ],
     queryFn: ({ pageParam = 1 }) => {
       const idRegex = "[a-zA-Z0-9]{5}";
 
-      const calculatedTime = searchTime
-        ? calculateTimeFilter(searchTime)
-        : null;
-
       const filters = {
         ...(searchState &&
           searchState.trim() !== "" && { state_eq: searchState }),
-        ...(searchDate && {
-          timestamp_start: format(searchDate, "yyyy-MM-dd").toString(),
-        }),
         ...(searchAction &&
           searchAction.trim() !== "" && {
             runner_like: `${searchAction}-${idRegex}`,
           }),
-        ...(searchText && searchText.trim() !== "" && { id_start: searchText }),
-        ...(calculatedTime && {
-          timestamp_gte: format(calculatedTime, "yyyy-MM-dd'T'HH:mm:ss"),
-        }),
+
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to == undefined && {
+            timestamp_start: format(searchDate.from, "yyyy-MM-dd").toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            timestamp_gte: format(
+              searchDate.from,
+              "yyyy-MM-dd'T'HH:mm:ss"
+            ).toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            timestamp_lte: format(
+              searchDate.to,
+              "yyyy-MM-dd'T'23:59:59"
+            ).toString(),
+          }),
       };
 
       return RunnerModel.getJobs(
@@ -151,34 +164,40 @@ export default function JobsDataTable({
             <Popover>
               <PopoverTrigger asChild>
                 <Button
+                  id="date"
                   variant={"outline"}
                   className={cn(
-                    "w-[280px] justify-start text-left font-normal",
+                    "w-[210px] justify-start text-left font-normal",
                     !searchDate && "text-muted-foreground"
                   )}
                 >
                   <CalendarIcon />
-                  {searchDate ? (
-                    format(searchDate, "yyyy-MM-dd")
+                  {searchDate?.from ? (
+                    searchDate.to ? (
+                      <>
+                        {format(searchDate.from, "yyyy-MM-dd")} -{" "}
+                        {format(searchDate.to, "yyyy-MM-dd")}
+                      </>
+                    ) : (
+                      format(searchDate.from, "yyyy-MM-dd")
+                    )
                   ) : (
                     <span>Pick a date</span>
                   )}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
+              <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
-                  mode="single"
+                  initialFocus
+                  mode="range"
+                  defaultMonth={searchDate?.from}
                   selected={searchDate}
                   onSelect={setSearchDate}
-                  initialFocus
+                  numberOfMonths={2}
                 />
               </PopoverContent>
             </Popover>
-            {/* <SelectInput
-            placeholder="All time"
-            items={timeVals}
-            onValueChange={(e) => setSearchTime(e)}
-          /> */}
+
             <SelectInput
               placeholder="All actions"
               items={actionsVals}
