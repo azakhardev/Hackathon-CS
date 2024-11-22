@@ -29,8 +29,8 @@ export class RunnerModel {
     filters?: Record<string, string>
   ): Promise<IRunner[] | IErrorMessage> {
     const params = new URLSearchParams({
-      search: search ?? "",
-      limit: limit?.toString() ? limit!.toString() : "-1",
+      id_like: search ? "runner-csas-dev-csas-linux-" + search || "runner-csas-dev-csas-linux-test-" + search || "runner-csas-ops-csas-linux-" + search || "runner-csas-ops-csas-linux-prod-" + search : "",
+      limit: limit?.toString() ? limit!.toString() : "99999",
       page: page?.toString() ?? "1",
       sort: sort ?? "",
       order: order ?? "asc",
