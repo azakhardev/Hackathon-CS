@@ -29,7 +29,7 @@ export default function AutomationsDataTable({
     from: undefined,
     to: undefined,
   });
-  const [sort, setSort] = useState({ column: "", direction: "asc"})
+  const [sort, setSort] = useState({ column: "", direction: "asc" });
 
   const automationsQuery = useQuery({
     queryKey: [
@@ -77,7 +77,8 @@ export default function AutomationsDataTable({
   });
   const automationsTypesQuery = useQuery({
     queryKey: ["automationTypes"],
-    queryFn: async () => await AutomationModel.getAutomationTypes(undefined, 999999),
+    queryFn: async () =>
+      await AutomationModel.getAutomationTypes(undefined, 9999),
   });
 
   if (automationsQuery.data && "error" in automationsQuery.data)
@@ -119,9 +120,7 @@ export default function AutomationsDataTable({
   //   { value: "14d", content: "14d" },
   //   { value: "7d", content: "7d" },
   // ];
-  const cols: ISelectItem[] = [
-    { value: 'id', content: 'Název'},
-  ];
+  const cols: ISelectItem[] = [{ value: "id", content: "ID" }];
 
   return (
     <>
@@ -140,7 +139,7 @@ export default function AutomationsDataTable({
                   dateRange={searchDate}
                   setSearchDate={setSearchDate}
                 />
-                <ButtonSort sort={sort} setSort={setSort} items={cols}/>
+                <ButtonSort sort={sort} setSort={setSort} items={cols} />
               </>
             }
           />

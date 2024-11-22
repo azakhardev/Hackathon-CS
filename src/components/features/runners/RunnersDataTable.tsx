@@ -35,7 +35,7 @@ export default function RunnersPage({
   const [searchAction, setSearchAction] = useState(" ");
   const [searchState, setSearchState] = useState(" ");
   const [limit, _] = useState(limit2);
-  const [sort, setSort] = useState({ column: "", direction: "asc"})
+  const [sort, setSort] = useState({ column: "", direction: "asc" });
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -45,7 +45,7 @@ export default function RunnersPage({
         limit: limit,
         searchAction: searchAction,
         searchState: searchState,
-        sort: sort
+        sort: sort,
       },
     ],
     queryFn: ({ pageParam = 1 }) => {
@@ -103,9 +103,7 @@ export default function RunnersPage({
     }
   });
 
-  const cols: ISelectItem[] = [
-    { value: 'id', content: 'Název'},
-  ];
+  const cols: ISelectItem[] = [{ value: "id", content: "Name" }];
 
   const actionsVals: ISelectItem[] = [
     {
@@ -177,7 +175,7 @@ export default function RunnersPage({
                 items={statesVals}
                 onValueChange={(e) => setSearchState(e)}
               />
-              <ButtonSort sort={sort} setSort={setSort} items={cols}/>
+              <ButtonSort sort={sort} setSort={setSort} items={cols} />
             </>
           }
         />

@@ -30,13 +30,13 @@ export default function JobsDataTable({
   const [searchText, setSearchText] = useState("");
   const [searchAction, setSearchAction] = useState("");
   const [searchState, setSearchState] = useState("");
-  const [sort, setSort] = useState({ column: "", direction: "asc"})
+  const [sort, setSort] = useState({ column: "", direction: "asc" });
   const [searchDate, setSearchDate] = useState<DateRange | undefined>({
     from: undefined,
     to: undefined,
   });
 
-  console.log(sort)
+  console.log(sort);
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -47,7 +47,7 @@ export default function JobsDataTable({
         searchAction: searchAction,
         searchDate: searchDate,
         searchState: searchState,
-        sort: sort
+        sort: sort,
       },
     ],
     queryFn: ({ pageParam = 1 }) => {
@@ -145,8 +145,8 @@ export default function JobsDataTable({
   ];
 
   const cols: ISelectItem[] = [
-    { value: 'id', content: 'Název'},
-    { value: 'timestamp', content: 'Čas'}
+    { value: "id", content: "Name" },
+    { value: "timestamp", content: "Time" },
   ];
 
   return (
@@ -177,7 +177,7 @@ export default function JobsDataTable({
                 items={statesVals}
                 onValueChange={(e) => setSearchState(e)}
               />
-              <ButtonSort sort={sort} setSort={setSort} items={cols}/>{" "}
+              <ButtonSort sort={sort} setSort={setSort} items={cols} />{" "}
             </>
           }
         />

@@ -22,7 +22,7 @@ export default function ProjectsDataTable({
 }) {
   const [searchText, setSearchText] = useState("");
   const [displayLimit, setDisplayLimit] = useState(limit);
-  const [sort, setSort] = useState({ column: "", direction: "asc"})
+  const [sort, setSort] = useState({ column: "", direction: "asc" });
 
   const sasQuery = useQuery({
     queryKey: ["sas"],
@@ -71,12 +71,13 @@ export default function ProjectsDataTable({
           projects.push(newProject);
         }
       });
-      sort.direction === 'asc' ? projects.sort((a, b) => a.name.localeCompare(b.name)) : projects.sort((a,b) => b.name.localeCompare(a.name))
-    
+    sort.direction === "asc"
+      ? projects.sort((a, b) => a.name.localeCompare(b.name))
+      : projects.sort((a, b) => b.name.localeCompare(a.name));
   }
 
-  if (sort.column == 'id') {
-    projects.sort()
+  if (sort.column === "id") {
+    projects.sort();
   }
 
   const totalProjects = projects.length;
@@ -86,15 +87,12 @@ export default function ProjectsDataTable({
   } else {
     displayedProjects = projects.slice(0, displayLimit);
   }
-  console.log(totalProjects, displayLimit);
 
   const handleLoadMore = () => {
     setDisplayLimit((prev) => prev + 10);
   };
 
-  const cols: ISelectItem[] = [
-    { value: 'id', content: 'Název'},
-  ];
+  const cols: ISelectItem[] = [{ value: "id", content: "Name" }];
 
   return (
     <div>
@@ -103,7 +101,7 @@ export default function ProjectsDataTable({
           left={
             <SearchBar searchText={searchText} setSearchText={setSearchText} />
           }
-          right={<ButtonSort sort={sort} setSort={setSort} items={cols}/>}
+          right={<ButtonSort sort={sort} setSort={setSort} items={cols} />}
         />
       )}
       {(sasQuery.isLoading || jobsQuery.isLoading) && <Throbber />}
