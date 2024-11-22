@@ -17,9 +17,13 @@ import DateRangePicker from "@/components/ui/table/DateRangePicker";
 export default function JobsDataTable({
   limit = 25,
   isNav = true,
+  id,
+  runnerId,
 }: {
   limit: number | undefined;
   isNav: boolean;
+  id?: string;
+  runnerId?: string;
 }) {
   const [searchText, setSearchText] = useState("");
   const [searchAction, setSearchAction] = useState("");
@@ -72,6 +76,8 @@ export default function JobsDataTable({
               "yyyy-MM-dd'T'23:59:59"
             ).toString(),
           }),
+        ...(id && id.trim() != "" && { SAS_eq: id }),
+        ...(runnerId && runnerId.trim() != "" && { runner_eq: runnerId }),
       };
 
       return RunnerModel.getJobs(

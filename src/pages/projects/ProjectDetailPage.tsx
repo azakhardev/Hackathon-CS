@@ -1,205 +1,18 @@
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import ErrorMessage from "@/components/ui/ErrorMessage";
-import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import JobsTable from "../../components/features/jobs/JobsTable";
-import { useState } from "react";
-import format from "date-fns/format";
-import SearchBar from "@/components/ui/table/SearchBar";
 import { CircleIcon } from "lucide-react";
-import { RunnerModel } from "@/lib/models/RunnerModel";
-import Throbber from "@/components/ui/Throbber";
 import { useSearchParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ISelectItem } from "@/components/SelectInput";
-import SelectInput from "@/components/SelectInput";
-import { AutomationModel } from "@/lib/models/AutomationModel";
-import { IAutomation } from "@/lib/types/IAutomation";
-import { IAutomationType } from "@/lib/types/IAutomationType";
-import AutomationsTable from "../automations/automations/AutomationsTable";
-import { DateRange } from "react-day-picker";
 import DetailHeader from "@/components/DetailHeader";
-import DateRangePicker from "@/components/ui/table/DateRangePicker";
+import JobsDataTable from "@/components/features/jobs/JobDataTable";
+import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
 
 export default function ProjectDetailPage() {
   const params = useParams();
   const id = params.id;
 
-  const [searchText, setSearchText] = useState("");
-  const [searchState, setSearchState] = useState("");
-  const [searchAction, setSearchAction] = useState("");
-  const [automationsSearchText, setAutomationsSearchText] = useState("");
-  const [searchDate, setSearchDate] = useState<DateRange | undefined>({
-    from: undefined,
-    to: undefined,
-  });
-  const [searchDateAutomations, setSearchDateAutomations] = useState<
-    DateRange | undefined
-  >({
-    from: undefined,
-    to: undefined,
-  });
-
   const [searchParams] = useSearchParams();
   const tabParam = searchParams.get("tabs");
   const defaultTab = tabParam || "jobs";
-
-  console.log(searchState);
-
-  const jobsQuery = useQuery({
-    queryKey: [
-      "jobsSAS",
-      id,
-      searchText,
-      searchDate,
-      searchState,
-      searchAction,
-    ],
-    queryFn: async () => {
-      const idRegex = "[a-zA-Z0-9]{5}";
-
-      const filters = {
-        ...(id && { SAS_eq: id }),
-        ...(searchDate &&
-          searchDate.from &&
-          searchDate.to == undefined && {
-            timestamp_start: format(searchDate.from, "yyyy-MM-dd").toString(),
-          }),
-        ...(searchDate &&
-          searchDate.from &&
-          searchDate.to && {
-            timestamp_gte: format(
-              searchDate.from,
-              "yyyy-MM-dd'T'HH:mm:ss"
-            ).toString(),
-          }),
-        ...(searchDate &&
-          searchDate.from &&
-          searchDate.to && {
-            timestamp_lte: format(
-              searchDate.to,
-              "yyyy-MM-dd'T'23:59:59"
-            ).toString(),
-          }),
-        ...(searchState &&
-          searchState.trim() != "" && { state_eq: searchState }),
-        ...(searchAction &&
-          searchAction.trim() != "" && {
-            runner_like:
-              searchAction != "none"
-                ? `${searchAction}-${idRegex}`
-                : searchAction,
-          }),
-      };
-
-      return RunnerModel.getJobs(
-        searchText,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        filters
-      );
-    },
-  });
-
-  const automationsQuery = useQuery({
-    queryKey: [
-      "automationsSAS",
-      id,
-      automationsSearchText,
-      searchDateAutomations,
-    ],
-    queryFn: async () => {
-      const filters = {
-        ...(id && { sas_eq: id }),
-        ...(searchDateAutomations &&
-          searchDateAutomations.from &&
-          searchDateAutomations.to == undefined && {
-            last_activity_start: format(
-              searchDateAutomations.from,
-              "yyyy-MM-dd"
-            ).toString(),
-          }),
-        ...(searchDateAutomations &&
-          searchDateAutomations.from &&
-          searchDateAutomations.to && {
-            last_activity_gte: format(
-              searchDateAutomations.from,
-              "yyyy-MM-dd'T'HH:mm:ss"
-            ).toString(),
-          }),
-        ...(searchDateAutomations &&
-          searchDateAutomations.from &&
-          searchDateAutomations.to && {
-            last_activity_lte: format(
-              searchDateAutomations.to,
-              "yyyy-MM-dd'T'23:59:59"
-            ).toString(),
-          }),
-      };
-
-      return AutomationModel.getAutomations(
-        automationsSearchText,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        filters
-      );
-    },
-  });
-
-  const automationsTypesQuery = useQuery({
-    queryKey: ["automationTypes"],
-    queryFn: async () => await AutomationModel.getAutomationTypes("", 9999),
-  });
-
-  if (jobsQuery.data && "error" in jobsQuery.data)
-    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
-
-  if (automationsQuery.data && "error" in automationsQuery.data)
-    return (
-      <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />
-    );
-
-  if (automationsQuery.error || automationsTypesQuery.error) {
-    const error: IErrorMessage = {
-      code: "500",
-      error: "Internal server error",
-      message: "Server responded with undefined",
-    };
-    return <ErrorMessage errorMessage={error}></ErrorMessage>;
-  }
-
-  // Data joining logic
-  let automationsWithTypes = null;
-
-  if (!(automationsQuery.isLoading || automationsTypesQuery.isLoading)) {
-    automationsWithTypes = (automationsQuery.data as IAutomation[]).map(
-      (automation: IAutomation) => {
-        const matchedType = Array.isArray(automationsTypesQuery.data)
-          ? automationsTypesQuery.data.find(
-              (type: IAutomationType) => type.type === automation.type
-            )
-          : null;
-        return { ...automation, type_object: matchedType || null };
-      }
-    );
-  }
-
-  const actionsVals: ISelectItem[] = [
-    { value: "csas-dev-csas-linux", content: "Building" },
-    { value: "csas-dev-csas-linux-test", content: "Testing" },
-    { value: "csas-ops-csas-linux", content: "Deploying to dev" },
-    { value: "csas-ops-csas-linux-test", content: "Deploying to prod" },
-  ];
-  const statesVals: ISelectItem[] = [
-    { value: "success", content: <StateItem title="Success" color="green" /> },
-    { value: "queued", content: <StateItem title="Queued" color="gray" /> }, // prettier-ignore
-    { value: "in_progress", content: <StateItem title="In Progress" color="yellow" /> }, // prettier-ignore
-    { value: "failed", content: <StateItem title="Failed" color="red" /> },
-  ];
 
   const title = id?.split("_")[1] ?? "";
   return (
@@ -217,60 +30,10 @@ export default function ProjectDetailPage() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="jobs">
-              <div className="flex justify-between gap-2 mb-4">
-                <SearchBar
-                  searchText={searchText ?? ""}
-                  setSearchText={setSearchText}
-                />
-                <div className="flex flex-1 gap-2">
-                  <DateRangePicker
-                    dateRange={searchDate}
-                    setSearchDate={setSearchDate}
-                  />
-                  <SelectInput
-                    placeholder="All actions"
-                    items={actionsVals}
-                    onValueChange={(e) => setSearchAction(e)}
-                  />
-                  <SelectInput
-                    placeholder="All States"
-                    items={statesVals}
-                    onValueChange={(e) => setSearchState(e)}
-                  />
-                </div>
-              </div>
-              {jobsQuery.isLoading ? (
-                <Throbber />
-              ) : jobsQuery.data?.length === 0 ? (
-                <h3>Nebyly nalezeny žádné jobs</h3>
-              ) : (
-                <JobsTable jobs={jobsQuery.data} searchText={searchText} />
-              )}
+              <JobsDataTable limit={25} isNav={true} id={id} />
             </TabsContent>
             <TabsContent value="automations">
-              <div className="flex justify-between gap-2 mb-4">
-                <SearchBar
-                  searchText={automationsSearchText ?? ""}
-                  setSearchText={setAutomationsSearchText}
-                />
-                <div className="flex justify-end flex-1 gap-2">
-                  <DateRangePicker
-                    dateRange={searchDateAutomations}
-                    setSearchDate={setSearchDateAutomations}
-                  />
-                </div>
-              </div>
-
-              {automationsQuery.isLoading || automationsTypesQuery.isLoading ? (
-                <Throbber />
-              ) : jobsQuery.data?.length === 0 ? (
-                <h3>Nebyly nalezeny žádné automatizace</h3>
-              ) : (
-                <AutomationsTable
-                  automations={automationsWithTypes as IAutomation[]}
-                  searchText={automationsSearchText}
-                />
-              )}
+              <AutomationsDataTable limit={25} isNav={true} id={id} />
             </TabsContent>
           </Tabs>
         </div>
