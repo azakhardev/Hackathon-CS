@@ -13,6 +13,7 @@ import MetricsPage from "./pages/metrics/MetricsPage";
 import ProjectsPage from "./pages/projects/ProjectsPage";
 import AutomationTypesPage from "./pages/automations/automationTypes/AutomationTypesPage";
 import ProjectDetailPage from "./pages/projects/ProjectDetailPage";
+import { LoginPage } from "./pages/login/LoginPage";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
     path: "/test",
     element: <Layout />,
     children: [{ path: "chart", element: <ChartTest /> }],
+  },
+  {
+    path: "/login",
+    children: [{ index: true, element: <LoginPage /> }],
   },
 ]);
 
