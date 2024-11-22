@@ -17,8 +17,8 @@ export default function SelectInput({
   defaultValue,
   onValueChange,
 }: {
-  defaultValue: string
-  placeholder: string;
+  defaultValue: string;
+  placeholder?: string;
   items: ISelectItem[];
   onValueChange: (value: string) => void;
 }) {

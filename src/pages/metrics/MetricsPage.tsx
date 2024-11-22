@@ -2,13 +2,7 @@ import H1 from "@/components/ui/typography/H1";
 import { useQuery } from "@tanstack/react-query";
 import { AutomationModel } from "../../lib/models/AutomationModel";
 import { useState } from "react";
-import { Popover, PopoverTrigger } from "@radix-ui/react-popover";
-import { Button } from "@/components/ui/Button";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
-import { PopoverContent } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import MetricsPageCharts from "../../components/features/metrics/MetricsPageCharts";
 import { IJobs } from "../../lib/types/IJobs";
 import { IRunner } from "../../lib/types/IRunner";
@@ -20,7 +14,6 @@ import Throbber from "@/components/ui/Throbber";
 import H2 from "@/components/ui/typography/H2";
 import RunnersDataTable from "@/components/features/runners/RunnersDataTable";
 import { MoreBtn } from "../home/HomePage";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import {
   Select,
   SelectContent,
@@ -30,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { DateRange } from "react-day-picker";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
+import SelectInput, { ISelectItem } from "@/components/SelectInput";
 
 export default function MetricsPage() {
   const [searchDate, setSearchDate] = useState<DateRange | undefined>({
@@ -153,6 +147,12 @@ export default function MetricsPage() {
 
   console.log(searchOrg);
 
+  let items: ISelectItem[] = [
+    { value: " ", content: "All" },
+    { value: "csas-dev", content: "Dev" },
+    { value: "csas-ops", content: "Ops" },
+  ];
+
   return (
     <>
       <H1>Metrics</H1>
@@ -161,41 +161,15 @@ export default function MetricsPage() {
           <div className="flex flex-col gap-2">
             <div className="flex justify-between">
               <H2>Total</H2>
-
-              {/* <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-[200px] justify-start text-left font-normal",
-                      !searchDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon />
-                    {searchDate ? (
-                      format(searchDate.from as Date, "yyyy-MM-dd")
-                    ) : (
-                      <span>Pick a date</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0"> */}
               <DateRangePicker
                 dateRange={searchDate}
                 setSearchDate={setSearchDate}
               />
-              <Select onValueChange={(e) => setSearchOrg(e)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="All" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value=" ">All</SelectItem>
-                  <SelectItem value="csas-dev">Dev</SelectItem>
-                  <SelectItem value="csas-ops">Ops</SelectItem>
-                </SelectContent>
-              </Select>
-              {/* </PopoverContent>
-              </Popover> */}
+              <SelectInput
+                defaultValue=" "
+                items={items}
+                onValueChange={(e) => setSearchOrg(e)}
+              />
             </div>
             {(jobsQuery.isLoading ||
               automationsQuery.isLoading ||

@@ -1,23 +1,21 @@
-import CustomBarChart from "@/components/features/charts/CustomBarChart";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
-import H2 from "@/components/ui/typography/H2";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { IJobs } from "@/lib/types/IJobs";
 import { IRunner } from "@/lib/types/IRunner";
 import ChartCard, { ChartCard2 } from "../charts/ChartCard";
-import { BikeIcon, CheckIcon, Rocket, Workflow } from "lucide-react";
+import { CheckIcon, ContainerIcon, Workflow } from "lucide-react";
 
-class MetricsStats {
-  organization: string;
-  success: number = 0;
-  failed: number = 0;
-  queued: number = 0;
-  in_progress: number = 0;
+// class MetricsStats {
+//   organization: string;
+//   success: number = 0;
+//   failed: number = 0;
+//   queued: number = 0;
+//   in_progress: number = 0;
 
-  constructor(org: string) {
-    this.organization = org;
-  }
-}
+//   constructor(org: string) {
+//     this.organization = org;
+//   }
+// }
 
 class PieStats {
   state: string;
@@ -115,7 +113,7 @@ export default function MetricsPageCharts(props: IProps) {
         <ChartCard2
           header="Runners"
           description="Current state of runners"
-          icon={<Rocket />}
+          icon={<ContainerIcon />}
           content={
             props.jobsData.length > 0 ? (
               <CustomPieChart
