@@ -10,23 +10,7 @@ export default function DetailHeader({
 }) {
   return (
     <div>
-      <div className="flex items-center gap-3">
-        <H2>{section}</H2>
-        <div className="flex items-center justify-center h-full">
-          <div
-            style={
-              { "--circle-color": "hsl(35, 100%, 52%)" } as React.CSSProperties
-            }
-            className="circle-static"
-          ></div>
-          <div
-            style={
-              { "--circle-color": "hsl(35, 100%, 52%)" } as React.CSSProperties
-            }
-            className="circle-pulse"
-          ></div>
-        </div>
-      </div>
+      <H2>{section}</H2>
       <H1>{title}</H1>
     </div>
   );

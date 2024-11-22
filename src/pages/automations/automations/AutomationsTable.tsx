@@ -17,6 +17,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { IAutomation } from "@/lib/types/IAutomation";
+import { Badge, badgeVariants } from "@/components/ui/badge";
 
 interface IProps {
   automations: IAutomation[] | IErrorMessage;
@@ -125,6 +126,13 @@ export default function AutomationsTable(props: IProps) {
                 </TableCell>
                 <TableCell>
                   <Badge_timeAgo date={new Date(a.last_activity)} />
+                  <span> on </span>
+                  <Link
+                    to={`/projects/${a.sas}`}
+                    className={badgeVariants({ variant: "outline" })}
+                  >
+                    {a.sas.slice(4)}
+                  </Link>
                 </TableCell>
                 <TableCell className="text-end">
                   <Link

@@ -111,7 +111,7 @@ export default function MetricsPage() {
           />
         </PopoverContent>
       </Popover>
-      <ul>
+      {/* <ul>
         <li>Stránka s grafy </li>
         <li>
           Kolik runnerů je v jakém stavu + Např. u kterých runnerů dochází
@@ -121,7 +121,7 @@ export default function MetricsPage() {
           Zobrazovat počet logů automatizací v určitém intervalu, tak by se
           mohla poznat jejich zatíženost
         </li>
-      </ul>
+      </ul> */}
       {(jobsQuery.isLoading ||
         automationsQuery.isLoading ||
         runnersQuery.isLoading) && <Throbber />}

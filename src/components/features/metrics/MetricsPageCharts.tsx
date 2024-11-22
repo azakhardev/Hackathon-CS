@@ -1,8 +1,10 @@
 import CustomBarChart from "@/components/features/charts/CustomBarChart";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
+import H2 from "@/components/ui/typography/H2";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { IJobs } from "@/lib/types/IJobs";
 import { IRunner } from "@/lib/types/IRunner";
+import ChartCard from "../charts/ChartCard";
 
 class JobState {
   organization: string;
@@ -68,26 +70,32 @@ export default function MetricsPageCharts(props: IProps) {
   const jStateData = createJobsData(props.jobsData);
   return (
     <>
-      <div>
-        <h1>Automations States</h1>
+      <div className="flex flex-row gap-4">
         {props.automationsData.length > 0 ? (
-          <CustomPieChart
-            chartConfig={AUTOMATIONS_STATE_CHART_CONFIG}
-            chartData={aStateData}
-            innerRadius={0}
+          <ChartCard
+            header={<H2>Automations</H2>}
+            content={
+              <CustomPieChart
+                chartConfig={AUTOMATIONS_STATE_CHART_CONFIG}
+                chartData={aStateData}
+                innerRadius={0}
+              />
+            }
           />
         ) : (
           <p>No data for this date range</p>
         )}
-      </div>
-      <div>
-        <h1>Jobs Stats</h1>
         {props.jobsData.length > 0 ? (
-          <CustomBarChart
-            chartConfig={JOBS_CHART_CONFIG}
-            chartData={jStateData}
-            showCursor={false}
-            dataKey="organization"
+          <ChartCard
+            header={<H2>Jobs</H2>}
+            content={
+              <CustomBarChart
+                chartConfig={JOBS_CHART_CONFIG}
+                chartData={jStateData}
+                showCursor={false}
+                dataKey="organization"
+              />
+            }
           />
         ) : (
           <p>No data for this date range</p>
