@@ -21,14 +21,51 @@ import H2 from "@/components/ui/typography/H2";
 import RunnersDataTable from "@/components/features/runners/RunnersDataTable";
 import { MoreBtn } from "../home/HomePage";
 import { Separator } from "@radix-ui/react-dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { DateRange } from "react-day-picker";
+import DateRangePicker from "@/components/ui/table/DateRangePicker";
 
 export default function MetricsPage() {
-  const [dateStart, setDateStart] = useState<Date>();
+  const [searchDate, setSearchDate] = useState<DateRange | undefined>({
+    from: undefined,
+    to: undefined,
+  });
+  const [searchOrg, setSearchOrg] = useState(" ");
+
   const automationsQuery = useQuery({
-    queryKey: ["automations", dateStart],
+    queryKey: ["automations", searchDate],
     queryFn: async () => {
-      const filters = {
-        ...(dateStart && { last_activity_gte: dateStart.toISOString() }),
+      const automationFilters = {
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to == undefined && {
+            last_activity_start: format(
+              searchDate.from,
+              "yyyy-MM-dd"
+            ).toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            last_activity_gte: format(
+              searchDate.from,
+              "yyyy-MM-dd'T'HH:mm:ss"
+            ).toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            last_activity_lte: format(
+              searchDate.to,
+              "yyyy-MM-dd'T'23:59:59"
+            ).toString(),
+          }),
       };
 
       return await AutomationModel.getAutomations(
@@ -37,16 +74,37 @@ export default function MetricsPage() {
         undefined,
         undefined,
         "asc",
-        filters
+        automationFilters
       );
     },
   });
 
   const jobsQuery = useQuery({
-    queryKey: ["jobs", dateStart],
+    queryKey: ["jobs", searchDate, searchOrg],
     queryFn: async () => {
       const filters = {
-        ...(dateStart && { timestamp_gte: dateStart.toISOString() }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to == undefined && {
+            timestamp_start: format(searchDate.from, "yyyy-MM-dd").toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            timestamp_gte: format(
+              searchDate.from,
+              "yyyy-MM-dd'T'HH:mm:ss"
+            ).toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            timestamp_lte: format(
+              searchDate.to,
+              "yyyy-MM-dd'T'23:59:59"
+            ).toString(),
+          }),
+        ...(searchOrg !== " " && { organization_eq: searchOrg }),
       };
       return await RunnerModel.getJobs(
         undefined,
@@ -60,9 +118,16 @@ export default function MetricsPage() {
   });
 
   const runnersQuery = useQuery({
-    queryKey: ["jobs"],
+    queryKey: ["runners", searchDate, searchOrg],
     queryFn: async () => {
-      return await RunnerModel.getRunners();
+      return await RunnerModel.getRunners(
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        "asc",
+        { ...(searchOrg !== " " && { organization_eq: searchOrg }) }
+      );
     },
   });
 
@@ -86,6 +151,8 @@ export default function MetricsPage() {
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
+  console.log(searchOrg);
+
   return (
     <>
       <H1>Metrics</H1>
@@ -95,32 +162,40 @@ export default function MetricsPage() {
             <div className="flex justify-between">
               <H2>Total</H2>
 
-              <Popover>
+              {/* <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant={"outline"}
                     className={cn(
                       "w-[200px] justify-start text-left font-normal",
-                      !dateStart && "text-muted-foreground"
+                      !searchDate && "text-muted-foreground"
                     )}
                   >
                     <CalendarIcon />
-                    {dateStart ? (
-                      format(dateStart, "yyyy-MM-dd")
+                    {searchDate ? (
+                      format(searchDate.from as Date, "yyyy-MM-dd")
                     ) : (
                       <span>Pick a date</span>
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={dateStart}
-                    onSelect={setDateStart}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+                <PopoverContent className="w-auto p-0"> */}
+              <DateRangePicker
+                dateRange={searchDate}
+                setSearchDate={setSearchDate}
+              />
+              <Select onValueChange={(e) => setSearchOrg(e)}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="All" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value=" ">All</SelectItem>
+                  <SelectItem value="csas-dev">Dev</SelectItem>
+                  <SelectItem value="csas-ops">Ops</SelectItem>
+                </SelectContent>
+              </Select>
+              {/* </PopoverContent>
+              </Popover> */}
             </div>
             {(jobsQuery.isLoading ||
               automationsQuery.isLoading ||
