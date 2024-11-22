@@ -88,7 +88,7 @@ function H2x({ children }: { children: React.ReactNode }) {
   );
 }
 
-function MoreBtn({ to }: { to: string }) {
+export function MoreBtn({ to }: { to: string }) {
   return (
     <Link to={to}>
       <Button_More className="mt-3" />
