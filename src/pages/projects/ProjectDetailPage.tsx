@@ -4,17 +4,8 @@ import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import JobsTable from "../../components/features/jobs/JobsTable";
 import { useState } from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/Button";
-import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 import format from "date-fns/format";
 import SearchBar from "@/components/ui/table/SearchBar";
-import { Calendar } from "@/components/ui/calendar";
 import { CircleIcon } from "lucide-react";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import Throbber from "@/components/ui/Throbber";
@@ -28,6 +19,7 @@ import { IAutomationType } from "@/lib/types/IAutomationType";
 import AutomationsTable from "../automations/automations/AutomationsTable";
 import { DateRange } from "react-day-picker";
 import DetailHeader from "@/components/DetailHeader";
+import DateRangePicker from "@/components/ui/table/DateRangePicker";
 
 export default function ProjectDetailPage() {
   const params = useParams();
@@ -231,43 +223,10 @@ export default function ProjectDetailPage() {
                   setSearchText={setSearchText}
                 />
                 <div className="flex flex-1 gap-2">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        id="date"
-                        variant={"outline"}
-                        className={cn(
-                          "w-[210px] justify-start text-left font-normal",
-                          !searchDate && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon />
-                        {searchDate?.from ? (
-                          searchDate.to ? (
-                            <>
-                              {format(searchDate.from, "yyyy-MM-dd")} -{" "}
-                              {format(searchDate.to, "yyyy-MM-dd")}
-                            </>
-                          ) : (
-                            format(searchDate.from, "yyyy-MM-dd")
-                          )
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        initialFocus
-                        mode="range"
-                        defaultMonth={searchDate?.from}
-                        selected={searchDate}
-                        onSelect={setSearchDate}
-                        numberOfMonths={2}
-                      />
-                    </PopoverContent>
-                  </Popover>
-
+                  <DateRangePicker
+                    dateRange={searchDate}
+                    setSearchDate={setSearchDate}
+                  />
                   <SelectInput
                     placeholder="All actions"
                     items={actionsVals}
@@ -295,42 +254,10 @@ export default function ProjectDetailPage() {
                   setSearchText={setAutomationsSearchText}
                 />
                 <div className="flex justify-end flex-1 gap-2">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        id="date"
-                        variant={"outline"}
-                        className={cn(
-                          "w-[210px] justify-start text-left font-normal",
-                          !searchDateAutomations && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon />
-                        {searchDateAutomations?.from ? (
-                          searchDateAutomations.to ? (
-                            <>
-                              {format(searchDateAutomations.from, "yyyy-MM-dd")}{" "}
-                              - {format(searchDateAutomations.to, "yyyy-MM-dd")}
-                            </>
-                          ) : (
-                            format(searchDateAutomations.from, "yyyy-MM-dd")
-                          )
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        initialFocus
-                        mode="range"
-                        defaultMonth={searchDateAutomations?.from}
-                        selected={searchDateAutomations}
-                        onSelect={setSearchDateAutomations}
-                        numberOfMonths={2}
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <DateRangePicker
+                    dateRange={searchDateAutomations}
+                    setSearchDate={setSearchDateAutomations}
+                  />
                 </div>
               </div>
 
