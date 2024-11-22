@@ -9,6 +9,8 @@ import { RunnerModel } from "@/lib/models/RunnerModel";
 import { DetailRunnerHeader } from "@/components/DetailHeader";
 import "@/components/features/runners/circle.css";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
+import { Theater } from "lucide-react";
+import Throbber from "@/components/ui/Throbber";
 
 export default function RunnerDetailPage() {
   const params = useParams();
@@ -40,6 +42,11 @@ export default function RunnerDetailPage() {
     runnerQuery.data && !("error" in runnerQuery.data) && runnerQuery.data.id
       ? runnerQuery.data.id.slice(-5).toUpperCase()
       : "";
+
+  if (runnerQuery.isLoading || metricsQuery.isLoading) {
+    return <Throbber />;
+  }
+
   return (
     <main>
       <div>
