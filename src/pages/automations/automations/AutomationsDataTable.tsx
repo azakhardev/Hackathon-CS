@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import DateRangePicker from "@/components/ui/table/DateRangePicker";
 
 export default function AutomationsDataTable({
   limit = 9999,
@@ -132,42 +133,10 @@ export default function AutomationsDataTable({
               setSearchText={setSearchText}
             />
             <div className="flex">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    id="date"
-                    variant={"outline"}
-                    className={cn(
-                      "w-[210px] justify-start text-left font-normal",
-                      !searchDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon />
-                    {searchDate?.from ? (
-                      searchDate.to ? (
-                        <>
-                          {format(searchDate.from, "yyyy-MM-dd")} -{" "}
-                          {format(searchDate.to, "yyyy-MM-dd")}
-                        </>
-                      ) : (
-                        format(searchDate.from, "yyyy-MM-dd")
-                      )
-                    ) : (
-                      <span>Pick a date</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    initialFocus
-                    mode="range"
-                    defaultMonth={searchDate?.from}
-                    selected={searchDate}
-                    onSelect={setSearchDate}
-                    numberOfMonths={2}
-                  />
-                </PopoverContent>
-              </Popover>
+              <DateRangePicker
+                dateRange={searchDate}
+                setSearchDate={setSearchDate}
+              />
             </div>
           </div>
         )}

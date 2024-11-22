@@ -6,22 +6,13 @@ import { CircleIcon } from "lucide-react";
 import { useState } from "react";
 import SearchBar from "@/components/ui/table/SearchBar";
 import { format, subDays, subHours, subMinutes, subMonths } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import Throbber from "@/components/ui/Throbber";
-import { calculateTimeFilter } from "@/lib/utils/calculateTimeFilter";
 import { DateRange } from "react-day-picker";
+import DateRangePicker from "@/components/ui/table/DateRangePicker";
 
 export default function JobsDataTable({
   limit = 25,
@@ -134,16 +125,6 @@ export default function JobsDataTable({
     { value: "csas-ops-csas-linux-prod", content: "Deploying to prod" },
   ];
 
-  const timeVals: ISelectItem[] = [
-    { value: "1m", content: "1m" },
-    { value: "14d", content: "14d" },
-    { value: "7d", content: "7d" },
-    { value: "1d", content: "1d" },
-    { value: "12h", content: "12h" },
-    { value: "8h", content: "8h" },
-    { value: "1h", content: "1h" },
-  ];
-
   const statesVals: ISelectItem[] = [
     { value: "success", content: <StateItem title="Success" color="green" /> },
     { value: "queued", content: <StateItem title="Queued" color="gray" /> }, // prettier-ignore
@@ -161,42 +142,10 @@ export default function JobsDataTable({
           />
 
           <div className="flex flex-1 gap-2">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  id="date"
-                  variant={"outline"}
-                  className={cn(
-                    "w-[210px] justify-start text-left font-normal",
-                    !searchDate && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon />
-                  {searchDate?.from ? (
-                    searchDate.to ? (
-                      <>
-                        {format(searchDate.from, "yyyy-MM-dd")} -{" "}
-                        {format(searchDate.to, "yyyy-MM-dd")}
-                      </>
-                    ) : (
-                      format(searchDate.from, "yyyy-MM-dd")
-                    )
-                  ) : (
-                    <span>Pick a date</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  initialFocus
-                  mode="range"
-                  defaultMonth={searchDate?.from}
-                  selected={searchDate}
-                  onSelect={setSearchDate}
-                  numberOfMonths={2}
-                />
-              </PopoverContent>
-            </Popover>
+            <DateRangePicker
+              dateRange={searchDate}
+              setSearchDate={setSearchDate}
+            />
 
             <SelectInput
               placeholder="All actions"
