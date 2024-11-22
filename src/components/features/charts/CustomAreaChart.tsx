@@ -8,6 +8,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { CurveType } from "recharts/types/shape/Curve";
+import { Icon } from "lucide-react";
 
 interface IProps {
   chartConfig: IChartConfig;
@@ -39,9 +40,15 @@ export default function CustomAreaChart(props: IProps) {
         />
         <ChartTooltip
           cursor={props.showCursor}
-          content={<ChartTooltipContent hideLabel indicator="dot" />}
+          content={
+            <ChartTooltipContent
+              hideIndicator={false}
+              hideLabel
+              indicator="line"
+            />
+          }
           formatter={(value, name) => (
-            <div className="flex min-w-[130px] items-center text-xs text-muted-foreground">
+            <div className="flex min-w-[130px] items-center text-xs text-muted-foreground ">
               {props.chartConfig[name as keyof typeof props.chartConfig]
                 ?.label || name}
               <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">

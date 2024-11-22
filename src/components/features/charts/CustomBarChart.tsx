@@ -11,6 +11,7 @@ interface IProps {
   chartData: any[];
   dataKey: string;
   showCursor: boolean;
+  stacked: boolean;
 }
 
 export default function CustomBarChart(props: IProps) {
@@ -34,8 +35,9 @@ export default function CustomBarChart(props: IProps) {
           <Bar
             key={i}
             dataKey={p}
+            stackId={props.stacked ? "a" : i}
             fill={props.chartConfig[p].color}
-            radius={8}
+            radius={props.stacked ? 0 : [4, 4, 0, 0]}
           />
         ))}
       </BarChart>
