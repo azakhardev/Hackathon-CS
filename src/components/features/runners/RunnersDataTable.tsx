@@ -29,6 +29,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ButtonSort } from "@/components/ButtonSort";
+import TableFilterNav from "@/components/ui/table/table_filter_nav";
 
 export default function RunnersPage({
   limit2 = 25,
@@ -159,21 +161,26 @@ export default function RunnersPage({
   return (
     <>
       {isNav && (
-        <div className="flex justify-between gap-2 mb-4">
-          <SearchBar searchText={searchText} setSearchText={setSearchText} />
-          <div className="flex flex-1 gap-2">
-            <SelectInput
-              placeholder="All actions"
-              items={actionsVals}
-              onValueChange={(e) => setSearchAction(e)}
-            />
-            <SelectInput
-              placeholder="All States"
-              items={statesVals}
-              onValueChange={(e) => setSearchState(e)}
-            />
-          </div>
-        </div>
+        <TableFilterNav
+          left={
+            <SearchBar searchText={searchText} setSearchText={setSearchText} />
+          }
+          right={
+            <>
+              <SelectInput
+                placeholder="All actions"
+                items={actionsVals}
+                onValueChange={(e) => setSearchAction(e)}
+              />
+              <SelectInput
+                placeholder="All States"
+                items={statesVals}
+                onValueChange={(e) => setSearchState(e)}
+              />
+              <ButtonSort />
+            </>
+          }
+        />
       )}
       {dataQuery.isLoading ? (
         <Throbber />

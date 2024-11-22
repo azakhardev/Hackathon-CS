@@ -21,6 +21,8 @@ import { Button } from "@/components/ui/Button";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
+import { ButtonSort } from "@/components/ButtonSort";
+import TableFilterNav from "@/components/ui/table/table_filter_nav";
 
 export default function AutomationsDataTable({
   limit = 9999,
@@ -130,18 +132,23 @@ export default function AutomationsDataTable({
     <>
       <div>
         {isNav && (
-          <div className="flex justify-between gap-4 mb-4">
-            <SearchBar
-              searchText={searchText ?? ""}
-              setSearchText={setSearchText}
-            />
-            <div className="flex">
-              <DateRangePicker
-                dateRange={searchDate}
-                setSearchDate={setSearchDate}
+          <TableFilterNav
+            left={
+              <SearchBar
+                searchText={searchText ?? ""}
+                setSearchText={setSearchText}
               />
-            </div>
-          </div>
+            }
+            right={
+              <>
+                <DateRangePicker
+                  dateRange={searchDate}
+                  setSearchDate={setSearchDate}
+                />
+                <ButtonSort />
+              </>
+            }
+          />
         )}
         {automationsQuery.isLoading || automationsTypesQuery.isLoading ? (
           <Throbber />

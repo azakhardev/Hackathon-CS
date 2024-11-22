@@ -9,6 +9,8 @@ import SearchBar from "@/components/ui/table/SearchBar";
 import ButtonLoadMore from "@/components/ui/table/Button_LoadMore";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import Throbber from "@/components/ui/Throbber";
+import { ButtonSort } from "@/components/ButtonSort";
+import TableFilterNav from "@/components/ui/table/table_filter_nav";
 
 export default function ProjectsDataTable({
   limit = -1,
@@ -86,9 +88,12 @@ export default function ProjectsDataTable({
   return (
     <div>
       {isNav && (
-        <div className="mb-4">
-          <SearchBar searchText={searchText} setSearchText={setSearchText} />
-        </div>
+        <TableFilterNav
+          left={
+            <SearchBar searchText={searchText} setSearchText={setSearchText} />
+          }
+          right={<ButtonSort />}
+        />
       )}
       {(sasQuery.isLoading || jobsQuery.isLoading) && <Throbber />}
 

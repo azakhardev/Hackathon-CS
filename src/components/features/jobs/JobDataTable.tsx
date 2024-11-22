@@ -13,6 +13,8 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import Throbber from "@/components/ui/Throbber";
 import { DateRange } from "react-day-picker";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
+import { ButtonSort } from "@/components/ButtonSort";
+import TableFilterNav from "@/components/ui/table/table_filter_nav";
 
 export default function JobsDataTable({
   limit = 25,
@@ -141,30 +143,33 @@ export default function JobsDataTable({
   return (
     <>
       {isNav && (
-        <div className="flex justify-between gap-4 mb-4">
-          <SearchBar
-            searchText={searchText ?? ""}
-            setSearchText={setSearchText}
-          />
-
-          <div className="flex flex-1 gap-2">
-            <DateRangePicker
-              dateRange={searchDate}
-              setSearchDate={setSearchDate}
+        <TableFilterNav
+          left={
+            <SearchBar
+              searchText={searchText ?? ""}
+              setSearchText={setSearchText}
             />
-
-            <SelectInput
-              placeholder="All actions"
-              items={actionsVals}
-              onValueChange={(e) => setSearchAction(e)}
-            />
-            <SelectInput
-              placeholder="All States"
-              items={statesVals}
-              onValueChange={(e) => setSearchState(e)}
-            />
-          </div>
-        </div>
+          }
+          right={
+            <>
+              <DateRangePicker
+                dateRange={searchDate}
+                setSearchDate={setSearchDate}
+              />
+              <SelectInput
+                placeholder="All actions"
+                items={actionsVals}
+                onValueChange={(e) => setSearchAction(e)}
+              />
+              <SelectInput
+                placeholder="All States"
+                items={statesVals}
+                onValueChange={(e) => setSearchState(e)}
+              />
+              <ButtonSort />{" "}
+            </>
+          }
+        />
       )}
 
       {dataQuery.isLoading && <Throbber />}
