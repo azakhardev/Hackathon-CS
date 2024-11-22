@@ -3,7 +3,7 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { PieStats } from "./MetricsShared";
+import { MetricItems, PieStats } from "./MetricsShared";
 import { AutomationModel } from "@/lib/models/AutomationModel";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { format } from "date-fns";
@@ -11,6 +11,8 @@ import { ChartCard2 } from "@/components/features/charts/ChartCard";
 import { Workflow } from "lucide-react";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
 import Throbber from "@/components/ui/Throbber";
+import SelectInput from "@/components/SelectInput";
+import DateRangePicker from "@/components/ui/table/DateRangePicker";
 
 const AUTOMATIONS_STATE_CHART_CONFIG = {
   count: {
@@ -35,7 +37,7 @@ export default function AutomationsChart() {
   const [searchOrg, setSearchOrg] = useState(" ");
 
   const automationsQuery = useQuery({
-    queryKey: ["automations", searchDate],
+    queryKey: ["automations", searchDate, searchOrg],
     queryFn: async () => {
       const automationFilters = {
         ...(searchDate &&
@@ -62,6 +64,7 @@ export default function AutomationsChart() {
               "yyyy-MM-dd'T'23:59:59"
             ).toString(),
           }),
+        ...(searchOrg !== " " && { organization_eq: searchOrg }),
       };
 
       return await AutomationModel.getAutomations(
@@ -74,10 +77,12 @@ export default function AutomationsChart() {
       );
     },
   });
+
   if (automationsQuery.data && "error" in automationsQuery.data)
     return (
       <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />
     );
+
   if (automationsQuery.error) {
     const error: IErrorMessage = {
       code: "500",
@@ -87,25 +92,34 @@ export default function AutomationsChart() {
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
+  if (automationsQuery.isLoading) return <Throbber />;
+
   const automationsData = automationsQuery.data as IAutomation[];
   const aStateData = createAutomationsStateData(automationsData) as IAutomation[]; // prettier-ignore
 
   return (
     <>
-      {automationsQuery.isLoading && <Throbber />}
       {!automationsQuery.isLoading && (
         <ChartCard2
           header="Automations"
           description="Current state of automations"
           icon={<Workflow />}
           content={
-            aStateData.length > 0 ? (
-              <CustomPieChart
-                chartConfig={AUTOMATIONS_STATE_CHART_CONFIG}
-                chartData={aStateData}
-                innerRadius={0}
-                label={false}
-              />
+            automationsData.length > 0 ? (
+              <div>
+                <div className="flex gap-4 max-w-fit">
+                  <DateRangePicker
+                    dateRange={searchDate}
+                    setSearchDate={setSearchDate}
+                  />
+                </div>
+                <CustomPieChart
+                  chartConfig={AUTOMATIONS_STATE_CHART_CONFIG}
+                  chartData={aStateData}
+                  innerRadius={0}
+                  label={true}
+                />
+              </div>
             ) : (
               <p>No data for this date range</p>
             )

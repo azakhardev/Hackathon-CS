@@ -4,12 +4,14 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { PieStats } from "./MetricsShared";
+import { MetricItems, PieStats } from "./MetricsShared";
 import { ChartCard2 } from "@/components/features/charts/ChartCard";
 import { ContainerIcon } from "lucide-react";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
 import { IRunner } from "@/lib/types/IRunner";
 import Throbber from "@/components/ui/Throbber";
+import SelectInput from "@/components/SelectInput";
+import DateRangePicker from "@/components/ui/table/DateRangePicker";
 
 const RUNNERS_CHART_CONFIG = {
   count: {
@@ -49,9 +51,23 @@ export default function RunnersCharts() {
       );
     },
   });
+
   if (runnersQuery.data && "error" in runnersQuery.data)
     return <ErrorMessage errorMessage={runnersQuery.data as IErrorMessage} />;
+
+  if (runnersQuery.error) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
+
+  if (runnersQuery.isLoading) return <Throbber />;
   const runnersData = runnersQuery.data as IRunner[];
+  const rStateData = createRunnersData(runnersData);
+
   return (
     <>
       {runnersQuery.isLoading && <Throbber />}
@@ -62,12 +78,23 @@ export default function RunnersCharts() {
           icon={<ContainerIcon />}
           content={
             runnersData.length > 0 ? (
-              <CustomPieChart
-                chartConfig={RUNNERS_CHART_CONFIG}
-                chartData={runnersData}
-                innerRadius={0}
-                label={true}
-              />
+              <div>
+                <div className="flex gap-4 max-w-fit">
+                  <div className="w-20">
+                    <SelectInput
+                      defaultValue={searchOrg}
+                      items={MetricItems}
+                      onValueChange={(e) => setSearchOrg(e)}
+                    />
+                  </div>
+                </div>
+                <CustomPieChart
+                  chartConfig={RUNNERS_CHART_CONFIG}
+                  chartData={rStateData}
+                  innerRadius={0}
+                  label={true}
+                />
+              </div>
             ) : (
               <p>No data for this date range</p>
             )

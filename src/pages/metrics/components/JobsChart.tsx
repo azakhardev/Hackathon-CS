@@ -68,6 +68,18 @@ export default function JobsChart() {
   });
   if (jobsQuery.data && "error" in jobsQuery.data)
     return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
+
+  if (jobsQuery.error) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
+
+  if (jobsQuery.isLoading) return <Throbber />;
+
   const jobsData = jobsQuery.data as IJobs[];
   const jStateData = createJobsData(jobsData);
   return (
@@ -86,7 +98,7 @@ export default function JobsChart() {
                     <SelectInput
                       defaultValue=" "
                       items={MetricItems}
-                      onValueChange={(e) => console.log(e)}
+                      onValueChange={(e) => setSearchOrg(e)}
                     />
                   </div>
                   <DateRangePicker

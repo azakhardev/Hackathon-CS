@@ -28,7 +28,6 @@ export default function SelectInput({
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value=" ">{placeholder}</SelectItem>
         {items.map((item) => (
           <SelectItem key={item.value} value={item.value}>
             {item.content}
