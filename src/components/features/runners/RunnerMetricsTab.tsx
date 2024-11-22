@@ -12,7 +12,7 @@ import {
   UploadIcon,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import ChartCard from "@/components/features/charts/ChartCard";
+import ChartCard, { ChartCard2 } from "@/components/features/charts/ChartCard";
 import H2 from "@/components/ui/typography/H2";
 
 interface ICPUMetrics {
@@ -126,165 +126,149 @@ export default function RunnerMetricsTab(props: IProps) {
   }
 
   return (
-    <div className="flex flex-col w-full gap-8">
-      <H2>Components</H2>
-      <div className="flex flex-col gap-2 md:flex-row">
-        <ChartCard
-          header={
-            <div className="flex items-center gap-2">
-              <CpuIcon size={40} className="-mb-1" />
-              <span className="text-5xl font-bold">CPU</span>
-            </div>
-          }
-          content={
-            <CustomLineChart
-              chartConfig={CPU_CHART_CONFIG}
-              chartData={cpuMetrics}
-              dataKey="point"
-              lineType="step"
-              showCursor={true}
-              tooltipText=" %"
-            />
-          }
-        />
-        <ChartCard
-          header={
-            <div className="flex items-center gap-2">
-              <MemoryStick size={40} className="-mb-1" />
-              <span className="text-5xl font-bold">RAM</span>
-            </div>
-          }
-          content={
-            <CustomLineChart
-              chartConfig={RAM_CHART_CONFIG}
-              dataKey="point"
-              lineType="step"
-              showCursor={true}
-              chartData={ramData}
-              tooltipText="GB"
-            />
-          }
-        />
+    <div className="flex flex-col w-full gap-10">
+      <div>
+        <H3>Components</H3>
+        <div className="flex flex-col gap-2 md:flex-row">
+          <ChartCard2
+            header="CPU"
+            description="Procesor usage in percents"
+            icon={<CpuIcon />}
+            content={
+              <CustomLineChart
+                chartConfig={CPU_CHART_CONFIG}
+                chartData={cpuMetrics}
+                dataKey="point"
+                lineType="step"
+                showCursor={true}
+                tooltipText=" %"
+              />
+            }
+          />
+          <ChartCard2
+            header="RAM"
+            description="Memory usage in GB/s"
+            icon={<MemoryStick />}
+            content={
+              <CustomLineChart
+                chartConfig={RAM_CHART_CONFIG}
+                dataKey="point"
+                lineType="step"
+                showCursor={true}
+                chartData={ramData}
+                tooltipText="GB"
+              />
+            }
+          />
+        </div>
       </div>
 
-      <H2>Network</H2>
-      <div className="flex flex-col gap-2 md:flex-row">
-        <ChartCard
-          header={
-            <div className="flex items-center gap-2">
-              <CloudUpload size={40} className="-mb-1" />
-              <span className="text-5xl font-bold">Transmit</span>
-            </div>
-          }
-          content={
-            <CustomLineChart
-              chartConfig={NETWORK_OUT_CONFIG}
-              chartData={outgoingData}
-              dataKey="point"
-              lineType="linear"
-              showCursor={true}
-              tooltipText="MB/s"
-            />
-          }
-        />
-        <ChartCard
-          header={
-            <div className="flex items-center gap-2">
-              <CloudDownload size={40} className="-mb-1" />
-              <span className="text-5xl font-bold">Receive</span>
-            </div>
-          }
-          content={
-            <CustomLineChart
-              chartConfig={NETWORK_IN_CONFIG}
-              chartData={incomingData}
-              dataKey="point"
-              lineType="linear"
-              showCursor={true}
-              tooltipText="MB/s"
-            />
-          }
-        />
+      <div>
+        <H3>Network</H3>
+        <div className="flex flex-col gap-2 md:flex-row">
+          <ChartCard2
+            header="Upload"
+            description="Upload speed in MB/s"
+            icon={<CloudUpload />}
+            content={
+              <CustomLineChart
+                chartConfig={NETWORK_OUT_CONFIG}
+                chartData={outgoingData}
+                dataKey="point"
+                lineType="linear"
+                showCursor={true}
+                tooltipText="MB/s"
+              />
+            }
+          />
+          <ChartCard2
+            header="Download"
+            description="Download speed in MB/s"
+            icon={<CloudDownload />}
+            content={
+              <CustomLineChart
+                chartConfig={NETWORK_IN_CONFIG}
+                chartData={incomingData}
+                dataKey="point"
+                lineType="linear"
+                showCursor={true}
+                tooltipText="MB/s"
+              />
+            }
+          />
+        </div>
       </div>
 
-      <H2>Disk</H2>
-      <div className="flex flex-col gap-2 md:flex-row">
-        <ChartCard
-          header={
-            <div className="flex items-center gap-2">
-              <HardDriveUploadIcon size={40} className="-mb-1" />
-              <span className="text-5xl font-bold">Write</span>
-            </div>
-          }
-          content={
-            <CustomLineChart
-              chartConfig={DISK_WRITE_CONFIG}
-              chartData={incomingData}
-              dataKey="point"
-              lineType="linear"
-              showCursor={true}
-              tooltipText="MB/s"
-            />
-          }
-        />
-        <ChartCard
-          header={
-            <div className="flex items-center gap-2">
-              <HardDriveDownloadIcon size={40} className="-mb-1" />
-              <span className="text-5xl font-bold">Read</span>
-            </div>
-          }
-          content={
-            <CustomLineChart
-              chartConfig={DISK_READ_CONFIG}
-              chartData={outgoingData}
-              dataKey="point"
-              lineType="linear"
-              showCursor={true}
-              tooltipText="MB/s"
-            />
-          }
-        />
+      <div>
+        <H3>Disk</H3>
+        <div className="flex flex-col gap-2 md:flex-row">
+          <ChartCard2
+            header="Write"
+            description="Write speed in MB/s"
+            icon={<HardDriveUploadIcon />}
+            content={
+              <CustomLineChart
+                chartConfig={DISK_WRITE_CONFIG}
+                chartData={incomingData}
+                dataKey="point"
+                lineType="linear"
+                showCursor={true}
+                tooltipText="MB/s"
+              />
+            }
+          />
+          <ChartCard2
+            header="Read"
+            description="Read speed in MB/s"
+            icon={<HardDriveDownloadIcon />}
+            content={
+              <CustomLineChart
+                chartConfig={DISK_READ_CONFIG}
+                chartData={outgoingData}
+                dataKey="point"
+                lineType="linear"
+                showCursor={true}
+                tooltipText="MB/s"
+              />
+            }
+          />
+        </div>
       </div>
       <Separator />
-      <H2>Combined</H2>
-      <div className="flex flex-col gap-2 md:flex-row">
-        <ChartCard
-          header={
-            <div className="flex items-center gap-2">
-              <UploadIcon size={40} className="-mb-1" />
-              <span className="text-5xl font-bold">Outgoing Data</span>
-            </div>
-          }
-          content={
-            <CustomAreaChart
-              chartConfig={OUTGOING_CHART_CONFIG}
-              dataKey="point"
-              lineType="natural"
-              showCursor={true}
-              chartData={outgoingData}
-              tooltipText="MB/s"
-            />
-          }
-        />
-        <ChartCard
-          header={
-            <div className="flex items-center gap-2">
-              <Download size={40} className="-mb-1" />
-              <span className="text-5xl font-bold">Incoming Data</span>
-            </div>
-          }
-          content={
-            <CustomAreaChart
-              chartConfig={INCOMING_CHART_CONFIG}
-              chartData={incomingData}
-              dataKey="point"
-              lineType="natural"
-              showCursor={true}
-              tooltipText="MB/s"
-            />
-          }
-        />
+      <div>
+        <H3>Combined</H3>
+        <div className="flex flex-col gap-2 md:flex-row">
+          <ChartCard2
+            header="Outgoing"
+            description="Speed of outgoing data in MB/s"
+            icon={<UploadIcon />}
+            content={
+              <CustomAreaChart
+                chartConfig={OUTGOING_CHART_CONFIG}
+                dataKey="point"
+                lineType="natural"
+                showCursor={true}
+                chartData={outgoingData}
+                tooltipText="MB/s"
+              />
+            }
+          />
+          <ChartCard2
+            header="Incoming"
+            description="Speed of outgoing data in MB/s"
+            icon={<Download />}
+            content={
+              <CustomAreaChart
+                chartConfig={INCOMING_CHART_CONFIG}
+                chartData={incomingData}
+                dataKey="point"
+                lineType="natural"
+                showCursor={true}
+                tooltipText="MB/s"
+              />
+            }
+          />
+        </div>
       </div>
     </div>
   );
@@ -350,4 +334,8 @@ function createFsData(runnerMetrics: IMetrics) {
   }
 
   return outgoingMetrics;
+}
+
+function H3({ children }: { children: React.ReactNode }) {
+  return <h3 className="mb-4 text-4xl font-bold text-center">{children}</h3>;
 }
