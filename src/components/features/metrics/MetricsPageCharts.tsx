@@ -25,15 +25,15 @@ const AUTOMATIONS_STATE_CHART_CONFIG = {
   },
   initial: {
     label: "Initial",
-    color: "hsl(var(--state_gray))",
+    // color: "hsl(var(--state_gray))",
   },
   in_progress: {
     label: "In Progress",
-    color: "hsl(var(--state_yellow)",
+    // color: "hsl(var(--state_yellow)",
   },
   finished: {
     label: "Finished",
-    color: "hsl(var(--state_green))",
+    // color: "hsl(var(--state_green))",
   },
 };
 
@@ -42,16 +42,16 @@ const AUTOMATIONS_TYPES_CHART_CONFIG = {};
 const JOBS_CHART_CONFIG = {
   success: {
     label: "Succeed Jobs",
-    color: "hsl(var(--state_green))",
+    color: "hsl(131, 41%, 46%)",
   },
   in_progress: {
     label: "Jobs in Progression",
-    color: "hsl(var(--state_yellow))",
+    color: "hsl(35, 100%, 52%)",
   },
 
   failed: {
     label: "Failed Jobs",
-    color: "hsl(var(--state_red))",
+    color: "hsl(358, 75%, 59%)",
   },
   queued: {
     label: "Queued Jobs",
@@ -89,7 +89,6 @@ export default function MetricsPageCharts(props: IProps) {
   const aStateData = createAutomationsStateData(props.automationsData);
   const jStateData = createJobsData(props.jobsData);
   const rStateData = createRunnersData(props.runnersData);
-  console.log(rStateData);
   return (
     <>
       <div className="flex flex-row gap-4">
@@ -137,17 +136,17 @@ function createAutomationsStateData(data: IAutomation[]) {
   const initialA = {
     state: "initial",
     count: 0,
-    fill: "hsl(var(--state_gray))",
+    fill: "hsl(35, 91%, 22%)",
   };
   const progressA = {
     state: "in_progress",
     count: 0,
-    fill: "hsl(var(--state_yellow)",
+    fill: "hsl(35, 100%, 52%)",
   };
   const finishedA = {
     state: "finished",
     count: 0,
-    fill: "hsl(var(--state_green))",
+    fill: "hsl(131, 41%, 46%)",
   };
 
   data.forEach((a) => {

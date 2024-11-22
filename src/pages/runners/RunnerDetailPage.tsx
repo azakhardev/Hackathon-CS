@@ -58,7 +58,8 @@ export default function RunnerDetailPage() {
                 Metrics
               </TabsTrigger>
             </TabsList>
-            <TabsContent value="jobs" className="p-4 border rounded">
+            <TabsContent value="jobs">
+              {/* className="p-4 border rounded" */}
               <JobsDataTable limit={25} isNav={true} runnerId={runnerId} />
             </TabsContent>
             <TabsContent value="metrics" className="p-4 border rounded ">
