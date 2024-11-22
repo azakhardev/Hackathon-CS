@@ -136,7 +136,7 @@ export default function MetricsPageCharts(props: IProps) {
           description="Current state of automations"
           icon={<Workflow />}
           content={
-            props.automationsData.length > 0 ? (
+            props.runnersData.length > 0 ? (
               <CustomPieChart
                 chartConfig={AUTOMATIONS_STATE_CHART_CONFIG}
                 chartData={aStateData}
