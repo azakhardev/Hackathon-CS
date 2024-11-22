@@ -17,6 +17,9 @@ import { IAutomation } from "@/lib/types/IAutomation";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import Throbber from "@/components/ui/Throbber";
+import H2 from "@/components/ui/typography/H2";
+import RunnersDataTable from "@/components/features/runners/RunnersDataTable";
+import { MoreBtn } from "../home/HomePage";
 
 export default function MetricsPage() {
   const [dateStart, setDateStart] = useState<Date>();
@@ -85,33 +88,35 @@ export default function MetricsPage() {
   return (
     <>
       <H1>Metrics</H1>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant={"outline"}
-            className={cn(
-              "w-[280px] justify-start text-left font-normal",
-              !dateStart && "text-muted-foreground"
-            )}
-          >
-            <CalendarIcon />
-            {dateStart ? (
-              format(dateStart, "yyyy-MM-dd")
-            ) : (
-              <span>Pick a date</span>
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0">
-          <Calendar
-            mode="single"
-            selected={dateStart}
-            onSelect={setDateStart}
-            initialFocus
-          />
-        </PopoverContent>
-      </Popover>
-      {/* <ul>
+      <div>
+        <H2>Global</H2>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "w-[280px] justify-start text-left font-normal",
+                !dateStart && "text-muted-foreground"
+              )}
+            >
+              <CalendarIcon />
+              {dateStart ? (
+                format(dateStart, "yyyy-MM-dd")
+              ) : (
+                <span>Pick a date</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={dateStart}
+              onSelect={setDateStart}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+        {/* <ul>
         <li>Stránka s grafy </li>
         <li>
           Kolik runnerů je v jakém stavu + Např. u kterých runnerů dochází
@@ -122,18 +127,25 @@ export default function MetricsPage() {
           mohla poznat jejich zatíženost
         </li>
       </ul> */}
-      {(jobsQuery.isLoading ||
-        automationsQuery.isLoading ||
-        runnersQuery.isLoading) && <Throbber />}
-      {!jobsQuery.isLoading &&
-        !automationsQuery.isLoading &&
-        !runnersQuery.isLoading && (
-          <MetricsPageCharts
-            automationsData={automationsQuery.data as IAutomation[]}
-            runnersData={runnersQuery.data as IRunner[]}
-            jobsData={jobsQuery.data as IJobs[]}
-          />
-        )}
+        {(jobsQuery.isLoading ||
+          automationsQuery.isLoading ||
+          runnersQuery.isLoading) && <Throbber />}
+        {!jobsQuery.isLoading &&
+          !automationsQuery.isLoading &&
+          !runnersQuery.isLoading && (
+            <MetricsPageCharts
+              automationsData={automationsQuery.data as IAutomation[]}
+              runnersData={runnersQuery.data as IRunner[]}
+              jobsData={jobsQuery.data as IJobs[]}
+            />
+          )}
+      </div>
+
+      <div>
+        <H2>Runners</H2>
+        <RunnersDataTable limit2={3} isNav={false} />
+        <MoreBtn to="/runners" />
+      </div>
     </>
   );
 }
