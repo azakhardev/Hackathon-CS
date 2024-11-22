@@ -14,8 +14,11 @@ import ProjectsPage from "./pages/projects/ProjectsPage";
 import AutomationTypesPage from "./pages/automations/automationTypes/AutomationTypesPage";
 import ProjectDetailPage from "./pages/projects/ProjectDetailPage";
 import { LoginPage } from "./pages/login/LoginPage";
+import { createContext, useState } from "react";
+import { ILogin } from "./lib/types/ILogin";
 
 const queryClient = new QueryClient();
+const LoginContext = createContext<ILogin | null>(null);
 
 const router = createBrowserRouter([
   {
@@ -44,12 +47,18 @@ const router = createBrowserRouter([
     children: [{ index: true, element: <LoginPage /> }],
   },
 ]);
-
 function App() {
+  const [login, setLogin] = useState<ILogin>({
+    username: "xxx",
+    password: "yyy",
+  });
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <RouterProvider router={router} />
+        <LoginContext.Provider value={login}>
+          <RouterProvider router={router} />
+        </LoginContext.Provider>
       </ThemeProvider>
     </QueryClientProvider>
   );
