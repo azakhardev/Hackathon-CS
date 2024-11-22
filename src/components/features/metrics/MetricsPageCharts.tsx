@@ -24,15 +24,15 @@ const AUTOMATIONS_STATE_CHART_CONFIG = {
   },
   initial: {
     label: "Initial",
-    color: "hsl(var(--chart-1))",
+    color: "hsl(var(--state_gray))",
   },
   in_progress: {
     label: "In Progress",
-    color: "hsl(var(--chart-3))",
+    color: "hsl(var(--state_yellow)",
   },
   finished: {
     label: "Finished",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--state_green))",
   },
 };
 
@@ -40,20 +40,21 @@ const AUTOMATIONS_TYPES_CHART_CONFIG = {};
 
 const JOBS_CHART_CONFIG = {
   success: {
-    label: "Successed Jobs",
-    color: "hsl(var(--chart-2))",
+    label: "Succeed Jobs",
+    color: "hsl(var(--state_green))",
   },
   in_progress: {
     label: "Jobs in Progression",
-    color: "hsl(var(--chart-3))",
+    color: "hsl(var(--state_yellow))",
+  },
+
+  failed: {
+    label: "Failed Jobs",
+    color: "hsl(var(--state_red))",
   },
   queued: {
     label: "Queued Jobs",
-    color: "gray",
-  },
-  failed: {
-    label: "Failed Jobs",
-    color: "hsl(var(--chart-5))",
+    color: "hsl(var(--state_gray))",
   },
 };
 

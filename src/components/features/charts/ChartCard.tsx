@@ -9,6 +9,7 @@ interface ChartCardProps {
 export default function ChartCard({ header, content }: ChartCardProps) {
   return (
     <Card className="flex flex-col w-full gap-5">
+      {/* bg-bg_secondary */}
       <CardHeader className="border-b">
         <div className="flex items-center w-full gap-2">{header}</div>
       </CardHeader>
