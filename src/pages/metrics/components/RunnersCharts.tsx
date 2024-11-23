@@ -11,6 +11,7 @@ import CustomPieChart from "@/components/features/charts/CustomPieChart";
 import { IRunner } from "@/lib/types/IRunner";
 import Throbber from "@/components/ui/Throbber";
 import ChartSelectInput from "@/components/ChartSelectInput";
+import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 
 const RUNNERS_CHART_CONFIG = {
   count: {
@@ -63,13 +64,13 @@ export default function RunnersCharts() {
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
-  if (runnersQuery.isLoading) return <Throbber />;
+  if (runnersQuery.isLoading) return <LoadingSkeletonMetrics />;
   const runnersData = runnersQuery.data as IRunner[];
   const rStateData = createRunnersData(runnersData);
 
   return (
     <>
-      {runnersQuery.isLoading && <Throbber />}
+      {runnersQuery.isLoading && <LoadingSkeletonMetrics />}
       {!runnersQuery.isLoading && (
         <ChartCard2
           header="Runners"

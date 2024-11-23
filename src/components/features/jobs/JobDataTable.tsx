@@ -20,6 +20,7 @@ import {
   states2Vals,
 } from "@/components/ui/table/Select_items_list";
 import { useSearchParams } from "react-router-dom";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 
 export default function JobsDataTable({
   limit = 25,
@@ -34,16 +35,25 @@ export default function JobsDataTable({
 }) {
   const [searchParams] = useSearchParams();
 
-  const [searchText, setSearchText] = useState(searchParams.get('text') || "");
-  const [searchAction, setSearchAction] = useState(searchParams.get('action') || "");
-  const [searchState, setSearchState] = useState(searchParams.get('state') || "");
-  const [sort, setSort] = useState({ column: searchParams.get('sort') || "", direction: searchParams.get('order') || "asc" });
+  const [searchText, setSearchText] = useState(searchParams.get("text") || "");
+  const [searchAction, setSearchAction] = useState(
+    searchParams.get("action") || ""
+  );
+  const [searchState, setSearchState] = useState(
+    searchParams.get("state") || ""
+  );
+  const [sort, setSort] = useState({
+    column: searchParams.get("sort") || "",
+    direction: searchParams.get("order") || "asc",
+  });
   const [searchDate, setSearchDate] = useState<DateRange | undefined>({
-    from: searchParams.get('from') ? new Date(searchParams.get('from')) : undefined,
-    to: searchParams.get('to') ? new Date(searchParams.get('to')) : undefined,
+    from: searchParams.get("from")
+      ? new Date(searchParams.get("from"))
+      : undefined,
+    to: searchParams.get("to") ? new Date(searchParams.get("to")) : undefined,
   });
 
-  console.log(searchDate.from)
+  console.log(searchDate.from);
 
   console.log(sort);
 
@@ -180,7 +190,7 @@ export default function JobsDataTable({
         />
       )}
 
-      {dataQuery.isLoading && <Throbber />}
+      {dataQuery.isLoading && <LoadingSkeleton />}
 
       {!dataQuery.isLoading && (
         <JobsTable jobs={allData} searchText={searchText} />

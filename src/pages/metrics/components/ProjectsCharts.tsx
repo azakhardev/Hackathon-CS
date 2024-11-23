@@ -11,6 +11,7 @@ import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { IJobs } from "@/lib/types/IJobs";
 import ChartSelectInput from "@/components/ChartSelectInput";
+import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 
 const PROJECTS_CHART_CONFIG = {
   count: { label: "Count" },
@@ -75,7 +76,9 @@ export default function ProjectsCharts() {
 
   return (
     <>
-      {(sasQuery.isLoading || jobsQuery.isLoading) && <Throbber />}
+      {(sasQuery.isLoading || jobsQuery.isLoading) && (
+        <LoadingSkeletonMetrics />
+      )}
       {!sasQuery.isLoading && !jobsQuery.isLoading && (
         <ChartCard2
           header="Projects"

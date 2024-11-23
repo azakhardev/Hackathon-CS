@@ -13,6 +13,7 @@ import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
 import { ISelectItem } from "@/components/SelectInput";
 import { useSearchParams } from "react-router-dom";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 
 export default function ProjectsDataTable({
   limit = -1,
@@ -22,9 +23,12 @@ export default function ProjectsDataTable({
   isNav: boolean;
 }) {
   const [searchParams] = useSearchParams();
-  const [searchText, setSearchText] = useState(searchParams.get('text') || "");
+  const [searchText, setSearchText] = useState(searchParams.get("text") || "");
   const [displayLimit, setDisplayLimit] = useState(limit);
-  const [sort, setSort] = useState({ column: searchParams.get('sort'), direction: searchParams.get('order') || 'asc' });
+  const [sort, setSort] = useState({
+    column: searchParams.get("sort"),
+    direction: searchParams.get("order") || "asc",
+  });
 
   const sasQuery = useQuery({
     queryKey: ["sas", searchText],
@@ -102,12 +106,12 @@ export default function ProjectsDataTable({
       {isNav && (
         <TableFilterNav
           left={
-            <SearchBar searchText={searchText} setSearchText={setSearchText}/>
+            <SearchBar searchText={searchText} setSearchText={setSearchText} />
           }
           right={<ButtonSort sort={sort} setSort={setSort} items={cols} />}
         />
       )}
-      {(sasQuery.isLoading || jobsQuery.isLoading) && <Throbber />}
+      {(sasQuery.isLoading || jobsQuery.isLoading) && <LoadingSkeleton />}
 
       {!sasQuery.isLoading && !jobsQuery.isLoading && (
         <ProjectsTable projects={displayedProjects} searchText={searchText} />

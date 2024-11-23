@@ -21,6 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ChartSelectInput from "@/components/ChartSelectInput";
+import LoadingSkeletonTypes from "@/components/ui/LoadingSkeletonTypes";
+import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 
 const JOBS_CHART_CONFIG = {
   count: { label: "Count" },
@@ -86,13 +88,13 @@ export default function JobsChart() {
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
-  if (jobsQuery.isLoading) return <Throbber />;
+  if (jobsQuery.isLoading) return <LoadingSkeletonMetrics />;
 
   const jobsData = jobsQuery.data as IJobs[];
   const jStateData = createJobsData(jobsData);
   return (
     <>
-      {jobsQuery.isLoading && <Throbber />}
+      {jobsQuery.isLoading && <LoadingSkeletonMetrics />}
       {!jobsQuery.isLoading && (
         <ChartCard2
           header="Jobs"

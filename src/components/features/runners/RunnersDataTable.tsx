@@ -17,6 +17,7 @@ import {
   statesVals,
 } from "@/components/ui/table/Select_items_list";
 import { useSearchParams } from "react-router-dom";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 
 export default function RunnersPage({
   limit2 = 25,
@@ -27,13 +28,20 @@ export default function RunnersPage({
 }) {
   const [searchParams] = useSearchParams();
 
-  const [searchText, setSearchText] = useState(searchParams.get('text') || "");
-  const [searchAction, setSearchAction] = useState(searchParams.get('action') || "");
-  const [searchState, setSearchState] = useState(searchParams.get('state') || "");
+  const [searchText, setSearchText] = useState(searchParams.get("text") || "");
+  const [searchAction, setSearchAction] = useState(
+    searchParams.get("action") || ""
+  );
+  const [searchState, setSearchState] = useState(
+    searchParams.get("state") || ""
+  );
   const [limit, _] = useState(limit2);
-  const [sort, setSort] = useState({ column: searchParams.get('sort'), direction: searchParams.get('order') || 'asc' });
+  const [sort, setSort] = useState({
+    column: searchParams.get("sort"),
+    direction: searchParams.get("order") || "asc",
+  });
 
-  console.log(searchAction)
+  console.log(searchAction);
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -117,14 +125,14 @@ export default function RunnersPage({
                 defaultValue={searchAction}
                 items={actionsVals}
                 onValueChange={(e) => setSearchAction(e)}
-                param='action'
+                param="action"
               />
               <SelectInput
                 placeholder="All States"
                 defaultValue={searchState}
                 items={statesVals}
                 onValueChange={(e) => setSearchState(e)}
-                param='state'
+                param="state"
               />
               <ButtonSort sort={sort} setSort={setSort} items={cols} />
             </>
@@ -132,7 +140,7 @@ export default function RunnersPage({
         />
       )}
       {dataQuery.isLoading ? (
-        <Throbber />
+        <LoadingSkeleton />
       ) : (
         <div>
           <RunnersTable

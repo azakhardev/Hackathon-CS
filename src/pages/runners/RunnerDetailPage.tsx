@@ -12,6 +12,7 @@ import JobsDataTable from "@/components/features/jobs/JobDataTable";
 import Throbber from "@/components/ui/Throbber";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { userValidate } from "@/lib/utils/validateUser";
+import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 
 export default function RunnerDetailPage() {
   userValidate();
@@ -45,18 +46,18 @@ export default function RunnerDetailPage() {
       ? runnerQuery.data.id.slice(-5).toUpperCase()
       : "";
 
-  if (runnerQuery.isLoading || metricsQuery.isLoading) {
-    return <Throbber />;
-  }
-
   return (
     <main>
       <div>
         <DetailRunnerHeader
           section="Runner"
-          title={title}
+          title={runnerQuery.isLoading ? "Loading..." : title}
           state={
-            "state" in runnerQuery.data ? runnerQuery.data.state : undefined
+            runnerQuery.isLoading
+              ? undefined
+              : "state" in runnerQuery.data
+              ? runnerQuery.data.state
+              : undefined
           }
         />
         <Breadcrumbs type="runner" />
@@ -76,7 +77,13 @@ export default function RunnerDetailPage() {
               <JobsDataTable limit={25} isNav={true} runnerId={runnerId} />
             </TabsContent>
             <TabsContent value="metrics" className="p-4 border rounded ">
-              <RunnerMetricsTab runnerMetrics={metricsQuery.data as IMetrics} />
+              {metricsQuery.isLoading ? (
+                <LoadingSkeletonMetrics />
+              ) : (
+                <RunnerMetricsTab
+                  runnerMetrics={metricsQuery.data as IMetrics}
+                />
+              )}
             </TabsContent>
           </Tabs>
         </div>

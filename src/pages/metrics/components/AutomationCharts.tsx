@@ -13,6 +13,7 @@ import CustomPieChart from "@/components/features/charts/CustomPieChart";
 import Throbber from "@/components/ui/Throbber";
 import SelectInput from "@/components/SelectInput";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
+import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 
 const AUTOMATIONS_STATE_CHART_CONFIG = {
   count: {
@@ -92,7 +93,7 @@ export default function AutomationsChart() {
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
-  if (automationsQuery.isLoading) return <Throbber />;
+  if (automationsQuery.isLoading) return <LoadingSkeletonMetrics />;
 
   const automationsData = automationsQuery.data as IAutomation[];
   const aStateData = createAutomationsStateData(automationsData) as IAutomation[]; // prettier-ignore

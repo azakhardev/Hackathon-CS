@@ -166,6 +166,19 @@
   animation: spin 1s linear infinite;
 }
 
+.animate-skeleton {
+  animation: skeleton 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes skeleton {
+  00%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 body::-webkit-scrollbar {
   display: none;
 }

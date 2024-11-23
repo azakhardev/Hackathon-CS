@@ -17,6 +17,7 @@ import { ISelectItem } from "@/components/SelectInput";
 import { IJobs } from "@/lib/types/IJobs";
 import { Button } from "@/components/ui/Button";
 import { useSearchParams } from "react-router-dom";
+import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 
 export default function AutomationsDataTable({
   limit = 25,
@@ -27,14 +28,19 @@ export default function AutomationsDataTable({
   isNav: boolean | undefined;
   id?: string;
 }) {
-  const [searchParams] = useSearchParams()
-  const [searchText, setSearchText] = useState(searchParams.get('text') || "");
+  const [searchParams] = useSearchParams();
+  const [searchText, setSearchText] = useState(searchParams.get("text") || "");
 
   const [searchDate, setSearchDate] = useState<DateRange | undefined>({
-    from: searchParams.get('from') ? new Date(searchParams.get('from')) : undefined,
-    to: searchParams.get('to') ? new Date(searchParams.get('to')) : undefined,
+    from: searchParams.get("from")
+      ? new Date(searchParams.get("from"))
+      : undefined,
+    to: searchParams.get("to") ? new Date(searchParams.get("to")) : undefined,
   });
-  const [sort, setSort] = useState({ column: searchParams.get('sort') || "", direction: searchParams.get('order') || "asc" });
+  const [sort, setSort] = useState({
+    column: searchParams.get("sort") || "",
+    direction: searchParams.get("order") || "asc",
+  });
 
   const automationsQuery = useInfiniteQuery({
     queryKey: [
@@ -174,7 +180,7 @@ export default function AutomationsDataTable({
           />
         )}
         {automationsQuery.isLoading || automationsTypesQuery.isLoading ? (
-          <Throbber />
+          <LoadingSkeleton />
         ) : (
           <AutomationsTable
             automations={automationsWithTypes as IAutomation[]}
