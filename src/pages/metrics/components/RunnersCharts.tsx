@@ -106,10 +106,10 @@ export default function RunnersCharts() {
 
 function createRunnersData(data: IRunner[]) {
   let newData: object[] = [];
-  const idleR = new PieStats("idle", "hsl(234, 97%, 52%)");
-  const activeR = new PieStats("active", "hsl(131, 41%, 46%)");
+  const idleR = new PieStats("idle", "hsl(210, 80%, 50%)");
+  const activeR = new PieStats("active", "hsl(161.4 93.5% 30.4%)");
   const failedR = new PieStats("failed", "hsl(0, 91%, 49%)");
-  const offlineR = new PieStats("offline", "hsl(208, 0%, 34%)");
+  const offlineR = new PieStats("offline", "hsl(0 0% 45.1%)");
 
   data.forEach((r) => {
     if (r.state.toLowerCase() === "idle") {

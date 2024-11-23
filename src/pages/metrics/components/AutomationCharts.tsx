@@ -133,9 +133,9 @@ export default function AutomationsChart() {
 
 function createAutomationsStateData(data: IAutomation[]) {
   let newData: object[] = [];
-  const initialA = new PieStats("initial", "hsl(234, 97%, 52%)");
-  const progressA = new PieStats("in_progress", "hsl(28, 97%, 52%)");
-  const finishedA = new PieStats("finished", "hsl(131, 41%, 46%)");
+  const initialA = new PieStats("initial", "hsl(210, 80%, 50%)");
+  const progressA = new PieStats("in_progress", "hsl(40, 90%, 50%)");
+  const finishedA = new PieStats("finished", "hsl(161.4 93.5% 30.4%)");
 
   data.forEach((a) => {
     if (a.state.toLowerCase() === "initial") {

@@ -114,10 +114,10 @@ export default function ProjectsCharts() {
 
 function createProjectsData(data: IProject[]) {
   let newData: object[] = [];
-  const successJ = new PieStats("success", "hsl(131, 41%, 46%)");
-  const progressionJ = new PieStats("in_progress", "hsl(28, 97%, 52%)");
+  const successJ = new PieStats("success", "hsl(161.4 93.5% 30.4%)");
+  const progressionJ = new PieStats("in_progress", "hsl(40, 90%, 50%)");
   const failedJ = new PieStats("failed", "hsl(0, 91%, 49%)");
-  const queuedJ = new PieStats("queued", "hsl(208, 0%, 34%)");
+  const queuedJ = new PieStats("queued", "hsl(0 0% 45.1%)");
 
   data.forEach((p) => {
     if (p.job.state.toLowerCase() === "success") {
