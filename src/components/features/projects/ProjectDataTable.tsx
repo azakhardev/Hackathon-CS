@@ -25,7 +25,7 @@ export default function ProjectsDataTable({
   const [sort, setSort] = useState({ column: "", direction: "asc" });
 
   const sasQuery = useQuery({
-    queryKey: ["sas"],
+    queryKey: ["sas", searchText],
     queryFn: async () => await RunnerModel.getSAS(searchText),
   });
 
@@ -34,10 +34,10 @@ export default function ProjectsDataTable({
     queryFn: async () => await RunnerModel.getJobs(),
   });
 
-  if (jobsQuery.data && "error" in jobsQuery.data)
-    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
   if (sasQuery.data && "error" in sasQuery.data)
     return <ErrorMessage errorMessage={sasQuery.data as IErrorMessage} />;
+  if (jobsQuery.data && "error" in jobsQuery.data)
+    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
 
   if (jobsQuery.error || sasQuery.error) {
     const error: IErrorMessage = {
@@ -82,6 +82,7 @@ export default function ProjectsDataTable({
 
   const totalProjects = projects.length;
   let displayedProjects;
+
   if (displayLimit === -1) {
     displayedProjects = projects;
   } else {

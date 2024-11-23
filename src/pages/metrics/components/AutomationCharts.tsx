@@ -121,7 +121,7 @@ export default function AutomationsChart() {
                 />
               </div>
             ) : (
-              <p>No data for this date range</p>
+              <p>No data for selected options</p>
             )
           }
         />
