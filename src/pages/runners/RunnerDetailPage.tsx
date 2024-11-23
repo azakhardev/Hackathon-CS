@@ -9,7 +9,6 @@ import { RunnerModel } from "@/lib/models/RunnerModel";
 import { DetailRunnerHeader } from "@/components/DetailHeader";
 import "@/components/features/runners/circle.css";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
-import { Theater } from "lucide-react";
 import Throbber from "@/components/ui/Throbber";
 
 export default function RunnerDetailPage() {
@@ -17,7 +16,7 @@ export default function RunnerDetailPage() {
   const runnerId = params.id;
 
   const [searchParams] = useSearchParams();
-  const tabParam = searchParams.get("tabs"); // Extract the `tabs` parameter
+  const tabParam = searchParams.get("tabs");
   const defaultTab = tabParam || "jobs";
 
   const runnerQuery = useQuery({

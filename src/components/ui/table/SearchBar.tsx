@@ -10,6 +10,15 @@ export default function SearchBar({
   searchText,
   setSearchText: setSearchText,
 }: SearchBarProps) {
+
+  const handleValueChange = (value: string) => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('text', value)
+    window.history.pushState({}, '', url)
+
+    setSearchText(value)
+  }
+
   return (
     <div className="relative flex items-center w-1/2">
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -17,9 +26,8 @@ export default function SearchBar({
       </div>
       <Input
         className="pl-10"
-        onChange={(e) => {
-          setSearchText(e.target.value);
-        }}
+        value={searchText}
+        onChange={(e) => handleValueChange(e.target.value)}
       />
       {searchText === "" && (
         <div className="absolute inset-y-0 flex items-center pointer-events-none left-8">

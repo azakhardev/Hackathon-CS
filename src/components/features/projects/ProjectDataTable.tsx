@@ -12,6 +12,7 @@ import Throbber from "@/components/ui/Throbber";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
 import { ISelectItem } from "@/components/SelectInput";
+import { useSearchParams } from "react-router-dom";
 
 export default function ProjectsDataTable({
   limit = -1,
@@ -20,9 +21,10 @@ export default function ProjectsDataTable({
   limit: number | undefined;
   isNav: boolean;
 }) {
-  const [searchText, setSearchText] = useState("");
+  const [searchParams] = useSearchParams();
+  const [searchText, setSearchText] = useState(searchParams.get('text') || "");
   const [displayLimit, setDisplayLimit] = useState(limit);
-  const [sort, setSort] = useState({ column: "", direction: "asc" });
+  const [sort, setSort] = useState({ column: searchParams.get('sort'), direction: searchParams.get('order') || 'asc' });
 
   const sasQuery = useQuery({
     queryKey: ["sas", searchText],
@@ -100,7 +102,7 @@ export default function ProjectsDataTable({
       {isNav && (
         <TableFilterNav
           left={
-            <SearchBar searchText={searchText} setSearchText={setSearchText} />
+            <SearchBar searchText={searchText} setSearchText={setSearchText}/>
           }
           right={<ButtonSort sort={sort} setSort={setSort} items={cols} />}
         />

@@ -19,6 +19,7 @@ import {
   actionsVals,
   states2Vals,
 } from "@/components/ui/table/Select_items_list";
+import { useSearchParams } from "react-router-dom";
 
 export default function JobsDataTable({
   limit = 25,
@@ -31,14 +32,18 @@ export default function JobsDataTable({
   id?: string;
   runnerId?: string;
 }) {
-  const [searchText, setSearchText] = useState("");
-  const [searchAction, setSearchAction] = useState("");
-  const [searchState, setSearchState] = useState("");
-  const [sort, setSort] = useState({ column: "", direction: "asc" });
+  const [searchParams] = useSearchParams();
+
+  const [searchText, setSearchText] = useState(searchParams.get('text') || "");
+  const [searchAction, setSearchAction] = useState(searchParams.get('action') || "");
+  const [searchState, setSearchState] = useState(searchParams.get('state') || "");
+  const [sort, setSort] = useState({ column: searchParams.get('sort') || "", direction: searchParams.get('order') || "asc" });
   const [searchDate, setSearchDate] = useState<DateRange | undefined>({
-    from: undefined,
-    to: undefined,
+    from: searchParams.get('from') ? new Date(searchParams.get('from')) : undefined,
+    to: searchParams.get('to') ? new Date(searchParams.get('to')) : undefined,
   });
+
+  console.log(searchDate.from)
 
   console.log(sort);
 
@@ -160,12 +165,14 @@ export default function JobsDataTable({
                 defaultValue={searchAction}
                 items={actionsVals}
                 onValueChange={(e) => setSearchAction(e)}
+                param="action"
               />
               <SelectInput
                 placeholder="All States"
                 defaultValue={searchState}
                 items={states2Vals}
                 onValueChange={(e) => setSearchState(e)}
+                param="state"
               />
               <ButtonSort sort={sort} setSort={setSort} items={cols} />{" "}
             </>
