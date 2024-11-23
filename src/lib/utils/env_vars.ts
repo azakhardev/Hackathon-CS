@@ -1,5 +1,13 @@
+const user = JSON.parse(localStorage.getItem("user"));
+
+let {username, password} = {username: "", password: ""}
+
+if (user) {
+  username = user.username
+  password = user.password
+ }
 const api_auth = btoa(
-  `${import.meta.env.VITE_API_LOGIN}:${import.meta.env.VITE_API_PASSWORD}`
+  `${username}:${password}`
 );
 const api_url = import.meta.env.VITE_API_URL;
 

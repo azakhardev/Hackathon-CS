@@ -12,7 +12,8 @@ import LoginContext from "@/App";
 import { ILogin } from "@/lib/types/ILogin";
 import { useContext, useEffect, useState } from "react";
 import { api_url } from "@/lib/utils/env_vars";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
+import { userValidate } from "@/lib/utils/validateUser";
 
 export function LoginForm() {
   //const login = useContext(LoginContext);
@@ -20,18 +21,10 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedLogin = localStorage.getItem("login");
-    if (storedLogin) {
-      const { username, password } = JSON.parse(storedLogin);
-      setUsername(username);
-      setPassword(password);
-      navigate("/");
-    } else {
-      setUsername(import.meta.env.VITE_API_LOGIN);
-      setPassword(import.meta.env.VITE_API_PASSWORD);
-    }
-  }, [navigate]);
+  userValidate();
+
+  console.log(username);
+  console.log(password);
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -40,19 +33,23 @@ export function LoginForm() {
       const response = await fetch(`${api_url}/sas`, {
         method: "GET",
         headers: {
-          Authorization: `Basic ${username}:${password}`,
+          Authorization: `Basic ${btoa(`${username}:${password}`)}`,
         },
       });
 
       if (response.ok) {
-        localStorage.setItem("login", JSON.stringify({ username, password }));
-        //TODO: set login context
+        localStorage.setItem("user", JSON.stringify({ username, password }));
         navigate("/");
+        window.location.reload();
       } else {
         console.error("Login failed");
+        setUsername("");
+        setPassword("");
       }
     } catch (error) {
       console.error("An error occurred during login", error);
+      setUsername("");
+      setPassword("");
     }
   }
 

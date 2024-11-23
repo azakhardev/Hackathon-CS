@@ -27,8 +27,11 @@ import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import JobsChart from "./components/JobsChart";
 import RunnersCharts from "./components/RunnersCharts";
 import AutomationsChart from "./components/AutomationCharts";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import { userValidate } from "@/lib/utils/validateUser";
 
 export default function MetricsPage() {
+  userValidate();
   // const [searchDate, setSearchDate] = useState<DateRange | undefined>({
   //   from: undefined,
   //   to: undefined,
@@ -157,6 +160,7 @@ export default function MetricsPage() {
   return (
     <>
       <H1>Metrics</H1>
+      <Breadcrumbs />
       <div className="flex flex-col gap-8">
         <div className="flex flex-col">
           <div className="flex flex-col gap-2">

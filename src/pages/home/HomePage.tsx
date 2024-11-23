@@ -1,13 +1,17 @@
 import ProjectDataTable from "../../components/features/projects/ProjectDataTable";
 import Button_More from "@/components/ButtonLoadMore";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import RunnersDataTable from "../../components/features/runners/RunnersDataTable";
 import AutomationTypesDataTable from "@/components/features/automations/automationTypes/AutomationsTypeDataTable";
 import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
+import { userValidate } from "@/lib/utils/validateUser";
 
 export default function HomePage() {
   const limit = 3;
+
+  userValidate();
+
   return (
     <div className="flex flex-col gap-32">
       {/* <H1>Homepage</H1> */}

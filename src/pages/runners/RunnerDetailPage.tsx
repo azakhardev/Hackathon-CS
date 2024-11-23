@@ -11,8 +11,11 @@ import "@/components/features/runners/circle.css";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
 import { Theater } from "lucide-react";
 import Throbber from "@/components/ui/Throbber";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import { userValidate } from "@/lib/utils/validateUser";
 
 export default function RunnerDetailPage() {
+  userValidate();
   const params = useParams();
   const runnerId = params.id;
 
@@ -57,6 +60,7 @@ export default function RunnerDetailPage() {
             "state" in runnerQuery.data ? runnerQuery.data.state : undefined
           }
         />
+        <Breadcrumbs type="runner" />
         <div className="w-full">
           <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">

@@ -5,8 +5,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DetailHeader from "@/components/DetailHeader";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
 import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
+import Breadcrumbs from "@/components/ui/Breadcrumbs";
+import { userValidate } from "@/lib/utils/validateUser";
 
 export default function ProjectDetailPage() {
+  userValidate();
   const params = useParams();
   const id = params.id;
 
@@ -19,6 +22,7 @@ export default function ProjectDetailPage() {
     <main>
       <div>
         <DetailHeader section="Project" title={title} />
+        <Breadcrumbs type="project" />
         <div>
           <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">
