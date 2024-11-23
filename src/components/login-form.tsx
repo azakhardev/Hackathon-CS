@@ -19,6 +19,7 @@ export function LoginForm() {
   //const login = useContext(LoginContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<undefined | string>(undefined);
   const navigate = useNavigate();
 
   userValidate();
@@ -42,13 +43,11 @@ export function LoginForm() {
         navigate("/");
         window.location.reload();
       } else {
-        console.error("Login failed");
-        setUsername("");
+        setError("Incorrect username or password");
         setPassword("");
       }
     } catch (error) {
-      console.error("An error occurred during login", error);
-      setUsername("");
+      setError(error.toString());
       setPassword("");
     }
   }
@@ -85,6 +84,9 @@ export function LoginForm() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            <span className="text-red-400 text-xs text-center -my-2">
+              {error}
+            </span>
             <Button type="submit" className="w-full">
               Login
             </Button>
