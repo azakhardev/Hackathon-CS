@@ -1,5 +1,5 @@
 import { AutomationModel } from "@/lib/models/AutomationModel";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import AutomationsTable from "@/pages/automations/automations/AutomationsTable";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
@@ -14,9 +14,11 @@ import DateRangePicker from "@/components/ui/table/DateRangePicker";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
 import { ISelectItem } from "@/components/SelectInput";
+import { IJobs } from "@/lib/types/IJobs";
+import { Button } from "@/components/ui/Button";
 
 export default function AutomationsDataTable({
-  limit = 9999,
+  limit = 25,
   isNav = true,
   id,
 }: {
@@ -31,12 +33,12 @@ export default function AutomationsDataTable({
   });
   const [sort, setSort] = useState({ column: "", direction: "asc" });
 
-  const automationsQuery = useQuery({
+  const automationsQuery = useInfiniteQuery({
     queryKey: [
       "automation",
       { searchText: searchText, searchDate: searchDate, sort: sort },
     ],
-    queryFn: async () => {
+    queryFn: ({ pageParam = 1 }) => {
       const filters = {
         ...(searchDate &&
           searchDate.from &&
@@ -74,6 +76,16 @@ export default function AutomationsDataTable({
         filters
       );
     },
+    initialPageParam: 1,
+    getNextPageParam: (_, __, lastPageParam) => {
+      return lastPageParam + 1;
+    },
+    getPreviousPageParam: (_, __, firstPageParam) => {
+      if (firstPageParam <= 1) {
+        return undefined;
+      }
+      return firstPageParam - 1;
+    },
   });
   const automationsTypesQuery = useQuery({
     queryKey: ["automationTypes"],
@@ -83,7 +95,9 @@ export default function AutomationsDataTable({
 
   if (automationsQuery.data && "error" in automationsQuery.data)
     return (
-      <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />
+      <ErrorMessage
+        errorMessage={automationsQuery.data.error as IErrorMessage}
+      />
     );
 
   if (automationsQuery.error || automationsTypesQuery.error) {
@@ -95,11 +109,20 @@ export default function AutomationsDataTable({
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
+  let allData: IAutomation[] = [];
+  automationsQuery.data?.pages.forEach((page) => {
+    if (Array.isArray(page)) {
+      allData = allData.concat(page);
+    } else {
+      console.error("Unexpected response format:", page);
+    }
+  });
+
   // Data joining logic
   let automationsWithTypes = null;
 
   if (!(automationsQuery.isLoading || automationsTypesQuery.isLoading)) {
-    automationsWithTypes = (automationsQuery.data as IAutomation[]).map(
+    automationsWithTypes = (allData as IAutomation[]).map(
       (automation: IAutomation) => {
         const matchedType = Array.isArray(automationsTypesQuery.data)
           ? automationsTypesQuery.data.find(
@@ -152,6 +175,31 @@ export default function AutomationsDataTable({
             searchText={searchText}
           />
         )}
+        {isNav &&
+          automationsQuery.data &&
+          (
+            automationsQuery.data?.pages[
+              automationsQuery.data.pageParams.length - 1
+            ] as IAutomation[]
+          ).length >= limit && (
+            <div className="w-full mt-4">
+              <Button
+                variant="outline"
+                onClick={() => automationsQuery.fetchNextPage()}
+                className="w-full"
+                disabled={
+                  !automationsQuery.hasNextPage ||
+                  automationsQuery.isFetchingNextPage
+                }
+              >
+                {automationsQuery.isFetchingNextPage
+                  ? "Loading more..."
+                  : automationsQuery.hasNextPage
+                  ? "Load More"
+                  : "Nothing more to load"}
+              </Button>
+            </div>
+          )}
       </div>
     </>
   );
