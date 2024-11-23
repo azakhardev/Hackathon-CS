@@ -22,7 +22,6 @@ export default function DateRangePicker({
   className,
 }: IDateRangePicker) {
   const handleDateChange = (newDateRange: DateRange | undefined) => {
-
     const url = new URL(window.location.href);
     if (newDateRange?.from) {
       url.searchParams.set("from", format(newDateRange.from, "yyyy-MM-dd"));

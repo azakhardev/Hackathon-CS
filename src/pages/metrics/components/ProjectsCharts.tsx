@@ -1,16 +1,16 @@
 import { ChartCard2 } from "@/components/features/charts/ChartCard";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
-import SelectInput from "@/components/SelectInput";
 import Throbber from "@/components/ui/Throbber";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import { useQuery } from "@tanstack/react-query";
-import { FoldersIcon } from "lucide-react";
-import { MetricItems, PieStats } from "./MetricsShared";
+import { FolderIcon } from "lucide-react";
+import { PieStats } from "./MetricsShared";
 import { useState } from "react";
 import { IProject } from "@/lib/types/IProject";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { IJobs } from "@/lib/types/IJobs";
+import ChartSelectInput from "@/components/ChartSelectInput";
 
 const PROJECTS_CHART_CONFIG = {
   count: { label: "Count" },
@@ -80,16 +80,15 @@ export default function ProjectsCharts() {
         <ChartCard2
           header="Projects"
           description="Current state of jobs"
-          icon={<FoldersIcon />}
+          icon={<FolderIcon />}
           content={
             projects.length > 0 ? (
               <div>
                 <div className="flex gap-4 max-w-fit">
                   <div className="w-20">
-                    <SelectInput
-                      defaultValue={searchOrg}
-                      items={MetricItems}
+                    <ChartSelectInput
                       onValueChange={(e) => setSearchOrg(e)}
+                      defaultValue={searchOrg}
                     />
                   </div>
                 </div>

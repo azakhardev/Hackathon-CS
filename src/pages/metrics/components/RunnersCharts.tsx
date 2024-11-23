@@ -10,8 +10,7 @@ import { ContainerIcon } from "lucide-react";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
 import { IRunner } from "@/lib/types/IRunner";
 import Throbber from "@/components/ui/Throbber";
-import SelectInput from "@/components/SelectInput";
-import DateRangePicker from "@/components/ui/table/DateRangePicker";
+import ChartSelectInput from "@/components/ChartSelectInput";
 
 const RUNNERS_CHART_CONFIG = {
   count: {
@@ -81,10 +80,9 @@ export default function RunnersCharts() {
               <div>
                 <div className="flex gap-4 max-w-fit">
                   <div className="w-20">
-                    <SelectInput
-                      defaultValue={searchOrg}
-                      items={MetricItems}
+                    <ChartSelectInput
                       onValueChange={(e) => setSearchOrg(e)}
+                      defaultValue={searchOrg}
                     />
                   </div>
                 </div>

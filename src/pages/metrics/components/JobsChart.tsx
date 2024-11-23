@@ -8,11 +8,19 @@ import ErrorMessage from "@/components/ui/ErrorMessage";
 import { ChartCard2 } from "@/components/features/charts/ChartCard";
 import { CheckIcon } from "lucide-react";
 import { IJobs } from "@/lib/types/IJobs";
-import SelectInput from "@/components/SelectInput";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
 import { MetricItems, PieStats } from "./MetricsShared";
 import Throbber from "@/components/ui/Throbber";
+import SelectInput from "@/components/SelectInput";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import ChartSelectInput from "@/components/ChartSelectInput";
 
 const JOBS_CHART_CONFIG = {
   count: { label: "Count" },
@@ -95,10 +103,9 @@ export default function JobsChart() {
               <div>
                 <div className="flex gap-4 max-w-fit">
                   <div className="w-20">
-                    <SelectInput
-                      defaultValue={searchOrg}
-                      items={MetricItems}
+                    <ChartSelectInput
                       onValueChange={(e) => setSearchOrg(e)}
+                      defaultValue={searchOrg}
                     />
                   </div>
                   <DateRangePicker
