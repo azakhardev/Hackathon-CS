@@ -106,24 +106,24 @@ export default function AutomationsChart() {
           description="Current state of automations"
           icon={<Workflow />}
           content={
-            automationsData.length > 0 ? (
-              <div>
-                <div className="flex gap-4 max-w-fit">
-                  <DateRangePicker
-                    dateRange={searchDate}
-                    setSearchDate={setSearchDate}
-                  />
-                </div>
+            <div>
+              <div className="flex gap-4 max-w-fit">
+                <DateRangePicker
+                  dateRange={searchDate}
+                  setSearchDate={setSearchDate}
+                />
+              </div>
+              {automationsData.length > 0 ? (
                 <CustomPieChart
                   chartConfig={AUTOMATIONS_STATE_CHART_CONFIG}
                   chartData={aStateData}
                   innerRadius={0}
                   label={true}
                 />
-              </div>
-            ) : (
-              <p>No data for selected options</p>
-            )
+              ) : (
+                <p>No data for selected options</p>
+              )}
+            </div>
           }
         />
       )}

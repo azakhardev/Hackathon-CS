@@ -85,26 +85,26 @@ export default function ProjectsCharts() {
           description="Current state of jobs"
           icon={<FolderIcon />}
           content={
-            projects.length > 0 ? (
-              <div>
-                <div className="flex gap-4 max-w-fit">
-                  <div className="w-20">
-                    <ChartSelectInput
-                      onValueChange={(e) => setSearchOrg(e)}
-                      defaultValue={searchOrg}
-                    />
-                  </div>
+            <div>
+              <div className="flex gap-4 max-w-fit">
+                <div className="w-20">
+                  <ChartSelectInput
+                    onValueChange={(e) => setSearchOrg(e)}
+                    defaultValue={searchOrg}
+                  />
                 </div>
+              </div>
+              {projects.length > 0 ? (
                 <CustomPieChart
                   chartConfig={PROJECTS_CHART_CONFIG}
                   chartData={pStateData}
                   innerRadius={0}
                   label={true}
                 />
-              </div>
-            ) : (
-              <p>No data for selected options</p>
-            )
+              ) : (
+                <p>No data for selected options</p>
+              )}
+            </div>
           }
         />
       )}

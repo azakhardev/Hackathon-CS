@@ -101,30 +101,30 @@ export default function JobsChart() {
           description="Current state of jobs"
           icon={<CheckIcon />}
           content={
-            jobsData.length > 0 ? (
-              <div>
-                <div className="flex gap-4 max-w-fit">
-                  <div className="w-20">
-                    <ChartSelectInput
-                      onValueChange={(e) => setSearchOrg(e)}
-                      defaultValue={searchOrg}
-                    />
-                  </div>
-                  <DateRangePicker
-                    dateRange={searchDate}
-                    setSearchDate={setSearchDate}
+            <div>
+              <div className="flex gap-4 max-w-fit">
+                <div className="w-20">
+                  <ChartSelectInput
+                    onValueChange={(e) => setSearchOrg(e)}
+                    defaultValue={searchOrg}
                   />
                 </div>
+                <DateRangePicker
+                  dateRange={searchDate}
+                  setSearchDate={setSearchDate}
+                />
+              </div>
+              {jobsData.length > 0 ? (
                 <CustomPieChart
                   chartConfig={JOBS_CHART_CONFIG}
                   chartData={jStateData}
                   innerRadius={0}
                   label={true}
                 />
-              </div>
-            ) : (
-              <p>No data for selected options</p>
-            )
+              ) : (
+                <p>No data for selected options</p>
+              )}
+            </div>
           }
         />
       )}

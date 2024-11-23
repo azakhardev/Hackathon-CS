@@ -77,26 +77,26 @@ export default function RunnersCharts() {
           description="Current state of runners"
           icon={<ContainerIcon />}
           content={
-            runnersData.length > 0 ? (
-              <div>
-                <div className="flex gap-4 max-w-fit">
-                  <div className="w-20">
-                    <ChartSelectInput
-                      onValueChange={(e) => setSearchOrg(e)}
-                      defaultValue={searchOrg}
-                    />
-                  </div>
+            <div>
+              <div className="flex gap-4 max-w-fit">
+                <div className="w-20">
+                  <ChartSelectInput
+                    onValueChange={(e) => setSearchOrg(e)}
+                    defaultValue={searchOrg}
+                  />
                 </div>
+              </div>
+              {runnersData.length > 0 ? (
                 <CustomPieChart
                   chartConfig={RUNNERS_CHART_CONFIG}
                   chartData={rStateData}
                   innerRadius={0}
                   label={true}
                 />
-              </div>
-            ) : (
-              <p>No data for selected options</p>
-            )
+              ) : (
+                <p>No data for selected options</p>
+              )}
+            </div>
           }
         />
       )}
