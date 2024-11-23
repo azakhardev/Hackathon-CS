@@ -23,7 +23,11 @@ import {
 } from "@/components/ui/tooltip";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
-import { IconItem, statesVals } from "@/components/ui/table/Select_items_list";
+import {
+  actionsVals,
+  IconItem,
+  statesVals,
+} from "@/components/ui/table/Select_items_list";
 
 export default function RunnersPage({
   limit2 = 25,
@@ -33,8 +37,8 @@ export default function RunnersPage({
   isNav: boolean;
 }) {
   const [searchText, setSearchText] = useState("");
-  const [searchAction, setSearchAction] = useState(" ");
-  const [searchState, setSearchState] = useState(" ");
+  const [searchAction, setSearchAction] = useState("");
+  const [searchState, setSearchState] = useState("");
   const [limit, _] = useState(limit2);
   const [sort, setSort] = useState({ column: "", direction: "asc" });
 
@@ -106,49 +110,6 @@ export default function RunnersPage({
 
   const cols: ISelectItem[] = [{ value: "id", content: "Name" }];
 
-  const actionsVals: ISelectItem[] = [
-    {
-      value: "csas-dev-csas-linux",
-      content: (
-        <IconItem
-          title="Build"
-          icon={<HammerIcon size={15} />}
-          text="Build runners"
-        />
-      ),
-    },
-    {
-      value: "csas-dev-csas-linux-test",
-      content: (
-        <IconItem
-          title="Test"
-          icon={<TestTubeDiagonalIcon size={15} />}
-          text="Test runners"
-        />
-      ),
-    },
-    {
-      value: "csas-ops-csas-linux",
-      content: (
-        <IconItem
-          title="DEV"
-          icon={<ServerIcon size={15} />}
-          text="DEV deployers"
-        />
-      ),
-    },
-    {
-      value: "csas-ops-csas-linux-prod",
-      content: (
-        <IconItem
-          title="PROD"
-          icon={<ServerIcon size={15} className="stroke-log_red" />}
-          text="PROD deployers"
-        />
-      ),
-    },
-  ];
-
   return (
     <>
       {isNav && (
@@ -159,14 +120,14 @@ export default function RunnersPage({
           right={
             <>
               <SelectInput
-                defaultValue={searchAction}
                 placeholder="All actions"
+                defaultValue={searchAction}
                 items={actionsVals}
                 onValueChange={(e) => setSearchAction(e)}
               />
               <SelectInput
-                defaultValue={searchState}
                 placeholder="All States"
+                defaultValue={searchState}
                 items={statesVals}
                 onValueChange={(e) => setSearchState(e)}
               />
