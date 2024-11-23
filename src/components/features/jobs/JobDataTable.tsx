@@ -150,8 +150,8 @@ export default function JobsDataTable({
   });
 
   const cols: ISelectItem[] = [
-    { value: "id", content: "Name" },
-    { value: "timestamp", content: "Time" },
+    { value: "id", content: "ID" },
+    { value: "timestamp", content: "Date" },
   ];
 
   return (
