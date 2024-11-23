@@ -12,8 +12,15 @@ import {
 import { IProject } from "@/lib/types/IProject";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
 import { JobCells } from "@/components/features/jobs/JobsTable";
-import { CheckIcon, WorkflowIcon } from "lucide-react";
+import { CheckIcon, Star, StarIcon, WorkflowIcon } from "lucide-react";
 import IconButton from "@/components/IconButton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@radix-ui/react-tooltip";
+import { useState } from "react";
 
 interface IProps {
   projects: IProject[] | IErrorMessage;
@@ -21,6 +28,30 @@ interface IProps {
 }
 
 export default function ProjectsTable(props: IProps) {
+  const [storage, setStorage] = useState(
+    (JSON.parse(localStorage.getItem("favorite")) as string[]) ?? []
+  );
+
+  console.log(storage);
+
+  function handleStarClick(value: string) {
+    if (storage.includes(value)) {
+      setStorage((oldStorage) => {
+        const newStorage = [...oldStorage];
+        newStorage.splice(storage.indexOf(value), 1);
+        localStorage.setItem("favorite", JSON.stringify(newStorage));
+        return newStorage;
+      });
+    } else {
+      setStorage((oldStorage) => {
+        const newStorage = [...oldStorage];
+        newStorage.push(value);
+        localStorage.setItem("favorite", JSON.stringify(newStorage));
+        return newStorage;
+      });
+    }
+  }
+
   return (
     <Table>
       <TableBody>
@@ -49,6 +80,16 @@ export default function ProjectsTable(props: IProps) {
                   text={`${name.toLowerCase()}'s AUTOMATIONS`}
                   tab="automations"
                 />
+                <div className="flex justify-center items-center cursor-pointer">
+                  <StarIcon
+                    onClick={() => {
+                      handleStarClick(p.name);
+                    }}
+                    fill={storage.includes(p.name) ? "yellow" : undefined}
+                    strokeWidth={storage.includes(p.name) ? 1 : 2}
+                    stroke={storage.includes(p.name) ? "black" : "white"}
+                  />
+                </div>
               </TableCell>
             </TableRow>
           );

@@ -25,8 +25,6 @@ export function LoginForm() {
 
   userValidate();
   const secret = "tajnyKlic69";
-  console.log(username);
-  console.log(password);
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

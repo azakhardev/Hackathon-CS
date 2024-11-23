@@ -27,7 +27,10 @@ export default function IconButton({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger>
-          <Link className={buttonVariants({ variant: "outline" })} to={fullUrl}>
+          <Link
+            className={buttonVariants({ variant: "outline" })}
+            to={url !== "" ? fullUrl : "#"}
+          >
             {icon}
           </Link>
         </TooltipTrigger>

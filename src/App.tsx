@@ -4,7 +4,6 @@ import HomePage from "./pages/home/HomePage";
 import RunnersPage from "./pages/runners/RunnersPage";
 import AutomationsPage from "./pages/automations/automations/AutomationsPage";
 import Layout from "./pages/_layout/_Layout";
-import ChartTest from "./components/features/charts/ChartTest";
 import JobsPage from "./pages/jobs/JobsPage";
 import RunnerDetailPage from "./pages/runners/RunnerDetailPage";
 import AutomationDetailPage from "./pages/automations/detail/AutomationDetailPage";
@@ -36,11 +35,6 @@ const router = createBrowserRouter([
       { path: "/automations/:id", element: <AutomationDetailPage /> },
       { path: "/automationTypes", element: <AutomationTypesPage /> },
     ],
-  },
-  {
-    path: "/test",
-    element: <Layout />,
-    children: [{ path: "chart", element: <ChartTest /> }],
   },
   {
     path: "/login",
