@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { api_url } from "./env_vars"
 import { useLocation } from "react-router-dom";
+import CryptoJS from "crypto-js";
 
 export function userValidate() {
 
@@ -12,7 +13,7 @@ export function userValidate() {
     useEffect(() => {
 
         const validateUser = async () => {
-          const userData = localStorage.getItem("user");
+          const userData = sessionStorage.getItem("user");
     
           if (!userData) {
             if (location.pathname != "/login") {
@@ -21,13 +22,15 @@ export function userValidate() {
             return;
           }
     
-          const { username, password } = JSON.parse(userData);
+          const { username, encryptedPassword } = JSON.parse(userData);
+          const secret = "tajnyKlic69"
+          const decryptedPassword = CryptoJS.AES.decrypt(encryptedPassword.toString(), secret).toString(CryptoJS.enc.Utf8)
     
           try {
             const response = await fetch(`${api_url}/sas`, {
               method: "GET",
               headers: {
-                Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+                Authorization: `Basic ${btoa(`${username}:${decryptedPassword}`)}`,
               },
             });
     

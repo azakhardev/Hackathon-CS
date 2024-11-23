@@ -14,6 +14,7 @@ import { useContext, useEffect, useState } from "react";
 import { api_url } from "@/lib/utils/env_vars";
 import { redirect, useNavigate } from "react-router-dom";
 import { userValidate } from "@/lib/utils/validateUser";
+import CryptoJS from "crypto-js";
 
 export function LoginForm() {
   //const login = useContext(LoginContext);
@@ -23,7 +24,7 @@ export function LoginForm() {
   const navigate = useNavigate();
 
   userValidate();
-
+  const secret = "tajnyKlic69";
   console.log(username);
   console.log(password);
 
@@ -39,7 +40,14 @@ export function LoginForm() {
       });
 
       if (response.ok) {
-        localStorage.setItem("user", JSON.stringify({ username, password }));
+        const encryptedPassword = CryptoJS.AES.encrypt(
+          password,
+          secret
+        ).toString();
+        sessionStorage.setItem(
+          "user",
+          JSON.stringify({ username, encryptedPassword })
+        );
         navigate("/");
         window.location.reload();
       } else {

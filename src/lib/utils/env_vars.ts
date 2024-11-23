@@ -1,10 +1,15 @@
-const user = JSON.parse(localStorage.getItem("user"));
+import CryptoJS from "crypto-js";
+
+const user = JSON.parse(sessionStorage.getItem("user"));
+const secret = "tajnyKlic69"
 
 let {username, password} = {username: "", password: ""}
 
 if (user) {
   username = user.username
-  password = user.password
+  const decryptedPassword = CryptoJS.AES.decrypt(user.encryptedPassword.toString(), secret).toString(CryptoJS.enc.Utf8)
+  password = decryptedPassword
+
  }
 const api_auth = btoa(
   `${username}:${password}`
