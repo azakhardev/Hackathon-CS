@@ -53,7 +53,8 @@ export default function ProjectsDataTable({
     };
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
-
+  const storage =
+    (JSON.parse(localStorage.getItem("favorite")) as string[]) ?? [];
   let projects: IProject[] = [];
   if (!jobsQuery.isLoading && !sasQuery.isLoading) {
     (sasQuery.data as string[])
@@ -77,9 +78,19 @@ export default function ProjectsDataTable({
           projects.push(newProject);
         }
       });
-    sort.direction === "asc"
-      ? projects.sort((a, b) => a.name.localeCompare(b.name))
-      : projects.sort((a, b) => b.name.localeCompare(a.name));
+
+    projects.sort((a, b) => {
+      const aPriority = storage.includes(a.name) ? 0 : 1;
+      const bPriority = storage.includes(b.name) ? 0 : 1;
+
+      if (aPriority !== bPriority) {
+        return aPriority - bPriority;
+      }
+
+      return sort.direction === "asc"
+        ? a.name.localeCompare(b.name)
+        : b.name.localeCompare(a.name);
+    });
   }
 
   if (sort.column === "id") {
