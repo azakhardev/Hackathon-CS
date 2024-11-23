@@ -14,6 +14,10 @@ import {
 
 export const actionsVals: ISelectItem[] = [
   {
+    value: " ",
+    content: <IconItem title="All actions" text="All" />,
+  },
+  {
     value: "csas-dev-csas-linux",
     content: (
       <IconItem
@@ -56,12 +60,14 @@ export const actionsVals: ISelectItem[] = [
 ];
 
 export const statesVals: ISelectItem[] = [
+  { value: " ", content: <IconItem title="All states" text="All States" /> },
   { value: "active", content: <StateItem title="Active" color="green" /> },
   { value: "offline", content: <StateItem title="Offline" color="gray" /> }, // prettier-ignore
   { value: "idle", content: <StateItem title="Idle" color="yellow" />  }, // prettier-ignore
   { value: "failed", content: <StateItem title="Failed" color="red" /> },
 ];
 export const states2Vals: ISelectItem[] = [
+  { value: " ", content: <IconItem title="All states" text="All States" /> },
   { value: "success", content: <StateItem title="Success" color="green" /> },
   { value: "queued", content: <StateItem title="Queued" color="gray" /> }, // prettier-ignore
   { value: "in_progress", content: <StateItem title="In Progress" color="yellow" /> }, // prettier-ignore

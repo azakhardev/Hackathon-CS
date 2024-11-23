@@ -48,6 +48,7 @@ export function ButtonSort({ sort, setSort, items }: ButtonSortProps) {
                 defaultValue={sort.column}
                 items={items}
                 onValueChange={(e) => setSort((prev) => ({ ...prev, column: e }))}
+                param="sort"
               />
             </div>
             <div className="flex flex-col gap-2 p-1">
@@ -59,6 +60,7 @@ export function ButtonSort({ sort, setSort, items }: ButtonSortProps) {
                 defaultValue={sort.direction}
                 items={directions}
                 onValueChange={(e) => setSort((prev) => ({ ...prev, direction: e }))}
+                param="order"
               />
             </div>
           </div>

@@ -12,6 +12,7 @@ import Throbber from "@/components/ui/Throbber";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
 import { ISelectItem } from "@/components/SelectInput";
+import { useSearchParams } from "react-router-dom";
 
 export default function ProjectsDataTable({
   limit = -1,
@@ -20,12 +21,13 @@ export default function ProjectsDataTable({
   limit: number | undefined;
   isNav: boolean;
 }) {
-  const [searchText, setSearchText] = useState("");
+  const [searchParams] = useSearchParams();
+  const [searchText, setSearchText] = useState(searchParams.get('text') || "");
   const [displayLimit, setDisplayLimit] = useState(limit);
-  const [sort, setSort] = useState({ column: "", direction: "asc" });
+  const [sort, setSort] = useState({ column: searchParams.get('sort'), direction: searchParams.get('order') || 'asc' });
 
   const sasQuery = useQuery({
-    queryKey: ["sas"],
+    queryKey: ["sas", searchText],
     queryFn: async () => await RunnerModel.getSAS(searchText),
   });
 
@@ -34,10 +36,10 @@ export default function ProjectsDataTable({
     queryFn: async () => await RunnerModel.getJobs(),
   });
 
-  if (jobsQuery.data && "error" in jobsQuery.data)
-    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
   if (sasQuery.data && "error" in sasQuery.data)
     return <ErrorMessage errorMessage={sasQuery.data as IErrorMessage} />;
+  if (jobsQuery.data && "error" in jobsQuery.data)
+    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
 
   if (jobsQuery.error || sasQuery.error) {
     const error: IErrorMessage = {
@@ -82,6 +84,7 @@ export default function ProjectsDataTable({
 
   const totalProjects = projects.length;
   let displayedProjects;
+
   if (displayLimit === -1) {
     displayedProjects = projects;
   } else {
@@ -99,7 +102,7 @@ export default function ProjectsDataTable({
       {isNav && (
         <TableFilterNav
           left={
-            <SearchBar searchText={searchText} setSearchText={setSearchText} />
+            <SearchBar searchText={searchText} setSearchText={setSearchText}/>
           }
           right={<ButtonSort sort={sort} setSort={setSort} items={cols} />}
         />

@@ -96,7 +96,7 @@ export default function JobsChart() {
                 <div className="flex gap-4 max-w-fit">
                   <div className="w-20">
                     <SelectInput
-                      defaultValue=" "
+                      defaultValue={searchOrg}
                       items={MetricItems}
                       onValueChange={(e) => setSearchOrg(e)}
                     />
@@ -114,7 +114,7 @@ export default function JobsChart() {
                 />
               </div>
             ) : (
-              <p>No data for this date range</p>
+              <p>No data for selected options</p>
             )
           }
         />

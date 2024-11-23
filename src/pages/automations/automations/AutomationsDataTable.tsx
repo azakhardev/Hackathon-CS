@@ -1,5 +1,5 @@
 import { AutomationModel } from "@/lib/models/AutomationModel";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import AutomationsTable from "@/pages/automations/automations/AutomationsTable";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
@@ -14,9 +14,12 @@ import DateRangePicker from "@/components/ui/table/DateRangePicker";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
 import { ISelectItem } from "@/components/SelectInput";
+import { IJobs } from "@/lib/types/IJobs";
+import { Button } from "@/components/ui/Button";
+import { useSearchParams } from "react-router-dom";
 
 export default function AutomationsDataTable({
-  limit = 9999,
+  limit = 25,
   isNav = true,
   id,
 }: {
@@ -24,19 +27,21 @@ export default function AutomationsDataTable({
   isNav: boolean | undefined;
   id?: string;
 }) {
-  const [searchText, setSearchText] = useState("");
-  const [searchDate, setSearchDate] = useState<DateRange | undefined>({
-    from: undefined,
-    to: undefined,
-  });
-  const [sort, setSort] = useState({ column: "", direction: "asc" });
+  const [searchParams] = useSearchParams()
+  const [searchText, setSearchText] = useState(searchParams.get('text') || "");
 
-  const automationsQuery = useQuery({
+  const [searchDate, setSearchDate] = useState<DateRange | undefined>({
+    from: searchParams.get('from') ? new Date(searchParams.get('from')) : undefined,
+    to: searchParams.get('to') ? new Date(searchParams.get('to')) : undefined,
+  });
+  const [sort, setSort] = useState({ column: searchParams.get('sort') || "", direction: searchParams.get('order') || "asc" });
+
+  const automationsQuery = useInfiniteQuery({
     queryKey: [
       "automation",
       { searchText: searchText, searchDate: searchDate, sort: sort },
     ],
-    queryFn: async () => {
+    queryFn: ({ pageParam = 1 }) => {
       const filters = {
         ...(searchDate &&
           searchDate.from &&
@@ -68,11 +73,21 @@ export default function AutomationsDataTable({
       return AutomationModel.getAutomations(
         searchText,
         limit,
-        undefined,
+        pageParam,
         sort.column,
         sort.direction,
         filters
       );
+    },
+    initialPageParam: 1,
+    getNextPageParam: (_, __, lastPageParam) => {
+      return lastPageParam + 1;
+    },
+    getPreviousPageParam: (_, __, firstPageParam) => {
+      if (firstPageParam <= 1) {
+        return undefined;
+      }
+      return firstPageParam - 1;
     },
   });
   const automationsTypesQuery = useQuery({
@@ -83,7 +98,9 @@ export default function AutomationsDataTable({
 
   if (automationsQuery.data && "error" in automationsQuery.data)
     return (
-      <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />
+      <ErrorMessage
+        errorMessage={automationsQuery.data.error as IErrorMessage}
+      />
     );
 
   if (automationsQuery.error || automationsTypesQuery.error) {
@@ -95,11 +112,20 @@ export default function AutomationsDataTable({
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
+  let allData: IAutomation[] = [];
+  automationsQuery.data?.pages.forEach((page) => {
+    if (Array.isArray(page)) {
+      allData = allData.concat(page);
+    } else {
+      console.error("Unexpected response format:", page);
+    }
+  });
+
   // Data joining logic
   let automationsWithTypes = null;
 
   if (!(automationsQuery.isLoading || automationsTypesQuery.isLoading)) {
-    automationsWithTypes = (automationsQuery.data as IAutomation[]).map(
+    automationsWithTypes = (allData as IAutomation[]).map(
       (automation: IAutomation) => {
         const matchedType = Array.isArray(automationsTypesQuery.data)
           ? automationsTypesQuery.data.find(
@@ -120,7 +146,10 @@ export default function AutomationsDataTable({
   //   { value: "14d", content: "14d" },
   //   { value: "7d", content: "7d" },
   // ];
-  const cols: ISelectItem[] = [{ value: "id", content: "ID" }];
+  const cols: ISelectItem[] = [
+    { value: "id", content: "ID" },
+    { value: "last_activity", content: "Date" },
+  ];
 
   return (
     <>
@@ -152,6 +181,31 @@ export default function AutomationsDataTable({
             searchText={searchText}
           />
         )}
+        {isNav &&
+          automationsQuery.data &&
+          (
+            automationsQuery.data?.pages[
+              automationsQuery.data.pageParams.length - 1
+            ] as IAutomation[]
+          ).length >= limit && (
+            <div className="w-full mt-4">
+              <Button
+                variant="outline"
+                onClick={() => automationsQuery.fetchNextPage()}
+                className="w-full"
+                disabled={
+                  !automationsQuery.hasNextPage ||
+                  automationsQuery.isFetchingNextPage
+                }
+              >
+                {automationsQuery.isFetchingNextPage
+                  ? "Loading more..."
+                  : automationsQuery.hasNextPage
+                  ? "Load More"
+                  : "Nothing more to load"}
+              </Button>
+            </div>
+          )}
       </div>
     </>
   );

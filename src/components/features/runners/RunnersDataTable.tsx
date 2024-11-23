@@ -2,12 +2,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import RunnersTable from "@/components/features/runners/RunnersTable";
 import { useState } from "react";
 import SearchBar from "@/components/ui/table/SearchBar";
-import {
-  CircleIcon,
-  HammerIcon,
-  ServerIcon,
-  TestTubeDiagonalIcon,
-} from "lucide-react";
 import { IRunner } from "../../../lib/types/IRunner";
 import { Button } from "@/components/ui/Button";
 import SelectInput, { ISelectItem } from "@/components/SelectInput";
@@ -15,15 +9,14 @@ import { RunnerModel } from "@/lib/models/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import Throbber from "@/components/ui/Throbber";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
-import { IconItem, statesVals } from "@/components/ui/table/Select_items_list";
+import {
+  actionsVals,
+  IconItem,
+  statesVals,
+} from "@/components/ui/table/Select_items_list";
+import { useSearchParams } from "react-router-dom";
 
 export default function RunnersPage({
   limit2 = 25,
@@ -32,11 +25,15 @@ export default function RunnersPage({
   limit2: number | undefined;
   isNav: boolean;
 }) {
-  const [searchText, setSearchText] = useState("");
-  const [searchAction, setSearchAction] = useState(" ");
-  const [searchState, setSearchState] = useState(" ");
+  const [searchParams] = useSearchParams();
+
+  const [searchText, setSearchText] = useState(searchParams.get('text') || "");
+  const [searchAction, setSearchAction] = useState(searchParams.get('action') || "");
+  const [searchState, setSearchState] = useState(searchParams.get('state') || "");
   const [limit, _] = useState(limit2);
-  const [sort, setSort] = useState({ column: "", direction: "asc" });
+  const [sort, setSort] = useState({ column: searchParams.get('sort'), direction: searchParams.get('order') || 'asc' });
+
+  console.log(searchAction)
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -106,49 +103,6 @@ export default function RunnersPage({
 
   const cols: ISelectItem[] = [{ value: "id", content: "Name" }];
 
-  const actionsVals: ISelectItem[] = [
-    {
-      value: "csas-dev-csas-linux",
-      content: (
-        <IconItem
-          title="Build"
-          icon={<HammerIcon size={15} />}
-          text="Build runners"
-        />
-      ),
-    },
-    {
-      value: "csas-dev-csas-linux-test",
-      content: (
-        <IconItem
-          title="Test"
-          icon={<TestTubeDiagonalIcon size={15} />}
-          text="Test runners"
-        />
-      ),
-    },
-    {
-      value: "csas-ops-csas-linux",
-      content: (
-        <IconItem
-          title="DEV"
-          icon={<ServerIcon size={15} />}
-          text="DEV deployers"
-        />
-      ),
-    },
-    {
-      value: "csas-ops-csas-linux-prod",
-      content: (
-        <IconItem
-          title="PROD"
-          icon={<ServerIcon size={15} className="stroke-log_red" />}
-          text="PROD deployers"
-        />
-      ),
-    },
-  ];
-
   return (
     <>
       {isNav && (
@@ -159,16 +113,18 @@ export default function RunnersPage({
           right={
             <>
               <SelectInput
-                defaultValue={searchAction}
                 placeholder="All actions"
+                defaultValue={searchAction}
                 items={actionsVals}
                 onValueChange={(e) => setSearchAction(e)}
+                param='action'
               />
               <SelectInput
-                defaultValue={searchState}
                 placeholder="All States"
+                defaultValue={searchState}
                 items={statesVals}
                 onValueChange={(e) => setSearchState(e)}
+                param='state'
               />
               <ButtonSort sort={sort} setSort={setSort} items={cols} />
             </>

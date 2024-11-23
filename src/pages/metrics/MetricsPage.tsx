@@ -27,6 +27,7 @@ import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import JobsChart from "./components/JobsChart";
 import RunnersCharts from "./components/RunnersCharts";
 import AutomationsChart from "./components/AutomationCharts";
+import ProjectsCharts from "./components/ProjectsCharts";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { userValidate } from "@/lib/utils/validateUser";
 
@@ -162,11 +163,30 @@ export default function MetricsPage() {
       <H1>Metrics</H1>
       <Breadcrumbs />
       <div className="flex flex-col gap-8">
+        <H2>Total</H2>
         <div className="flex flex-col">
           <div className="flex flex-col gap-2">
-            <div className="flex justify-between">
-              <H2>Total</H2>
-              {/* <DateRangePicker
+            <div className="flex flex-col md:flex-row gap-2 justify-between">
+              <ProjectsCharts />
+              <AutomationsChart />
+            </div>
+            <div className="flex flex-col md:flex-row gap-2 justify-between ">
+              <JobsChart />
+              <RunnersCharts />
+            </div>
+          </div>
+        </div>
+        <div>
+          <H2>Runners</H2>
+          <RunnersDataTable limit2={3} isNav={false} />
+          <MoreBtn to="/runners" />
+        </div>
+      </div>
+    </>
+  );
+}
+
+/* <DateRangePicker
                 dateRange={searchDate}
                 setSearchDate={setSearchDate}
               />
@@ -181,27 +201,11 @@ export default function MetricsPage() {
               runnersQuery.isLoading) && <Throbber />}
             {!jobsQuery.isLoading &&
               !automationsQuery.isLoading &&
-              !runnersQuery.isLoading && ( */}
-              <>
-                <JobsChart />
-                <RunnersCharts />
-                <AutomationsChart />
-              </>
-              {/* <MetricsPageCharts
+              !runnersQuery.isLoading && ( */
+
+/* <MetricsPageCharts
                     automationsData={automationsQuery.data as IAutomation[]}
                     runnersData={runnersQuery.data as IRunner[]}
                     jobsData={jobsQuery.data as IJobs[]}
                   />
-               )} */}
-            </div>
-          </div>
-        </div>
-        <div>
-          <H2>Runners</H2>
-          <RunnersDataTable limit2={3} isNav={false} />
-          <MoreBtn to="/runners" />
-        </div>
-      </div>
-    </>
-  );
-}
+               )} */

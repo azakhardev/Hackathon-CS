@@ -21,6 +21,24 @@ export default function DateRangePicker({
   setSearchDate: setSearchDate,
   className,
 }: IDateRangePicker) {
+  const handleDateChange = (newDateRange: DateRange | undefined) => {
+
+    const url = new URL(window.location.href);
+    if (newDateRange?.from) {
+      url.searchParams.set("from", format(newDateRange.from, "yyyy-MM-dd"));
+    } else {
+      url.searchParams.delete("from");
+    }
+    if (newDateRange?.to) {
+      url.searchParams.set("to", format(newDateRange.to, "yyyy-MM-dd"));
+    } else {
+      url.searchParams.delete("to");
+    }
+    window.history.pushState({}, "", url);
+
+    setSearchDate(newDateRange);
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -53,7 +71,7 @@ export default function DateRangePicker({
           mode="range"
           defaultMonth={dateRange?.from}
           selected={dateRange}
-          onSelect={setSearchDate}
+          onSelect={handleDateChange}
           numberOfMonths={2}
         />
       </PopoverContent>

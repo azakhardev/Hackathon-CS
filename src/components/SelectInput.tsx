@@ -16,14 +16,24 @@ export default function SelectInput({
   items,
   defaultValue,
   onValueChange,
+  param
 }: {
   defaultValue: string;
   placeholder?: string;
   items: ISelectItem[];
   onValueChange: (value: string) => void;
+  param: string
 }) {
+  const handleValueChange = (value: string) => {
+    const url = new URL(window.location.href);
+    url.searchParams.set(param, value);
+    window.history.pushState({}, "", url);
+
+    onValueChange(value);
+  };
+
   return (
-    <Select onValueChange={onValueChange} defaultValue={defaultValue}>
+    <Select onValueChange={handleValueChange} defaultValue={defaultValue}>
       <SelectTrigger className="w-full">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
