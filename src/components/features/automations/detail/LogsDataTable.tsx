@@ -5,7 +5,7 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import LogsTable from "./LogsTable";
 import { IAutomationType } from "@/lib/types/IAutomationType";
-import Throbber from "@/components/ui/Throbber";
+import LoadingSkeletonLogs from "@/components/ui/LoadingSkeletonLogs";
 
 export default function LogsDataTable({
   automationId,
@@ -53,7 +53,7 @@ export default function LogsDataTable({
     logsQuery.isLoading ||
     automationsTypesQuery.isLoading
   ) {
-    return <Throbber />;
+    return <LoadingSkeletonLogs />;
   }
 
   // Data joining logic

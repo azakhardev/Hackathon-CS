@@ -23,7 +23,6 @@ import {
 import { AutomationModel } from "@/lib/models/AutomationModel";
 import { IAutomationType, ITransition } from "@/lib/types/IAutomationType";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import Throbber from "@/components/ui/Throbber";
 import LoadingSkeletonTypes from "@/components/ui/LoadingSkeletonTypes";
 //-----------------------------------------↓
 export default function AutomationTypesDataTable({

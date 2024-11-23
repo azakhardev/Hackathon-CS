@@ -53,10 +53,6 @@ export default function JobsDataTable({
     to: searchParams.get("to") ? new Date(searchParams.get("to")) : undefined,
   });
 
-  console.log(searchDate.from);
-
-  console.log(sort);
-
   const dataQuery = useInfiniteQuery({
     queryKey: [
       "runners",
