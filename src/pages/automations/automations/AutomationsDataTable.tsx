@@ -143,7 +143,10 @@ export default function AutomationsDataTable({
   //   { value: "14d", content: "14d" },
   //   { value: "7d", content: "7d" },
   // ];
-  const cols: ISelectItem[] = [{ value: "id", content: "ID" }];
+  const cols: ISelectItem[] = [
+    { value: "id", content: "ID" },
+    { value: "last_activity", content: "Date" },
+  ];
 
   return (
     <>
