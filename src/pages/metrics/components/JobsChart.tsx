@@ -121,6 +121,7 @@ export default function JobsChart() {
                 <DateRangePicker
                   dateRange={searchDate}
                   setSearchDate={setSearchDate}
+                  setParams={false}
                 />
               </div>
               {jobsData.length > 0 ? (

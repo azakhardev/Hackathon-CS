@@ -114,6 +114,7 @@ export default function AutomationsChart() {
                 <DateRangePicker
                   dateRange={searchDate}
                   setSearchDate={setSearchDate}
+                  setParams={false}
                 />
               </div>
               {automationsData.length > 0 ? (
