@@ -29,11 +29,11 @@ export default function AutomationTypesDataTable({
   limit = -1,
   isNav = true,
 }: {
-  limit: number | undefined;
+  limit?: number;
   isNav: boolean;
 }) {
   const automationsTypeQuery = useQuery({
-    queryKey: ["automationTypes"],
+    queryKey: ["automationTypes", limit],
     queryFn: async () => await AutomationModel.getAutomationTypes("", limit),
     gcTime: 0,
   });
