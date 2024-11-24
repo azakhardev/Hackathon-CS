@@ -12,14 +12,8 @@ import {
 import { IProject } from "@/lib/types/IProject";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
 import { JobCells } from "@/components/features/jobs/JobsTable";
-import { CheckIcon, Star, StarIcon, WorkflowIcon } from "lucide-react";
+import { CheckIcon, StarIcon, WorkflowIcon } from "lucide-react";
 import IconButton from "@/components/IconButton";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@radix-ui/react-tooltip";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/lib/hooks/use-mobile";

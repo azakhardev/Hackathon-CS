@@ -2,7 +2,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import JobsTable from "./JobsTable";
 import { Button } from "@/components/ui/Button";
 import { IJobs } from "@/lib/types/IJobs";
-import { CircleIcon } from "lucide-react";
 import { useState } from "react";
 import SearchBar from "@/components/ui/table/SearchBar";
 import { format } from "date-fns";
@@ -10,7 +9,6 @@ import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import Throbber from "@/components/ui/Throbber";
 import { DateRange } from "react-day-picker";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
 import { ButtonSort } from "@/components/ButtonSort";
@@ -218,11 +216,11 @@ export default function JobsDataTable({
   );
 }
 
-function StateItem({ title, color }: { title: string; color: string }) {
-  return (
-    <div className="flex flex-row items-center">
-      <CircleIcon size={8} className={`mr-2 fill-state_${color} stroke-none`} />
-      <span>{title}</span>
-    </div>
-  );
-}
+// function StateItem({ title, color }: { title: string; color: string }) {
+//   return (
+//     <div className="flex flex-row items-center">
+//       <CircleIcon size={8} className={`mr-2 fill-state_${color} stroke-none`} />
+//       <span>{title}</span>
+//     </div>
+//   );
+// }

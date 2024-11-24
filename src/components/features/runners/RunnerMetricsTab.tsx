@@ -12,8 +12,7 @@ import {
   UploadIcon,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import ChartCard, { ChartCard2 } from "@/components/features/charts/ChartCard";
-import H2 from "@/components/ui/typography/H2";
+import { ChartCard2 } from "@/components/features/charts/ChartCard";
 
 interface ICPUMetrics {
   point: string;

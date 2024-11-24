@@ -2,7 +2,7 @@ import CustomPieChart from "@/components/features/charts/CustomPieChart";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { IJobs } from "@/lib/types/IJobs";
 import { IRunner } from "@/lib/types/IRunner";
-import ChartCard, { ChartCard2 } from "../charts/ChartCard";
+import { ChartCard2 } from "../charts/ChartCard";
 import { CheckIcon, ContainerIcon, Workflow } from "lucide-react";
 
 // class MetricsStats {

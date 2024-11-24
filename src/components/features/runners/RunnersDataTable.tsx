@@ -8,12 +8,10 @@ import SelectInput, { ISelectItem } from "@/components/SelectInput";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import Throbber from "@/components/ui/Throbber";
 import { ButtonSort } from "@/components/ButtonSort";
 import TableFilterNav from "@/components/ui/table/table_filter_nav";
 import {
   actionsVals,
-  IconItem,
   statesVals,
 } from "@/components/ui/table/Select_items_list";
 import { useSearchParams } from "react-router-dom";
@@ -36,7 +34,7 @@ export default function RunnersPage({
   const [searchState, setSearchState] = useState(
     searchParams.get("state") || ""
   );
-  const [limit, _] = useState(limit2);
+  const [limit,] = useState(limit2);
   const [sort, setSort] = useState({
     column: searchParams.get("sort"),
     direction: searchParams.get("order") || "asc",

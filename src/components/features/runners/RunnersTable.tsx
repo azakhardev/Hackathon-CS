@@ -1,4 +1,4 @@
-import { Badge, badgeVariants } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -13,7 +13,6 @@ import {
   buildRunnerText as runnerRoleText,
 } from "@/components/features/jobs/JobsTable";
 import { IRunner } from "@/lib/types/IRunner";
-import { Link } from "react-router-dom";
 import IconButton from "@/components/IconButton";
 import { CheckIcon, PieChartIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -31,6 +30,10 @@ export default function RunnersTable(props: IProps) {
   // function handleRowClick(id: string) {
   //   navigate(`/runners/${id}`);
   // }
+
+  const { t } = useTranslation();
+  const isMobile = useIsMobile();
+  
   const runnerData =
     props.runners
       ?.filter((item): item is IRunner[] => Array.isArray(item))
@@ -39,8 +42,7 @@ export default function RunnersTable(props: IProps) {
   if (!runnerData.length) {
     return <p>No runners available or an error occurred.</p>;
   }
-  const { t } = useTranslation();
-  const isMobile = useIsMobile();
+  
   return (
     <Table>
       {/* <TableCaption></TableCaption>

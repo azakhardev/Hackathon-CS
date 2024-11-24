@@ -3,8 +3,9 @@ import { HammerIcon, ServerIcon, TestTubeDiagonalIcon } from "lucide-react";
 
 import { IconItem } from "./IconItem";
 import { StateItem } from "./StateItem";
+import { TFunction } from "i18next";
 
-export const actionsVals = (t: any): ISelectItem[] => [
+export const actionsVals = (t: TFunction): ISelectItem[] => [
   {
     value: " ",
     content: (
@@ -56,7 +57,7 @@ export const actionsVals = (t: any): ISelectItem[] => [
   },
 ];
 
-export const statesVals = (t: any): ISelectItem[] => [
+export const statesVals = (t: TFunction): ISelectItem[] => [
   {
     value: " ",
     content: (
@@ -81,7 +82,7 @@ export const statesVals = (t: any): ISelectItem[] => [
     ),
   },
 ];
-export const states2Vals = (t: any): ISelectItem[] => [
+export const states2Vals = (t: TFunction): ISelectItem[] => [
   {
     value: " ",
     content: (
