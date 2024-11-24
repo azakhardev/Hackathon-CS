@@ -42,6 +42,7 @@ export default function MobileNavbar() {
       <div className="flex flex-row w-full h-full">
         {items.map((item) => (
           <SidebarMenuButton
+            key={item.title}
             onClick={item.action}
             className="flex justify-center w-full h-full"
           >
