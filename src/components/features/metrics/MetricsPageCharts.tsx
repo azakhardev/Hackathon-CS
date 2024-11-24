@@ -89,7 +89,6 @@ export default function MetricsPageCharts(props: IProps) {
   const aStateData = createAutomationsStateData(props.automationsData);
   const jStateData = createJobsData(props.jobsData);
   const rStateData = createRunnersData(props.runnersData);
-  console.log(rStateData);
   return (
     <>
       <div className="flex flex-row gap-4">

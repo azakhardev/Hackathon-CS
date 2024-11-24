@@ -33,8 +33,6 @@ export default function ProjectsTable(props: IProps) {
     (JSON.parse(localStorage.getItem("favorite")) as string[]) ?? []
   );
 
-  console.log(storage);
-
   function handleStarClick(value: string) {
     if (storage.includes(value)) {
       setStorage((oldStorage) => {

@@ -70,10 +70,7 @@ export default function ProjectsCharts() {
       }
     });
   }
-
   const pStateData = createProjectsData(projects);
-  console.log("pData:", pStateData);
-
   return (
     <>
       {(sasQuery.isLoading || jobsQuery.isLoading) && (

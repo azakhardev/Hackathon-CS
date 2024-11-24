@@ -41,9 +41,6 @@ export class RunnerModel {
         params.append(key, value);
       });
     }
-
-    console.log(`${api_url}/runners?${params}`);
-
     const response = await fetch(`${api_url}/runners?${params}`, {
       method: "GET",
       headers: {
@@ -86,8 +83,6 @@ export class RunnerModel {
         params.append(key, value);
       });
     }
-    console.log(`${api_url}/jobs?${params}`);
-
     const response = await fetch(`${api_url}/jobs?${params}`, {
       method: "GET",
       headers: {

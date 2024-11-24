@@ -56,7 +56,6 @@ export default function AutomationTypesDataTable({
     return <LoadingSkeletonTypes />;
   }
 
-  console.log(limit, isNav);
   return (
     <>
       <Table>
