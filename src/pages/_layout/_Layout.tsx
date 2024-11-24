@@ -7,6 +7,7 @@ import { useIsMobile } from "@/lib/hooks/use-mobile";
 import MobileNavbar from "./mobile-navbar";
 import { CommandButton, CommandDialogDemo } from "./command";
 import { LanguageSwitch } from "@/components/languageSelector";
+import { ThemeSwitch } from "@/components/theme-provider";
 
 export default function Layout() {
   const isMobile = useIsMobile();
@@ -22,6 +23,7 @@ export default function Layout() {
             <div>
               <CommandButton />
               <LanguageSwitch />
+              {/* <ThemeSwitch /> */}
             </div>
           )}
         </header>
