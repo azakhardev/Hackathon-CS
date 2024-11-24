@@ -32,6 +32,7 @@ import { useQuery } from "@tanstack/react-query";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import { Link, useNavigate } from "react-router-dom";
 import { useCommandStore } from "@/lib/store";
+import { Button } from "@/components/ui/Button";
 
 interface NavItem {
   title: string;
@@ -157,5 +158,23 @@ export function CommandDialogDemo() {
         </CommandList>
       </CommandDialog>
     </>
+  );
+}
+
+export function CommandButton() {
+  const setOpen = useCommandStore((state) => state.toggleShow);
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="ghost" onClick={setOpen}>
+            <SearchIcon size={8} />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <span className="text-xs">⌘ K</span>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }
