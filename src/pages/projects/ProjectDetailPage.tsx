@@ -5,7 +5,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DetailHeader from "@/components/DetailHeader";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
 import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
-import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { userValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
 
@@ -50,11 +49,11 @@ export default function ProjectDetailPage() {
   );
 }
 
-function StateItem({ title, color }: { title: string; color: string }) {
-  return (
-    <div className="flex flex-row items-center">
-      <CircleIcon size={8} className={`mr-2 fill-state_${color} stroke-none`} />
-      <span>{title}</span>
-    </div>
-  );
-}
+// function StateItem({ title, color }: { title: string; color: string }) {
+//   return (
+//     <div className="flex flex-row items-center">
+//       <CircleIcon size={8} className={`mr-2 fill-state_${color} stroke-none`} />
+//       <span>{title}</span>
+//     </div>
+//   );
+// }

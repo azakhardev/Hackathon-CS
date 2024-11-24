@@ -4,12 +4,11 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { MetricItems, PieStats } from "./MetricsShared";
+import { PieStats } from "./MetricsShared";
 import { ChartCard2 } from "@/components/features/charts/ChartCard";
 import { ContainerIcon } from "lucide-react";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
 import { IRunner } from "@/lib/types/IRunner";
-import Throbber from "@/components/ui/Throbber";
 import ChartSelectInput from "@/components/ChartSelectInput";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 import {
@@ -40,14 +39,10 @@ const RUNNERS_CHART_CONFIG = {
 
 export default function RunnersCharts() {
   const [searchOrg, setSearchOrg] = useState(" ");
-  const [searchDate, setSearchDate] = useState<DateRange | undefined>({
-    from: undefined,
-    to: undefined,
-  });
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const runnersQuery = useQuery({
-    queryKey: ["runners", searchDate, searchOrg],
+    queryKey: ["runners", searchOrg],
     queryFn: async () => {
       return await RunnerModel.getRunners(
         undefined,
@@ -76,14 +71,13 @@ export default function RunnersCharts() {
   const runnersData = runnersQuery.data as IRunner[];
   const rStateData = createRunnersData(runnersData);
 
-
   return (
     <>
       {runnersQuery.isLoading && <LoadingSkeletonMetrics />}
       {!runnersQuery.isLoading && (
         <ChartCard2
-          header={t('translation:runners:header')}
-          description={t('translation:metrics:runners_desc')}
+          header={t("translation:runners:header")}
+          description={t("translation:metrics:runners_desc")}
           icon={<ContainerIcon />}
           content={
             <div>
@@ -114,7 +108,7 @@ export default function RunnersCharts() {
 }
 
 function createRunnersData(data: IRunner[]) {
-  let newData: object[] = [];
+  const newData: object[] = [];
   const idleR = new PieStats("idle", Chart_Orange);
   const activeR = new PieStats("active", Chart_Green);
   const failedR = new PieStats("failed", Chart_Red);

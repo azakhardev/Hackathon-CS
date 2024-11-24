@@ -1,6 +1,5 @@
 import { ChartCard2 } from "@/components/features/charts/ChartCard";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
-import Throbber from "@/components/ui/Throbber";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import { useQuery } from "@tanstack/react-query";
 import { FolderIcon } from "lucide-react";
@@ -29,7 +28,7 @@ const PROJECTS_CHART_CONFIG = {
 };
 
 export default function ProjectsCharts() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [searchOrg, setSearchOrg] = useState(" ");
   const sasQuery = useQuery({
     queryKey: ["sas"],
@@ -58,7 +57,7 @@ export default function ProjectsCharts() {
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
-  let projects: IProject[] = [];
+  const projects: IProject[] = [];
   if (!sasQuery.isLoading && !jobsQuery.isLoading) {
     (sasQuery.data as string[]).forEach((s) => {
       const jobsForSAS = (jobsQuery.data as IJobs[]).filter((j) => j.SAS === s);
@@ -87,8 +86,8 @@ export default function ProjectsCharts() {
       )}
       {!sasQuery.isLoading && !jobsQuery.isLoading && (
         <ChartCard2
-          header={t('translation:projects:header')}
-          description={t('translation:metrics:projects_desc')}
+          header={t("translation:projects:header")}
+          description={t("translation:metrics:projects_desc")}
           icon={<FolderIcon />}
           content={
             <div>
@@ -119,7 +118,7 @@ export default function ProjectsCharts() {
 }
 
 function createProjectsData(data: IProject[]) {
-  let newData: object[] = [];
+  const newData: object[] = [];
   const successJ = new PieStats("success", Chart_Green);
   const progressionJ = new PieStats("in_progress", Chart_Orange);
   const failedJ = new PieStats("failed", Chart_Red);
