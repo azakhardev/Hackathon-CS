@@ -44,6 +44,7 @@ export default function RunnersCharts() {
     from: undefined,
     to: undefined,
   });
+  const { t } = useTranslation()
 
   const runnersQuery = useQuery({
     queryKey: ["runners", searchDate, searchOrg],
@@ -75,7 +76,6 @@ export default function RunnersCharts() {
   const runnersData = runnersQuery.data as IRunner[];
   const rStateData = createRunnersData(runnersData);
 
-  const { t } = useTranslation()
 
   return (
     <>

@@ -14,7 +14,8 @@
         "jobs_header": "Úloha",
         "ops_header": "Ops",
         "automations_header": "Automatizace",
-        "automation_types_header": "Typy automatizace"
+        "automation_types_header": "Typy automatizace",
+        "types_header": "Typy"
     },
     "projects": {
         "header": "Projekty",

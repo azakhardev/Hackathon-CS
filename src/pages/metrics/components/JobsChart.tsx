@@ -40,6 +40,8 @@ const JOBS_CHART_CONFIG = {
 };
 
 export default function JobsChart() {
+  const { t } = useTranslation()
+
   const [searchDate, setSearchDate] = useState<DateRange | undefined>({
     from: undefined,
     to: undefined,
@@ -99,7 +101,6 @@ export default function JobsChart() {
 
   const jobsData = jobsQuery.data as IJobs[];
   const jStateData = createJobsData(jobsData);
-  const { t } = useTranslation()
   return (
     <>
       {jobsQuery.isLoading && <LoadingSkeletonMetrics />}
