@@ -12,6 +12,7 @@ import { IRunner } from "@/lib/types/IRunner";
 import Throbber from "@/components/ui/Throbber";
 import ChartSelectInput from "@/components/ChartSelectInput";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
+import { useTranslation } from "react-i18next";
 
 const RUNNERS_CHART_CONFIG = {
   count: {
@@ -68,13 +69,15 @@ export default function RunnersCharts() {
   const runnersData = runnersQuery.data as IRunner[];
   const rStateData = createRunnersData(runnersData);
 
+  const { t } = useTranslation()
+
   return (
     <>
       {runnersQuery.isLoading && <LoadingSkeletonMetrics />}
       {!runnersQuery.isLoading && (
         <ChartCard2
-          header="Runners"
-          description="Current state of runners"
+          header={t('translation:runners:header')}
+          description={t('translation:metrics:runners_desc')}
           icon={<ContainerIcon />}
           content={
             <div>

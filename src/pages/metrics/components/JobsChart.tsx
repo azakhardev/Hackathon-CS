@@ -23,6 +23,7 @@ import {
 import ChartSelectInput from "@/components/ChartSelectInput";
 import LoadingSkeletonTypes from "@/components/ui/LoadingSkeletonTypes";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
+import { useTranslation } from "react-i18next";
 
 const JOBS_CHART_CONFIG = {
   count: { label: "Count" },
@@ -92,13 +93,14 @@ export default function JobsChart() {
 
   const jobsData = jobsQuery.data as IJobs[];
   const jStateData = createJobsData(jobsData);
+  const { t } = useTranslation()
   return (
     <>
       {jobsQuery.isLoading && <LoadingSkeletonMetrics />}
       {!jobsQuery.isLoading && (
         <ChartCard2
-          header="Jobs"
-          description="Current state of jobs"
+          header={t('translation:jobs:header')}
+          description={t('translation:metrics:jobs_desc')}
           icon={<CheckIcon />}
           content={
             <div>

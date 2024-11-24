@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table/Select_items_list";
 import { useSearchParams } from "react-router-dom";
 import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import { useTranslation } from "react-i18next";
 
 export default function RunnersPage({
   limit2 = 25,
@@ -27,7 +28,7 @@ export default function RunnersPage({
   isNav: boolean;
 }) {
   const [searchParams] = useSearchParams();
-
+  const { t } = useTranslation()
   const [searchText, setSearchText] = useState(searchParams.get("text") || "");
   const [searchAction, setSearchAction] = useState(
     searchParams.get("action") || ""
@@ -107,7 +108,7 @@ export default function RunnersPage({
     }
   });
 
-  const cols: ISelectItem[] = [{ value: "id", content: "Name" }];
+  const cols: ISelectItem[] = [{ value: "id", content: t('translation:filters:name_sort')}];
 
   return (
     <>
@@ -119,16 +120,16 @@ export default function RunnersPage({
           right={
             <>
               <SelectInput
-                placeholder="All actions"
+                placeholder={t('translation:filters:action_placeholder')}
                 defaultValue={searchAction}
-                items={actionsVals}
+                items={actionsVals(t)}
                 onValueChange={(e) => setSearchAction(e)}
                 param="action"
               />
               <SelectInput
-                placeholder="All States"
+                placeholder={t('translation:filters:state_placeholder')}
                 defaultValue={searchState}
-                items={statesVals}
+                items={statesVals(t)}
                 onValueChange={(e) => setSearchState(e)}
                 param="state"
               />
@@ -163,10 +164,10 @@ export default function RunnersPage({
                   }
                 >
                   {dataQuery.isFetchingNextPage
-                    ? "Loading more..."
+                    ? t('translation:common:more_btn_loading')
                     : dataQuery.hasNextPage
-                    ? "Load More"
-                    : "Nothing more to load"}
+                    ? t('translation:common:more_btn_text')
+                    : t('translation:common:more_btn_error')}
                 </Button>
               </div>
             )}

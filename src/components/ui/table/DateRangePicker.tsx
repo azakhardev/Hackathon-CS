@@ -9,6 +9,7 @@ import { Button } from "../Button";
 import { Calendar } from "../calendar";
 import { cn } from "@/lib/utils";
 import format from "date-fns/format";
+import { useTranslation } from "react-i18next";
 
 interface IDateRangePicker {
   dateRange: DateRange | undefined;
@@ -38,6 +39,8 @@ export default function DateRangePicker({
     setSearchDate(newDateRange);
   };
 
+  const { t } = useTranslation()
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -60,7 +63,7 @@ export default function DateRangePicker({
               format(dateRange.from, "yyyy-MM-dd")
             )
           ) : (
-            <span>Pick a date</span>
+            <span>{t('translation:filters:date')}</span>
           )}
         </Button>
       </PopoverTrigger>

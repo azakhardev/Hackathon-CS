@@ -30,8 +30,11 @@ import AutomationsChart from "./components/AutomationCharts";
 import ProjectsCharts from "./components/ProjectsCharts";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { userValidate } from "@/lib/utils/validateUser";
+import { useTranslation } from "react-i18next";
 
 export default function MetricsPage() {
+  const { t } = useTranslation()
+
   userValidate();
   // const [searchDate, setSearchDate] = useState<DateRange | undefined>({
   //   from: undefined,
@@ -160,7 +163,7 @@ export default function MetricsPage() {
 
   return (
     <>
-      <H1>Metrics</H1>
+      <H1>{t('translation:metrics:header')}</H1>
       <div className="flex flex-col gap-8">
         <H2>Total</H2>
         <div className="flex flex-col">

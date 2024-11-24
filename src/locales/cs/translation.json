@@ -1,0 +1,113 @@
+{
+    "common": {
+        "more_btn_text": "Více",
+        "more_btn_loading": "Načítaní ...",
+        "more_btn_error": "Nic dalšího k načtení",
+        "by": "pomocí",
+        "is": "je",
+        "on": "na"
+    },
+    "homepage": {
+        "dev_header": "Dev",
+        "projects_header": "Projekty",
+        "runners_header": "Spouštěče",
+        "jobs_header": "Úloha",
+        "ops_header": "Ops",
+        "automations_header": "Automatizace",
+        "automation_types_header": "Typy automatizace"
+    },
+    "projects": {
+        "header": "Projekty",
+        "success_build": "byl postaven v",
+        "in_progress_build": "je stavěný v",
+        "success_prod": "byl nasazen do produkce v",
+        "queued": "čeká na spouštěč",
+        "tabs_jobs": "Úlohy",
+        "tabs_automations": "Automatizace",
+        "logs_btn": "Logy",
+        "detail_title": "Projekt"
+    },
+    "jobs": {
+        "header": "Úlohy",
+        "state_inProgress": "Probíhá",
+        "state_queued": "Čeká",
+        "state_success": "Úspěšný",
+        "state_failed": "Neúspěšný",
+        "state_default": "Žádné"
+    },
+    "runners": {
+        "header": "Spouštěče",
+        "state_active": "Aktivni",
+        "state_offline": "Odpojený",
+        "state_idle": "Nečinný",
+        "state_failed": "Neúspěšný",
+        "action_build": "Stavící spouštěč",
+        "action_test": "Testovací spouštěč",
+        "action_deploy_dev": "vývojový nasazovač",
+        "action_deploy_prod": "Výrobní nasazovač",
+        "action_waiting": "Čeká",
+        "desc_waiting": "Čeká na spouštěč",
+        "desc_build": "Staví",
+        "desc_test": "Testuje",
+        "desc_deploy_dev": "Nasazuje na dev",
+        "desc_deploy_prod": "Nasazuje na prod",
+        "decs_default": "Neznámá akce",
+        "icon_jobs": " ÚLOHY",
+        "icon_metrics": " METRIKY",
+        "tabs_jobs": "Úlohy",
+        "tabs_metrics": "Metriky",
+        "detail_title": "Spouštěč"
+    },
+    "filters": {
+        "text": "Najít",
+        "name_sort": "Jméno",
+        "date_sort": "Datum",
+        "sort_title": "Seřadit podle",
+        "order_title": "Pořadí",
+        "date": "Vyberte datum",
+        "action_placeholder": "Všechny akce",
+        "state_placeholder": "Všechny stavy",
+        "state_active": "Aktivni",
+        "state_offline": "Odpojený",
+        "state_idle": "Nečinný",
+        "state_failed": "Neúspěšný",
+        "state_inProgress": "Probíhá",
+        "state_success": "Úspěšný",
+        "state_queued": "Čeká",
+        "action_build": "Stavící",
+        "action_test": "Testovací",
+        "action_dev": "Vývoj",
+        "action_ops": "Výroba",
+        "projects_placeholder": "Všechno"
+    },
+    "jobsVerbsMap": {
+        "success": "byl",
+        "in_progress": "je",
+        "queued": "bude",
+        "failed": "se nepodařilo"
+    },
+    "runnerActionMap": {
+        "waiting": "čeká na Spouštěč",
+        "build": "postaven",
+        "test": "testován",
+        "deploy_dev": "nasazen na dev",
+        "deploy_prod": "nasazen na prod"
+    },
+    "metrics": {
+        "header": "Metriky",
+        "projects_desc": "Aktuální stav úloh",
+        "automation_desc": "Aktuální stav automatizací",
+        "runners_desc": "Aktuální stav spouštěčů",
+        "jobs_desc": "Aktuální stav úloh"
+    },
+    "automations": {
+        "header": "Automatizace",
+        "detail_header": "Logy",
+        "detail_error": "Chyba při spojování dat",
+        "no_data": "Žádné data k dispozici",
+        "new_log": "Nový log byl vytvořen na"
+    },
+    "automationTypes": {
+        "header": "Typy automatizace"
+    }
+}

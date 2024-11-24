@@ -14,6 +14,7 @@ import TableFilterNav from "@/components/ui/table/table_filter_nav";
 import { ISelectItem } from "@/components/SelectInput";
 import { useSearchParams } from "react-router-dom";
 import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import { useTranslation } from "react-i18next";
 
 export default function ProjectsDataTable({
   limit = 99999999,
@@ -23,6 +24,7 @@ export default function ProjectsDataTable({
   isNav: boolean;
 }) {
   const [searchParams] = useSearchParams();
+  const { t } = useTranslation()
   const [searchText, setSearchText] = useState(searchParams.get("text") || "");
   const [displayLimit, setDisplayLimit] = useState(limit);
   const [sort, setSort] = useState({
@@ -110,7 +112,7 @@ export default function ProjectsDataTable({
     setDisplayLimit((prev) => prev + 10);
   };
 
-  const cols: ISelectItem[] = [{ value: "id", content: "Name" }];
+  const cols: ISelectItem[] = [{ value: "id", content: t('translation:filters:name_sort') }];
 
   return (
     <div>
