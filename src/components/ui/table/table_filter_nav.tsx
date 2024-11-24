@@ -8,9 +8,9 @@ export default function TableFilterNav({
   right: React.ReactNode;
 }) {
   return (
-    <div className="flex-wrap flex-col sm:flex-row sm:flex-nowrap flex justify-between gap-4 mb-4">
+    <div className="flex flex-col flex-wrap justify-between gap-4 mb-4 sm:flex-row sm:flex-nowrap">
       {left}
-      <div className="flex-wrap justify-stretch sm:flex-nowrap flex sm:justify-end flex-1 gap-2">
+      <div className="flex flex-wrap justify-end flex-1 gap-2 sm:flex-nowrap">
         {right}
       </div>
     </div>
