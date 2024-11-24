@@ -8,7 +8,6 @@ export default function RunnersPage() {
   return (
     <div>
       <H1>Runners</H1>
-      <Breadcrumbs />
       <RunnersDataTable isNav={true} limit2={25} />
     </div>
   );

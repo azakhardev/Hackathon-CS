@@ -60,7 +60,6 @@ export default function RunnerDetailPage() {
               : undefined
           }
         />
-        <Breadcrumbs type="runner" />
         <div className="w-full">
           <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">

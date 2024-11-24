@@ -8,7 +8,6 @@ export default function AutomationsPage() {
   return (
     <>
       <H1>Automations</H1>
-      <Breadcrumbs />
       <AutomationsDataTable limit={undefined} isNav={true} />
     </>
   );

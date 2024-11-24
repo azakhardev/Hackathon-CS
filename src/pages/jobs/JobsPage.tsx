@@ -9,7 +9,6 @@ export default function JobsPage() {
   return (
     <>
       <H1>Jobs</H1>
-      <Breadcrumbs />
       <JobsDataTable limit={25} isNav={true} />
     </>
   );

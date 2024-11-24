@@ -8,7 +8,6 @@ export default function ProjectsPage() {
   return (
     <>
       <H1>Projects</H1>
-      <Breadcrumbs />
       <ProjectDataTable limit={-1} isNav={true} />
     </>
   );

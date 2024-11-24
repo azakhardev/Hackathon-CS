@@ -161,16 +161,15 @@ export default function MetricsPage() {
   return (
     <>
       <H1>Metrics</H1>
-      <Breadcrumbs />
       <div className="flex flex-col gap-8">
         <H2>Total</H2>
         <div className="flex flex-col">
           <div className="flex flex-col gap-2">
-            <div className="flex flex-col md:flex-row gap-2 justify-between">
+            <div className="flex flex-col justify-between gap-2 md:flex-row">
               <ProjectsCharts />
               <AutomationsChart />
             </div>
-            <div className="flex flex-col md:flex-row gap-2 justify-between ">
+            <div className="flex flex-col justify-between gap-2 md:flex-row ">
               <JobsChart />
               <RunnersCharts />
             </div>

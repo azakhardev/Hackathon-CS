@@ -1,6 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { HomeIcon } from "lucide-react";
 import { Fragment } from "react/jsx-runtime";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "./breadcrumb";
 
 interface IBreadcrumbs {
   type?: "runner" | "automationType" | "automationLogs" | "project";
@@ -12,10 +20,17 @@ export default function Breadcrumbs({ type }: IBreadcrumbs) {
   const segments = pathname.split("/");
 
   return (
-    <div className="flex gap-1 text-xs items-center mb-4">
-      <Link to="/">
-        <HomeIcon width={18} />
-      </Link>
+    <div className="flex items-center gap-2 px-4">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <Link to="/">
+            <BreadcrumbItem className="hidden md:block">
+              <BreadcrumbLink>/</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Link>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       {segments.map((item, i) => {
         if (item != "") {
           let splitted = item;
@@ -38,12 +53,16 @@ export default function Breadcrumbs({ type }: IBreadcrumbs) {
           }
 
           return (
-            <Fragment key={i}>
-              <span className="text-primary opacity-40 px-1 font-black">/</span>
-              <Link to={`${segments.slice(0, i + 1).join("/")}`}>
-                {splitted.toUpperCase()}
+            <>
+              <BreadcrumbSeparator className="hidden md:block" />
+              <Link key={i} to={`${segments.slice(0, i + 1).join("/")}`}>
+                <BreadcrumbItem>
+                  <BreadcrumbPage className="capitalize">
+                    {splitted.toLowerCase()}
+                  </BreadcrumbPage>
+                </BreadcrumbItem>
               </Link>
-            </Fragment>
+            </>
           );
         }
       })}

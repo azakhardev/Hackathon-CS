@@ -22,7 +22,6 @@ export default function ProjectDetailPage() {
     <main>
       <div>
         <DetailHeader section="Project" title={title} />
-        <Breadcrumbs type="project" />
         <div>
           <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">

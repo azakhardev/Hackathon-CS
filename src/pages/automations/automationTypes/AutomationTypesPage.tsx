@@ -8,7 +8,6 @@ export default function AutomationTypesPage() {
   return (
     <>
       <H1>Automation Types</H1>
-      <Breadcrumbs type="automationType" />
       <AutomationTypesDataTable isNav={true} limit={9999} />
     </>
   );

@@ -14,7 +14,6 @@ export default function AutomationDetailPage() {
   return (
     <>
       <DetailHeader section="Automation" title={automationId.slice(-5)} />
-      <Breadcrumbs type="automationLogs" />
       <H2>Logs</H2>
       <LogsDataTable automationId={automationId} />
     </>
