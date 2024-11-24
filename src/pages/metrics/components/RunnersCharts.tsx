@@ -12,6 +12,12 @@ import { IRunner } from "@/lib/types/IRunner";
 import Throbber from "@/components/ui/Throbber";
 import ChartSelectInput from "@/components/ChartSelectInput";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
+import {
+  Chart_Gray,
+  Chart_Green,
+  Chart_Orange,
+  Chart_Red,
+} from "./ChartColors";
 import { useTranslation } from "react-i18next";
 
 const RUNNERS_CHART_CONFIG = {
@@ -109,10 +115,10 @@ export default function RunnersCharts() {
 
 function createRunnersData(data: IRunner[]) {
   let newData: object[] = [];
-  const idleR = new PieStats("idle", "hsl(210, 80%, 50%)");
-  const activeR = new PieStats("active", "hsl(161.4 93.5% 30.4%)");
-  const failedR = new PieStats("failed", "hsl(0, 91%, 49%)");
-  const offlineR = new PieStats("offline", "hsl(0 0% 45.1%)");
+  const idleR = new PieStats("idle", Chart_Orange);
+  const activeR = new PieStats("active", Chart_Green);
+  const failedR = new PieStats("failed", Chart_Red);
+  const offlineR = new PieStats("offline", Chart_Gray);
 
   data.forEach((r) => {
     if (r.state.toLowerCase() === "idle") {

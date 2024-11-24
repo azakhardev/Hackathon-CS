@@ -36,124 +36,6 @@ export default function MetricsPage() {
   const { t } = useTranslation()
 
   userValidate();
-  // const [searchDate, setSearchDate] = useState<DateRange | undefined>({
-  //   from: undefined,
-  //   to: undefined,
-  // });
-  // const [searchOrg, setSearchOrg] = useState(" ");
-
-  // const automationsQuery = useQuery({
-  //   queryKey: ["automations", searchDate],
-  //   queryFn: async () => {
-  //     const automationFilters = {
-  //       ...(searchDate &&
-  //         searchDate.from &&
-  //         searchDate.to == undefined && {
-  //           last_activity_start: format(
-  //             searchDate.from,
-  //             "yyyy-MM-dd"
-  //           ).toString(),
-  //         }),
-  //       ...(searchDate &&
-  //         searchDate.from &&
-  //         searchDate.to && {
-  //           last_activity_gte: format(
-  //             searchDate.from,
-  //             "yyyy-MM-dd'T'HH:mm:ss"
-  //           ).toString(),
-  //         }),
-  //       ...(searchDate &&
-  //         searchDate.from &&
-  //         searchDate.to && {
-  //           last_activity_lte: format(
-  //             searchDate.to,
-  //             "yyyy-MM-dd'T'23:59:59"
-  //           ).toString(),
-  //         }),
-  //     };
-
-  //     return await AutomationModel.getAutomations(
-  //       undefined,
-  //       undefined,
-  //       undefined,
-  //       undefined,
-  //       "asc",
-  //       automationFilters
-  //     );
-  //   },
-  // });
-
-  // const jobsQuery = useQuery({
-  //   queryKey: ["jobs", searchDate, searchOrg],
-  //   queryFn: async () => {
-  //     const filters = {
-  //       ...(searchDate &&
-  //         searchDate.from &&
-  //         searchDate.to == undefined && {
-  //           timestamp_start: format(searchDate.from, "yyyy-MM-dd").toString(),
-  //         }),
-  //       ...(searchDate &&
-  //         searchDate.from &&
-  //         searchDate.to && {
-  //           timestamp_gte: format(
-  //             searchDate.from,
-  //             "yyyy-MM-dd'T'HH:mm:ss"
-  //           ).toString(),
-  //         }),
-  //       ...(searchDate &&
-  //         searchDate.from &&
-  //         searchDate.to && {
-  //           timestamp_lte: format(
-  //             searchDate.to,
-  //             "yyyy-MM-dd'T'23:59:59"
-  //           ).toString(),
-  //         }),
-  //       ...(searchOrg !== " " && { organization_eq: searchOrg }),
-  //     };
-  //     return await RunnerModel.getJobs(
-  //       undefined,
-  //       undefined,
-  //       undefined,
-  //       undefined,
-  //       "asc",
-  //       filters
-  //     );
-  //   },
-  // });
-
-  // const runnersQuery = useQuery({
-  //   queryKey: ["runners", searchDate, searchOrg],
-  //   queryFn: async () => {
-  //     return await RunnerModel.getRunners(
-  //       undefined,
-  //       undefined,
-  //       undefined,
-  //       undefined,
-  //       "asc",
-  //       { ...(searchOrg !== " " && { organization_eq: searchOrg }) }
-  //     );
-  //   },
-  // });
-
-  // if (automationsQuery.data && "error" in automationsQuery.data)
-  //   return (
-  //     <ErrorMessage errorMessage={automationsQuery.data as IErrorMessage} />
-  //   );
-
-  // if (jobsQuery.data && "error" in jobsQuery.data)
-  //   return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
-
-  // if (runnersQuery.data && "error" in runnersQuery.data)
-  //   return <ErrorMessage errorMessage={runnersQuery.data as IErrorMessage} />;
-
-  // if (automationsQuery.error || jobsQuery.error || runnersQuery.error) {
-  //   const error: IErrorMessage = {
-  //     code: "500",
-  //     error: "Internal server error",
-  //     message: "Server responded with undefined",
-  //   };
-  //   return <ErrorMessage errorMessage={error}></ErrorMessage>;
-  // }
 
   let items: ISelectItem[] = [
     { value: " ", content: "All" },
@@ -170,11 +52,11 @@ export default function MetricsPage() {
           <div className="flex flex-col gap-2">
             <div className="flex flex-col justify-between gap-2 md:flex-row">
               <ProjectsCharts />
-              <AutomationsChart />
+              <JobsChart />
             </div>
             <div className="flex flex-col justify-between gap-2 md:flex-row ">
               <RunnersCharts />
-              <JobsChart />
+              <AutomationsChart />
             </div>
           </div>
         </div>
@@ -187,27 +69,3 @@ export default function MetricsPage() {
     </>
   );
 }
-
-/* <DateRangePicker
-                dateRange={searchDate}
-                setSearchDate={setSearchDate}
-              />
-              <SelectInput
-                defaultValue="All"
-                items={items}
-                onValueChange={(e) => setSearchOrg(e)}
-              />
-            </div>
-            {(jobsQuery.isLoading ||
-              automationsQuery.isLoading ||
-              runnersQuery.isLoading) && <Throbber />}
-            {!jobsQuery.isLoading &&
-              !automationsQuery.isLoading &&
-              !runnersQuery.isLoading && ( */
-
-/* <MetricsPageCharts
-                    automationsData={automationsQuery.data as IAutomation[]}
-                    runnersData={runnersQuery.data as IRunner[]}
-                    jobsData={jobsQuery.data as IJobs[]}
-                  />
-               )} */

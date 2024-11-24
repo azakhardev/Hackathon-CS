@@ -14,6 +14,7 @@ import Throbber from "@/components/ui/Throbber";
 import SelectInput from "@/components/SelectInput";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
+import { Chart_Green, Chart_Orange, Chart_OrangeOpacity } from "./ChartColors";
 import { useTranslation } from "react-i18next";
 
 const AUTOMATIONS_STATE_CHART_CONFIG = {
@@ -135,9 +136,9 @@ export default function AutomationsChart() {
 
 function createAutomationsStateData(data: IAutomation[]) {
   let newData: object[] = [];
-  const initialA = new PieStats("initial", "hsl(210, 80%, 50%)");
-  const progressA = new PieStats("in_progress", "hsl(40, 90%, 50%)");
-  const finishedA = new PieStats("finished", "hsl(161.4 93.5% 30.4%)");
+  const initialA = new PieStats("initial", Chart_OrangeOpacity);
+  const progressA = new PieStats("in_progress", Chart_Orange);
+  const finishedA = new PieStats("finished", Chart_Green);
 
   data.forEach((a) => {
     if (a.state.toLowerCase() === "initial") {
