@@ -11,7 +11,7 @@ import { userValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
 
 export default function MetricsPage() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   userValidate();
 
@@ -23,10 +23,11 @@ export default function MetricsPage() {
 
   return (
     <>
-      <H1>{t('translation:metrics:header')}</H1>
+      <H1>{t("translation:metrics:header")}</H1>
       <div className="flex flex-col gap-8">
-        <H2>Total</H2>
         <div className="flex flex-col">
+          <H2>Total</H2>
+
           <div className="flex flex-col gap-2">
             <div className="flex flex-col justify-between gap-2 md:flex-row">
               <ProjectsCharts />
