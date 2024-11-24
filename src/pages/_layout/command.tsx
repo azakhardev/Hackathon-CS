@@ -9,6 +9,7 @@ import {
   SearchIcon,
   ShapesIcon,
   WorkflowIcon,
+  LucideIcon,
 } from "lucide-react";
 import {
   CommandDialog,
@@ -31,6 +32,38 @@ import { useQuery } from "@tanstack/react-query";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import { Link, useNavigate } from "react-router-dom";
 import { useCommandStore } from "@/lib/store";
+
+interface NavItem {
+  title: string;
+  icon: LucideIcon;
+  path: string;
+}
+
+const navigationItems: NavItem[] = [
+  { title: "Projects", icon: FolderIcon, path: "/projects" },
+  { title: "Runners", icon: ContainerIcon, path: "/runners" },
+  { title: "Jobs", icon: CheckIcon, path: "/jobs" },
+  { title: "Metrics", icon: PieChartIcon, path: "/metrics" },
+  { title: "Automations", icon: WorkflowIcon, path: "/automations" },
+  { title: "Automations Type", icon: ShapesIcon, path: "/automationTypes" },
+];
+
+interface MyCommandProps {
+  title: string;
+  icon: LucideIcon;
+  onNavigate: () => void;
+}
+
+const MyCommand: React.FC<MyCommandProps> = ({
+  title,
+  icon: Icon,
+  onNavigate,
+}) => (
+  <CommandItem onSelect={onNavigate}>
+    <Icon />
+    <span>{title}</span>
+  </CommandItem>
+);
 
 export function CommandDialogDemo() {
   //const [open, setOpen] = React.useState(false);
@@ -76,87 +109,41 @@ export function CommandDialogDemo() {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Favorite">
-            {/*ADD favorite func*/}
-            <CommandItem
-              onSelect={() => {
+            <MyCommand
+              title="GIORGIO"
+              icon={FolderIcon}
+              onNavigate={() => {
                 navigate("/projects/SAS_GIORGIO");
                 setOpen();
               }}
-            >
-              <FolderIcon />
-              <span>GIORGIO</span>
-            </CommandItem>
+            />
           </CommandGroup>
           <CommandGroup heading="Pages">
-            <CommandItem
-              onSelect={() => {
-                navigate("/projects");
-                setOpen();
-              }}
-            >
-              <FolderIcon />
-              <span>Projects</span>
-            </CommandItem>
-            <CommandItem
-              onSelect={() => {
-                navigate("/runners");
-                setOpen();
-              }}
-            >
-              <ContainerIcon />
-              <span>Runners</span>
-            </CommandItem>
-            <CommandItem
-              onSelect={() => {
-                navigate("/jobs");
-                setOpen();
-              }}
-            >
-              <CheckIcon />
-              <span>Jobs</span>
-            </CommandItem>
-            <CommandItem
-              onSelect={() => {
-                navigate("/metrics");
-                setOpen();
-              }}
-            >
-              <PieChartIcon />
-              <span>Metrics</span>
-            </CommandItem>
-            <CommandItem
-              onSelect={() => {
-                navigate("/automations");
-                setOpen();
-              }}
-            >
-              <WorkflowIcon />
-              <span>Automations</span>
-            </CommandItem>
-            <CommandItem
-              onSelect={() => {
-                navigate("/automationTypes");
-                setOpen();
-              }}
-            >
-              <ShapesIcon />
-              <span>Automations Type</span>
-            </CommandItem>
+            {navigationItems.map((item) => (
+              <MyCommand
+                key={item.path}
+                title={item.title}
+                icon={item.icon}
+                onNavigate={() => {
+                  navigate(item.path);
+                  setOpen();
+                }}
+              />
+            ))}
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Projects">
             {sasQuery.data &&
               (sasQuery.data as string[]).map((s) => (
-                <CommandItem
+                <MyCommand
                   key={s}
-                  onSelect={() => {
+                  title={s.slice(4)}
+                  icon={FolderIcon}
+                  onNavigate={() => {
                     navigate(`/projects/${s}`);
                     setOpen();
                   }}
-                >
-                  <FolderIcon />
-                  <span>{s.slice(4)}</span>
-                </CommandItem>
+                />
               ))}
           </CommandGroup>
         </CommandList>
