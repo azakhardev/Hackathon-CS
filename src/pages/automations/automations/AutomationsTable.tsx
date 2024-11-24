@@ -19,6 +19,7 @@ import {
 import { IAutomation } from "@/lib/types/IAutomation";
 import { Badge, badgeVariants } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "@/lib/hooks/use-mobile";
 
 interface IProps {
   automations: IAutomation[] | IErrorMessage;
@@ -73,6 +74,7 @@ export default function AutomationsTable(props: IProps) {
 
     return props;
   };
+  const isMobile = useIsMobile();
   return (
     <Table className="overflow-x-auto">
       <TableBody>
@@ -86,55 +88,65 @@ export default function AutomationsTable(props: IProps) {
             return (
               <TableRow key={`${a.id}-${index}`}>
                 <TableCell>
-                  <div className="flex justify-start">
-                    <Table_cel_title
-                      title={a.id.slice(-5)}
-                      text={a.id.slice(0, -6).toLowerCase()}
-                      searchText={props.searchText}
-                    />
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex flex-col justify-center">
-                    <div className="flex justify-center">
-                      {a.type_object?.states?.map((state, index) => {
-                        const nodeProps = getNodeProps(
-                          index,
-                          activeIndex,
-                          a.type_object?.states?.length ?? 0
-                        );
-                        return (
-                          <TooltipProvider key={index}>
-                            <Tooltip>
-                              <TooltipTrigger>
-                                <StateNode {...nodeProps} />
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{state}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        );
-                      })}
-                    </div>
-                    {isStateWrong ? (
-                      <span className="text-center text-muted-foreground">
-                        {`(${a.state.toLowerCase()})`}
-                      </span>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge_timeAgo date={new Date(a.last_activity)} />
-                  <span> {t("translation:common:on")} </span>
-                  <Link
-                    to={`/projects/${a.sas}`}
-                    className={badgeVariants({ variant: "outline" })}
+                  <div
+                    className={`flex flex-wrap  h-full gap-3 ${
+                      isMobile
+                        ? "flex-col gap-2 items-start justify-start"
+                        : "items-center justify-between"
+                    }`}
                   >
-                    {a.sas.slice(4)}
-                  </Link>
+                    <div>
+                      <div className="flex justify-start">
+                        <Table_cel_title
+                          title={a.id.slice(-5)}
+                          text={a.id.slice(0, -6).toLowerCase()}
+                          searchText={props.searchText}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex flex-col justify-center">
+                        <div className="flex justify-center">
+                          {a.type_object?.states?.map((state, index) => {
+                            const nodeProps = getNodeProps(
+                              index,
+                              activeIndex,
+                              a.type_object?.states?.length ?? 0
+                            );
+                            return (
+                              <TooltipProvider key={index}>
+                                <Tooltip>
+                                  <TooltipTrigger>
+                                    <StateNode {...nodeProps} />
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>{state}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            );
+                          })}
+                        </div>
+                        {isStateWrong ? (
+                          <span className="text-center text-muted-foreground">
+                            {`(${a.state.toLowerCase()})`}
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
+                    <div>
+                      <Badge_timeAgo date={new Date(a.last_activity)} />
+                      <span> {t("translation:common:on")} </span>
+                      <Link
+                        to={`/projects/${a.sas}`}
+                        className={badgeVariants({ variant: "outline" })}
+                      >
+                        {a.sas.slice(4)}
+                      </Link>
+                    </div>
+                  </div>
                 </TableCell>
                 <TableCell className="text-end">
                   <Link
