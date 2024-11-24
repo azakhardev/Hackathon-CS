@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import { HomeIcon } from "lucide-react";
+import { Fragment } from "react/jsx-runtime";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,14 +10,18 @@ import {
   BreadcrumbSeparator,
 } from "./breadcrumb";
 
-export default function Breadcrumbs() {
+interface IBreadcrumbs {
+  type?: "runner" | "automationType" | "automationLogs" | "project";
+}
+
+export default function Breadcrumbs({ type }: IBreadcrumbs) {
   const pathname = useLocation().pathname;
 
   const segments = pathname.split("/");
 
   let urlDefined = "";
   if (segments.length > 1 && segments[segments.length - 2] === "automations")
-    urlDefined = `/projects/${segments[1]}?tabs=automations`;
+    urlDefined = "/projects/SAS_ANCHOR?tabs=automations";
   //todo: different path coming from automations directly?
   return (
     <div className="flex items-center gap-2 px-4">

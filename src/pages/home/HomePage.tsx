@@ -49,7 +49,7 @@ export default function HomePage() {
           {!isMobile && (
             <div>
               <H2x>{t("translation:homepage:automation_types_header")}</H2x>
-              <AutomationTypesDataTable limit={limit} />
+              <AutomationTypesDataTable limit={limit} isNav={false} />
               <MoreBtn to="/automationTypes" />
             </div>
           )}

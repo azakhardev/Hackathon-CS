@@ -9,7 +9,7 @@ export default function AutomationTypesPage() {
   return (
     <>
       <H1>{t("translation:automationTypes:header")}</H1>
-      <AutomationTypesDataTable limit={9999} />
+      <AutomationTypesDataTable isNav={true} limit={9999} />
     </>
   );
 }

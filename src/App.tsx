@@ -13,7 +13,7 @@ import ProjectsPage from "./pages/projects/ProjectsPage";
 import AutomationTypesPage from "./pages/automations/automationTypes/AutomationTypesPage";
 import ProjectDetailPage from "./pages/projects/ProjectDetailPage";
 import { LoginPage } from "./pages/login/LoginPage";
-import { createContext } from "react";
+import { createContext, useState } from "react";
 import { ILogin } from "./lib/types/ILogin";
 
 const queryClient = new QueryClient();
@@ -44,10 +44,15 @@ const router = createBrowserRouter([
   },
 ]);
 function App() {
+  const [login, setLogin] = useState<ILogin>({
+    username: "xxx",
+    password: "yyy",
+  });
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <LoginContext.Provider value={{ username: "xxx", password: "yyy" }}>
+        <LoginContext.Provider value={login}>
           <RouterProvider router={router} />
         </LoginContext.Provider>
       </ThemeProvider>

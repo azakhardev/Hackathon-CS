@@ -17,7 +17,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { IAutomation } from "@/lib/types/IAutomation";
-import { badgeVariants } from "@/lib/types/IBadgeProps";
+import { badgeVariants } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
 

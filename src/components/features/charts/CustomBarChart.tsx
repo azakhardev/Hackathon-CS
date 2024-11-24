@@ -8,7 +8,7 @@ import { IChartConfig } from "@/lib/types/IChartConfig";
 
 interface IProps {
   chartConfig: IChartConfig;
-  chartData: object[];
+  chartData: any[];
   dataKey: string;
   showCursor: boolean;
   stacked?: boolean;
