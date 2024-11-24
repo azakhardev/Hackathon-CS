@@ -179,15 +179,6 @@
   }
 }
 
-body::-webkit-scrollbar {
-  display: none;
-}
-
-.body {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -196,4 +187,17 @@ body::-webkit-scrollbar {
   100% {
     transform: rotate(360deg);
   }
+}
+
+body::-webkit-scrollbar {
+  width: 0.3em;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
 }
