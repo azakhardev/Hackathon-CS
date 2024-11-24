@@ -25,6 +25,7 @@ import {
   TriangleAlert,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "@/lib/hooks/use-mobile";
 
 interface IProps {
   logs: IAutomationLog[] | IErrorMessage;
@@ -104,18 +105,21 @@ export default function LogsTable(props: IProps) {
     return props2;
   };
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   if (!Array.isArray(props.logs) || props.logs.length === 0) {
     return (
       <Table>
         <TableBody>
           <TableRow>
-            <TableCell className="text-center">{t('translation:automations:no_data')}</TableCell>
+            <TableCell className="text-center">
+              {t("translation:automations:no_data")}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
     );
   }
+  const isMobile = useIsMobile();
 
   return (
     <Table>
@@ -140,54 +144,60 @@ export default function LogsTable(props: IProps) {
           return (
             <TableRow key={l.timestamp}>
               <TableCell>
-                <div className="flex justify-start">
-                  <TableCelTitleLog
-                    title={l.type}
-                    text={l.description}
-                    icon={pp.icon}
-                    color={pp.color}
-                  />
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex flex-col justify-center">
-                  <div className="flex justify-center">
-                    {l.type_object?.states?.map((state, index) => {
-                      const nodeProps = getNodeProps(
-                        index,
-                        toIndex,
-                        fromIndex,
-                        totalStates,
-                        l.level
-                      );
-
-                      return (
-                        <TooltipProvider key={index}>
-                          <Tooltip>
-                            <TooltipTrigger>
-                              <StateNode {...nodeProps} />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>{state}</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      );
-                    })}
+                <div
+                  className={`flex flex-wrap  h-full gap-3 ${
+                    isMobile
+                      ? "flex-col gap-2 items-start justify-start"
+                      : "items-center justify-between"
+                  }`}
+                >
+                  <div className="flex justify-start">
+                    <TableCelTitleLog
+                      title={l.type}
+                      text={l.description}
+                      icon={pp.icon}
+                      color={pp.color}
+                    />
                   </div>
-                  {isStateWrong ? (
-                    <span className="text-center text-muted-foreground">
-                      {`(${l.from_state.toLowerCase()} → ${l.to_state.toLowerCase()})`}
-                    </span>
-                  ) : (
-                    ""
-                  )}
+                  <div className="flex flex-col justify-center">
+                    <div className="flex justify-center">
+                      {l.type_object?.states?.map((state, index) => {
+                        const nodeProps = getNodeProps(
+                          index,
+                          toIndex,
+                          fromIndex,
+                          totalStates,
+                          l.level
+                        );
+
+                        return (
+                          <TooltipProvider key={index}>
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <StateNode {...nodeProps} />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{state}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        );
+                      })}
+                    </div>
+                    {isStateWrong ? (
+                      <span className="text-center text-muted-foreground">
+                        {`(${l.from_state.toLowerCase()} → ${l.to_state.toLowerCase()})`}
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="font-medium">
+                    <Badge_timeAgo date={new Date(l.timestamp)} />
+                    <span>{t("translation:automations:no_data")}</span>
+                    <Badge_Link title={l.automation_id.slice(-5)} route="#" />
+                  </div>
                 </div>
-              </TableCell>
-              <TableCell className="font-medium">
-                <Badge_timeAgo date={new Date(l.timestamp)} />
-                <span>{t('translation:automations:no_data')}</span>
-                <Badge_Link title={l.automation_id.slice(-5)} route="#" />
               </TableCell>
             </TableRow>
           );
