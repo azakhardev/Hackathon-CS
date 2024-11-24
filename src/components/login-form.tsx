@@ -18,8 +18,8 @@ import CryptoJS from "crypto-js";
 
 export function LoginForm() {
   //const login = useContext(LoginContext);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("dopo");
+  const [password, setPassword] = useState("DevOps2024");
   const [error, setError] = useState<undefined | string>(undefined);
   const navigate = useNavigate();
 
