@@ -82,7 +82,8 @@ export function Loader({
 function H1x({ children }: { children: React.ReactNode }) {
   return (
     <h1
-      className={`text-4xl font-extrabold tracking-tight scroll-m-20 lg:text-7xl w-full text-center`}
+      //className={`text-4xl font-extrabold tracking-tight scroll-m-20 lg:text-7xl w-full text-center`}
+      className={`text-4xl font-extrabold tracking-tight scroll-m-20 lg:text-5xl w-full text-center uppercase border-b-2 pb-2 mb-5`}
     >
       {children}
     </h1>
