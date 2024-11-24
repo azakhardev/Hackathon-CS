@@ -1,8 +1,5 @@
 import { useParams } from "react-router-dom";
-import H2 from "@/components/ui/typography/H2";
 import LogsDataTable from "@/components/features/automations/detail/LogsDataTable";
-import DetailHeader from "@/components/DetailHeader";
-import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { userValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
 import H1 from "@/components/ui/typography/H1";

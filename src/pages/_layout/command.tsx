@@ -21,7 +21,6 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 import {
   Tooltip,
@@ -29,10 +28,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+import { useSidebar } from "@/components/ui/sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { RunnerModel } from "@/lib/models/RunnerModel";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCommandStore } from "@/lib/store";
 import { Button } from "@/components/ui/Button";
 import { useTranslation } from "react-i18next";
@@ -88,7 +87,7 @@ export function CommandDialogDemo() {
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-  }, []);
+  }, [setOpen]);
 
   const sasQuery = useQuery({
     queryKey: ["sas"], //searchText - api cant filter, always same all response (cache with single key)

@@ -1,10 +1,6 @@
-import {
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
+import { SidebarMenuButton, useSidebar } from "@/components/ui/sidebar";
 import { useCommandStore } from "@/lib/store";
-import { Home, HomeIcon, PanelRightIcon, SearchIcon } from "lucide-react";
+import { HomeIcon, PanelRightIcon, SearchIcon } from "lucide-react";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 

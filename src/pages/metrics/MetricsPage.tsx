@@ -2,7 +2,6 @@ import H1 from "@/components/ui/typography/H1";
 import H2 from "@/components/ui/typography/H2";
 import RunnersDataTable from "@/components/features/runners/RunnersDataTable";
 import { MoreBtn } from "../home/HomePage";
-import { ISelectItem } from "@/components/SelectInput";
 import JobsChart from "./components/JobsChart";
 import RunnersCharts from "./components/RunnersCharts";
 import AutomationsChart from "./components/AutomationCharts";

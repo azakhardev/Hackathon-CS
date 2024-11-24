@@ -17,7 +17,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { IAutomation } from "@/lib/types/IAutomation";
-import { Badge, badgeVariants } from "@/components/ui/badge";
+import { badgeVariants } from "@/components/ui/badge";
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
 
@@ -27,6 +27,7 @@ interface IProps {
 }
 
 export default function AutomationsTable(props: IProps) {
+  const isMobile = useIsMobile();
   const { t } = useTranslation();
   if (props.automations === undefined || props.automations === null)
     return <h1>Error at data joining</h1>;
@@ -74,7 +75,7 @@ export default function AutomationsTable(props: IProps) {
 
     return props;
   };
-  const isMobile = useIsMobile();
+
   return (
     <Table className="overflow-x-auto">
       <TableBody>
