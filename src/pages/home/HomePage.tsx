@@ -8,9 +8,11 @@ import JobsDataTable from "@/components/features/jobs/JobDataTable";
 import { userValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "@/components/languageSelector";
+import { useIsMobile } from "@/lib/hooks/use-mobile";
 
 export default function HomePage() {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
   const limit = 3;
   userValidate();
 
@@ -45,11 +47,13 @@ export default function HomePage() {
             <AutomationsDataTable limit={limit} isNav={false} />
             <MoreBtn to="/automations" />
           </div>
-          <div>
-            <H2x>{t("translation:homepage:automation_types_header")}</H2x>
-            <AutomationTypesDataTable limit={limit} isNav={false} />
-            <MoreBtn to="/automationTypes" />
-          </div>
+          {!isMobile && (
+            <div>
+              <H2x>{t("translation:homepage:automation_types_header")}</H2x>
+              <AutomationTypesDataTable limit={limit} isNav={false} />
+              <MoreBtn to="/automationTypes" />
+            </div>
+          )}
         </div>
       </div>
     </div>
