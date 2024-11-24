@@ -28,44 +28,49 @@ export default function Breadcrumbs({ type }: IBreadcrumbs) {
               <BreadcrumbLink>/</BreadcrumbLink>
             </BreadcrumbItem>
           </Link>
+          {segments.map((item, i) => {
+            if (item != "") {
+              let splitted = item;
+              switch (type) {
+                case "runner":
+                  splitted = item.split("-")[item.split("-").length - 1];
+                  break;
+                case "automationLogs":
+                  splitted = item.split("-")[item.split("-").length - 1];
+                  break;
+                case "automationType":
+                  const splittedArr = item.split(/(?=[A-Z])/);
+                  splitted = splittedArr[0] + " " + splittedArr[1];
+                  break;
+                case "project":
+                  splitted = item.split("_")[item.split("_").length - 1];
+                  break;
+                default:
+                  break;
+              }
+
+              return (
+                <>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <Link key={i} to={`${segments.slice(0, i + 1).join("/")}`}>
+                    <BreadcrumbItem>
+                      {i === segments.length - 1 ? (
+                        <BreadcrumbPage className="capitalize">
+                          {splitted.toLowerCase()}
+                        </BreadcrumbPage>
+                      ) : (
+                        <BreadcrumbLink className="capitalize">
+                          {splitted.toLowerCase()}
+                        </BreadcrumbLink>
+                      )}
+                    </BreadcrumbItem>
+                  </Link>
+                </>
+              );
+            }
+          })}
         </BreadcrumbList>
       </Breadcrumb>
-
-      {segments.map((item, i) => {
-        if (item != "") {
-          let splitted = item;
-          switch (type) {
-            case "runner":
-              splitted = item.split("-")[item.split("-").length - 1];
-              break;
-            case "automationLogs":
-              splitted = item.split("-")[item.split("-").length - 1];
-              break;
-            case "automationType":
-              const splittedArr = item.split(/(?=[A-Z])/);
-              splitted = splittedArr[0] + " " + splittedArr[1];
-              break;
-            case "project":
-              splitted = item.split("_")[item.split("_").length - 1];
-              break;
-            default:
-              break;
-          }
-
-          return (
-            <>
-              <BreadcrumbSeparator className="hidden md:block" />
-              <Link key={i} to={`${segments.slice(0, i + 1).join("/")}`}>
-                <BreadcrumbItem>
-                  <BreadcrumbPage className="capitalize">
-                    {splitted.toLowerCase()}
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-              </Link>
-            </>
-          );
-        }
-      })}
     </div>
   );
 }
