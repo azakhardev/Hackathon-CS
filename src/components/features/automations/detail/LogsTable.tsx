@@ -24,6 +24,7 @@ import {
   SearchXIcon,
   TriangleAlert,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   logs: IAutomationLog[] | IErrorMessage;
@@ -102,12 +103,14 @@ export default function LogsTable(props: IProps) {
 
     return props2;
   };
+
+  const { t } = useTranslation()
   if (!Array.isArray(props.logs) || props.logs.length === 0) {
     return (
       <Table>
         <TableBody>
           <TableRow>
-            <TableCell className="text-center">No data available</TableCell>
+            <TableCell className="text-center">{t('translation:automations:no_data')}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -183,7 +186,7 @@ export default function LogsTable(props: IProps) {
               </TableCell>
               <TableCell className="font-medium">
                 <Badge_timeAgo date={new Date(l.timestamp)} />
-                <span>new log was created on</span>
+                <span>{t('translation:automations:no_data')}</span>
                 <Badge_Link title={l.automation_id.slice(-5)} route="#" />
               </TableCell>
             </TableRow>

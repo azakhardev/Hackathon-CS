@@ -13,8 +13,11 @@ import Throbber from "@/components/ui/Throbber";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { userValidate } from "@/lib/utils/validateUser";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
+import { useTranslation } from "react-i18next";
 
 export default function RunnerDetailPage() {
+  const { t } = useTranslation()
+
   userValidate();
   const params = useParams();
   const runnerId = params.id;
@@ -50,7 +53,7 @@ export default function RunnerDetailPage() {
     <main>
       <div>
         <DetailRunnerHeader
-          section="Runner"
+          section={t("translation:runners:detail_title")} 
           title={runnerQuery.isLoading ? "Loading..." : title}
           state={
             runnerQuery.isLoading
@@ -65,10 +68,10 @@ export default function RunnerDetailPage() {
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">
               {/* mb-8*/}
               <TabsTrigger className="w-[100px]" value="jobs">
-                Jobs
+                {t('translation:runners:tabs_jobs')}
               </TabsTrigger>
               <TabsTrigger className="w-[100px]" value="metrics">
-                Metrics
+              {t('translation:runners:tabs_metrics')}
               </TabsTrigger>
             </TabsList>
             <TabsContent value="jobs">

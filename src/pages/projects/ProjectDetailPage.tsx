@@ -7,8 +7,11 @@ import JobsDataTable from "@/components/features/jobs/JobDataTable";
 import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { userValidate } from "@/lib/utils/validateUser";
+import { useTranslation } from "react-i18next";
 
 export default function ProjectDetailPage() {
+
+  const { t } = useTranslation()
   userValidate();
   const params = useParams();
   const id = params.id;
@@ -21,15 +24,15 @@ export default function ProjectDetailPage() {
   return (
     <main>
       <div>
-        <DetailHeader section="Project" title={title} />
+        <DetailHeader section={t("translation:projects:detail_title")} title={title} />
         <div>
           <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">
               <TabsTrigger className="w-[100px]" value="jobs">
-                Jobs
+                {t('translation:projects:tabs_jobs')}
               </TabsTrigger>
               <TabsTrigger className="w-[100px]" value="automations">
-                Automations
+              {t('translation:projects:tabs_automations')}
               </TabsTrigger>
             </TabsList>
             <TabsContent value="jobs">

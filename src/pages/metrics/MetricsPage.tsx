@@ -8,8 +8,11 @@ import RunnersCharts from "./components/RunnersCharts";
 import AutomationsChart from "./components/AutomationCharts";
 import ProjectsCharts from "./components/ProjectsCharts";
 import { userValidate } from "@/lib/utils/validateUser";
+import { useTranslation } from "react-i18next";
 
 export default function MetricsPage() {
+  const { t } = useTranslation()
+
   userValidate();
 
   let items: ISelectItem[] = [
@@ -20,7 +23,7 @@ export default function MetricsPage() {
 
   return (
     <>
-      <H1>Metrics</H1>
+      <H1>{t('translation:metrics:header')}</H1>
       <div className="flex flex-col gap-8">
         <H2>Total</H2>
         <div className="flex flex-col">

@@ -1,0 +1,114 @@
+{
+    "common": {
+        "more_btn_text": "Load more",
+        "more_btn_loading": "Loading more...",
+        "more_btn_error": "Nothing more to load",
+        "by": "by",
+        "is": "is",
+        "on": "on"
+    },
+    "homepage": {
+        "dev_header": "Dev",
+        "projects_header": "Projects",
+        "runners_header": "Runners",
+        "jobs_header": "Jobs",
+        "ops_header": "Ops",
+        "automations_header": "Automations",
+        "automation_types_header": "Automation Types"
+    },
+    "projects": {
+        "header": "Projects",
+        "success_build": "byl postaven v",
+        "in_progress_build": "je stavěný v",
+        "success_prod": "byl nasazen do produkce v",
+        "queued": "čeká na spouštěč",
+        "tabs_jobs": "Jobs",
+        "tabs_automations": "Automations",
+        "logs_btn": "Logs",
+        "detail_title": "Project"
+
+    },
+    "jobs": {
+        "header": "Jobs",
+        "state_inProgress": "In Progress",
+        "state_queued": "Queued",
+        "state_success": "Success",
+        "state_failed": "Failed",
+        "state_default": "None"
+    },
+    "runners": {
+        "header": "Runners",
+        "state_active": "Active",
+        "state_offline": "Offline",
+        "state_idle": "Idle",
+        "state_failed": "Failed",
+        "action_build": "Build runner",
+        "action_test": "Test Runner",
+        "action_deploy_dev": "Dev deployer",
+        "action_deploy_prod": "Prod deployer",
+        "action_waiting": "Waiting",
+        "desc_waiting": "Waiting for runner",
+        "desc_build": "Building",
+        "desc_test": "Testing",
+        "desc_deploy_dev": "Deploying to dev",
+        "desc_deploy_prod": "Deploying to prod",
+        "decs_default": "Unknown action",
+        "icon_jobs": "'s JOBS",
+        "icon_metrics": "'s icon_metrics",
+        "tabs_jobs": "Jobs",
+        "tabs_metrics": "Metrics",
+        "detail_title": "Runner"
+    },
+    "filters": {
+        "text": "Find",
+        "name_sort": "Name",
+        "date_sort": "Date",
+        "sort_title": "Sort by",
+        "order_title": "In Direction",
+        "date": "Pick a date",
+        "action_placeholder": "All actions",
+        "state_placeholder": "All states",
+        "state_active": "Active",
+        "state_offline": "Offline",
+        "state_idle": "Idle",
+        "state_failed": "Failed",
+        "state_success": "Success",
+        "state_queued": "Queued",
+        "state_inProgress": "In Progress",
+        "action_build": "Build",
+        "action_test": "Test",
+        "action_dev": "DEV",
+        "action_ops": "PROD",
+        "projects_placeholder": "All"
+    },
+    "jobsVerbsMap": {
+        "success": "was",
+        "in_progress": "is being",
+        "queued": "will be",
+        "failed": "failed to be"
+    },
+    "runnerActionMap": {
+        "waiting": "is waiting for runner",
+        "build": "built",
+        "test": "tested",
+        "deploy_dev": "deployed to dev",
+        "deploy_prod": "deployed to prod"
+    },
+    "metrics": {
+        "header": "Metrics",
+        "projects_desc" : "Current state of jobs",
+        "automation_desc": "Current state of automations",
+        "runners_desc": "Current state of runners",
+        "jobs_desc": "Current state of jobs"
+    },
+    "automations": {
+        "header": "Automations",
+        "detail_header": "Logs",
+        "detail_error": "Error at data joining",
+        "no_data": "No data available",
+        "new_log": "new log was created on"
+    },
+    "automationTypes": {
+        "header": "Automation Types"
+    }
+}

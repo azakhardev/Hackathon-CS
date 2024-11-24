@@ -18,6 +18,7 @@ import {
   Chart_Orange,
   Chart_Red,
 } from "./ChartColors";
+import { useTranslation } from "react-i18next";
 
 const RUNNERS_CHART_CONFIG = {
   count: {
@@ -74,13 +75,15 @@ export default function RunnersCharts() {
   const runnersData = runnersQuery.data as IRunner[];
   const rStateData = createRunnersData(runnersData);
 
+  const { t } = useTranslation()
+
   return (
     <>
       {runnersQuery.isLoading && <LoadingSkeletonMetrics />}
       {!runnersQuery.isLoading && (
         <ChartCard2
-          header="Runners"
-          description="Current state of runners"
+          header={t('translation:runners:header')}
+          description={t('translation:metrics:runners_desc')}
           icon={<ContainerIcon />}
           content={
             <div>

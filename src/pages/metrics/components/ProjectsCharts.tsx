@@ -18,6 +18,7 @@ import {
   Chart_Orange,
   Chart_Red,
 } from "./ChartColors";
+import { useTranslation } from "react-i18next";
 
 const PROJECTS_CHART_CONFIG = {
   count: { label: "Count" },
@@ -28,6 +29,7 @@ const PROJECTS_CHART_CONFIG = {
 };
 
 export default function ProjectsCharts() {
+  const { t } = useTranslation()
   const [searchOrg, setSearchOrg] = useState(" ");
   const sasQuery = useQuery({
     queryKey: ["sas"],
@@ -77,6 +79,7 @@ export default function ProjectsCharts() {
     });
   }
   const pStateData = createProjectsData(projects);
+
   return (
     <>
       {(sasQuery.isLoading || jobsQuery.isLoading) && (
@@ -84,8 +87,8 @@ export default function ProjectsCharts() {
       )}
       {!sasQuery.isLoading && !jobsQuery.isLoading && (
         <ChartCard2
-          header="Projects"
-          description="Current state of jobs"
+          header={t('translation:projects:header')}
+          description={t('translation:metrics:projects_desc')}
           icon={<FolderIcon />}
           content={
             <div>

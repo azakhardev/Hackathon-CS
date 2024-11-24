@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { badgeVariants } from "@/components/ui/badge";
 import { Table_cel_state } from "@/components/ui/table/table_cel_state";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   jobs: IJobs[] | IErrorMessage | undefined;
@@ -21,6 +22,7 @@ interface IProps {
 }
 
 export default function JobsTable(props: IProps) {
+  const { t } = useTranslation()
   return (
     <Table>
       {/* <TableHeader>
@@ -36,7 +38,7 @@ export default function JobsTable(props: IProps) {
             <TableCell className="font-medium">
               <Table_cel_title
                 title={j.id}
-                text={buildDescription(parseRunnerAction(j.runner))}
+                text={buildDescription(parseRunnerAction(j.runner), t)}
                 searchText={props.searchText}
               />
             </TableCell>
@@ -136,69 +138,73 @@ export function parseRunnerAction(RunnerId: string) {
   // throw new Error("Unknown runner ID format");
 }
 
-export function buildDescription(action: RunnerActions) {
+export function buildDescription(action: RunnerActions, t: any) {
   switch (action) {
     case RunnerActions.waiting:
-      return "Waiting for runner";
+      return `${t('translation:runners:desc_waiting')}`;
     case RunnerActions.build:
-      return "Building";
+      return `${t('translation:runners:desc_build')}`;
     case RunnerActions.test:
-      return "Testing";
+      return `${t('translation:runners:desc_test')}`;
     case RunnerActions.deploy_dev:
-      return "Deploying to dev";
+      return `${t('translation:runners:desc_deploy_dev')}`;
     case RunnerActions.deploy_prod:
-      return "Deploying to prod";
+      return `${t('translation:runners:desc_deploy_prod')}`;
     default:
-      return "Unknown action";
+      return `${t('translation:runners:desc_default')}`;
   }
 }
 
 // RUNNER builders
-export function buildRunnerText(action: string) {
+export function buildRunnerText(action: string, t: any) {
   action = parseRunnerAction(action);
   switch (action) {
     case RunnerActions.waiting:
-      return "wtf???";
+      return `${t('translation:runners:action_waiting')}`;
     case RunnerActions.build:
-      return "is build runner";
+      return `${t('translation:common:is')} ${t('translation:runners:action_build')}`;
     case RunnerActions.test:
-      return "is test runner";
+      return `${t('translation:common:is')} ${t('translation:runners:action_test')}`;
     case RunnerActions.deploy_dev:
-      return "is DEV deployer";
+      return `${t('translation:common:is')} ${t('translation:runners:action_deploy_dev')}`;
     case RunnerActions.deploy_prod:
-      return "is PROD deployer";
+      return `${t('translation:common:is')} ${t('translation:runners:action_deploy_prod')}`;
   }
   return action;
 }
-export function buildRunnerDescription(action: string) {
+export function buildRunnerDescription(action: string, t: any) {
   action = parseRunnerAction(action);
   switch (action) {
     case RunnerActions.waiting:
-      return "wtf???";
+      return t('translation:runners:action_waiting');
     case RunnerActions.build:
-      return "Build runner";
+      return t('translation:runners:action_build');
     case RunnerActions.test:
-      return "Test runner";
+      return t('translation:runners:action_test');
     case RunnerActions.deploy_dev:
-      return "Dev deployer";
+      return t('translation:runners:action_deploy_dev');
     case RunnerActions.deploy_prod:
-      return "Prod deployer";
+      return t('translation:runners:action_deploy_prod');
   }
   return action;
 }
 
-const verbMap: { [key in JobStates]: string } = {
-  [JobStates.success]: "was",
-  [JobStates.in_progress]: "is being",
-  [JobStates.queued]: "will be",
-  [JobStates.failed]: "failed to be",
+function verbMap(t: any): { [key in JobStates]: string } {
+  return {
+    [JobStates.success]: t('translation:jobsVerbsMap:success'),
+    [JobStates.in_progress]: t('translation:jobsVerbsMap:in_progress'),
+    [JobStates.queued]: t('translation:jobsVerbsMap:queued'),
+    [JobStates.failed]: t('translation:jobsVerbsMap:failed'),
+  }
 };
-const actionMap: { [key in RunnerActions]: string } = {
-  [RunnerActions.waiting]: "is waiting for runner", //always
-  [RunnerActions.build]: "built",
-  [RunnerActions.test]: "tested",
-  [RunnerActions.deploy_dev]: "deployed to dev",
-  [RunnerActions.deploy_prod]: "deployed to prod",
+function actionMap(t: any): { [key in RunnerActions]: string } {
+  return {
+    [RunnerActions.waiting]: t('translation:runnerActionMap:waiting'), //always
+    [RunnerActions.build]: t('translation:runnerActionMap:build'),
+    [RunnerActions.test]: t('translation:runnerActionMap:test'),
+    [RunnerActions.deploy_dev]: t('translation:runnerActionMap:deploy_dev'),
+    [RunnerActions.deploy_prod]: t('translation:runnerActionMap:deploy_prod'),
+  }
 };
 export function tagJoin({
   action,
@@ -207,16 +213,17 @@ export function tagJoin({
   action: RunnerActions;
   state: string;
 }): string {
+  const { t } = useTranslation()
   if (!(state in JobStates)) {
     throw new Error("Unknown job state");
   }
-  const actionText = actionMap[action];
+  const actionText = actionMap(t)[action];
   if (action === RunnerActions.waiting) {
     return actionText;
   }
-  const verb = verbMap[state as JobStates];
+  const verb = verbMap(t)[state as JobStates];
   if (!verb || !actionText) {
     throw new Error("Unknown job state or action");
   }
-  return `${verb} ${actionText} by`;
+  return `${verb} ${actionText} ${t('translation:common:by')}`;
 }

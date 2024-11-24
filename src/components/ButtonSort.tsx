@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SelectInput, { ISelectItem } from "./SelectInput";
+import { useTranslation } from "react-i18next";
 
 interface SortState {
   column: string;
@@ -31,6 +32,8 @@ export function ButtonSort({ sort, setSort, items }: ButtonSortProps) {
     { value: "desc", content: <ArrowDownZAIcon /> },
   ];
 
+  const { t } = useTranslation()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -42,7 +45,7 @@ export function ButtonSort({ sort, setSort, items }: ButtonSortProps) {
         <DropdownMenuGroup>
           <div className="flex flex-col gap-2 p-2">
             <div className="flex flex-col gap-2 p-1">
-              <span className="text-sm text-muted-foreground">Sort by</span>
+              <span className="text-sm text-muted-foreground">{t('translation:filters:sort_title')}</span>
               <SelectInput
                 placeholder=""
                 defaultValue={sort.column}
@@ -53,7 +56,7 @@ export function ButtonSort({ sort, setSort, items }: ButtonSortProps) {
             </div>
             <div className="flex flex-col gap-2 p-1">
               <span className="text-sm text-muted-foreground">
-                In Direction
+              {t('translation:filters:order_title')}
               </span>
               <SelectInput
                 placeholder=""

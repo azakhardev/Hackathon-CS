@@ -15,6 +15,7 @@ import SelectInput from "@/components/SelectInput";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 import { Chart_Green, Chart_Orange, Chart_OrangeOpacity } from "./ChartColors";
+import { useTranslation } from "react-i18next";
 
 const AUTOMATIONS_STATE_CHART_CONFIG = {
   count: {
@@ -37,6 +38,7 @@ export default function AutomationsChart() {
     to: undefined,
   });
   const [searchOrg, setSearchOrg] = useState(" ");
+  const { t } = useTranslation()
 
   const automationsQuery = useQuery({
     queryKey: ["automations", searchDate, searchOrg],
@@ -103,8 +105,8 @@ export default function AutomationsChart() {
     <>
       {!automationsQuery.isLoading && (
         <ChartCard2
-          header="Automations"
-          description="Current state of automations"
+          header={t('translation:automations:header')}
+          description={t('translation:metrics:automation_desc')}
           icon={<Workflow />}
           content={
             <div>

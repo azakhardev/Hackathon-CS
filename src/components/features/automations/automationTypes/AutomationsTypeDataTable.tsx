@@ -55,7 +55,6 @@ export default function AutomationTypesDataTable({
   if (automationsTypeQuery.isLoading) {
     return <LoadingSkeletonTypes />;
   }
-
   return (
     <>
       <Table>
