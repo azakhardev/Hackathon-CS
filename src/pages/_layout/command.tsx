@@ -10,6 +10,8 @@ import {
   ShapesIcon,
   WorkflowIcon,
   LucideIcon,
+  LanguagesIcon,
+  PanelLeft,
 } from "lucide-react";
 import {
   CommandDialog,
@@ -27,19 +29,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { SidebarMenuItem } from "@/components/ui/sidebar";
+import { SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import { Link, useNavigate } from "react-router-dom";
 import { useCommandStore } from "@/lib/store";
 import { Button } from "@/components/ui/Button";
+import { useTranslation } from "react-i18next";
 
 interface NavItem {
   title: string;
   icon: LucideIcon;
   path: string;
 }
-
 const navigationItems: NavItem[] = [
   { title: "Projects", icon: FolderIcon, path: "/projects" },
   { title: "Runners", icon: ContainerIcon, path: "/runners" },
@@ -48,6 +50,11 @@ const navigationItems: NavItem[] = [
   { title: "Automations", icon: WorkflowIcon, path: "/automations" },
   { title: "Automations Type", icon: ShapesIcon, path: "/automationTypes" },
 ];
+interface NavActionItem {
+  title: string;
+  icon: LucideIcon;
+  action: () => void;
+}
 
 interface MyCommandProps {
   title: string;
@@ -91,7 +98,25 @@ export function CommandDialogDemo() {
 
   const storage =
     (JSON.parse(localStorage.getItem("favorite")) as string[]) ?? [];
-  console.log(storage);
+
+  const { i18n } = useTranslation();
+  const { toggleSidebar } = useSidebar();
+  const actionItems: NavActionItem[] = [
+    {
+      title: "Switch Langue",
+      icon: LanguagesIcon,
+      action: () => {
+        i18n.changeLanguage(i18n.language === "en" ? "cs" : "en");
+      },
+    },
+    {
+      title: "Toggle Sidebar",
+      icon: PanelLeft,
+      action: () => {
+        toggleSidebar();
+      },
+    },
+  ];
 
   return (
     <>
@@ -141,6 +166,21 @@ export function CommandDialogDemo() {
             ))}
           </CommandGroup>
           <CommandSeparator />
+          <CommandGroup heading="Actions">
+            {actionItems.map((item) => (
+              <MyCommand
+                key={item.title}
+                title={item.title}
+                icon={item.icon}
+                onNavigate={() => {
+                  item.action();
+                  setOpen();
+                }}
+              />
+            ))}
+          </CommandGroup>
+          <CommandSeparator />
+
           <CommandGroup heading="Projects">
             {sasQuery.data &&
               (sasQuery.data as string[]).map((s) => (
