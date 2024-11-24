@@ -190,14 +190,13 @@
 }
 
 body::-webkit-scrollbar {
-  width: 0.3em;
+  width: 0.5em;
 }
-
 body::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
+  /* background-color: hsl(var(--bg_secondary)); */
 }
-
 body::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
+  background-color: hsl(var(--bg_default));
+  outline: 1px solid hsl(var(--border_default));
 }
