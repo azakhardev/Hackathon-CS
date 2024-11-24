@@ -88,6 +88,10 @@ export function CommandDialogDemo() {
   });
   const navigate = useNavigate();
 
+  const storage =
+    (JSON.parse(localStorage.getItem("favorite")) as string[]) ?? [];
+  console.log(storage);
+
   return (
     <>
       {/* <TooltipProvider>
@@ -109,14 +113,18 @@ export function CommandDialogDemo() {
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Favorite">
-            <MyCommand
-              title="GIORGIO"
-              icon={FolderIcon}
-              onNavigate={() => {
-                navigate("/projects/SAS_GIORGIO");
-                setOpen();
-              }}
-            />
+            {storage &&
+              (storage as string[]).map((s) => (
+                <MyCommand
+                  key={s}
+                  title={s.slice(4)}
+                  icon={FolderIcon}
+                  onNavigate={() => {
+                    navigate(`/projects/${s}`);
+                    setOpen();
+                  }}
+                />
+              ))}
           </CommandGroup>
           <CommandGroup heading="Pages">
             {navigationItems.map((item) => (
