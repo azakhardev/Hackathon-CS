@@ -16,6 +16,7 @@ import { IRunner } from "@/lib/types/IRunner";
 import { Link } from "react-router-dom";
 import IconButton from "@/components/IconButton";
 import { CheckIcon, PieChartIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   runners: (IRunner[] | IErrorMessage)[] | undefined;
@@ -37,7 +38,7 @@ export default function RunnersTable(props: IProps) {
   if (!runnerData.length) {
     return <p>No runners available or an error occurred.</p>;
   }
-
+  const { t } = useTranslation()
   return (
     <Table>
       {/* <TableCaption></TableCaption>
@@ -57,7 +58,7 @@ export default function RunnersTable(props: IProps) {
               <TableCell className="font-medium">
                 <Table_cel_title
                   title={title}
-                  text={buildRunnerDescription(r.id)}
+                  text={buildRunnerDescription(r.id, t)}
                   searchText={props.searchText}
                 />
               </TableCell>
@@ -74,19 +75,19 @@ export default function RunnersTable(props: IProps) {
                   className={badgeVariants({ variant: "outline" })}
                 >                  
                 </Link>*/}
-                {runnerRoleText(r.id)}
+                {runnerRoleText(r.id, t)}
               </TableCell>
               <TableCell className="flex flex-row justify-end gap-2">
                 <IconButton
                   url={`/runners/${r.id}`}
                   icon={<CheckIcon size={16} />}
-                  text={`${title.toLowerCase()}'s JOBS`}
+                  text={`${title.toLowerCase()}${t('translation:runners:icon_jobs')}`}
                   tab="jobs"
                 />
                 <IconButton
                   url={`/runners/${r.id}`}
                   icon={<PieChartIcon size={16} />}
-                  text={`${title.toLowerCase()}'s METRICS`}
+                  text={`${title.toLowerCase()}${t('translation:runners:icon_metrics')}`}
                   tab="metrics"
                 />
               </TableCell>

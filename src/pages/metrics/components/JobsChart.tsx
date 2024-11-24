@@ -29,6 +29,7 @@ import {
   Chart_Orange,
   Chart_Red,
 } from "./ChartColors";
+import { useTranslation } from "react-i18next";
 
 const JOBS_CHART_CONFIG = {
   count: { label: "Count" },
@@ -98,13 +99,14 @@ export default function JobsChart() {
 
   const jobsData = jobsQuery.data as IJobs[];
   const jStateData = createJobsData(jobsData);
+  const { t } = useTranslation()
   return (
     <>
       {jobsQuery.isLoading && <LoadingSkeletonMetrics />}
       {!jobsQuery.isLoading && (
         <ChartCard2
-          header="Jobs"
-          description="Current state of jobs"
+          header={t('translation:jobs:header')}
+          description={t('translation:metrics:jobs_desc')}
           icon={<CheckIcon />}
           content={
             <div>

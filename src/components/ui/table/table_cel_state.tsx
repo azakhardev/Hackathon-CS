@@ -1,5 +1,6 @@
 import { CircleIcon } from "lucide-react";
 import { Description_timeAgo } from "./badge_timeAgo";
+import { useTranslation } from "react-i18next";
 
 export enum StateType {
   Gray = "state_gray",
@@ -22,8 +23,25 @@ function getColorForState(state: string): StateType {
   return stateColorMap[state] || StateType.Gray;
 }
 
-function formatState(state: string) {
-  return state.charAt(0).toUpperCase() + state.slice(1).replace("_", " ");
+function formatState(state: string, t: any) {
+  switch (state) {
+    case 'in_progress':
+      return t('translation:jobs:state_inProgress')
+    case 'queued':
+      return t('translation:jobs:state_queued')
+    case "success":
+      return t('translation:jobs:state_success')
+    case "failed":
+      return t('translation:jobs:state_failed')
+    case "active": 
+      return t('translation:runners:state_active')
+    case "offline":
+      return t('translation:runners:state_offline')
+    case "idle":
+      return t('translation:runners:state_idle')
+    default:
+      return t('translation:jobs:state_default')
+  }
 }
 
 const tailwindFillClassMap = {
@@ -42,6 +60,7 @@ export function Table_cel_state({
   text: string;
   type: string;
 }) {
+  const { t } = useTranslation()
   return (
     <div className="flex flex-col">
       <div className="flex flex-row items-center gap-2">
@@ -50,8 +69,8 @@ export function Table_cel_state({
           stroke="none"
           className={tailwindFillClassMap[getColorForState(type)]}
         />
-        <div className="text-base font-semibold text-primary text-nowrap">
-          {formatState(title)}
+        <div className="text-base font-semibold text-primary">
+          {formatState(title, t)}
         </div>
       </div>
       <div className="text-sm font-light text-muted-foreground">

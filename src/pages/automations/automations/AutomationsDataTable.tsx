@@ -18,6 +18,7 @@ import { IJobs } from "@/lib/types/IJobs";
 import { Button } from "@/components/ui/Button";
 import { useSearchParams } from "react-router-dom";
 import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
+import { useTranslation } from "react-i18next";
 
 export default function AutomationsDataTable({
   limit = 25,
@@ -28,6 +29,7 @@ export default function AutomationsDataTable({
   isNav: boolean | undefined;
   id?: string;
 }) {
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams();
   const [searchText, setSearchText] = useState(searchParams.get("text") || "");
 
@@ -154,7 +156,7 @@ export default function AutomationsDataTable({
   // ];
   const cols: ISelectItem[] = [
     { value: "id", content: "ID" },
-    { value: "last_activity", content: "Date" },
+    { value: "last_activity", content: t('translation:filters:date_sort') },
   ];
 
   return (
@@ -205,10 +207,10 @@ export default function AutomationsDataTable({
                 }
               >
                 {automationsQuery.isFetchingNextPage
-                  ? "Loading more..."
-                  : automationsQuery.hasNextPage
-                  ? "Load More"
-                  : "Nothing more to load"}
+                    ? t('translation:common:more_btn_loading')
+                    : automationsQuery.hasNextPage
+                    ? t('translation:common:more_btn_text')
+                    : t('translation:common:more_btn_error')}
               </Button>
             </div>
           )}

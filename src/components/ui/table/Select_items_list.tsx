@@ -12,16 +12,16 @@ import {
   TooltipTrigger,
 } from "../tooltip";
 
-export const actionsVals: ISelectItem[] = [
+export const actionsVals = (t: any): ISelectItem[] => [
   {
     value: " ",
-    content: <IconItem title="All actions" text="All" />,
+    content: <IconItem title={t('translation:filters:action_placeholder')} text="All" />,
   },
   {
     value: "csas-dev-csas-linux",
     content: (
       <IconItem
-        title="Build"
+        title={t('translation:filters:action_build')}
         icon={<HammerIcon size={15} />}
         text="Build runners"
       />
@@ -31,7 +31,7 @@ export const actionsVals: ISelectItem[] = [
     value: "csas-dev-csas-linux-test",
     content: (
       <IconItem
-        title="Test"
+      title={t('translation:filters:action_test')}
         icon={<TestTubeDiagonalIcon size={15} />}
         text="Test runners"
       />
@@ -41,7 +41,7 @@ export const actionsVals: ISelectItem[] = [
     value: "csas-ops-csas-linux",
     content: (
       <IconItem
-        title="DEV"
+      title={t('translation:filters:action_dev')}
         icon={<ServerIcon size={15} />}
         text="DEV deployers"
       />
@@ -51,7 +51,7 @@ export const actionsVals: ISelectItem[] = [
     value: "csas-ops-csas-linux-prod",
     content: (
       <IconItem
-        title="PROD"
+      title={t('translation:filters:action_ops')}
         icon={<ServerIcon size={15} className="stroke-log_red" />}
         text="PROD deployers"
       />
@@ -59,19 +59,19 @@ export const actionsVals: ISelectItem[] = [
   },
 ];
 
-export const statesVals: ISelectItem[] = [
-  { value: " ", content: <IconItem title="All states" text="All States" /> },
-  { value: "active", content: <StateItem title="Active" color="green" /> },
-  { value: "offline", content: <StateItem title="Offline" color="gray" /> }, // prettier-ignore
-  { value: "idle", content: <StateItem title="Idle" color="yellow" />  }, // prettier-ignore
-  { value: "failed", content: <StateItem title="Failed" color="red" /> },
+export const statesVals = (t: any): ISelectItem[] => [
+  { value: " ", content: <IconItem title={t('translation:filters:state_placeholder')} text={t('translation:filters:state_placeholder')} /> },
+  { value: "active", content: <StateItem title={t('translation:filters:state_active')} color="green" /> },
+  { value: "offline", content: <StateItem title={t('translation:filters:state_offline')} color="gray" /> }, // prettier-ignore
+  { value: "idle", content: <StateItem title={t('translation:filters:state_idle')} color="yellow" />  }, // prettier-ignore
+  { value: "failed", content: <StateItem title={t('translation:filters:state_failed')} color="red" /> },
 ];
-export const states2Vals: ISelectItem[] = [
-  { value: " ", content: <IconItem title="All states" text="All States" /> },
-  { value: "success", content: <StateItem title="Success" color="green" /> },
-  { value: "queued", content: <StateItem title="Queued" color="gray" /> }, // prettier-ignore
-  { value: "in_progress", content: <StateItem title="In Progress" color="yellow" /> }, // prettier-ignore
-  { value: "failed", content: <StateItem title="Failed" color="red" /> },
+export const states2Vals = (t: any): ISelectItem[] => [
+  { value: " ", content: <IconItem title={t('translation:filters:state_placeholder')} text={t('translation:filters:state_placeholder')} /> },
+  { value: "success", content: <StateItem title={t('translation:filters:state_success')} color="green" /> },
+  { value: "queued", content: <StateItem title={t('translation:filters:state_queued')}  color="gray" /> }, // prettier-ignore
+  { value: "in_progress", content: <StateItem title={t('translation:filters:state_inProgress')}  color="yellow" /> }, // prettier-ignore
+  { value: "failed", content: <StateItem title={t('translation:filters:state_failed')}  color="red" /> },
 ];
 export function IconItem({
   title,

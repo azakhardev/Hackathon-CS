@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/tooltip";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { Badge, badgeVariants } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   automations: IAutomation[] | IErrorMessage;
@@ -25,6 +26,7 @@ interface IProps {
 }
 
 export default function AutomationsTable(props: IProps) {
+  const { t } = useTranslation()
   if (props.automations === undefined || props.automations === null)
     return <h1>Error at data joining</h1>;
   const getNodeProps = (
@@ -126,7 +128,7 @@ export default function AutomationsTable(props: IProps) {
                 </TableCell>
                 <TableCell>
                   <Badge_timeAgo date={new Date(a.last_activity)} />
-                  <span> on </span>
+                  <span> {t('translation:common:on')} </span>
                   <Link
                     to={`/projects/${a.sas}`}
                     className={badgeVariants({ variant: "outline" })}
@@ -139,7 +141,7 @@ export default function AutomationsTable(props: IProps) {
                     className={buttonVariants({ variant: "outline" })}
                     to={`/automations/${a.id}`}
                   >
-                    Logs
+                    {t('translation:projects:logs_btn')}
                   </Link>
                 </TableCell>
               </TableRow>

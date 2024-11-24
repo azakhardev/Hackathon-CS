@@ -6,12 +6,14 @@ import { useQuery } from "@tanstack/react-query";
 import LogsTable from "./LogsTable";
 import { IAutomationType } from "@/lib/types/IAutomationType";
 import LoadingSkeletonLogs from "@/components/ui/LoadingSkeletonLogs";
+import { useTranslation } from "react-i18next";
 
 export default function LogsDataTable({
   automationId,
 }: {
   automationId: string;
 }) {
+  const { t } = useTranslation()
   const logsQuery = useQuery({
     queryKey: ["automationLogs", automationId],
     queryFn: async () => await AutomationModel.getAutomationLogs(automationId!),
@@ -67,7 +69,7 @@ export default function LogsDataTable({
     }
   );
   if (logsWithTypes === undefined || automationsTypesQuery === null)
-    return <h1>Error at data joining</h1>;
+    return <h1>{t('translation:automations:detail_error')}</h1>;
 
   return (
     <>

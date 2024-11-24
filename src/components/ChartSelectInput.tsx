@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   onValueChange: (value: string) => void;
@@ -12,6 +13,7 @@ interface IProps {
 }
 
 export default function ChartSelectInput(props: IProps) {
+  const { t } = useTranslation()
   return (
     <Select
       onValueChange={(e) => {
@@ -20,10 +22,10 @@ export default function ChartSelectInput(props: IProps) {
       defaultValue={props.defaultValue}
     >
       <SelectTrigger>
-        <SelectValue placeholder="All" />
+        <SelectValue placeholder={t('translation:filters:projects_placeholder')} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value=" ">All</SelectItem>
+        <SelectItem value=" ">{t('translation:filters:projects_placeholder')}</SelectItem>
         <SelectItem value="csas-dev">Dev</SelectItem>
         <SelectItem value="csas-ops">Ops</SelectItem>
       </SelectContent>
