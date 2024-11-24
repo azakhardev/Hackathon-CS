@@ -77,19 +77,21 @@ export default function ProjectsTable(props: IProps) {
                 />
               </TableCell>
               <JobCells job={{ ...p.job }} isMobile={isMobile} />
-              <TableCell className="flex flex-row justify-end gap-2">
-                <IconButton
-                  url={`/projects/${p.job.SAS}`}
-                  icon={<CheckIcon size={16} />}
-                  text={`${name.toLowerCase()}'s JOBS`}
-                  tab="jobs"
-                />
-                <IconButton
-                  url={`/projects/${p.job.SAS}`}
-                  icon={<WorkflowIcon size={16} />}
-                  text={`${name.toLowerCase()}'s AUTOMATIONS`}
-                  tab="automations"
-                />
+              <TableCell>
+                <div className="flex flex-row items-center justify-end h-full gap-2">
+                  <IconButton
+                    url={`/projects/${p.job.SAS}`}
+                    icon={<CheckIcon size={16} />}
+                    text={`${name.toLowerCase()}'s JOBS`}
+                    tab="jobs"
+                  />
+                  <IconButton
+                    url={`/projects/${p.job.SAS}`}
+                    icon={<WorkflowIcon size={16} />}
+                    text={`${name.toLowerCase()}'s AUTOMATIONS`}
+                    tab="automations"
+                  />
+                </div>
               </TableCell>
             </TableRow>
           );

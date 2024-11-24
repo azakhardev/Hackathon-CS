@@ -26,22 +26,22 @@ function getColorForState(state: string): StateType {
 
 function formatState(state: string, t: TFunction) {
   switch (state) {
-    case 'in_progress':
-      return t('translation:jobs:state_inProgress')
-    case 'queued':
-      return t('translation:jobs:state_queued')
+    case "in_progress":
+      return t("translation:jobs:state_inProgress");
+    case "queued":
+      return t("translation:jobs:state_queued");
     case "success":
-      return t('translation:jobs:state_success')
+      return t("translation:jobs:state_success");
     case "failed":
-      return t('translation:jobs:state_failed')
-    case "active": 
-      return t('translation:runners:state_active')
+      return t("translation:jobs:state_failed");
+    case "active":
+      return t("translation:runners:state_active");
     case "offline":
-      return t('translation:runners:state_offline')
+      return t("translation:runners:state_offline");
     case "idle":
-      return t('translation:runners:state_idle')
+      return t("translation:runners:state_idle");
     default:
-      return t('translation:jobs:state_default')
+      return t("translation:jobs:state_default");
   }
 }
 
@@ -61,7 +61,7 @@ export function Table_cel_state({
   text: string;
   type: string;
 }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col">
       <div className="flex flex-row items-center gap-2">
