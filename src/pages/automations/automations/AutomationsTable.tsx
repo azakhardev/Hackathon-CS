@@ -26,7 +26,7 @@ interface IProps {
 }
 
 export default function AutomationsTable(props: IProps) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   if (props.automations === undefined || props.automations === null)
     return <h1>Error at data joining</h1>;
   const getNodeProps = (
@@ -128,7 +128,7 @@ export default function AutomationsTable(props: IProps) {
                 </TableCell>
                 <TableCell>
                   <Badge_timeAgo date={new Date(a.last_activity)} />
-                  <span> {t('translation:common:on')} </span>
+                  <span> {t("translation:common:on")} </span>
                   <Link
                     to={`/projects/${a.sas}`}
                     className={badgeVariants({ variant: "outline" })}
@@ -139,9 +139,9 @@ export default function AutomationsTable(props: IProps) {
                 <TableCell className="text-end">
                   <Link
                     className={buttonVariants({ variant: "outline" })}
-                    to={`/automations/${a.id}`}
+                    to={`/projects/${a.sas}/automations/${a.id}`}
                   >
-                    {t('translation:projects:logs_btn')}
+                    {t("translation:projects:logs_btn")}
                   </Link>
                 </TableCell>
               </TableRow>

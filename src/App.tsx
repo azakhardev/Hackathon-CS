@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/projects", element: <ProjectsPage /> },
       { path: "/projects/:id", element: <ProjectDetailPage /> },
-      { path: "/projects/:project/automation", element: <AutomationsPage /> },
+      { path: "/projects/:project/automations", element: <AutomationsPage /> }, // prettier-ignore
       { path: "/projects/:project/automations/:id", element: <AutomationDetailPage /> }, // prettier-ignore
       { path: "/runners", element: <RunnersPage /> },
       { path: "/runners/:id", element: <RunnerDetailPage /> },
