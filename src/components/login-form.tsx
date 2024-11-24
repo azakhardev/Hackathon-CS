@@ -18,8 +18,8 @@ import CryptoJS from "crypto-js";
 
 export function LoginForm() {
   //const login = useContext(LoginContext);
-  const [username, setUsername] = useState("dopo");
-  const [password, setPassword] = useState("DevOps2024");
+  const [username, setUsername] = useState(import.meta.env.VITE_API_LOGIN);
+  const [password, setPassword] = useState(import.meta.env.VITE_API_PASSWORD);
   const [error, setError] = useState<undefined | string>(undefined);
   const navigate = useNavigate();
 
