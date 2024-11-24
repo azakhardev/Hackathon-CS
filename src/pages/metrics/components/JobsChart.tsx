@@ -10,18 +10,8 @@ import { CheckIcon } from "lucide-react";
 import { IJobs } from "@/lib/types/IJobs";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
-import { MetricItems, PieStats } from "./MetricsShared";
-import Throbber from "@/components/ui/Throbber";
-import SelectInput from "@/components/SelectInput";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { PieStats } from "./MetricsShared";
 import ChartSelectInput from "@/components/ChartSelectInput";
-import LoadingSkeletonTypes from "@/components/ui/LoadingSkeletonTypes";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 import {
   Chart_Gray,
@@ -40,7 +30,7 @@ const JOBS_CHART_CONFIG = {
 };
 
 export default function JobsChart() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const [searchDate, setSearchDate] = useState<DateRange | undefined>({
     from: undefined,
@@ -106,8 +96,8 @@ export default function JobsChart() {
       {jobsQuery.isLoading && <LoadingSkeletonMetrics />}
       {!jobsQuery.isLoading && (
         <ChartCard2
-          header={t('translation:jobs:header')}
-          description={t('translation:metrics:jobs_desc')}
+          header={t("translation:jobs:header")}
+          description={t("translation:metrics:jobs_desc")}
           icon={<CheckIcon />}
           content={
             <div>
@@ -143,7 +133,7 @@ export default function JobsChart() {
 }
 
 function createJobsData(data: IJobs[]) {
-  let newData: object[] = [];
+  const newData: object[] = [];
   const successJ = new PieStats("success", Chart_Green);
   const progressionJ = new PieStats("in_progress", Chart_Orange);
   const failedJ = new PieStats("failed", Chart_Red);

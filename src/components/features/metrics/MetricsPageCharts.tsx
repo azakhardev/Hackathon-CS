@@ -152,7 +152,7 @@ export default function MetricsPageCharts(props: IProps) {
 }
 
 function createAutomationsStateData(data: IAutomation[]) {
-  let newData: object[] = [];
+  const newData: object[] = [];
   const initialA = new PieStats("initial", "hsl(234, 97%, 52%)");
   const progressA = new PieStats("in_progress", "hsl(28, 97%, 52%)");
   const finishedA = new PieStats("finished", "hsl(131, 41%, 46%)");
@@ -172,7 +172,7 @@ function createAutomationsStateData(data: IAutomation[]) {
 }
 
 function createJobsData(data: IJobs[]) {
-  let newData: object[] = [];
+  const newData: object[] = [];
   const successJ = new PieStats("success", "hsl(131, 41%, 46%)");
   const progressionJ = new PieStats("in_progress", "hsl(28, 97%, 52%)");
   const failedJ = new PieStats("failed", "hsl(0, 91%, 49%)");
@@ -218,7 +218,7 @@ function createJobsData(data: IJobs[]) {
 // }
 
 function createRunnersData(data: IRunner[]) {
-  let newData: object[] = [];
+  const newData: object[] = [];
   const idleR = new PieStats("idle", "hsl(234, 97%, 52%)");
   const activeR = new PieStats("active", "hsl(131, 41%, 46%)");
   const failedR = new PieStats("failed", "hsl(0, 91%, 49%)");

@@ -15,11 +15,11 @@ export default function MetricsPage() {
 
   userValidate();
 
-  let items: ISelectItem[] = [
-    { value: " ", content: "All" },
-    { value: "csas-dev", content: "Dev" },
-    { value: "csas-ops", content: "Ops" },
-  ];
+  // const items: ISelectItem[] = [
+  //   { value: " ", content: "All" },
+  //   { value: "csas-dev", content: "Dev" },
+  //   { value: "csas-ops", content: "Ops" },
+  // ];
 
   return (
     <>

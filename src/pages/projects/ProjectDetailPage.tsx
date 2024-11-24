@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { CircleIcon } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DetailHeader from "@/components/DetailHeader";

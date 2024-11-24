@@ -1,13 +1,12 @@
 import ProjectDataTable from "../../components/features/projects/ProjectDataTable";
 import Button_More from "@/components/ButtonLoadMore";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import RunnersDataTable from "../../components/features/runners/RunnersDataTable";
 import AutomationTypesDataTable from "@/components/features/automations/automationTypes/AutomationsTypeDataTable";
 import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
 import { userValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
-import LanguageSelector from "@/components/languageSelector";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
 
 export default function HomePage() {

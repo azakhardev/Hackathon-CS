@@ -3,15 +3,13 @@ import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { MetricItems, PieStats } from "./MetricsShared";
+import { PieStats } from "./MetricsShared";
 import { AutomationModel } from "@/lib/models/AutomationModel";
 import { IAutomation } from "@/lib/types/IAutomation";
 import { format } from "date-fns";
 import { ChartCard2 } from "@/components/features/charts/ChartCard";
 import { Workflow } from "lucide-react";
 import CustomPieChart from "@/components/features/charts/CustomPieChart";
-import Throbber from "@/components/ui/Throbber";
-import SelectInput from "@/components/SelectInput";
 import DateRangePicker from "@/components/ui/table/DateRangePicker";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 import { Chart_Green, Chart_Orange, Chart_OrangeOpacity } from "./ChartColors";
@@ -37,11 +35,10 @@ export default function AutomationsChart() {
     from: undefined,
     to: undefined,
   });
-  const [searchOrg, setSearchOrg] = useState(" ");
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const automationsQuery = useQuery({
-    queryKey: ["automations", searchDate, searchOrg],
+    queryKey: ["automations", searchDate],
     queryFn: async () => {
       const automationFilters = {
         ...(searchDate &&
@@ -68,7 +65,6 @@ export default function AutomationsChart() {
               "yyyy-MM-dd'T'23:59:59"
             ).toString(),
           }),
-        ...(searchOrg !== " " && { organization_eq: searchOrg }),
       };
 
       return await AutomationModel.getAutomations(
@@ -105,8 +101,8 @@ export default function AutomationsChart() {
     <>
       {!automationsQuery.isLoading && (
         <ChartCard2
-          header={t('translation:automations:header')}
-          description={t('translation:metrics:automation_desc')}
+          header={t("translation:automations:header")}
+          description={t("translation:metrics:automation_desc")}
           icon={<Workflow />}
           content={
             <div>
@@ -136,7 +132,7 @@ export default function AutomationsChart() {
 }
 
 function createAutomationsStateData(data: IAutomation[]) {
-  let newData: object[] = [];
+  const newData: object[] = [];
   const initialA = new PieStats("initial", Chart_OrangeOpacity);
   const progressA = new PieStats("in_progress", Chart_Orange);
   const finishedA = new PieStats("finished", Chart_Green);

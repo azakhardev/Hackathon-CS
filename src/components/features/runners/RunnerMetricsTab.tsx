@@ -275,7 +275,7 @@ export default function RunnerMetricsTab(props: IProps) {
 }
 
 function createCpuData(runnerMetrics: IMetrics) {
-  let cpuMetrics: ICPUMetrics[] = [];
+  const cpuMetrics: ICPUMetrics[] = [];
 
   if (runnerMetrics?.metrics) {
     runnerMetrics.metrics.forEach((m, i) => {
@@ -290,7 +290,7 @@ function createCpuData(runnerMetrics: IMetrics) {
 }
 
 function createRamData(runnerMetrics: IMetrics) {
-  let ramMetrics: IRAMMetrics[] = [];
+  const ramMetrics: IRAMMetrics[] = [];
 
   if (runnerMetrics?.metrics) {
     runnerMetrics.metrics.forEach((m, i) => {
@@ -305,7 +305,7 @@ function createRamData(runnerMetrics: IMetrics) {
 }
 
 function createNetworkData(runnerMetrics: IMetrics) {
-  let incomingMetrics: IIncomingMetrics[] = [];
+  const incomingMetrics: IIncomingMetrics[] = [];
 
   if (runnerMetrics?.metrics) {
     runnerMetrics.metrics.forEach((m, i) => {
@@ -321,7 +321,7 @@ function createNetworkData(runnerMetrics: IMetrics) {
 }
 
 function createFsData(runnerMetrics: IMetrics) {
-  let outgoingMetrics: IOutgoingMetrics[] = [];
+  const outgoingMetrics: IOutgoingMetrics[] = [];
 
   if (runnerMetrics?.metrics) {
     runnerMetrics.metrics.forEach((m, i) => {

@@ -61,7 +61,7 @@ export default function ProjectsDataTable({
   }
   const storage =
     (JSON.parse(localStorage.getItem("favorite")) as string[]) ?? [];
-  let projects: IProject[] = [];
+  const projects: IProject[] = [];
   if (!jobsQuery.isLoading && !sasQuery.isLoading) {
     (sasQuery.data as string[])
       .filter((x) => x.includes(searchText.toUpperCase()))
