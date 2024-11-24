@@ -42,7 +42,7 @@ export function AppSidebar() {
         <SidebarMenuItems title="Ops" items={itemsOps} />
       </SidebarContent>
       <SidebarFooter>
-        <CommandDialogDemo />
+        {/* <CommandDialogDemo /> */}
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -118,6 +118,7 @@ function SidebarMenuItems({ title, items }: { title: string; items: Item[] }) {
               <SidebarMenuButton
                 asChild
                 isActive={location.pathname === item.url}
+                onClick={() => {}}
               >
                 <Link to={item.url}>
                   <item.icon />

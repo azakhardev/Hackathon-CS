@@ -1,9 +1,11 @@
 import { create } from "zustand";
 
-const useSidebarStore = create((set) => ({
-  isOpen: false,
-}));
+type Store = {
+  isOpen: boolean;
+  toggleShow: () => void;
+};
 
-const useCommandStore = create((set) => ({
+export const useCommandStore = create<Store>((set) => ({
   isOpen: false,
+  toggleShow: () => set((state) => ({ isOpen: !state.isOpen })),
 }));

@@ -2,18 +2,12 @@
 
 import * as React from "react";
 import {
-  Calculator,
-  Calendar,
   CheckIcon,
   ContainerIcon,
-  CreditCard,
   FolderIcon,
   PieChartIcon,
   SearchIcon,
-  Settings,
   ShapesIcon,
-  Smile,
-  User,
   WorkflowIcon,
 } from "lucide-react";
 import {
@@ -36,15 +30,18 @@ import { SidebarMenuItem } from "@/components/ui/sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { RunnerModel } from "@/lib/models/RunnerModel";
 import { Link, useNavigate } from "react-router-dom";
+import { useCommandStore } from "@/lib/store";
 
 export function CommandDialogDemo() {
-  const [open, setOpen] = React.useState(false);
+  //const [open, setOpen] = React.useState(false);
+  const open = useCommandStore((state) => state.isOpen);
+  const setOpen = useCommandStore((state) => state.toggleShow);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen((open) => !open);
+        setOpen();
       }
     };
 
@@ -60,7 +57,7 @@ export function CommandDialogDemo() {
 
   return (
     <>
-      <TooltipProvider>
+      {/* <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
             <SidebarMenuItem className="flex justify-center">
@@ -73,7 +70,7 @@ export function CommandDialogDemo() {
             </kbd>
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
+      </TooltipProvider> */}
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
@@ -83,7 +80,7 @@ export function CommandDialogDemo() {
             <CommandItem
               onSelect={() => {
                 navigate("/projects/SAS_GIORGIO");
-                setOpen(false);
+                setOpen();
               }}
             >
               <FolderIcon />
@@ -94,7 +91,7 @@ export function CommandDialogDemo() {
             <CommandItem
               onSelect={() => {
                 navigate("/projects");
-                setOpen(false);
+                setOpen();
               }}
             >
               <FolderIcon />
@@ -103,7 +100,7 @@ export function CommandDialogDemo() {
             <CommandItem
               onSelect={() => {
                 navigate("/runners");
-                setOpen(false);
+                setOpen();
               }}
             >
               <ContainerIcon />
@@ -112,7 +109,7 @@ export function CommandDialogDemo() {
             <CommandItem
               onSelect={() => {
                 navigate("/jobs");
-                setOpen(false);
+                setOpen();
               }}
             >
               <CheckIcon />
@@ -121,7 +118,7 @@ export function CommandDialogDemo() {
             <CommandItem
               onSelect={() => {
                 navigate("/metrics");
-                setOpen(false);
+                setOpen();
               }}
             >
               <PieChartIcon />
@@ -130,7 +127,7 @@ export function CommandDialogDemo() {
             <CommandItem
               onSelect={() => {
                 navigate("/automations");
-                setOpen(false);
+                setOpen();
               }}
             >
               <WorkflowIcon />
@@ -139,7 +136,7 @@ export function CommandDialogDemo() {
             <CommandItem
               onSelect={() => {
                 navigate("/automationTypes");
-                setOpen(false);
+                setOpen();
               }}
             >
               <ShapesIcon />
@@ -154,7 +151,7 @@ export function CommandDialogDemo() {
                   key={s}
                   onSelect={() => {
                     navigate(`/projects/${s}`);
-                    setOpen(false);
+                    setOpen();
                   }}
                 >
                   <FolderIcon />

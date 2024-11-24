@@ -170,8 +170,8 @@ export default function MetricsPage() {
               <AutomationsChart />
             </div>
             <div className="flex flex-col justify-between gap-2 md:flex-row ">
-              <JobsChart />
               <RunnersCharts />
+              <JobsChart />
             </div>
           </div>
         </div>
