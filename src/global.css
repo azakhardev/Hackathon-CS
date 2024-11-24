@@ -85,14 +85,6 @@
 
     --base_secondary: var(--text_primary);
 
-    --chart_state_waiting: var(--state_gray);
-    --chart_state_inProgress: var(--state_yellow);
-    --chart_state_done: var(--state_green);
-    --chart_state_failed:var(--state_red);
-
-    --chart_state_initial: 0, 0%, 93%;
-
-
     /* -------- Tailwind & ShadCn --------  */
     /* https://ui.shadcn.com/docs/theming#list-of-variables */
 

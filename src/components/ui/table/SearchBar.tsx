@@ -10,14 +10,13 @@ export default function SearchBar({
   searchText,
   setSearchText: setSearchText,
 }: SearchBarProps) {
-
   const handleValueChange = (value: string) => {
-    const url = new URL(window.location.href)
-    url.searchParams.set('text', value)
-    window.history.pushState({}, '', url)
+    const url = new URL(window.location.href);
+    url.searchParams.set("text", value);
+    window.history.pushState({}, "", url);
 
-    setSearchText(value)
-  }
+    setSearchText(value);
+  };
 
   return (
     <div className="relative flex items-center w-1/2">
