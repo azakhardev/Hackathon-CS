@@ -21,6 +21,7 @@ import {
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface IProps {
   projects: IProject[] | IErrorMessage;
@@ -57,13 +58,28 @@ export default function ProjectsTable(props: IProps) {
       <TableBody>
         {(props.projects as IProject[]).map((p) => {
           const name = p.name.toUpperCase().slice(4);
+          let starClass = "";
+          if (storage.includes(p.name))
+            starClass += "fill-state_yellow stroke-none";
+          else starClass += "hidden group-hover:block";
           return (
             <TableRow key={p.name}>
-              <TableCell className="font-medium">
+              <TableCell className="font-medium group">
                 <Table_cel_title
                   title={name}
                   text=""
                   searchText={props.searchText}
+                  icon={
+                    <div className="flex items-center justify-center cursor-pointer">
+                      <StarIcon
+                        onClick={() => {
+                          handleStarClick(p.name);
+                        }}
+                        className={cn(starClass)}
+                        size={15}
+                      />
+                    </div>
+                  }
                 />
               </TableCell>
               <JobCells {...p.job} />
@@ -80,16 +96,6 @@ export default function ProjectsTable(props: IProps) {
                   text={`${name.toLowerCase()}'s AUTOMATIONS`}
                   tab="automations"
                 />
-                <div className="flex justify-center items-center cursor-pointer">
-                  <StarIcon
-                    onClick={() => {
-                      handleStarClick(p.name);
-                    }}
-                    fill={storage.includes(p.name) ? "yellow" : undefined}
-                    strokeWidth={storage.includes(p.name) ? 1 : 2}
-                    stroke={storage.includes(p.name) ? "black" : "white"}
-                  />
-                </div>
               </TableCell>
             </TableRow>
           );
