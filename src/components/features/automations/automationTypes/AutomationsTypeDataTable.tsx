@@ -24,6 +24,7 @@ import { AutomationModel } from "@/lib/models/AutomationModel";
 import { IAutomationType, ITransition } from "@/lib/types/IAutomationType";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import LoadingSkeletonTypes from "@/components/ui/LoadingSkeletonTypes";
+import { useIsMobile } from "@/lib/hooks/use-mobile";
 //-----------------------------------------↓
 export default function AutomationTypesDataTable({
   limit = -1,
@@ -32,6 +33,8 @@ export default function AutomationTypesDataTable({
   limit?: number;
   isNav: boolean;
 }) {
+  const isMobile = useIsMobile();
+
   const automationsTypeQuery = useQuery({
     queryKey: ["automationTypes", limit],
     queryFn: async () => await AutomationModel.getAutomationTypes("", limit),
@@ -55,6 +58,7 @@ export default function AutomationTypesDataTable({
   if (automationsTypeQuery.isLoading) {
     return <LoadingSkeletonTypes />;
   }
+
   return (
     <>
       <Table>
@@ -69,12 +73,12 @@ export default function AutomationTypesDataTable({
                     className="border-none"
                   >
                     <AccordionTrigger>
-                      <div className="flex">
+                      <div className={`flex ${isMobile ? "flex-col" : ""}`}>
                         <span className="min-w-96 text-start">{x.type}</span>
                         <div
                           className={badgeVariants({
                             variant: "outline",
-                            className: "border-dashed",
+                            className: "border-dashed w-fit",
                           })}
                         >
                           {x.states.length}x states
@@ -96,6 +100,7 @@ export default function AutomationTypesDataTable({
                                 ? "none"
                                 : "down"
                             }
+                            className={isMobile ? "ml-[1rem]" : `ml-[25rem]`}
                           />
                         ))}
                       </div>
@@ -149,15 +154,17 @@ const StateNodeWithTooltip = ({
   state,
   transitions,
   direction,
+  className,
 }: {
   state: string;
   transitions: ITransition[];
   direction: NodeDirection;
+  className?: string;
 }) => (
   <TooltipProvider>
     <Tooltip>
       <TooltipTrigger>
-        <div className="flex items-start gap-2 ml-[25rem]">
+        <div className={`flex items-start gap-2 ${className}`}>
           <StateNode color="green" direction={direction} isActive={false} />
           {state.charAt(0).toUpperCase() + state.slice(1).toLowerCase()}
         </div>

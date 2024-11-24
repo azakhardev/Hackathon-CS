@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import IconButton from "@/components/IconButton";
 import { CheckIcon, PieChartIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "@/lib/hooks/use-mobile";
 
 interface IProps {
   runners: (IRunner[] | IErrorMessage)[] | undefined;
@@ -38,7 +39,8 @@ export default function RunnersTable(props: IProps) {
   if (!runnerData.length) {
     return <p>No runners available or an error occurred.</p>;
   }
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+  const isMobile = useIsMobile();
   return (
     <Table>
       {/* <TableCaption></TableCaption>
@@ -65,29 +67,35 @@ export default function RunnersTable(props: IProps) {
               <TableCell>
                 <Table_cel_state title={r.state} text="" type={r.state} />
               </TableCell>
-              <TableCell>
-                <Badge variant="outline" title={title}>
-                  {" "}
-                  {title}
-                </Badge>
-                {/* <Link
+              {!isMobile && (
+                <TableCell>
+                  <Badge variant="outline" title={title}>
+                    {" "}
+                    {title}
+                  </Badge>
+                  {/* <Link
                   to={`/runners?grp=${r.runner_group}`}
                   className={badgeVariants({ variant: "outline" })}
-                >                  
+                >
                 </Link>*/}
-                {runnerRoleText(r.id, t)}
-              </TableCell>
+                  {runnerRoleText(r.id, t)}
+                </TableCell>
+              )}
               <TableCell className="flex flex-row justify-end gap-2">
                 <IconButton
                   url={`/runners/${r.id}`}
                   icon={<CheckIcon size={16} />}
-                  text={`${title.toLowerCase()}${t('translation:runners:icon_jobs')}`}
+                  text={`${title.toLowerCase()}${t(
+                    "translation:runners:icon_jobs"
+                  )}`}
                   tab="jobs"
                 />
                 <IconButton
                   url={`/runners/${r.id}`}
                   icon={<PieChartIcon size={16} />}
-                  text={`${title.toLowerCase()}${t('translation:runners:icon_metrics')}`}
+                  text={`${title.toLowerCase()}${t(
+                    "translation:runners:icon_metrics"
+                  )}`}
                   tab="metrics"
                 />
               </TableCell>

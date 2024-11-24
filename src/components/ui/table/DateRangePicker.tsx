@@ -39,7 +39,7 @@ export default function DateRangePicker({
     setSearchDate(newDateRange);
   };
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <Popover>
@@ -63,7 +63,7 @@ export default function DateRangePicker({
               format(dateRange.from, "yyyy-MM-dd")
             )
           ) : (
-            <span>{t('translation:filters:date')}</span>
+            <span className="truncate">{t("translation:filters:date")}</span>
           )}
         </Button>
       </PopoverTrigger>

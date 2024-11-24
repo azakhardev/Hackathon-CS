@@ -37,10 +37,10 @@ export default function JobsTable(props: IProps) {
       <TableBody>
         {(props.jobs as IJobs[]).map((j) => {
           let text = buildDescription(parseRunnerAction(j.runner), t);
-          if (isMobile) text += `${j.SAS}`;
+          if (isMobile) text += ` ${j.SAS.slice(4)}`;
           return (
             <TableRow key={j.id}>
-              <TableCell className="font-medium">
+              <TableCell className={`font-medium`}>
                 <Table_cel_title
                   title={j.id}
                   text={text}
@@ -58,7 +58,6 @@ export default function JobsTable(props: IProps) {
 
 export function JobCells({ job, isMobile }: { job: IJobs; isMobile: boolean }) {
   const action = parseRunnerAction(job.runner);
-  // const isMobile = useIsMobile();
   return (
     <>
       <TableCell>
