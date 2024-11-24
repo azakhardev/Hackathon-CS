@@ -59,7 +59,7 @@ export default function JobsTable(props: IProps) {
 
 export function JobCells({ job, isMobile }: { job: IJobs; isMobile: boolean }) {
   const action = parseRunnerAction(job.runner);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <>
       <TableCell>
@@ -70,7 +70,7 @@ export function JobCells({ job, isMobile }: { job: IJobs; isMobile: boolean }) {
         />
       </TableCell>
       {!isMobile && (
-        <TableCell>
+        <TableCell className="flex gap-1">
           <Link
             to={`/projects/${job.SAS}?tabs=jobs` /*`/jobs/${job.runner}`*/}
             className={badgeVariants({ variant: "outline" })}
@@ -227,11 +227,11 @@ function actionMap(t: TFunction): { [key in RunnerActions]: string } {
 export function tagJoin({
   action,
   state,
-  t
+  t,
 }: {
   action: RunnerActions;
   state: string;
-  t: TFunction
+  t: TFunction;
 }): string {
   if (!(state in JobStates)) {
     throw new Error("Unknown job state");

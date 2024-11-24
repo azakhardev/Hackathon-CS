@@ -33,7 +33,7 @@ export default function RunnersTable(props: IProps) {
 
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  
+
   const runnerData =
     props.runners
       ?.filter((item): item is IRunner[] => Array.isArray(item))
@@ -42,7 +42,7 @@ export default function RunnersTable(props: IProps) {
   if (!runnerData.length) {
     return <p>No runners available or an error occurred.</p>;
   }
-  
+
   return (
     <Table>
       {/* <TableCaption></TableCaption>
@@ -71,16 +71,17 @@ export default function RunnersTable(props: IProps) {
               </TableCell>
               {!isMobile && (
                 <TableCell>
-                  <Badge variant="outline" title={title}>
-                    {" "}
-                    {title}
-                  </Badge>
-                  {/* <Link
+                  <div className="flex gap-1">
+                    <Badge variant="outline" title={title}>
+                      {title}
+                    </Badge>
+                    {/* <Link
                   to={`/runners?grp=${r.runner_group}`}
                   className={badgeVariants({ variant: "outline" })}
                 >
                 </Link>*/}
-                  {runnerRoleText(r.id, t)}
+                    {runnerRoleText(r.id, t)}
+                  </div>
                 </TableCell>
               )}
               <TableCell className="flex flex-row justify-end gap-2">
