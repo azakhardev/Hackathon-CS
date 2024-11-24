@@ -14,7 +14,8 @@
         "jobs_header": "Jobs",
         "ops_header": "Ops",
         "automations_header": "Automations",
-        "automation_types_header": "Automation Types"
+        "automation_types_header": "Automation Types",
+        "types_header": "Types"
     },
     "projects": {
         "header": "Projects",

@@ -30,16 +30,18 @@ import {
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
 import { CommandDialogDemo } from "./command";
+import { useTranslation } from "react-i18next";
 
 export function AppSidebar() {
+  const { t } = useTranslation()
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b">
         <SidebarHeaderBuilder title="Loop" />
       </SidebarHeader>
       <SidebarContent>
-        <SidebarMenuItems title="Dev" items={itemsDev} />
-        <SidebarMenuItems title="Ops" items={itemsOps} />
+        <SidebarMenuItems title="Dev" items={itemsDev(t)} />
+        <SidebarMenuItems title="Ops" items={itemsOps(t)} />
       </SidebarContent>
       <SidebarFooter>
         {/* <CommandDialogDemo /> */}
@@ -71,36 +73,36 @@ type Item = {
   url: string;
   icon: React.ComponentType;
 };
-const itemsDev: Item[] = [
+const itemsDev = (t: any): Item[] => [
   {
-    title: "Projects",
+    title: t('translation:homepage:projects_header'),
     url: "/projects",
     icon: Folder, //MonitorCog, Container
   },
   {
-    title: "Runners",
+    title: t('translation:homepage:runners_header'),
     url: "/runners",
     icon: Container, //TerminalSquare, MonitorCog, Container
   },
   {
-    title: "Jobs",
+    title: t('translation:homepage:jobs_header'),
     url: "/jobs",
     icon: Check, //ClipboardList, SquareCheck
   },
 ];
-const itemsOps: Item[] = [
+const itemsOps = (t:any): Item[] => [
   {
-    title: "Metrics",
+    title: t('translation:metrics:header'),
     url: "/metrics",
     icon: ChartPie, //ChartLine, chart-pie
   },
   {
-    title: "Automations",
+    title: t('translation:homepage:automations_header'),
     url: "/automations",
     icon: Workflow,
   },
   {
-    title: "Types",
+    title: t('translation:homepage:types_header'),
     url: "/automationTypes",
     icon: Shapes, //Shapes, Triangle
   },
