@@ -47,7 +47,7 @@ export default function JobsTable(props: IProps) {
                   searchText={props.searchText}
                 />
               </TableCell>
-              <JobCells job={{ ...j }} isMobile />
+              <JobCells job={{ ...j }} isMobile={isMobile} />
             </TableRow>
           );
         })}
