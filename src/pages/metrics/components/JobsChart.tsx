@@ -23,6 +23,12 @@ import {
 import ChartSelectInput from "@/components/ChartSelectInput";
 import LoadingSkeletonTypes from "@/components/ui/LoadingSkeletonTypes";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
+import {
+  Chart_Gray,
+  Chart_Green,
+  Chart_Orange,
+  Chart_Red,
+} from "./ChartColors";
 
 const JOBS_CHART_CONFIG = {
   count: { label: "Count" },
@@ -134,10 +140,10 @@ export default function JobsChart() {
 
 function createJobsData(data: IJobs[]) {
   let newData: object[] = [];
-  const successJ = new PieStats("success", "hsl(161.4 93.5% 30.4%)");
-  const progressionJ = new PieStats("in_progress", "hsl(40, 90%, 50%)");
-  const failedJ = new PieStats("failed", "hsl(0, 91%, 49%)");
-  const queuedJ = new PieStats("queued", "hsl(0 0% 45.1%)");
+  const successJ = new PieStats("success", Chart_Green);
+  const progressionJ = new PieStats("in_progress", Chart_Orange);
+  const failedJ = new PieStats("failed", Chart_Red);
+  const queuedJ = new PieStats("queued", Chart_Gray);
 
   data.forEach((j) => {
     if (j.state.toLowerCase() === "success") {

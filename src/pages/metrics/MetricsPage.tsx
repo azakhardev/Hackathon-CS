@@ -49,11 +49,11 @@ export default function MetricsPage() {
           <div className="flex flex-col gap-2">
             <div className="flex flex-col justify-between gap-2 md:flex-row">
               <ProjectsCharts />
-              <AutomationsChart />
+              <JobsChart />
             </div>
             <div className="flex flex-col justify-between gap-2 md:flex-row ">
               <RunnersCharts />
-              <JobsChart />
+              <AutomationsChart />
             </div>
           </div>
         </div>
