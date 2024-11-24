@@ -8,15 +8,16 @@ import {
 import { Table_cel_state } from "@/components/ui/table/table_cel_state";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
-
+import {
+  buildRunnerDescription,
+  buildRunnerText as runnerRoleText,
+} from "@/components/features/jobs/JobsTable";
 import { IRunner } from "@/lib/types/IRunner";
 import { Link } from "react-router-dom";
 import IconButton from "@/components/IconButton";
 import { CheckIcon, PieChartIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
-import { buildRunnerDescription } from "../jobs/jobs_table_functions";
-import { TFunction } from "i18next";
 
 interface IProps {
   runners: (IRunner[] | IErrorMessage)[] | undefined;
@@ -54,13 +55,6 @@ export default function RunnersTable(props: IProps) {
       <TableBody>
         {runnerData.map((r, index) => {
           const title = r.id.slice(r.id.length - 5).toUpperCase();
-          function runnerRoleText(
-            id: string,
-            t: TFunction<"translation", undefined>
-          ): import("react").ReactNode | Iterable<import("react").ReactNode> {
-            throw new Error("Function not implemented.");
-          }
-
           return (
             <TableRow key={index}>
               <TableCell className="font-medium">
