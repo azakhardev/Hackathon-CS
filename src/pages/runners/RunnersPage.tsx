@@ -1,10 +1,10 @@
 import H1 from "@/components/ui/typography/H1";
 import RunnersDataTable from "../../components/features/runners/RunnersDataTable";
-import { userValidate } from "@/lib/utils/validateUser";
+import { useUserValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
 
 export default function RunnersPage() {
-  userValidate();
+  useUserValidate();
   const { t } = useTranslation();
   return (
     <div>

@@ -6,13 +6,13 @@ import JobsChart from "./components/JobsChart";
 import RunnersCharts from "./components/RunnersCharts";
 import AutomationsChart from "./components/AutomationCharts";
 import ProjectsCharts from "./components/ProjectsCharts";
-import { userValidate } from "@/lib/utils/validateUser";
+import { useUserValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
 
 export default function MetricsPage() {
   const { t } = useTranslation();
 
-  userValidate();
+  useUserValidate();
 
   // const items: ISelectItem[] = [
   //   { value: " ", content: "All" },

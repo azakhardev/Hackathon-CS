@@ -5,7 +5,7 @@ import RunnersDataTable from "../../components/features/runners/RunnersDataTable
 import AutomationTypesDataTable from "@/components/features/automations/automationTypes/AutomationsTypeDataTable";
 import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
-import { userValidate } from "@/lib/utils/validateUser";
+import { useUserValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
 
@@ -13,7 +13,7 @@ export default function HomePage() {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const limit = 3;
-  userValidate();
+  useUserValidate();
 
   return (
     <div className="flex flex-col gap-32">

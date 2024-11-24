@@ -1,12 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-  useSidebar,
-  // SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/pages/_layout/app-sidebar";
 import Breadcrumbs from "@/components/ui/Breadcrumbs";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
@@ -15,7 +9,6 @@ import { CommandButton, CommandDialogDemo } from "./command";
 import { LanguageSwitch } from "@/components/languageSelector";
 
 export default function Layout() {
-  //{ children }: { children: React.ReactNode }
   const isMobile = useIsMobile();
   return (
     <SidebarProvider>

@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import LogsDataTable from "@/components/features/automations/detail/LogsDataTable";
-import { userValidate } from "@/lib/utils/validateUser";
+import { useUserValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
 import H1 from "@/components/ui/typography/H1";
 
 export default function AutomationDetailPage() {
-  userValidate();
+  useUserValidate();
   const { t } = useTranslation();
   const params = useParams();
   const automationId = params.id;

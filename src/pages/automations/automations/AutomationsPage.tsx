@@ -1,10 +1,10 @@
 import H1 from "@/components/ui/typography/H1";
 import AutomationsDataTable from "./AutomationsDataTable";
-import { userValidate } from "@/lib/utils/validateUser";
+import { useUserValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
 
 export default function AutomationsPage() {
-  userValidate();
+  useUserValidate();
   const { t } = useTranslation();
   return (
     <>

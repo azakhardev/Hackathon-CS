@@ -9,14 +9,14 @@ import { RunnerModel } from "@/lib/models/RunnerModel";
 import { DetailRunnerHeader } from "@/components/DetailHeader";
 import "@/components/features/runners/circle.css";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
-import { userValidate } from "@/lib/utils/validateUser";
+import { useUserValidate } from "@/lib/utils/validateUser";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 import { useTranslation } from "react-i18next";
 
 export default function RunnerDetailPage() {
   const { t } = useTranslation();
 
-  userValidate();
+  useUserValidate();
   const params = useParams();
   const runnerId = params.id;
 

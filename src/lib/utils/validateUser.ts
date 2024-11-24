@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react";
-import { useState } from "react";
 import { api_url } from "./env_vars"
 import { useLocation } from "react-router-dom";
 import CryptoJS from "crypto-js";
 
-export function userValidate() {
+export function useUserValidate() {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -44,7 +43,7 @@ export function userValidate() {
                     navigate("/");
                 }
             }
-          } catch (error) {
+          } catch {
             if (location.pathname != "/login") {
                 navigate("/login");
             }
@@ -52,7 +51,7 @@ export function userValidate() {
         };
     
         validateUser();
-      }, [navigate]);
+      }, [navigate, location.pathname]);
 
       
       return;

@@ -4,12 +4,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DetailHeader from "@/components/DetailHeader";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
 import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
-import { userValidate } from "@/lib/utils/validateUser";
+import { useUserValidate } from "@/lib/utils/validateUser";
 import { useTranslation } from "react-i18next";
 
 export default function ProjectDetailPage() {
   const { t } = useTranslation();
-  userValidate();
+  useUserValidate();
   const params = useParams();
   const id = params.id;
 

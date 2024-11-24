@@ -8,22 +8,19 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import LoginContext from "@/App";
-import { ILogin } from "@/lib/types/ILogin";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { api_url } from "@/lib/utils/env_vars";
-import { redirect, useNavigate } from "react-router-dom";
-import { userValidate } from "@/lib/utils/validateUser";
+import { useNavigate } from "react-router-dom";
+import { useUserValidate } from "@/lib/utils/validateUser";
 import CryptoJS from "crypto-js";
 
 export function LoginForm() {
-  //const login = useContext(LoginContext);
   const [username, setUsername] = useState(import.meta.env.VITE_API_LOGIN);
   const [password, setPassword] = useState(import.meta.env.VITE_API_PASSWORD);
   const [error, setError] = useState<undefined | string>(undefined);
   const navigate = useNavigate();
 
-  userValidate();
+  useUserValidate();
   const secret = "tajnyKlic69";
 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
