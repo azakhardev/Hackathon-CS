@@ -6,45 +6,48 @@ import AutomationTypesDataTable from "@/components/features/automations/automati
 import AutomationsDataTable from "../automations/automations/AutomationsDataTable";
 import JobsDataTable from "@/components/features/jobs/JobDataTable";
 import { userValidate } from "@/lib/utils/validateUser";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "@/components/languageSelector";
 
 export default function HomePage() {
+  const { t } = useTranslation()
   const limit = 3;
-
   userValidate();
 
   return (
     <div className="flex flex-col gap-32">
       {/* <H1>Homepage</H1> */}
+      <LanguageSelector />
       <div>
-        <H1x>Dev</H1x>
+        <H1x>{t('translation:homepage:dev_header')}</H1x>
         <div className="flex flex-col gap-6">
           <div>
-            <H2x>Projects</H2x>
+            <H2x>{t('translation:homepage:projects_header')}</H2x>
             <ProjectDataTable limit={limit} isNav={false} />
             <MoreBtn to="/projects" />
           </div>
           <div>
-            <H2x>Runners</H2x>
+            <H2x>{t('translation:homepage:runners_header')}</H2x>
             <RunnersDataTable limit2={limit} isNav={false} />
             <MoreBtn to="/runners" />
           </div>
           <div>
-            <H2x>Jobs</H2x>
+            <H2x>{t('translation:homepage:jobs_header')}</H2x>
             <JobsDataTable limit={limit} isNav={false} />
             <MoreBtn to="/jobs" />
           </div>
         </div>
       </div>
       <div>
-        <H1x>Ops</H1x>
+        <H1x>{t('translation:homepage:ops_header')}</H1x>
         <div className="flex flex-col gap-6">
           <div>
-            <H2x>Automations</H2x>
+            <H2x>{t('translation:homepage:automations_header')}</H2x>
             <AutomationsDataTable limit={limit} isNav={false} />
             <MoreBtn to="/automations" />
           </div>
           <div>
-            <H2x>Automation Types</H2x>
+            <H2x>{t('translation:homepage:automation_types_header')}</H2x>
             <AutomationTypesDataTable limit={limit} isNav={false} />
             <MoreBtn to="/automationTypes" />
           </div>

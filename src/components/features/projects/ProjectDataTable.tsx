@@ -16,7 +16,7 @@ import { useSearchParams } from "react-router-dom";
 import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 
 export default function ProjectsDataTable({
-  limit = -1,
+  limit = 99999999,
   isNav = true,
 }: {
   limit: number | undefined;
