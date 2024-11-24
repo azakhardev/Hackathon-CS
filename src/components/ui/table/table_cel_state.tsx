@@ -50,7 +50,7 @@ export function Table_cel_state({
           stroke="none"
           className={tailwindFillClassMap[getColorForState(type)]}
         />
-        <div className="text-base font-semibold text-primary">
+        <div className="text-base font-semibold text-primary text-nowrap">
           {formatState(title)}
         </div>
       </div>
