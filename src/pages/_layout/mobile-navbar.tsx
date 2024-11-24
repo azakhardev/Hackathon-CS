@@ -1,4 +1,8 @@
-import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
+import {
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar";
 import { useCommandStore } from "@/lib/store";
 import { Home, HomeIcon, PanelRightIcon, SearchIcon } from "lucide-react";
 import React from "react";
@@ -13,11 +17,12 @@ type Item = {
 export default function MobileNavbar() {
   const navigate = useNavigate();
   const setOpen = useCommandStore((state) => state.toggleShow);
+  const { toggleSidebar } = useSidebar();
 
   const items: Item[] = [
     {
       title: "Sidebar",
-      action: () => setOpen(),
+      action: () => toggleSidebar(),
       icon: PanelRightIcon,
     },
     {
@@ -27,9 +32,7 @@ export default function MobileNavbar() {
     },
     {
       title: "Search",
-      action: () => {
-        setOpen();
-      },
+      action: () => setOpen(),
       icon: SearchIcon,
     },
   ];
