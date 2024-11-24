@@ -30,6 +30,7 @@ import {
   TooltipTrigger,
 } from "@radix-ui/react-tooltip";
 import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 
 export function AppSidebar() {
   const { t } = useTranslation();
@@ -72,7 +73,7 @@ type Item = {
   url: string;
   icon: React.ComponentType;
 };
-const itemsDev = (t: any): Item[] => [
+const itemsDev = (t: TFunction): Item[] => [
   {
     title: t("translation:homepage:projects_header"),
     url: "/projects",
@@ -89,7 +90,7 @@ const itemsDev = (t: any): Item[] => [
     icon: Check, //ClipboardList, SquareCheck
   },
 ];
-const itemsOps = (t: any): Item[] => [
+const itemsOps = (t: TFunction): Item[] => [
   {
     title: t("translation:metrics:header"),
     url: "/metrics",

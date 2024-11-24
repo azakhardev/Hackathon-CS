@@ -1,6 +1,7 @@
 import { CircleIcon } from "lucide-react";
 import { Description_timeAgo } from "./badge_timeAgo";
 import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 
 export enum StateType {
   Gray = "state_gray",
@@ -23,7 +24,7 @@ function getColorForState(state: string): StateType {
   return stateColorMap[state] || StateType.Gray;
 }
 
-function formatState(state: string, t: any) {
+function formatState(state: string, t: TFunction) {
   switch (state) {
     case 'in_progress':
       return t('translation:jobs:state_inProgress')

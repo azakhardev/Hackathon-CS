@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import CustomLineChart from "@/components/features/charts/CustomLineChart";
 
 interface IProps {
   children: ReactNode;

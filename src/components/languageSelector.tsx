@@ -32,13 +32,7 @@ export default function LanguageSelector() {
 export function LanguageSwitch() {
   //button to switch between languages
   const { i18n } = useTranslation();
-  const languages = [
-    { code: "en", language: "En" },
-    { code: "cs", language: "Cs" },
-  ];
-  const handleLangClick = (code: string) => {
-    i18n.changeLanguage(code);
-  };
+
   //if cs => en, if en => cs
   const switchLang = () => {
     const lang = i18n.language === "en" ? "cs" : "en";
