@@ -34,7 +34,7 @@ export default function SelectInput({
 
   return (
     <Select onValueChange={handleValueChange} defaultValue={defaultValue}>
-      <SelectTrigger className="w-auto sm:w-full">
+      <SelectTrigger className="w-auto flex-1 sm:w-full">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>

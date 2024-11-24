@@ -15,17 +15,17 @@ interface IDateRangePicker {
   dateRange: DateRange | undefined;
   setSearchDate: (dateRange: DateRange | undefined) => void;
   className?: string;
-  setParams?: boolean
+  setParams?: boolean;
 }
 
 export default function DateRangePicker({
   dateRange,
   setSearchDate: setSearchDate,
   className,
-  setParams = true
+  setParams = true,
 }: IDateRangePicker) {
   const handleDateChange = (newDateRange: DateRange | undefined) => {
-    if(setParams) {
+    if (setParams) {
       const url = new URL(window.location.href);
       if (newDateRange?.from) {
         url.searchParams.set("from", format(newDateRange.from, "yyyy-MM-dd"));
@@ -38,7 +38,7 @@ export default function DateRangePicker({
         url.searchParams.delete("to");
       }
       window.history.pushState({}, "", url);
-    } 
+    }
     setSearchDate(newDateRange);
   };
 
@@ -51,7 +51,7 @@ export default function DateRangePicker({
           id="date"
           variant={"outline"}
           className={cn(
-            `max-w-[210px] justify-start text-left font-normal ${className}`,
+            `max-w-[210px] flex-1 md:flex-initial justify-start text-left font-normal ${className}`,
             !dateRange && "text-muted-foreground"
           )}
         >

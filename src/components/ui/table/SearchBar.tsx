@@ -21,7 +21,7 @@ export default function SearchBar({
   };
 
   return (
-    <div className="relative flex items-center w-full sm:w-1/3">
+    <div className="relative flex-2 flex items-center w-full md:w-1/2">
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
         <Search size={20} />
       </div>

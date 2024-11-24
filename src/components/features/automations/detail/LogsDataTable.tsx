@@ -7,7 +7,6 @@ import LogsTable from "./LogsTable";
 import { IAutomationType } from "@/lib/types/IAutomationType";
 import LoadingSkeletonLogs from "@/components/ui/LoadingSkeletonLogs";
 import { useTranslation } from "react-i18next";
-import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 
 export default function LogsDataTable({
   automationId,
@@ -56,7 +55,7 @@ export default function LogsDataTable({
     logsQuery.isLoading ||
     automationsTypesQuery.isLoading
   ) {
-    return <LoadingSkeleton />;
+    return <LoadingSkeletonLogs />;
   }
 
   // Data joining logic

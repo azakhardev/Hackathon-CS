@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export default function ChartSelectInput(props: IProps) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   return (
     <Select
       onValueChange={(e) => {
@@ -22,10 +22,14 @@ export default function ChartSelectInput(props: IProps) {
       defaultValue={props.defaultValue}
     >
       <SelectTrigger>
-        <SelectValue placeholder={t('translation:filters:projects_placeholder')} />
+        <SelectValue
+          placeholder={t("translation:filters:projects_placeholder")}
+        />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value=" ">{t('translation:filters:projects_placeholder')}</SelectItem>
+        <SelectItem value=" ">
+          {t("translation:filters:projects_placeholder")}
+        </SelectItem>
         <SelectItem value="csas-dev">Dev</SelectItem>
         <SelectItem value="csas-ops">Ops</SelectItem>
       </SelectContent>
