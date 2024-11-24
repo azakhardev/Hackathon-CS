@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { badgeVariants } from "@/components/ui/badge";
 import { Table_cel_state } from "@/components/ui/table/table_cel_state";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
+import { useIsMobile } from "@/lib/hooks/use-mobile";
 
 interface IProps {
   jobs: IJobs[] | IErrorMessage | undefined;
@@ -21,6 +22,7 @@ interface IProps {
 }
 
 export default function JobsTable(props: IProps) {
+  const isMobile = useIsMobile();
   return (
     <Table>
       {/* <TableHeader>
@@ -31,18 +33,22 @@ export default function JobsTable(props: IProps) {
         </TableRow>
       </TableHeader> */}
       <TableBody>
-        {(props.jobs as IJobs[]).map((j) => (
-          <TableRow key={j.id}>
-            <TableCell className="font-medium">
-              <Table_cel_title
-                title={j.id}
-                text={buildDescription(parseRunnerAction(j.runner))}
-                searchText={props.searchText}
-              />
-            </TableCell>
-            <JobCells {...j} />
-          </TableRow>
-        ))}
+        {(props.jobs as IJobs[]).map((j) => {
+          let text = buildDescription(parseRunnerAction(j.runner));
+          if (isMobile) text += `${j.SAS}`;
+          return (
+            <TableRow key={j.id}>
+              <TableCell className="font-medium">
+                <Table_cel_title
+                  title={j.id}
+                  text={text}
+                  searchText={props.searchText}
+                />
+              </TableCell>
+              <JobCells {...j} />
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );
@@ -50,6 +56,7 @@ export default function JobsTable(props: IProps) {
 
 export function JobCells(job: IJobs) {
   const action = parseRunnerAction(job.runner);
+  const isMobile = useIsMobile();
   return (
     <>
       <TableCell>
@@ -59,23 +66,25 @@ export function JobCells(job: IJobs) {
           type={job.state}
         />
       </TableCell>
-      <TableCell>
-        <Link
-          to={`/projects/${job.SAS}?tabs=jobs` /*`/jobs/${job.runner}`*/}
-          className={badgeVariants({ variant: "outline" })}
-        >
-          {job.SAS.toUpperCase().slice(4)}
-        </Link>
-        <span>{tagJoin({ action, state: job.state })}</span>
-        {action !== RunnerActions.waiting.toString() && (
+      {!isMobile && (
+        <TableCell>
           <Link
-            to={`/runners/${job.runner}`}
+            to={`/projects/${job.SAS}?tabs=jobs` /*`/jobs/${job.runner}`*/}
             className={badgeVariants({ variant: "outline" })}
           >
-            {job.runner.slice(job.runner.length - 5).toUpperCase()}
+            {job.SAS.toUpperCase().slice(4)}
           </Link>
-        )}
-      </TableCell>
+          <span>{tagJoin({ action, state: job.state })}</span>
+          {action !== RunnerActions.waiting.toString() && (
+            <Link
+              to={`/runners/${job.runner}`}
+              className={badgeVariants({ variant: "outline" })}
+            >
+              {job.runner.slice(job.runner.length - 5).toUpperCase()}
+            </Link>
+          )}
+        </TableCell>
+      )}
     </>
   );
 }
@@ -95,8 +104,8 @@ enum JobStates {
 }
 
 export function parseRunnerAction(RunnerId: string) {
-  const buildRegex = /^runner-csas-dev-csas-linux-[a-zA-Z0-9]{5}$/
-  const deployDevRegex = /^runner-csas-ops-csas-linux-[a-zA-Z0-9]{5}$/
+  const buildRegex = /^runner-csas-dev-csas-linux-[a-zA-Z0-9]{5}$/;
+  const deployDevRegex = /^runner-csas-ops-csas-linux-[a-zA-Z0-9]{5}$/;
 
   if (RunnerId === "none") return RunnerActions.waiting;
   else if (RunnerId.includes("csas-dev") && buildRegex.test(RunnerId))
@@ -218,5 +227,5 @@ export function tagJoin({
   if (!verb || !actionText) {
     throw new Error("Unknown job state or action");
   }
-  return `${verb} ${actionText} by`;
+  return ` ${verb} ${actionText} by `;
 }
