@@ -28,10 +28,8 @@ import { useIsMobile } from "@/lib/hooks/use-mobile";
 //-----------------------------------------↓
 export default function AutomationTypesDataTable({
   limit = -1,
-  isNav = true,
 }: {
   limit?: number;
-  isNav: boolean;
 }) {
   const isMobile = useIsMobile();
 

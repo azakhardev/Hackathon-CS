@@ -11,7 +11,7 @@ import { CurveType } from "recharts/types/shape/Curve";
 
 interface IProps {
   chartConfig: IChartConfig;
-  chartData: any[];
+  chartData: object[];
   dataKey: string;
   lineType: CurveType;
   showCursor: boolean;

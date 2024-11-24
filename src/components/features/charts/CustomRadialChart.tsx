@@ -15,7 +15,7 @@ import {
 
 interface IProps {
   chartConfig: IChartConfig;
-  chartData: any[];
+  chartData: object[];
   dataKey: string;
   showCursor: boolean;
   single: boolean;

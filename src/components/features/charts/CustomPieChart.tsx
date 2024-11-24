@@ -11,7 +11,7 @@ import { IChartConfig } from "@/lib/types/IChartConfig";
 
 interface IProps {
   chartConfig: IChartConfig;
-  chartData: any[];
+  chartData: object[];
   innerRadius: number;
   label?: boolean;
 }

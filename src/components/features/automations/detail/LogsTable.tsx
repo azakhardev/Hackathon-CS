@@ -30,9 +30,9 @@ import { useIsMobile } from "@/lib/hooks/use-mobile";
 interface IProps {
   logs: IAutomationLog[] | IErrorMessage;
 }
-//If from=[0]&&to=[arr.len] => success => color=green
 
 export default function LogsTable(props: IProps) {
+  const isMobile = useIsMobile();
   const getNodeProps = (
     currentIndex: number,
     fromIndex: number,
@@ -119,7 +119,6 @@ export default function LogsTable(props: IProps) {
       </Table>
     );
   }
-  const isMobile = useIsMobile();
 
   return (
     <Table>
