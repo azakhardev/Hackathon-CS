@@ -42,6 +42,7 @@ export default function RunnersPage({
     direction: searchParams.get("order") || "asc",
   });
 
+
   const dataQuery = useInfiniteQuery({
     queryKey: [
       "runners",
