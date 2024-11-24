@@ -22,6 +22,7 @@ import {
 } from "@radix-ui/react-tooltip";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/lib/hooks/use-mobile";
 
 interface IProps {
   projects: IProject[] | IErrorMessage;
@@ -29,6 +30,7 @@ interface IProps {
 }
 
 export default function ProjectsTable(props: IProps) {
+  const isMobile = useIsMobile();
   const [storage, setStorage] = useState(
     (JSON.parse(localStorage.getItem("favorite")) as string[]) ?? []
   );
@@ -80,7 +82,7 @@ export default function ProjectsTable(props: IProps) {
                   }
                 />
               </TableCell>
-              <JobCells {...p.job} />
+              <JobCells job={{ ...p.job }} isMobile={isMobile} />
               <TableCell className="flex flex-row justify-end gap-2">
                 <IconButton
                   url={`/projects/${p.job.SAS}`}

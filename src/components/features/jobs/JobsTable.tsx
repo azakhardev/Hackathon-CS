@@ -47,7 +47,7 @@ export default function JobsTable(props: IProps) {
                   searchText={props.searchText}
                 />
               </TableCell>
-              <JobCells {...j} />
+              <JobCells job={{ ...j }} isMobile />
             </TableRow>
           );
         })}
@@ -56,9 +56,9 @@ export default function JobsTable(props: IProps) {
   );
 }
 
-export function JobCells(job: IJobs) {
+export function JobCells({ job, isMobile }: { job: IJobs; isMobile: boolean }) {
   const action = parseRunnerAction(job.runner);
-  const isMobile = useIsMobile();
+  // const isMobile = useIsMobile();
   return (
     <>
       <TableCell>

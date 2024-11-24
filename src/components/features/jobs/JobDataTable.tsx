@@ -123,6 +123,8 @@ export default function JobsDataTable({
     },
   });
 
+  const { t } = useTranslation();
+
   if (dataQuery.data && "error" in dataQuery.data)
     return (
       <ErrorMessage errorMessage={dataQuery.data.error as IErrorMessage} />
@@ -146,14 +148,10 @@ export default function JobsDataTable({
     }
   });
 
-  const { t } = useTranslation()
-
   const cols: ISelectItem[] = [
     { value: "id", content: "Id" },
-    { value: "timestamp", content: t('translation:filters:date_sort') },
+    { value: "timestamp", content: t("translation:filters:date_sort") },
   ];
-
-
 
   return (
     <>
@@ -172,14 +170,14 @@ export default function JobsDataTable({
                 setSearchDate={setSearchDate}
               />
               <SelectInput
-                placeholder={t('translation:filters:action_placeholder')}
+                placeholder={t("translation:filters:action_placeholder")}
                 defaultValue={searchAction}
                 items={actionsVals(t)}
                 onValueChange={(e) => setSearchAction(e)}
                 param="action"
               />
               <SelectInput
-                placeholder={t('translation:filters:state_placeholder')}
+                placeholder={t("translation:filters:state_placeholder")}
                 defaultValue={searchState}
                 items={states2Vals(t)}
                 onValueChange={(e) => setSearchState(e)}
@@ -209,10 +207,10 @@ export default function JobsDataTable({
               disabled={!dataQuery.hasNextPage || dataQuery.isFetchingNextPage}
             >
               {dataQuery.isFetchingNextPage
-                    ? t('translation:common:more_btn_loading')
-                    : dataQuery.hasNextPage
-                    ? t('translation:common:more_btn_text')
-                    : t('translation:common:more_btn_error')}
+                ? t("translation:common:more_btn_loading")
+                : dataQuery.hasNextPage
+                ? t("translation:common:more_btn_text")
+                : t("translation:common:more_btn_error")}
             </Button>
           </div>
         )}

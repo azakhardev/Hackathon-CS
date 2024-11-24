@@ -24,7 +24,7 @@ export default function ProjectsDataTable({
   isNav: boolean;
 }) {
   const [searchParams] = useSearchParams();
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [searchText, setSearchText] = useState(searchParams.get("text") || "");
   const [displayLimit, setDisplayLimit] = useState(limit);
   const [sort, setSort] = useState({
@@ -41,6 +41,10 @@ export default function ProjectsDataTable({
     queryKey: ["jobs"],
     queryFn: async () => await RunnerModel.getJobs(),
   });
+
+  const handleLoadMore = () => {
+    setDisplayLimit((prev) => prev + 10);
+  };
 
   if (sasQuery.data && "error" in sasQuery.data)
     return <ErrorMessage errorMessage={sasQuery.data as IErrorMessage} />;
@@ -108,11 +112,9 @@ export default function ProjectsDataTable({
     displayedProjects = projects.slice(0, displayLimit);
   }
 
-  const handleLoadMore = () => {
-    setDisplayLimit((prev) => prev + 10);
-  };
-
-  const cols: ISelectItem[] = [{ value: "id", content: t('translation:filters:name_sort') }];
+  const cols: ISelectItem[] = [
+    { value: "id", content: t("translation:filters:name_sort") },
+  ];
 
   return (
     <div>
