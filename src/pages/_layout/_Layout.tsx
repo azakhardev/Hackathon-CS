@@ -32,7 +32,7 @@ export default function Layout() {
             </div>
           )}
         </header>
-        <main className="h-full max-w-full px-4 mt-4 mb-3 sm:px-6 md:px-12 lg:px-24 xl:px-32 sm:mt-6 md:mt-8 lg:mt-10 sm:mb-4 md:mb-5 bg-bg_secondary">
+        <main className="h-full max-w-full px-4 mb-3 sm:px-6 md:px-12 lg:px-24 xl:px-32 sm:mb-4 md:mb-5 bg-bg_secondary">
           <div className="max-w-screen-lg mx-auto">
             <Outlet />
           </div>
