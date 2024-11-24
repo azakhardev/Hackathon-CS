@@ -20,8 +20,6 @@ const queryClient = new QueryClient();
 const LoginContext = createContext<ILogin | null>(null);
 
 const router = createBrowserRouter([
-  // test
-  //Majkl je gej
   {
     path: "/",
     element: <Layout />,
