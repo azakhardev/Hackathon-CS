@@ -87,7 +87,7 @@ export function LoginForm() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <span className="text-red-400 text-xs text-center -my-2">
+            <span className="-my-2 text-xs text-center text-red-400">
               {error}
             </span>
             <Button type="submit" className="w-full">

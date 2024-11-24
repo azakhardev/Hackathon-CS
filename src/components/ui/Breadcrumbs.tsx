@@ -15,7 +15,7 @@ export default function Breadcrumbs() {
 
   let urlDefined = "";
   if (segments.length > 1 && segments[segments.length - 2] === "automations")
-    urlDefined = `/projects/${segments[1]}?tabs=automations`;
+    urlDefined = `/projects/${segments[2]}?tabs=automations`;
   //todo: different path coming from automations directly?
   return (
     <div className="flex items-center gap-2 px-4">
