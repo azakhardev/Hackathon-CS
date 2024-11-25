@@ -31,7 +31,7 @@ interface IProps {
   logs: IAutomationLog[] | IErrorMessage;
 }
 
-export default function LogsTable(props: IProps) {
+export default function LogsTableRespo(props: IProps) {
   const isMobile = useIsMobile();
   const getNodeProps = (
     currentIndex: number,
@@ -143,13 +143,13 @@ export default function LogsTable(props: IProps) {
             <TableRow key={l.timestamp}>
               <TableCell>
                 <div
-                  className={`flex flex-wrap  h-full gap-3 ${
+                  className={`flex flex-wrap  h-full gap-2 ${
                     isMobile
-                      ? "flex-col gap-2 items-start justify-start"
+                      ? "flex-col gap-2 items-center justify-start"
                       : "items-center justify-between"
                   }`}
                 >
-                  <div className={`flex justify-start`}>
+                  <div className={`flex justify-start md:min-w-[400px]`}>
                     <TableCelTitleLog
                       title={l.type}
                       text={l.description}

@@ -10,7 +10,7 @@ export default function TableFilterNav({
   return (
     <div className="flex flex-col flex-wrap justify-between gap-4 mb-4 sm:flex-row sm:flex-nowrap">
       {left}
-      <div className="flex flex-wrap justify-end flex-1 gap-2 sm:flex-nowrap">
+      <div className="flex flex-wrap justify-between md:justify-end flex-1 gap-2 sm:flex-nowrap">
         {right}
       </div>
     </div>
