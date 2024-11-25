@@ -52,7 +52,7 @@ export default function ProjectsTable(props: IProps) {
           let starClass = "";
           if (storage.includes(p.name))
             starClass += "fill-state_yellow stroke-none";
-          else starClass += "hidden group-hover:block";
+          else starClass += "md:hidden group-hover:block";
           return (
             <TableRow key={p.name}>
               <TableCell className="font-medium group">
