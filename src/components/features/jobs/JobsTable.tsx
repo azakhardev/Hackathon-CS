@@ -60,14 +60,16 @@ export function JobCells({ job, isMobile }: { job: IJobs; isMobile: boolean }) {
         />
       </TableCell>
       {!isMobile && (
-        <TableCell className="flex gap-1">
+        <TableCell>
           <Link
             to={`/projects/${job.SAS}?tabs=jobs`}
             className={badgeVariants({ variant: "outline" })}
           >
             {job.SAS.toUpperCase().slice(4)}
           </Link>
-          <span>{tagJoin({ action, state: job.state, t })}</span>
+          <span className="mx-[4px]">
+            {tagJoin({ action, state: job.state, t })}
+          </span>
           {action !== RunnerActions.waiting.toString() && (
             <Link
               to={`/runners/${job.runner}`}
