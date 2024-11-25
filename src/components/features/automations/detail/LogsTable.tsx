@@ -192,7 +192,7 @@ export default function LogsTable(props: IProps) {
                   </div>
                   <div className="font-medium">
                     <Badge_timeAgo date={new Date(l.timestamp)} />
-                    <span>{t("translation:automations:no_data")}</span>
+                    <span>{t("translation:automations:new_log")}</span>
                     <Badge_Link title={l.automation_id.slice(-5)} route="#" />
                   </div>
                 </div>

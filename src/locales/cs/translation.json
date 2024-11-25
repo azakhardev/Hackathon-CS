@@ -106,7 +106,7 @@
         "detail_header": "Logy",
         "detail_error": "Chyba při spojování dat",
         "no_data": "Žádné data k dispozici",
-        "new_log": "Nový log byl vytvořen na"
+        "new_log": "Tento záznam byl vytvořen na"
     },
     "automationTypes": {
         "header": "Typy automatizace"
