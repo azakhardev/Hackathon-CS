@@ -73,7 +73,6 @@ const MyCommand: React.FC<MyCommandProps> = ({
 );
 
 export function CommandDialogDemo() {
-  //const [open, setOpen] = React.useState(false);
   const open = useCommandStore((state) => state.isOpen);
   const setOpen = useCommandStore((state) => state.toggleShow);
 
@@ -90,7 +89,7 @@ export function CommandDialogDemo() {
   }, [setOpen]);
 
   const sasQuery = useQuery({
-    queryKey: ["sas"], //searchText - api cant filter, always same all response (cache with single key)
+    queryKey: ["sas"],
     queryFn: async () => await RunnerModel.getSAS(""),
   });
   const navigate = useNavigate();

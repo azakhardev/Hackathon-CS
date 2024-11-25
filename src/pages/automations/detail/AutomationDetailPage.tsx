@@ -13,9 +13,7 @@ export default function AutomationDetailPage() {
 
   return (
     <>
-      {/* <DetailHeader section={t('translation:automations:header')} title={automationId.slice(-5)} /> */}
       <H1>{t("translation:automations:detail_header")}</H1>
-      {/* <div className="mb-4 text-muted-foreground">{automationId.slice(-5)}</div> */}
       <LogsDataTable automationId={automationId} />
     </>
   );

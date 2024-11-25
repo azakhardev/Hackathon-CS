@@ -5,18 +5,6 @@ import { IRunner } from "@/lib/types/IRunner";
 import { ChartCard2 } from "../charts/ChartCard";
 import { CheckIcon, ContainerIcon, Workflow } from "lucide-react";
 
-// class MetricsStats {
-//   organization: string;
-//   success: number = 0;
-//   failed: number = 0;
-//   queued: number = 0;
-//   in_progress: number = 0;
-
-//   constructor(org: string) {
-//     this.organization = org;
-//   }
-// }
-
 class PieStats {
   state: string;
   count: number = 0;

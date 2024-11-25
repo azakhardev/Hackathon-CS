@@ -87,6 +87,3 @@ export default function StateNode({
     </div>
   );
 }
-
-// Tailwind
-// wierd cashing, it needs to find load the variables then is ok but on rebuild is not visible

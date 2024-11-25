@@ -131,8 +131,7 @@ export default function LogsTable(props: IProps) {
           const fromIndex: number =
             l.type_object.states.indexOf(l.from_state) ?? -1;
           const totalStates = l.type_object.states.length ?? 0;
-          // prettier-ignore
-          if ( fromIndex === 0 && toIndex === l.type_object.states.length - 1)
+          if (fromIndex === 0 && toIndex === l.type_object.states.length - 1)
             isSuccess = true;
 
           if (isSuccess) l.level = "SUCCESS";
@@ -150,7 +149,7 @@ export default function LogsTable(props: IProps) {
                       : "items-center justify-between"
                   }`}
                 >
-                  <div className="flex justify-start">
+                  <div className={`flex justify-start`}>
                     <TableCelTitleLog
                       title={l.type}
                       text={l.description}
@@ -193,7 +192,7 @@ export default function LogsTable(props: IProps) {
                   </div>
                   <div className="font-medium">
                     <Badge_timeAgo date={new Date(l.timestamp)} />
-                    <span>{t("translation:automations:new_log")}</span>
+                    <span>{t("translation:automations:no_data")}</span>
                     <Badge_Link title={l.automation_id.slice(-5)} route="#" />
                   </div>
                 </div>

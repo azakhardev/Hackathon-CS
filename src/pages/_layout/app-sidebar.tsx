@@ -44,7 +44,6 @@ export function AppSidebar() {
         <SidebarMenuItems title="Ops" items={itemsOps(t)} />
       </SidebarContent>
       <SidebarFooter>
-        {/* <CommandDialogDemo /> */}
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -52,9 +51,7 @@ export function AppSidebar() {
             </TooltipTrigger>
             <TooltipContent>
               <div className="">
-                {/* Open sidebar */}
                 <kbd className=" p-4 pointer-events-none inline-flex h-5 select-none mb-2 items-center gap-1 rounded border bg-bg_default px-1.5 font-mono text-sm font-medium text-muted-foreground opacity-100">
-                  {/* bg-muted */}
                   <span className="text-xs">⌘</span>B
                 </kbd>
               </div>

@@ -5,9 +5,6 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  // TableCaption,
-  // TableHead,
-  // TableHeader,
 } from "@/components/ui/table/table";
 import { IProject } from "@/lib/types/IProject";
 import Table_cel_title from "@/components/ui/table/table_cel_title";

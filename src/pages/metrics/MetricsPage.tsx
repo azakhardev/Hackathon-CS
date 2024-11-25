@@ -14,12 +14,6 @@ export default function MetricsPage() {
 
   useUserValidate();
 
-  // const items: ISelectItem[] = [
-  //   { value: " ", content: "All" },
-  //   { value: "csas-dev", content: "Dev" },
-  //   { value: "csas-ops", content: "Ops" },
-  // ];
-
   return (
     <>
       <H1>{t("translation:metrics:header")}</H1>

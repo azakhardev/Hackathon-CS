@@ -7,4 +7,3 @@ export const Chart_Red = "hsl(0, 100%, 47%)";
 
 //todo:
 // var style = getComputedStyle(document.body);
-// console.log(style.getPropertyValue("--chart_state_waiting")); // #336699

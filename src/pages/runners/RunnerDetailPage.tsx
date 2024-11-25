@@ -64,7 +64,6 @@ export default function RunnerDetailPage() {
         <div className="w-full">
           <Tabs defaultValue={defaultTab}>
             <TabsList className="bg-[#27272A] text-gray-500 w-[200px]">
-              {/* mb-8*/}
               <TabsTrigger className="w-[100px]" value="jobs">
                 {t("translation:runners:tabs_jobs")}
               </TabsTrigger>
@@ -73,7 +72,6 @@ export default function RunnerDetailPage() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="jobs">
-              {/* className="p-4 border rounded" */}
               <JobsDataTable limit={25} isNav={true} runnerId={runnerId} />
             </TabsContent>
             <TabsContent value="metrics" className="p-4 border rounded ">

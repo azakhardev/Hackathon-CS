@@ -16,11 +16,3 @@ export default function TableFilterNav({
     </div>
   );
 }
-
-// export default function TableFilterNav({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) {
-//   return <div className="flex justify-end flex-1 gap-2">{children}</div>;
-// }

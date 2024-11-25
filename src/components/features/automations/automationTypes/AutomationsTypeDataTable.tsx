@@ -25,7 +25,7 @@ import { IAutomationType, ITransition } from "@/lib/types/IAutomationType";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import LoadingSkeletonTypes from "@/components/ui/LoadingSkeletonTypes";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
-//-----------------------------------------↓
+
 export default function AutomationTypesDataTable({
   limit = -1,
 }: {

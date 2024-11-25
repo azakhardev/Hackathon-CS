@@ -5,9 +5,6 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  // TableCaption,
-  // TableHead,
-  // TableHeader,
 } from "@/components/ui/table/table";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
 import { Link } from "react-router-dom";
@@ -28,13 +25,6 @@ export default function JobsTable(props: IProps) {
   const { t } = useTranslation();
   return (
     <Table>
-      {/* <TableHeader>
-        <TableRow>
-          <TableHead className="w-[200px] text-white">Id</TableHead>
-          <TableHead className="text-white">Status</TableHead>
-          <TableHead className="text-white">Info</TableHead>
-        </TableRow>
-      </TableHeader> */}
       <TableBody>
         {(props.jobs as IJobs[]).map((j) => {
           let text = buildDescription(parseRunnerAction(j.runner), t);
@@ -72,7 +62,7 @@ export function JobCells({ job, isMobile }: { job: IJobs; isMobile: boolean }) {
       {!isMobile && (
         <TableCell className="flex gap-1">
           <Link
-            to={`/projects/${job.SAS}?tabs=jobs` /*`/jobs/${job.runner}`*/}
+            to={`/projects/${job.SAS}?tabs=jobs`}
             className={badgeVariants({ variant: "outline" })}
           >
             {job.SAS.toUpperCase().slice(4)}
@@ -127,25 +117,6 @@ export function parseRunnerAction(RunnerId: string) {
     return RunnerActions.deploy_prod;
 
   return RunnerActions.waiting;
-  // else return RunnerActions.build; //TODO: FIX it later !!!!!!!!!!!!!!!!!!!!!!!!!
-
-  // const prod = `${RunnerId.split("-")[1]}-${RunnerId.split("-")[2]}`;
-  // const action = RunnerId.split("-").slice(3, -1).join("-");
-
-  // switch (`${prod}-${action}`) {
-  //   case "csas-dev-csas-linux":
-  //     return RunnerActions.build;
-  //   case "csas-dev-csas-linux-test":
-  //     return RunnerActions.test;
-  //   case "csas-ops-csas-linux":
-  //     return RunnerActions.deploy_dev;
-  //   case "csas-ops-csas-linux-test":
-  //     return RunnerActions.deploy_prod;
-  //   default:
-  //     return RunnerActions.waiting;
-  // }
-
-  // throw new Error("Unknown runner ID format");
 }
 
 export function buildDescription(action: RunnerActions, t: TFunction) {

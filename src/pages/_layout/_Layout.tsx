@@ -16,7 +16,6 @@ export default function Layout() {
       <AppSidebar />
       <SidebarInset className=" bg-bg_secondary">
         <CommandDialogDemo />
-
         <header className="mb-6 border-b flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12 justify-between px-4">
           <Breadcrumbs />
           {!isMobile && (
