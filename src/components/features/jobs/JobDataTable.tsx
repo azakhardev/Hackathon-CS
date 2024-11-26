@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQueries, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import JobsTable from "./JobsTable";
 import { Button } from "@/components/ui/Button";
 import { IJobs } from "@/lib/types/IJobs";
@@ -225,6 +225,7 @@ export default function JobsDataTable({
 
   if (jobsQuery.data && "error" in jobsQuery.data)
     return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
+  return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
 
   if (jobsQuery.error) {
     const error: IErrorMessage = {

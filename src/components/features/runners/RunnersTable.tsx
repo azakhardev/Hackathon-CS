@@ -8,15 +8,12 @@ import {
 import { Table_cel_state } from "@/components/ui/table/table_cel_state";
 import Table_cel_title from "@/components/ui/table/table_cel_title";
 import { IErrorMessage } from "@/lib/types/IErrorMessage";
-import {
-  buildRunnerDescription,
-  buildRunnerText as runnerRoleText,
-} from "@/components/features/jobs/JobsTable";
 import { IRunner } from "@/lib/types/IRunner";
 import IconButton from "@/components/IconButton";
 import { CheckIcon, PieChartIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useIsMobile } from "@/lib/hooks/use-mobile";
+import { buildRunnerDescription, buildRunnerText } from "@/lib/functions/jobsFunc";
 
 interface IProps {
   runners: (IRunner[] | IErrorMessage)[] | undefined;
@@ -66,7 +63,7 @@ export default function RunnersTable(props: IProps) {
                     <Badge variant="outline" title={title}>
                       {title}
                     </Badge>
-                    {runnerRoleText(r.id, t)}
+                    {buildRunnerText(r.id, t)}
                   </div>
                 </TableCell>
               )}

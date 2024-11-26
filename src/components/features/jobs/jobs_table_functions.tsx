@@ -1,4 +1,4 @@
-import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 export enum RunnerActions {
   waiting = "waiting",
   build = "build",
@@ -55,7 +55,7 @@ export function parseRunnerAction(RunnerId: string) {
   // throw new Error("Unknown runner ID format");
 }
 
-export function buildDescription(action: RunnerActions, t: any) {
+export function buildDescription(action: RunnerActions, t: TFunction) {
   switch (action) {
     case RunnerActions.waiting:
       return `${t("translation:runners:desc_waiting")}`;
@@ -73,7 +73,7 @@ export function buildDescription(action: RunnerActions, t: any) {
 }
 
 // RUNNER builders
-export function buildRunnerText(action: string, t: any) {
+export function buildRunnerText(action: string, t: TFunction) {
   action = parseRunnerAction(action);
   switch (action) {
     case RunnerActions.waiting:
@@ -97,7 +97,7 @@ export function buildRunnerText(action: string, t: any) {
   }
   return action;
 }
-export function buildRunnerDescription(action: string, t: any) {
+export function buildRunnerDescription(action: string, t: TFunction) {
   action = parseRunnerAction(action);
   switch (action) {
     case RunnerActions.waiting:
@@ -117,11 +117,12 @@ export function buildRunnerDescription(action: string, t: any) {
 export function tagJoin({
   action,
   state,
+  t
 }: {
   action: RunnerActions;
   state: string;
+  t: TFunction
 }): string {
-  const { t } = useTranslation();
   if (!(state in JobStates)) {
     throw new Error("Unknown job state");
   }
@@ -136,7 +137,7 @@ export function tagJoin({
   return `${verb} ${actionText} ${t("translation:common:by")}`;
 }
 
-function verbMap(t: any): { [key in JobStates]: string } {
+function verbMap(t: TFunction): { [key in JobStates]: string } {
   return {
     [JobStates.success]: t("translation:jobsVerbsMap:success"),
     [JobStates.in_progress]: t("translation:jobsVerbsMap:in_progress"),
@@ -144,7 +145,7 @@ function verbMap(t: any): { [key in JobStates]: string } {
     [JobStates.failed]: t("translation:jobsVerbsMap:failed"),
   };
 }
-function actionMap(t: any): { [key in RunnerActions]: string } {
+function actionMap(t: TFunction): { [key in RunnerActions]: string } {
   return {
     [RunnerActions.waiting]: t("translation:runnerActionMap:waiting"), //always
     [RunnerActions.build]: t("translation:runnerActionMap:build"),
