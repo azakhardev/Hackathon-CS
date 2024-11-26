@@ -4,7 +4,7 @@
 
 ## Welcome
 
-to [Loop](https://github.com/Edems-DEV/Hackathon-CS) repository. This repo hosts the frontend application built in raw React for Česká spořitelna's internal tooling, developed during the 2024 Hackathon.
+to [Loop](https://github.com/Edems-DEV/Hackathon-CS) repository. This repo hosts the frontend application built in raw React for Česká spořitelna's internal tooling, developed during the 2024 Hackathon. 
 
 ## Setup
 - `npm install`
