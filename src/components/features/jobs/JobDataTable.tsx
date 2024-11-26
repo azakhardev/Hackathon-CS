@@ -23,7 +23,13 @@ import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 import { useTranslation } from "react-i18next";
 import CustomPieChart from "../charts/CustomPieChart";
 import { PieStats } from "@/pages/metrics/components/MetricsShared";
-import { Chart_Gray, Chart_Green, Chart_Orange, Chart_Red } from "@/pages/metrics/components/ChartColors";
+import {
+  Chart_Gray,
+  Chart_Green,
+  Chart_Orange,
+  Chart_Red,
+} from "@/pages/metrics/components/ChartColors";
+import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
 
 export default function JobsDataTable({
   limit = 25,
@@ -59,16 +65,56 @@ export default function JobsDataTable({
   });
 
   const jobsQuery = useQuery({
-    queryKey: ['jobs'],
-    queryFn: async () => await RunnerModel.getJobs(
-      undefined,
-      9999999,
-      undefined,
-      undefined,
-      undefined,
-      id && id.trim() != "" && { SAS_eq: id }
-    )
-  })
+    queryKey: [
+      "jobs",
+      {
+        searchAction: searchAction,
+        searchDate: searchDate,
+      },
+    ],
+    queryFn: async () => {
+      const idRegex = "[a-zA-Z0-9]{5}";
+
+      const filters = {
+        ...(searchAction &&
+          searchAction.trim() !== "" && {
+            runner_like: `${searchAction}-${idRegex}`,
+          }),
+
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to == undefined && {
+            timestamp_start: format(searchDate.from, "yyyy-MM-dd").toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            timestamp_gte: format(
+              searchDate.from,
+              "yyyy-MM-dd'T'HH:mm:ss"
+            ).toString(),
+          }),
+        ...(searchDate &&
+          searchDate.from &&
+          searchDate.to && {
+            timestamp_lte: format(
+              searchDate.to,
+              "yyyy-MM-dd'T'23:59:59"
+            ).toString(),
+          }),
+        ...(id && id.trim() != "" && { SAS_eq: id }),
+        ...(runnerId && runnerId.trim() != "" && { runner_eq: runnerId }),
+      };
+      return RunnerModel.getJobs(
+        undefined,
+        9999999,
+        undefined,
+        undefined,
+        undefined,
+        filters
+      );
+    },
+  });
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -178,9 +224,7 @@ export default function JobsDataTable({
   };
 
   if (jobsQuery.data && "error" in jobsQuery.data)
-    return (
-      <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />
-    );
+    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
 
   if (jobsQuery.error) {
     const error: IErrorMessage = {
@@ -191,28 +235,30 @@ export default function JobsDataTable({
     return <ErrorMessage errorMessage={error}></ErrorMessage>;
   }
 
-  if (jobsQuery.isLoading) {
-    return 
+  let jStateData = createJobsData([]);
+  if (!jobsQuery.isLoading) {
+    jStateData = createJobsData(jobsQuery.data as IJobs[]);
   }
-  const jStateData = createJobsData(jobsQuery.data as IJobs[]);
+
   return (
     <>
       {isNav && (
         <div>
-            {jobsQuery.isLoading ? (
-              <div></div>
-            ) : (
-              <div className="pt-[20px] pb-[40px] text-[20px] xl:px-[200px]">
-                <CustomPieChart
-              chartConfig={JOBS_CHART_CONFIG}
-              chartData={jStateData}
-              innerRadius={0}
-              label={true}
-            />
-              </div>
-              
-            )}
-            
+          {jobsQuery.isLoading ? (
+            <LoadingSkeletonMetrics />
+          ) : graph ? (
+            <div className="pt-[20px] pb-[40px] text-[20px] xl:px-[200px]">
+              <CustomPieChart
+                chartConfig={JOBS_CHART_CONFIG}
+                chartData={jStateData}
+                innerRadius={0}
+                label={true}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
+
           <TableFilterNav
             left={
               <SearchBar
