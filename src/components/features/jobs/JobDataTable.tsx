@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQueries, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import JobsTable from "./JobsTable";
 import { Button } from "@/components/ui/Button";
 import { IJobs } from "@/lib/types/IJobs";
@@ -23,7 +23,12 @@ import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 import { useTranslation } from "react-i18next";
 import CustomPieChart from "../charts/CustomPieChart";
 import { PieStats } from "@/pages/metrics/components/MetricsShared";
-import { Chart_Gray, Chart_Green, Chart_Orange, Chart_Red } from "@/pages/metrics/components/ChartColors";
+import {
+  Chart_Gray,
+  Chart_Green,
+  Chart_Orange,
+  Chart_Red,
+} from "@/pages/metrics/components/ChartColors";
 
 export default function JobsDataTable({
   limit = 25,
@@ -59,16 +64,17 @@ export default function JobsDataTable({
   });
 
   const jobsQuery = useQuery({
-    queryKey: ['jobs'],
-    queryFn: async () => await RunnerModel.getJobs(
-      undefined,
-      9999999,
-      undefined,
-      undefined,
-      undefined,
-      id && id.trim() != "" && { SAS_eq: id }
-    )
-  })
+    queryKey: ["jobs"],
+    queryFn: async () =>
+      await RunnerModel.getJobs(
+        undefined,
+        9999999,
+        undefined,
+        undefined,
+        undefined,
+        id && id.trim() != "" && { SAS_eq: id }
+      ),
+  });
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -178,9 +184,7 @@ export default function JobsDataTable({
   };
 
   if (jobsQuery.data && "error" in jobsQuery.data)
-    return (
-      <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />
-    );
+    return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
 
   if (jobsQuery.error) {
     const error: IErrorMessage = {
@@ -192,27 +196,28 @@ export default function JobsDataTable({
   }
 
   if (jobsQuery.isLoading) {
-    return 
+    return;
   }
   const jStateData = createJobsData(jobsQuery.data as IJobs[]);
   return (
     <>
       {isNav && (
         <div>
-            {jobsQuery.isLoading ? (
-              <div></div>
-            ) : (
+          {jobsQuery.isLoading ? (
+            <div></div>
+          ) : (
+            graph && (
               <div className="pt-[20px] pb-[40px] text-[20px] xl:px-[200px]">
                 <CustomPieChart
-              chartConfig={JOBS_CHART_CONFIG}
-              chartData={jStateData}
-              innerRadius={0}
-              label={true}
-            />
+                  chartConfig={JOBS_CHART_CONFIG}
+                  chartData={jStateData}
+                  innerRadius={0}
+                  label={true}
+                />
               </div>
-              
-            )}
-            
+            )
+          )}
+
           <TableFilterNav
             left={
               <SearchBar

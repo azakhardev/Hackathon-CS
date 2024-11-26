@@ -36,7 +36,7 @@ export default function Breadcrumbs() {
               if (item === "automations") url = urlDefined;
 
               return (
-                <>
+                <div className="flex flex-row items-center" key={i}>
                   <BreadcrumbSeparator className="block" />
                   <Link key={i} to={url}>
                     <BreadcrumbItem>
@@ -51,7 +51,7 @@ export default function Breadcrumbs() {
                       )}
                     </BreadcrumbItem>
                   </Link>
-                </>
+                </div>
               );
             }
           })}

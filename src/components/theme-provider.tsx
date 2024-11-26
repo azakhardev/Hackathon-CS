@@ -10,7 +10,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "./ui/alert-dialog";
 import { useTranslation } from "react-i18next";
 
@@ -77,14 +76,6 @@ export function ThemeProvider({
   );
 }
 
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
-
-  if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider");
-
-  return context;
-};
 
 export function ThemeSwitch() {
   const { t } = useTranslation();
@@ -138,3 +129,13 @@ export function ThemeSwitch() {
     </>
   );
 }
+
+export const useTheme = () => {
+    const context = useContext(ThemeProviderContext);
+  
+    if (context === undefined)
+      throw new Error("useTheme must be used within a ThemeProvider");
+  
+    return context;
+  };
+  
