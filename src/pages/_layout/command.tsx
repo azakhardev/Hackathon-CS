@@ -35,7 +35,6 @@ import { useNavigate } from "react-router-dom";
 import { useCommandStore } from "@/lib/store";
 import { Button } from "@/components/ui/Button";
 import { useTranslation } from "react-i18next";
-import { TFunction } from "i18next";
 
 interface NavItem {
   title: string;
@@ -97,14 +96,14 @@ export function CommandDialogDemo() {
   const { toggleSidebar } = useSidebar();
   const actionItems: NavActionItem[] = [
     {
-      title: "Switch Langue",
+      title: t('translation:command:switch_lang'),
       icon: LanguagesIcon,
       action: () => {
         i18n.changeLanguage(i18n.language === "en" ? "cs" : "en");
       },
     },
     {
-      title: "Toggle Sidebar",
+      title: t('translation:command:toggle_side'),
       icon: PanelLeft,
       action: () => {
         toggleSidebar();
@@ -113,12 +112,12 @@ export function CommandDialogDemo() {
   ];
 
   const navigationItems: NavItem[] = [
-    { title: t('translation:homepage:projectass'), icon: FolderIcon, path: "/projects" },
-    { title: "Runners", icon: ContainerIcon, path: "/runners" },
-    { title: "Jobs", icon: CheckIcon, path: "/jobs" },
-    { title: "Metrics", icon: PieChartIcon, path: "/metrics" },
-    { title: "Automations", icon: WorkflowIcon, path: "/automations" },
-    { title: "Automations Type", icon: ShapesIcon, path: "/automationTypes" },
+    { title: t('translation:homepage:projects_header'), icon: FolderIcon, path: "/projects" },
+    { title: t('translation:homepage:runners_header'), icon: ContainerIcon, path: "/runners" },
+    { title: t('translation:homepage:jobs_header'), icon: CheckIcon, path: "/jobs" },
+    { title: t('translation:metrics:header'), icon: PieChartIcon, path: "/metrics" },
+    { title: t('translation:homepage:automations_header'), icon: WorkflowIcon, path: "/automations" },
+    { title: t('translation:homepage:types_header'), icon: ShapesIcon, path: "/automationTypes" },
   ];
 
   return (
@@ -138,10 +137,10 @@ export function CommandDialogDemo() {
         </Tooltip>
       </TooltipProvider> */}
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput placeholder={t('translation:command:placeholder')} />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Favorite">
+          <CommandEmpty>{t('translation:command:noResult')}</CommandEmpty>
+          <CommandGroup heading={t('translation:command:favorite')}>
             {storage &&
               (storage as string[]).map((s) => (
                 <MyCommand
@@ -155,7 +154,7 @@ export function CommandDialogDemo() {
                 />
               ))}
           </CommandGroup>
-          <CommandGroup heading="Pages">
+          <CommandGroup heading={t('translation:command:pages')}>
             {navigationItems.map((item) => (
               <MyCommand
                 key={item.path}
@@ -169,7 +168,7 @@ export function CommandDialogDemo() {
             ))}
           </CommandGroup>
           <CommandSeparator />
-          <CommandGroup heading="Actions">
+          <CommandGroup heading={t('translation:command:actions')}>
             {actionItems.map((item) => (
               <MyCommand
                 key={item.title}
@@ -184,7 +183,7 @@ export function CommandDialogDemo() {
           </CommandGroup>
           <CommandSeparator />
 
-          <CommandGroup heading="Projects">
+          <CommandGroup heading={t('translation:command:projects')}>
             {sasQuery.data &&
               (sasQuery.data as string[]).map((s) => (
                 <MyCommand

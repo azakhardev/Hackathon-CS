@@ -110,5 +110,15 @@
     },
     "automationTypes": {
         "header": "Typy automatizace"
+    },
+    "command": {
+        "noResult": "Nebyly nalezeny žádné výsledky.",
+        "placeholder": "Zadejte příkaz nebo hledejte...",
+        "favorite": "Oblíbene",
+        "pages": "Stránky",
+        "actions": "Akce",
+        "projects": "Projekty",
+        "switch_lang": "Přepnout jazyk",
+        "toggle_side": "Přepínání postranního panelu"
     }
 }

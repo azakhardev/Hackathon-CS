@@ -111,5 +111,15 @@
     },
     "automationTypes": {
         "header": "Automation Types"
+    },
+    "command": {
+        "noResult": "No results found.",
+        "placeholder": "Type a command or search...",
+        "favorite": "Favorite",
+        "pages": "Pages",
+        "actions": "Actions",
+        "projects": "Projects",
+        "switch_lang": "Switch Language",
+        "toggle_side": "Toggle Sidebar"
     }
 }
