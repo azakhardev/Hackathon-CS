@@ -257,49 +257,6 @@ export default function JobsDataTable({
     <>
       {isNav && (
         <div>
-          {jobsQuery.isLoading ? (
-            <LoadingSkeletonMetrics />
-          ) : graph ? (
-            <div className="mb-5">
-              <Table>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      <Accordion type="single" collapsible>
-                        <AccordionItem
-                          key="xxx"
-                          value="xxx"
-                          className="border-none"
-                        >
-                          <AccordionTrigger>
-                            <div
-                              className={`flex gap-1 items-center justify-start`}
-                            >
-                              <PieChartIcon size={24} className="mb-1" />
-                              <div className="ml-[10px]">{/* <H2></H2> */}</div>
-                            </div>
-                          </AccordionTrigger>
-                          <AccordionContent>
-                            <div className="pt-[20px] pb-[40px] text-[20px] xl:px-[200px]">
-                              <CustomPieChart
-                                chartConfig={JOBS_CHART_CONFIG}
-                                chartData={jStateData}
-                                innerRadius={0}
-                                label={true}
-                              />
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-                      </Accordion>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </div>
-          ) : (
-            <></>
-          )}
-
           <TableFilterNav
             left={
               <SearchBar
@@ -332,6 +289,48 @@ export default function JobsDataTable({
             }
           />
         </div>
+      )}
+      {jobsQuery.isLoading ? (
+        <LoadingSkeletonMetrics />
+      ) : graph ? (
+        <div className="mb-5">
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <Accordion type="single" collapsible>
+                    <AccordionItem
+                      key="xxx"
+                      value="xxx"
+                      className="border-none"
+                    >
+                      <AccordionTrigger>
+                        <div
+                          className={`flex gap-1 items-center justify-start`}
+                        >
+                          <PieChartIcon size={24} />
+                          <div>{/* <H2></H2> */}</div>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="pt-[20px] pb-[40px] text-[20px] xl:px-[200px]">
+                          <CustomPieChart
+                            chartConfig={JOBS_CHART_CONFIG}
+                            chartData={jStateData}
+                            innerRadius={0}
+                            label={true}
+                          />
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      ) : (
+        <></>
       )}
 
       {dataQuery.isLoading && <LoadingSkeleton />}
