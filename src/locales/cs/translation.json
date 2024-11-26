@@ -38,7 +38,7 @@
     },
     "runners": {
         "header": "Spouštěče",
-        "state_active": "Aktivni",
+        "state_active": "Aktivní",
         "state_offline": "Odpojený",
         "state_idle": "Nečinný",
         "state_failed": "Neúspěšný",
@@ -95,7 +95,7 @@
         "deploy_prod": "nasazen na prod"
     },
     "metrics": {
-        "header": "Metriky",
+        "header": "Globální Metriky",
         "projects_desc": "Aktuální stav úloh",
         "automation_desc": "Aktuální stav automatizací",
         "runners_desc": "Aktuální stav spouštěčů",
@@ -120,5 +120,13 @@
         "projects": "Projekty",
         "switch_lang": "Přepnout jazyk",
         "toggle_side": "Přepínání postranního panelu"
+    },
+    "alert": {
+        "title": "Jseš si tím naprosto jistý?",
+        "first_para": "Upozorňujeme, že používání bílého motivu může zvýšit riziko namáhání očí a může potenciálně přispět k dlouhodobému poškození sítnice, zejména v prostředí se slabým osvětlením.",
+        "second_para": "Tato aplikace byla navržena s tmavým režimem jako výchozím pro optimální vizuální zážitek. Pro vaše pohodlí a bezpečnost důrazně doporučujeme nadále používat tmavé téma.",
+        "third_para": "Chcete stále přejít na bílé motiv?",
+        "yes": "Ano",
+        "no": "Ne"
     }
 }

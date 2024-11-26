@@ -36,7 +36,7 @@ export default function ProjectDetailPage() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="jobs">
-              <JobsDataTable limit={25} isNav={true} id={id} />
+              <JobsDataTable limit={25} isNav={true} id={id} graph={true}/>
             </TabsContent>
             <TabsContent value="automations">
               <AutomationsDataTable limit={25} isNav={true} id={id} />

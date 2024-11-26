@@ -24,6 +24,7 @@ export default function CustomPieChart(props: IProps) {
       <PieChart>
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
         <Pie
+          className="text-[15px]"
           data={props.chartData}
           dataKey={Object.keys(props.chartConfig).at(0) as string}
           nameKey={nKey}
@@ -33,7 +34,7 @@ export default function CustomPieChart(props: IProps) {
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
         <ChartLegend
           content={<ChartLegendContent nameKey={nKey} />}
-          className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
+          className="-translate-y-2 flex-wrap gap-x-2 gap-y-4 pt-8 xl:[&>*]:basis-1/5 [&>*]:basis-1/3 [&>*]:justify-center"
         />
       </PieChart>
     </ChartContainer>

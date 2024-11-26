@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueries, useQuery } from "@tanstack/react-query";
 import JobsTable from "./JobsTable";
 import { Button } from "@/components/ui/Button";
 import { IJobs } from "@/lib/types/IJobs";
@@ -17,20 +17,26 @@ import {
   actionsVals,
   states2Vals,
 } from "@/components/ui/table/Select_items_list";
+
 import { useSearchParams } from "react-router-dom";
 import LoadingSkeleton from "@/components/ui/LoadingSkeleton";
 import { useTranslation } from "react-i18next";
+import CustomPieChart from "../charts/CustomPieChart";
+import { PieStats } from "@/pages/metrics/components/MetricsShared";
+import { Chart_Gray, Chart_Green, Chart_Orange, Chart_Red } from "@/pages/metrics/components/ChartColors";
 
 export default function JobsDataTable({
   limit = 25,
   isNav = true,
   id,
   runnerId,
+  graph = false,
 }: {
   limit: number | undefined;
   isNav: boolean;
   id?: string;
   runnerId?: string;
+  graph?: boolean;
 }) {
   const [searchParams] = useSearchParams();
 
@@ -52,9 +58,21 @@ export default function JobsDataTable({
     to: searchParams.get("to") ? new Date(searchParams.get("to")) : undefined,
   });
 
+  const jobsQuery = useQuery({
+    queryKey: ['jobs'],
+    queryFn: async () => await RunnerModel.getJobs(
+      undefined,
+      9999999,
+      undefined,
+      undefined,
+      undefined,
+      id && id.trim() != "" && { SAS_eq: id }
+    )
+  })
+
   const dataQuery = useInfiniteQuery({
     queryKey: [
-      "runners",
+      "infinityJobs",
       {
         search: searchText,
         limit: limit,
@@ -151,40 +169,82 @@ export default function JobsDataTable({
     { value: "timestamp", content: t("translation:filters:date_sort") },
   ];
 
+  const JOBS_CHART_CONFIG = {
+    count: { label: "Count" },
+    success: { label: "Successful" },
+    in_progress: { label: "In Progress" },
+    failed: { label: "Failed" },
+    queued: { label: "Queued" },
+  };
+
+  if (jobsQuery.data && "error" in jobsQuery.data)
+    return (
+      <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />
+    );
+
+  if (jobsQuery.error) {
+    const error: IErrorMessage = {
+      code: "500",
+      error: "Internal server error",
+      message: "Server responded with undefined",
+    };
+    return <ErrorMessage errorMessage={error}></ErrorMessage>;
+  }
+
+  if (jobsQuery.isLoading) {
+    return 
+  }
+  const jStateData = createJobsData(jobsQuery.data as IJobs[]);
   return (
     <>
       {isNav && (
-        <TableFilterNav
-          left={
-            <SearchBar
-              searchText={searchText ?? ""}
-              setSearchText={setSearchText}
+        <div>
+            {jobsQuery.isLoading ? (
+              <div></div>
+            ) : (
+              <div className="pt-[20px] pb-[40px] text-[20px] xl:px-[200px]">
+                <CustomPieChart
+              chartConfig={JOBS_CHART_CONFIG}
+              chartData={jStateData}
+              innerRadius={0}
+              label={true}
             />
-          }
-          right={
-            <>
-              <DateRangePicker
-                dateRange={searchDate}
-                setSearchDate={setSearchDate}
+              </div>
+              
+            )}
+            
+          <TableFilterNav
+            left={
+              <SearchBar
+                searchText={searchText ?? ""}
+                setSearchText={setSearchText}
               />
-              <SelectInput
-                placeholder={t("translation:filters:action_placeholder")}
-                defaultValue={searchAction}
-                items={actionsVals(t)}
-                onValueChange={(e) => setSearchAction(e)}
-                param="action"
-              />
-              <SelectInput
-                placeholder={t("translation:filters:state_placeholder")}
-                defaultValue={searchState}
-                items={states2Vals(t)}
-                onValueChange={(e) => setSearchState(e)}
-                param="state"
-              />
-              <ButtonSort sort={sort} setSort={setSort} items={cols} />{" "}
-            </>
-          }
-        />
+            }
+            right={
+              <>
+                <DateRangePicker
+                  dateRange={searchDate}
+                  setSearchDate={setSearchDate}
+                />
+                <SelectInput
+                  placeholder={t("translation:filters:action_placeholder")}
+                  defaultValue={searchAction}
+                  items={actionsVals(t)}
+                  onValueChange={(e) => setSearchAction(e)}
+                  param="action"
+                />
+                <SelectInput
+                  placeholder={t("translation:filters:state_placeholder")}
+                  defaultValue={searchState}
+                  items={states2Vals(t)}
+                  onValueChange={(e) => setSearchState(e)}
+                  param="state"
+                />
+                <ButtonSort sort={sort} setSort={setSort} items={cols} />{" "}
+              </>
+            }
+          />
+        </div>
       )}
 
       {dataQuery.isLoading && <LoadingSkeleton />}
@@ -214,4 +274,27 @@ export default function JobsDataTable({
         )}
     </>
   );
+}
+
+function createJobsData(data: IJobs[]) {
+  const newData: object[] = [];
+  const successJ = new PieStats("success", Chart_Green);
+  const progressionJ = new PieStats("in_progress", Chart_Orange);
+  const failedJ = new PieStats("failed", Chart_Red);
+  const queuedJ = new PieStats("queued", Chart_Gray);
+
+  data.forEach((j) => {
+    if (j.state.toLowerCase() === "success") {
+      successJ.count++;
+    } else if (j.state.toLowerCase() === "failed") {
+      failedJ.count++;
+    } else if (j.state.toLowerCase() === "in_progress") {
+      progressionJ.count++;
+    } else {
+      queuedJ.count++;
+    }
+  });
+
+  newData.push(successJ, progressionJ, failedJ, queuedJ);
+  return newData;
 }

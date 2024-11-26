@@ -96,7 +96,7 @@
         "deploy_prod": "deployed to prod"
     },
     "metrics": {
-        "header": "Metrics",
+        "header": "Globals Metrics",
         "projects_desc" : "Current state of jobs",
         "automation_desc": "Current state of automations",
         "runners_desc": "Current state of runners",
@@ -121,5 +121,13 @@
         "projects": "Projects",
         "switch_lang": "Switch Language",
         "toggle_side": "Toggle Sidebar"
+    },
+    "alert": {
+        "title": "Are you absolutely sure?",
+        "first_para": "Please note that using the white theme may increase the risk ofeye strain and could potentially contribute to long-term retinaldamage, especially in low-light environments.",
+        "second_para": "This app was designed with a dark mode as the default for an optimal visual experience. For your comfort and safety, we strongly recommend continuing to use the dark theme.",
+        "third_para": "Do you still want to switch to the white theme?",
+        "yes": "Yes",
+        "no": "No"
     }
 }

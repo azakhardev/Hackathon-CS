@@ -12,6 +12,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
+import { useTranslation } from "react-i18next";
 
 type Theme = "dark" | "light" | "system";
 
@@ -86,6 +87,7 @@ export const useTheme = () => {
 };
 
 export function ThemeSwitch() {
+  const { t } = useTranslation();
   const { theme, setTheme } = useTheme();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -110,29 +112,25 @@ export function ThemeSwitch() {
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>{t("translation:alert:title")}</AlertDialogTitle>
             <AlertDialogDescription>
               <p className="leading-7 [&:not(:first-child)]:mt-6">
-                Please note that using the white theme may increase the risk of
-                eye strain and could potentially contribute to long-term retinal
-                damage, especially in low-light environments.
+                {t("translation:alert:first_para")}
               </p>
               <p className="leading-7 [&:not(:first-child)]:mt-6">
-                This app was designed with a dark mode as the default for an
-                optimal visual experience. For your comfort and safety, we
-                strongly recommend continuing to use the dark theme.
+                {t("translation:alert:second_para")}
               </p>
               <p className="leading-7 [&:not(:first-child)]:mt-6 font-bold">
-                Do you still want to switch to the white theme?
+                {t("translation:alert:third_para")}
               </p>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleDialogAction}>
-              Yes
+              {t("translation:alert:yes")}
             </AlertDialogCancel>
             <AlertDialogAction onClick={() => setIsDialogOpen(false)}>
-              No
+              {t("translation:alert:no")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
