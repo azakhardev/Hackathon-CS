@@ -72,7 +72,7 @@ export default function RunnerDetailPage() {
               </TabsTrigger>
             </TabsList>
             <TabsContent value="jobs">
-              <JobsDataTable limit={25} isNav={true} runnerId={runnerId} />
+              <JobsDataTable limit={25} isNav={false} runnerId={runnerId} />
             </TabsContent>
             <TabsContent value="metrics" className="p-4 border rounded ">
               {metricsQuery.isLoading ? (
