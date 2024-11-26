@@ -225,7 +225,6 @@ export default function JobsDataTable({
 
   if (jobsQuery.data && "error" in jobsQuery.data)
     return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
-  return <ErrorMessage errorMessage={jobsQuery.data as IErrorMessage} />;
 
   if (jobsQuery.error) {
     const error: IErrorMessage = {
