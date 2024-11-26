@@ -30,6 +30,19 @@ import {
   Chart_Red,
 } from "@/pages/metrics/components/ChartColors";
 import LoadingSkeletonMetrics from "@/components/ui/LoadingSkeletonMetrics";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@/components/ui/table/table";
+import { PieChartIcon } from "lucide-react";
 
 export default function JobsDataTable({
   limit = 25,
@@ -247,13 +260,41 @@ export default function JobsDataTable({
           {jobsQuery.isLoading ? (
             <LoadingSkeletonMetrics />
           ) : graph ? (
-            <div className="pt-[20px] pb-[40px] text-[20px] xl:px-[200px]">
-              <CustomPieChart
-                chartConfig={JOBS_CHART_CONFIG}
-                chartData={jStateData}
-                innerRadius={0}
-                label={true}
-              />
+            <div className="mb-5">
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <Accordion type="single" collapsible>
+                        <AccordionItem
+                          key="xxx"
+                          value="xxx"
+                          className="border-none"
+                        >
+                          <AccordionTrigger>
+                            <div
+                              className={`flex gap-1 items-center justify-start`}
+                            >
+                              <PieChartIcon size={24} className="mb-1" />
+                              <div className="ml-[10px]">{/* <H2></H2> */}</div>
+                            </div>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div className="pt-[20px] pb-[40px] text-[20px] xl:px-[200px]">
+                              <CustomPieChart
+                                chartConfig={JOBS_CHART_CONFIG}
+                                chartData={jStateData}
+                                innerRadius={0}
+                                label={true}
+                              />
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
             </div>
           ) : (
             <></>
