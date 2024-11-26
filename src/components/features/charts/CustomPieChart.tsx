@@ -18,14 +18,15 @@ interface IProps {
 
 export default function CustomPieChart(props: IProps) {
   const nKey = Object.keys(props.chartData[0]).at(0);
-
+  //@ts-ignore
+  const filteredChartData = props.chartData.filter((data) => data.count > 0);
   return (
     <ChartContainer config={props.chartConfig}>
       <PieChart>
         <ChartTooltip content={<ChartTooltipContent hideLabel />} />
         <Pie
           className="text-[15px]"
-          data={props.chartData}
+          data={filteredChartData}
           dataKey={Object.keys(props.chartConfig).at(0) as string}
           nameKey={nKey}
           label={props.label}
