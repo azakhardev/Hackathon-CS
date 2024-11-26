@@ -35,20 +35,14 @@ import { useNavigate } from "react-router-dom";
 import { useCommandStore } from "@/lib/store";
 import { Button } from "@/components/ui/Button";
 import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 
 interface NavItem {
   title: string;
   icon: LucideIcon;
   path: string;
 }
-const navigationItems: NavItem[] = [
-  { title: "Projects", icon: FolderIcon, path: "/projects" },
-  { title: "Runners", icon: ContainerIcon, path: "/runners" },
-  { title: "Jobs", icon: CheckIcon, path: "/jobs" },
-  { title: "Metrics", icon: PieChartIcon, path: "/metrics" },
-  { title: "Automations", icon: WorkflowIcon, path: "/automations" },
-  { title: "Automations Type", icon: ShapesIcon, path: "/automationTypes" },
-];
+
 interface NavActionItem {
   title: string;
   icon: LucideIcon;
@@ -74,6 +68,7 @@ const MyCommand: React.FC<MyCommandProps> = ({
 
 export function CommandDialogDemo() {
   //const [open, setOpen] = React.useState(false);
+  const { t } = useTranslation()
   const open = useCommandStore((state) => state.isOpen);
   const setOpen = useCommandStore((state) => state.toggleShow);
 
@@ -115,6 +110,15 @@ export function CommandDialogDemo() {
         toggleSidebar();
       },
     },
+  ];
+
+  const navigationItems: NavItem[] = [
+    { title: t('translation:homepage:projectass'), icon: FolderIcon, path: "/projects" },
+    { title: "Runners", icon: ContainerIcon, path: "/runners" },
+    { title: "Jobs", icon: CheckIcon, path: "/jobs" },
+    { title: "Metrics", icon: PieChartIcon, path: "/metrics" },
+    { title: "Automations", icon: WorkflowIcon, path: "/automations" },
+    { title: "Automations Type", icon: ShapesIcon, path: "/automationTypes" },
   ];
 
   return (
