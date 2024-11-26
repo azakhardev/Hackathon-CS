@@ -118,12 +118,18 @@ export default function ProjectsDataTable({
   return (
     <div>
       {isNav && (
-        <TableFilterNav
-          left={
-            <SearchBar searchText={searchText} setSearchText={setSearchText} />
-          }
-          right={<ButtonSort sort={sort} setSort={setSort} items={cols} />}
-        />
+        <div className="flex justify-between w-full gap-2 mb-4">
+          <SearchBar searchText={searchText} setSearchText={setSearchText} />
+          <div>
+            <ButtonSort sort={sort} setSort={setSort} items={cols} />
+          </div>
+        </div>
+        // <TableFilterNav
+        //   left={
+        //     <SearchBar searchText={searchText} setSearchText={setSearchText} />
+        //   }
+        //   right={<ButtonSort sort={sort} setSort={setSort} items={cols} />}
+        // />
       )}
       {(sasQuery.isLoading || jobsQuery.isLoading) && <LoadingSkeleton />}
 
