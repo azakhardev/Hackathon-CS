@@ -19,7 +19,6 @@ interface SortState {
   direction: string;
 }
 
-
 interface ButtonSortProps {
   sort: SortState;
   setSort: React.Dispatch<React.SetStateAction<SortState>>;
@@ -28,16 +27,17 @@ interface ButtonSortProps {
 
 export function ButtonSort({ sort, setSort, items }: ButtonSortProps) {
   const directions: ISelectItem[] = [
-    { value: "asc", content: <ArrowDownAZIcon/> },
+    { value: "asc", content: <ArrowDownAZIcon /> },
     { value: "desc", content: <ArrowDownZAIcon /> },
   ];
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
+          {/*  className="ml-auto" */}
           <ArrowDownUpIcon size={16} />
         </Button>
       </DropdownMenuTrigger>
@@ -45,24 +45,30 @@ export function ButtonSort({ sort, setSort, items }: ButtonSortProps) {
         <DropdownMenuGroup>
           <div className="flex flex-col gap-2 p-2">
             <div className="flex flex-col gap-2 p-1">
-              <span className="text-sm text-muted-foreground">{t('translation:filters:sort_title')}</span>
+              <span className="text-sm text-muted-foreground">
+                {t("translation:filters:sort_title")}
+              </span>
               <SelectInput
                 placeholder=""
                 defaultValue={sort.column}
                 items={items}
-                onValueChange={(e) => setSort((prev) => ({ ...prev, column: e }))}
+                onValueChange={(e) =>
+                  setSort((prev) => ({ ...prev, column: e }))
+                }
                 param="sort"
               />
             </div>
             <div className="flex flex-col gap-2 p-1">
               <span className="text-sm text-muted-foreground">
-              {t('translation:filters:order_title')}
+                {t("translation:filters:order_title")}
               </span>
               <SelectInput
                 placeholder=""
                 defaultValue={sort.direction}
                 items={directions}
-                onValueChange={(e) => setSort((prev) => ({ ...prev, direction: e }))}
+                onValueChange={(e) =>
+                  setSort((prev) => ({ ...prev, direction: e }))
+                }
                 param="order"
               />
             </div>
