@@ -52,7 +52,6 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
 
   }
-  :root,
   .dark {
     /* -------- MY --------  */
     --text_primary: 0, 0%, 93%;
@@ -137,6 +136,91 @@
 
     /* ... */
   }
+.light {
+  /* -------- MY --------  */
+  --text_primary: 0, 0%, 10%; /* Dark text */
+  --text_secondary: 0, 0%, 40%; /* Slightly lighter text */
+
+  --bg_default: 0, 0%, 98%; /* Light background */
+  --bg_secondary: 0, 0%, 100%; /* White */
+
+  --bg_component_default: 0, 0%, 93%; /* Component backgrounds */
+  --bg_component_hover: 0, 0%, 90%;
+  --bg_component_active: 0, 0%, 85%;
+
+  --border_default: 0, 0%, 80%; /* Border colors */
+  --border_hover: 0, 0%, 70%;
+  --border_active: 0, 0%, 50%;
+
+  --bg_contrast_default: 0, 0%, 50%; /* Contrast elements */
+  --bg_contrast_hover: 0, 0%, 60%;
+
+  --base-red: 358, 82%, 55%; /* Base red adjusted for light theme */
+
+  --state_gray: 0, 0%, 80%; /* State colors */
+  --state_yellow: 35, 100%, 45%;
+  --state_green: 167, 55%, 40%;
+  --state_red: 0, 85%, 50%;
+
+  --log_yellow: 39, 85%, 45%;
+  --log_blue: 210, 85%, 50%;
+  --log_red: var(--base-red);
+
+  --base_secondary: var(--text_primary);
+
+  /* -------- Tailwind & ShadCn --------  */
+  /* https://ui.shadcn.com/docs/theming#list-of-variables */
+
+  --background: var(--bg_default);
+  --foreground: var(--text_primary);
+
+  --muted: var(--base_secondary);
+  --muted-foreground: var(--text_secondary);
+
+  --card: var(--bg_default);
+  --card-foreground: var(--foreground);
+
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+
+  --border: var(--border_default);
+
+  --input: var(--border_default);
+
+  --primary: var(--text_primary);
+  --primary-foreground: var(--bg_secondary);
+
+  --secondary: var(--base_secondary);
+  --secondary-foreground: var(--bg_secondary);
+
+  --accent: var(--base_secondary);
+  --accent-foreground: var(--bg_secondary);
+
+  --destructive: 358, 69%, 55%;
+  --destructive-foreground: var(--foreground);
+
+  --ring: 216 12.2% 40%;
+
+  /* Charts */
+  --chart-1: 220 50% 40%;
+  --chart-2: 160 45% 35%;
+  --chart-3: 30 70% 45%;
+  --chart-4: 280 50% 50%;
+  --chart-5: 340 60% 45%;
+
+  /* SIDEBAR */
+  --sidebar-background: var(--bg_secondary);
+  --sidebar-foreground: 0, 0%, 15%;
+  --sidebar-primary: 224.3 76.3% 48%;
+  --sidebar-primary-foreground: 0, 0%, 10%;
+  --sidebar-accent: 0, 0%, 93%;
+  --sidebar-accent-foreground: 0, 0%, 15%;
+  --sidebar-border: 0, 0%, 85%;
+  --sidebar-ring: 217.2 91.2% 40%;
+
+  /* ... */
+}
+
 }
 
 @layer base {

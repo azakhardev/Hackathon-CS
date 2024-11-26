@@ -22,7 +22,7 @@ export default function Layout() {
             <div>
               <CommandButton />
               <LanguageSwitch />
-              {/* <ThemeSwitch /> */}
+              <ThemeSwitch />
             </div>
           )}
         </header>
