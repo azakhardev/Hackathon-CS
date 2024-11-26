@@ -9,7 +9,7 @@ export default function JobsPage() {
   return (
     <>
       <H1>{t("translation:jobs:header")}</H1>
-      <JobsDataTable limit={25} isNav={true} />
+      <JobsDataTable limit={25} isNav={true} graph={true} />
     </>
   );
 }
