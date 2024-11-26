@@ -8,7 +8,7 @@
   background-color: var(--circle-color);
   border-radius: 50%;
   position: relative;
-  z-index: 2; /* Ensure it's above the pulsing circle */
+  z-index: 2;
 }
 
 /* Pulsing circle */

@@ -22,7 +22,6 @@ export function ChartCard2({
 }: ChartCardProps2) {
   return (
     <Card className="flex flex-col w-full gap-5 bg-bg_primary bg-bg_default">
-      {/* bg-bg_secondary */}
       <CardHeader className="border-b">
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-col gap-2">
@@ -46,7 +45,6 @@ interface ChartCardProps {
 export default function ChartCard({ header, content }: ChartCardProps) {
   return (
     <Card className="flex flex-col w-full gap-5 bg-bg_secondary">
-      {/* bg-bg_secondary */}
       <CardHeader className="border-b">{header}</CardHeader>
       <CardContent>{content}</CardContent>
     </Card>

@@ -107,7 +107,7 @@
         "detail_header": "Logs",
         "detail_error": "Error at data joining",
         "no_data": "No data available",
-        "new_log": "new log was created on"
+        "new_log": "Log was created on"
     },
     "automationTypes": {
         "header": "Automation Types"

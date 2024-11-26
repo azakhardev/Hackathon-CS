@@ -143,15 +143,6 @@ export default function AutomationsDataTable({
     );
   }
 
-  // const timeVals: ISelectItem[] = [
-  //   { value: "2y", content: "2y" },
-  //   { value: "1y", content: "1y" },
-  //   { value: "6m", content: "6m" },
-  //   { value: "3m", content: "3m" },
-  //   { value: "1m", content: "1m" },
-  //   { value: "14d", content: "14d" },
-  //   { value: "7d", content: "7d" },
-  // ];
   const cols: ISelectItem[] = [
     { value: "id", content: "ID" },
     { value: "last_activity", content: t("translation:filters:date_sort") },

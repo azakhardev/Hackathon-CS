@@ -9,7 +9,6 @@ export default function DetailHeader({
 }) {
   return (
     <div>
-      {/* <H2>{section}</H2> */}
       <H1>{title}</H1>
     </div>
   );

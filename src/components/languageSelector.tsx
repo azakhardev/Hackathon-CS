@@ -33,7 +33,6 @@ export function LanguageSwitch() {
   //button to switch between languages
   const { i18n } = useTranslation();
 
-  //if cs => en, if en => cs
   const switchLang = () => {
     const lang = i18n.language === "en" ? "cs" : "en";
     i18n.changeLanguage(lang);

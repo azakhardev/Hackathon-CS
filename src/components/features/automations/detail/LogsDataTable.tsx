@@ -59,8 +59,6 @@ export default function LogsDataTable({
   }
 
   // Data joining logic
-  // if (!logsQuery.data || !automationsTypesQuery.data)
-  //   return <h1>Error at data joining</h1>;
   const logsWithTypes = (logsQuery.data as IAutomationLog[]).map(
     (log: IAutomationLog) => {
       const matchedType = Array.isArray(automationsTypesQuery.data)

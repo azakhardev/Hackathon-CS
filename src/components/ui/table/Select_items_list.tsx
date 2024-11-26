@@ -73,8 +73,18 @@ export const statesVals = (t: TFunction): ISelectItem[] => [
       <StateItem title={t("translation:filters:state_active")} color="green" />
     ),
   },
-  { value: "offline", content: <StateItem title={t('translation:filters:state_offline')} color="gray" /> }, // prettier-ignore
-  { value: "idle", content: <StateItem title={t('translation:filters:state_idle')} color="yellow" />  }, // prettier-ignore
+  {
+    value: "offline",
+    content: (
+      <StateItem title={t("translation:filters:state_offline")} color="gray" />
+    ),
+  },
+  {
+    value: "idle",
+    content: (
+      <StateItem title={t("translation:filters:state_idle")} color="yellow" />
+    ),
+  },
   {
     value: "failed",
     content: (
@@ -98,8 +108,21 @@ export const states2Vals = (t: TFunction): ISelectItem[] => [
       <StateItem title={t("translation:filters:state_success")} color="green" />
     ),
   },
-  { value: "queued", content: <StateItem title={t('translation:filters:state_queued')}  color="gray" /> }, // prettier-ignore
-  { value: "in_progress", content: <StateItem title={t('translation:filters:state_inProgress')}  color="yellow" /> }, // prettier-ignore
+  {
+    value: "queued",
+    content: (
+      <StateItem title={t("translation:filters:state_queued")} color="gray" />
+    ),
+  },
+  {
+    value: "in_progress",
+    content: (
+      <StateItem
+        title={t("translation:filters:state_inProgress")}
+        color="yellow"
+      />
+    ),
+  },
   {
     value: "failed",
     content: (

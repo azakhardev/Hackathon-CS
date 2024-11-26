@@ -26,7 +26,7 @@ export default function RunnersPage({
   isNav: boolean;
 }) {
   const [searchParams] = useSearchParams();
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [searchText, setSearchText] = useState(searchParams.get("text") || "");
   const [searchAction, setSearchAction] = useState(
     searchParams.get("action") || ""
@@ -34,12 +34,11 @@ export default function RunnersPage({
   const [searchState, setSearchState] = useState(
     searchParams.get("state") || ""
   );
-  const [limit,] = useState(limit2);
+  const [limit] = useState(limit2);
   const [sort, setSort] = useState({
     column: searchParams.get("sort"),
     direction: searchParams.get("order") || "asc",
   });
-
 
   const dataQuery = useInfiniteQuery({
     queryKey: [
@@ -107,7 +106,9 @@ export default function RunnersPage({
     }
   });
 
-  const cols: ISelectItem[] = [{ value: "id", content: t('translation:filters:name_sort')}];
+  const cols: ISelectItem[] = [
+    { value: "id", content: t("translation:filters:name_sort") },
+  ];
 
   return (
     <>
@@ -119,14 +120,14 @@ export default function RunnersPage({
           right={
             <>
               <SelectInput
-                placeholder={t('translation:filters:action_placeholder')}
+                placeholder={t("translation:filters:action_placeholder")}
                 defaultValue={searchAction}
                 items={actionsVals(t)}
                 onValueChange={(e) => setSearchAction(e)}
                 param="action"
               />
               <SelectInput
-                placeholder={t('translation:filters:state_placeholder')}
+                placeholder={t("translation:filters:state_placeholder")}
                 defaultValue={searchState}
                 items={statesVals(t)}
                 onValueChange={(e) => setSearchState(e)}
@@ -145,7 +146,6 @@ export default function RunnersPage({
             runners={dataQuery.data?.pages}
             searchText={searchText}
           />
-          {/* TODO: use global component */}
           {isNav &&
             dataQuery.data &&
             (
@@ -163,10 +163,10 @@ export default function RunnersPage({
                   }
                 >
                   {dataQuery.isFetchingNextPage
-                    ? t('translation:common:more_btn_loading')
+                    ? t("translation:common:more_btn_loading")
                     : dataQuery.hasNextPage
-                    ? t('translation:common:more_btn_text')
-                    : t('translation:common:more_btn_error')}
+                    ? t("translation:common:more_btn_text")
+                    : t("translation:common:more_btn_error")}
                 </Button>
               </div>
             )}

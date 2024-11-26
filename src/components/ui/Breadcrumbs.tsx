@@ -22,7 +22,7 @@ export default function Breadcrumbs() {
       <Breadcrumb>
         <BreadcrumbList>
           <Link to="/">
-            <BreadcrumbItem className="hidden md:block">
+            <BreadcrumbItem className="block">
               <BreadcrumbLink>/</BreadcrumbLink>
             </BreadcrumbItem>
           </Link>
@@ -37,7 +37,7 @@ export default function Breadcrumbs() {
 
               return (
                 <>
-                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbSeparator className="block" />
                   <Link key={i} to={url}>
                     <BreadcrumbItem>
                       {i === segments.length - 1 ? (

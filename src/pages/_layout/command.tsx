@@ -85,7 +85,7 @@ export function CommandDialogDemo() {
   }, [setOpen]);
 
   const sasQuery = useQuery({
-    queryKey: ["sas"], //searchText - api cant filter, always same all response (cache with single key)
+    queryKey: ["sas"],
     queryFn: async () => await RunnerModel.getSAS(""),
   });
   const navigate = useNavigate();

@@ -31,7 +31,7 @@ interface IProps {
   logs: IAutomationLog[] | IErrorMessage;
 }
 
-export default function LogsTable(props: IProps) {
+export default function LogsTableRespo(props: IProps) {
   const isMobile = useIsMobile();
   const getNodeProps = (
     currentIndex: number,
@@ -131,8 +131,7 @@ export default function LogsTable(props: IProps) {
           const fromIndex: number =
             l.type_object.states.indexOf(l.from_state) ?? -1;
           const totalStates = l.type_object.states.length ?? 0;
-          // prettier-ignore
-          if ( fromIndex === 0 && toIndex === l.type_object.states.length - 1)
+          if (fromIndex === 0 && toIndex === l.type_object.states.length - 1)
             isSuccess = true;
 
           if (isSuccess) l.level = "SUCCESS";
@@ -144,13 +143,13 @@ export default function LogsTable(props: IProps) {
             <TableRow key={l.timestamp}>
               <TableCell>
                 <div
-                  className={`flex flex-wrap  h-full gap-3 ${
+                  className={`flex flex-wrap  h-full gap-2 ${
                     isMobile
-                      ? "flex-col gap-2 items-start justify-start"
+                      ? "flex-col gap-2 items-center justify-start"
                       : "items-center justify-between"
                   }`}
                 >
-                  <div className="flex justify-start">
+                  <div className={`flex justify-start md:min-w-[400px]`}>
                     <TableCelTitleLog
                       title={l.type}
                       text={l.description}
@@ -193,7 +192,7 @@ export default function LogsTable(props: IProps) {
                   </div>
                   <div className="font-medium">
                     <Badge_timeAgo date={new Date(l.timestamp)} />
-                    <span>{t("translation:automations:no_data")}</span>
+                    <span>{t("translation:automations:new_log")}</span>
                     <Badge_Link title={l.automation_id.slice(-5)} route="#" />
                   </div>
                 </div>

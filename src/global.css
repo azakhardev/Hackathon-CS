@@ -179,15 +179,6 @@
   }
 }
 
-body::-webkit-scrollbar {
-  display: none;
-}
-
-.body {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -196,4 +187,16 @@ body::-webkit-scrollbar {
   100% {
     transform: rotate(360deg);
   }
+}
+
+body::-webkit-scrollbar {
+  width: 0.5em;
+}
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
+  /* background-color: hsl(var(--bg_secondary)); */
+}
+body::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--bg_default));
+  outline: 1px solid hsl(var(--border_default));
 }
